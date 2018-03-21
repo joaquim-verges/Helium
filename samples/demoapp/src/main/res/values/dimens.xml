@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="list_size">140dp</dimen>
+    <dimen name="grid_spacing">8dp</dimen>
+    <dimen name="grid_size">140dp</dimen>
+    <dimen name="menu_padding">24dp</dimen>
+</resources>

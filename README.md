@@ -24,32 +24,31 @@ Helium follows this pattern, and provides some useful base classes will save you
 
 ### BaseRepository
 
-Helium follows this pattern, and provides some useful base classes will save you lots of develoment time, while keeping your code clean and organized.
-
 - Simple interface that returns some data
 - Here is a good place to put your network calls, database queries/writes, preferences edits, etc...
-- Responsible for producing the object models that the presenter will use
+- Responsible for producing the model objects that the presenter will use
 
 ### BasePresenter
 
-- can push state to a ViewDelegate via `pushState(state)`
-- receives view events from any attached ViewDelegate via `onVieEvent(event)`
+- can push state to a `ViewDelegate` via `pushState(state)`
+- receives `ViewEvent` from any attached `ViewDelegate` via `onViewEvent(event)`
 - receives lifecycle events (implements `LifecycleObserver`)
 - can be persisted accross orientation changes (implements `ViewModel`)
 - no view references here, only state pushing and reacting to view events
 
 ### BaseViewDelegate
 
-- Can render Android views according to the ViewState passed in `render(viewState)`
-- Can push ViewEvents to any attached presenter via `pushEvent()`
+- Can render Android views according to the `ViewState` passed in `render(state)`
+- Can push `ViewEvent` to any attached presenter via `pushEvent(event)`
 - This is the only place where you hold context or views
 - no business logic here, only enough to render views
 
 ### Notes on the implementaion
 
- - Presenters and ViewDelegates communicate via RxJava subjects, they are not coupled together
- - Lifecycle is handled for you, no need to worry about cleaning up or detaching anything
- - Each of the three classes  are independent can be re-used for other components
+ - Uses [RxJava](https://github.com/ReactiveX/RxJava) to handle communication between Presenters and ViewDelegates
+ - Uses [RxLifecycle](https://github.com/trello/RxLifecycle) to automatically dispose subscriptions, no need to worry about cleaning up or detaching anything
+ - Uses `ViewModel` from the [Android Architecture Components](https://developer.android.com/topic/libraries/architecture/viewmodel.html) to retain presenters across configuration changes
+ - Each of the three classes are independent from each other can be re-used for other components
 
 ## Usage
 
@@ -61,7 +60,7 @@ presenter.attach(viewDelegate)
 
 This is all you need to create a component in an Activity or fragment.
 
-You can also make your presenter retained upon configuration changes by accessing it via the RetainedPresenters.get method:
+You can also make your presenter retained upon configuration changes by accessing it via the `RetainedPresenters.get()` method:
 
 ```kotlin
 val presenter = RetainedPresenters.get(this, MyPresenter::class.java)
@@ -75,7 +74,7 @@ A typical Presenter looks like this:
 class MyPresenter(repository: MyRepository()) : BasePresenter<MyState, MyEvent> {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    fun loadData() {
+    private fun loadData() {
         repository
             .getData()
             .doOnSubscribe { pushState(MyState.Loading) }
@@ -86,7 +85,7 @@ class MyPresenter(repository: MyRepository()) : BasePresenter<MyState, MyEvent> 
             )
     }
 
-    override onViewEvent(event : MyEvent) {
+    override fun onViewEvent(event : MyEvent) {
         when(event) {
             is Click -> ...
             is LongPress -> ...
@@ -95,7 +94,7 @@ class MyPresenter(repository: MyRepository()) : BasePresenter<MyState, MyEvent> 
 }
 ```
 
-note that `loadData()` is annotated with a `OnLifecycleEvent` annotation, which can be used to schedule method calls when a certain lifecycle event happens.
+note that `loadData()` is annotated with a `@OnLifecycleEvent` annotation, which can be used to schedule method calls when a certain lifecycle event happens. This is not required but is very useful in the Android world.
 
 A typical ViewDelegate looks like this:
 
@@ -105,7 +104,7 @@ class MyViewDelegate(inflater: LayoutInflater)
 
     val myButton : TextView = view.findViewById(R.id.my_button)
 
-    init{
+    init {
         myButton.setOnClickListener { view -> pushEvent(MyEvent.Click(view)) }
     }
 
@@ -130,14 +129,14 @@ sealed class MyState : ViewState {
 }
 
 sealed class MyEvent : ViewEvent {
-    data class Click(view: View) : MyEvent()
-    data class LongPress(view: View)  : MyEvent()
+    data class Click(val view: View) : MyEvent()
+    data class LongPress(val view: View)  : MyEvent()
 }
 ```
 
 ## Ready-to-use components
 
-On top of providing the base classes to build any component you can think of, Helium has a set of handy presenters and viewdelegates ready to be used as building blocks for your own components.
+On top of providing the base classes to build any component you can think of, Helium has a set of handy presenters and view delegates ready to be used as building blocks for your own components.
 
 Most Android apps have common patterns (loading data from network, displaying lists, viewpagers, etc), Helium can help you build those components with minimal amount of code.
 
@@ -179,7 +178,7 @@ This list view delegate is all you'll need to display a list of models of any ki
 
 This is a specialized `ViewDelegate` that is specific to recycler views. It holds the list item layout that can be bound to some data and recycled, and also provides the same mechanism to push events up to the presenter layer.
 
-This class is particularly useful when used with a `DataListViewDelegate`, as Helium will handle all the adapter code for you.
+This class is particularly useful when used with a `DataListViewDelegate`, as Helium will handle all the adapter code and the wiring for you.
 
 Configuration:
 
@@ -191,7 +190,7 @@ Events:
 
 ## PagerViewDelegate
 
-Another widely use UI pattern is the ViewPager, so Helium provides a `ViewDelegate` that you can use out of the box.
+Another widely use UI pattern is the `ViewPager`, so Helium provides a `ViewDelegate` that you can use out of the box.
 
 Configuration:
 

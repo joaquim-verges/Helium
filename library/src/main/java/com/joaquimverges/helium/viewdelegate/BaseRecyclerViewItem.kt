@@ -35,5 +35,5 @@ abstract class BaseRecyclerViewItem<in T, V : ViewEvent>(val view: View) : Recyc
 
     abstract fun bind(data: T)
 
-    fun onViewEvent(event: V) = viewEvents?.onNext(event)
+    fun pushEvent(event: V) = viewEvents?.onNext(event)
 }

@@ -41,10 +41,10 @@ class ArticleGridItemViewHolder(inflater: LayoutInflater,
         }
         Glide.with(context).load(data.urlToImage).into(mMediaView)
         itemView.setOnClickListener {
-            onViewEvent(ArticleEvent.Clicked(context, data))
+            pushEvent(ArticleEvent.Clicked(context, data))
         }
         itemView.setOnLongClickListener {
-            onViewEvent(ArticleEvent.LongPressed(context, data))
+            pushEvent(ArticleEvent.LongPressed(context, data))
             true
         }
     }

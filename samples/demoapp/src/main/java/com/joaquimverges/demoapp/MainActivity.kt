@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
 
         override fun bind(data: MenuItem) {
             title.text = data.title
-            view.setOnClickListener { onViewEvent(ClickEvent(view, data)) }
+            view.setOnClickListener { pushEvent(ClickEvent(view, data)) }
         }
     }
 

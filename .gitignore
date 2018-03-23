@@ -52,3 +52,5 @@ freeline_project_description.json
 
 samples/newsapp/src/main/res/values/private_strings.xml
 
+samples/demoapp/release/*
+samples/newsapp/release/*

@@ -24,6 +24,8 @@ Helium follows this pattern, and provides some useful base classes will save you
 
 ### BaseRepository
 
+Helium follows this pattern, and provides some useful base classes will save you lots of develoment time, while keeping your code clean and organized.
+
 - Simple interface that returns some data
 - Here is a good place to put your network calls, database queries/writes, preferences edits, etc...
 - Responsible for producing the object models that the presenter will use

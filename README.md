@@ -32,16 +32,16 @@ Helium follows this pattern, and provides some useful base classes will save you
 
 ### BasePresenter
 
-- can push state to a ViewDelegate via pushState(state)
-- receives view events from any attached ViewDelegate via onVieEvent(event)
-- receives lifecycle events (implements LifecycleObserver)
-- can be persisted accross orientation changes (implements ViewModel)
+- can push state to a ViewDelegate via `pushState(state)`
+- receives view events from any attached ViewDelegate via `onVieEvent(event)`
+- receives lifecycle events (implements `LifecycleObserver`)
+- can be persisted accross orientation changes (implements `ViewModel`)
 - no view references here, only state pushing and reacting to view events
 
 ### BaseViewDelegate
 
-- Can render Android views according to the ViewState passed in render(viewState)
-- Can push ViewEvents to any attached presenter via pushEvent()
+- Can render Android views according to the ViewState passed in `render(viewState)`
+- Can push ViewEvents to any attached presenter via `pushEvent()`
 - This is the only place where you hold context or views
 - no business logic here, only enough to render views
 
@@ -120,7 +120,7 @@ class MyViewDelegate(inflater: LayoutInflater)
 
 ```
 
-In this example, we're using `MyState` and `MyEvent` as the medium of communication between our Presenter and our ViewDelegate. These state and event classes can be anything you want, I like to use sealed kotlin classes to define them :
+In this example, we're using `MyState` and `MyEvent` as the medium of communication between our Presenter and our ViewDelegate. These state and event classes can be anything you want. I like to use sealed kotlin classes to define them :
 
 ```kotlin
 sealed class MyState : ViewState {
@@ -130,8 +130,8 @@ sealed class MyState : ViewState {
 }
 
 sealed class MyEvent : ViewEvent {
-    data class Click(view: View)
-    data class LongPress(view: View) 
+    data class Click(view: View) : MyEvent()
+    data class LongPress(view: View)  : MyEvent()
 }
 ```
 
@@ -141,7 +141,7 @@ On top of providing the base classes to build any component you can think of, He
 
 Most Android apps have common patterns (loading data from network, displaying lists, viewpagers, etc), Helium can help you build those components with minimal amount of code.
 
-Loading data from network, and display it in a RecyclerView is is by far the most common thing we Android developers have to implement, and Helium helps you cut down on a lot of boilerplate code, while keeping the structure clean:
+Loading data from network, and display it in a `RecyclerView` is is by far the most common thing we Android developers have to implement, and Helium helps you cut down on a lot of boilerplate code, while keeping the structure clean:
 
 ### DataListPresenter
 
@@ -149,37 +149,37 @@ The role of this class is to simply load some data asynchronously and push its c
 
 Configuration:
 
-- BaseRepository that provides the data
-- RefreshPolicy param to configure how often this data should be refreshed
+- `BaseRepository` that provides the data
+- `RefreshPolicy` param to configure how often this data should be refreshed
 
 States :
 
-- NetworkViewState class to describe the network request status (loading, error, empty, data ready, etc.)
+- `NetworkViewState` class to describe the network request status (loading, error, empty, data ready, etc.)
 - the data ready state comes with the list of loaded data
 
-This presenter can be used with any ViewDelegate that can render a NetworkViewState. Helium provides a ready-made list view delegate that can be used with this presenter:
+This presenter can be used with any `ViewDelegate` that can render a `NetworkViewState`. Helium provides a ready-made list view delegate that can be used with this presenter:
 
 ### DataListViewDelegate
 
-This viewdelegate holds a recycler view, a loading spinner and a empty view container. It knows how to render any NetworkViewState.
+This viewdelegate holds a recycler view, a loading spinner and a empty view container. It knows how to render any `NetworkViewState`.
 
 Configuration:
 
-- ViewHolder for the list items layout (extends BaseRecyclerViewItem)
+- `BaseRecyclerViewItem` for the list items layout (extends `RecyclerView.ViewHolder`)
 
 There's also a handful of configuration options that you can use to customize your layout, list, empty view, etc.
 
 Events:
 
-- Relies on the passed ViewHolder implementation to relay any kind of view events up to the presenter layer (typically clicks, long press, etc)
+- Relies on the passed `BaseRecyclerViewItem` implementation to relay any kind of view events up to the presenter layer (typically clicks, long press, etc)
 
 This list view delegate is all you'll need to display a list of models of any kind. All you need to focus on is the actual list item layout, the rest is handled for you.
 
 ### BaseRecyclerItem
 
-This is a specialized ViewDelegate that is specific to recycler views. It holds the list item layout that can be bound to some data and recycled, and also provides the same mechanism to push events up to the presenter layer.
+This is a specialized `ViewDelegate` that is specific to recycler views. It holds the list item layout that can be bound to some data and recycled, and also provides the same mechanism to push events up to the presenter layer.
 
-This class is particularly useful when used with a DataListViewDelegate, as Helium will handle all the adapter code for you.
+This class is particularly useful when used with a `DataListViewDelegate`, as Helium will handle all the adapter code for you.
 
 Configuration:
 
@@ -191,11 +191,11 @@ Events:
 
 ## PagerViewDelegate
 
-Another widely use UI pattern is the ViewPager, so Helium provides a ViewDelegate that you can use out of the box.
+Another widely use UI pattern is the ViewPager, so Helium provides a `ViewDelegate` that you can use out of the box.
 
 Configuration:
 
-- A FragmentPageProvider, that defines which Fragment goes in which page.
+- `FragmentPageProvider`, that defines which Fragment goes in which page.
 
 There's also a handful of configuration options to customize your layout, view pager configuration, etc.
 

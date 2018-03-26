@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.joaquimverges.helium.event.ViewEvent
 import com.joaquimverges.helium.state.ViewState
+import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 
 /**
@@ -46,9 +47,12 @@ abstract class BaseViewDelegate<in S : ViewState, E : ViewEvent>(val view: View,
     abstract fun render(viewState: S)
 
     /**
+     * Observe the ViewEvent changes from this ViewDelegate
+     */
+    fun observer() : Observable<E> = viewEventsObservable
+
+    /**
      * Pushes a new ViewEvent, which will trigger active subscribers
      */
     fun pushEvent(event: E) = viewEventsObservable.onNext(event)
-
-    fun observer() = viewEventsObservable
 }

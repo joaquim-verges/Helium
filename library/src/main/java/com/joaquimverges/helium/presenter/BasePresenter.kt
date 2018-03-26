@@ -5,6 +5,7 @@ import com.joaquimverges.helium.viewdelegate.BaseViewDelegate
 import com.joaquimverges.helium.event.ViewEvent
 import com.joaquimverges.helium.state.ViewState
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
+import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.BehaviorSubject
@@ -43,9 +44,9 @@ abstract class BasePresenter<S : ViewState, E: ViewEvent> : ViewModel(), Lifecyc
     }
 
     /**
-     * Interested parties can subscribe to view state changes from this presenter.
+     * Observe the ViewState changes from this Presenter
      */
-    fun observer(): BehaviorSubject<S> = viewState
+    fun observer(): Observable<S> = viewState
 
     /**
      * Pushes a new state, which will trigger any active subscribers

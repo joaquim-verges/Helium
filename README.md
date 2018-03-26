@@ -20,7 +20,7 @@ It's a very classic MVP pattern that works for any component in your app.
 
 ## Implementation
 
-Helium follows this pattern, and provides some useful base classes will save you lots of develoment time, while keeping your code clean and organized.
+Helium follows the MVP pattern described above. The provided bases classes save development time and keep code clean and organized.
 
 ### BaseRepository
 
@@ -190,7 +190,7 @@ Events:
 
 ## PagerViewDelegate
 
-Another widely use UI pattern is the `ViewPager`, so Helium provides a `ViewDelegate` that you can use out of the box.
+Another widely used UI pattern is the `ViewPager`, so Helium provides a `ViewDelegate` that you can use out of the box.
 
 Configuration:
 

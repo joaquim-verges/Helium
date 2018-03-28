@@ -21,7 +21,7 @@ class SimpleListActivity : AppCompatActivity() {
     }
 
     class MyRepository : BaseRepository<List<String>> {
-        override fun getData(): Single<List<String>> = Observable.range(0, 100).map { i -> "Word number $i" }.toList()
+        override fun getData() = Observable.range(0, 100).map { i -> "Word number $i" }.toList()
     }
 
     class MyListItem(@LayoutRes layoutResId: Int, inflater: LayoutInflater, parent: ViewGroup)
@@ -42,7 +42,7 @@ These implementations come with a variety of customization options to use them d
 
 Explore simple usages of the library in the [Demo App](/samples/demoapp).
 
-For a more full fledged app using Helium, check out [Helium News](/samples/newsapp). Also available on [Google Play](https://play.google.com/store/apps/details?id=com.jv.news).
+For a more full fledged App using Helium, check out [Helium News](/samples/newsapp). Also available on [Google Play](https://play.google.com/store/apps/details?id=com.jv.news).
 
 
 ## Philosphy
@@ -95,17 +95,19 @@ The following bases classes are the building blocks for any components in your a
 
 ## Usage
 
+This is all you need to create a component and display it in an Activity:
+
 ```kotlin
-override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    val presenter = MyPresenter()
-    val viewDelegate = MyViewDelegate(layoutInflater)
-    presenter.attach(viewDelegate)
-    setContentView(viewDelegate.view)
+class MyActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val presenter = MyPresenter()
+        val viewDelegate = MyViewDelegate(layoutInflater)
+        presenter.attach(viewDelegate)
+        setContentView(viewDelegate.view)
+    }
 }
 ```
-
-This is all you need to create a component and display it in an Activity.
 
 You can also make your presenter retained upon configuration changes by accessing it via the `RetainedPresenters.get()` method:
 
@@ -127,9 +129,7 @@ class MyFragment : Fragment() {
 }
 ```
 
-where `this` is an Activity or Fragment.
-
-A typical Presenter looks like this:
+A typical Presenter implementation looks like this:
 
 ```kotlin
 class MyPresenter(repository: MyRepository()) : BasePresenter<MyState, MyEvent> {
@@ -157,7 +157,7 @@ class MyPresenter(repository: MyRepository()) : BasePresenter<MyState, MyEvent> 
 
 note that `loadData()` is annotated with a `@OnLifecycleEvent` annotation, which can be used to schedule method calls when a certain lifecycle event happens. This is not required but is very useful in the Android world.
 
-A typical ViewDelegate looks like this:
+A typical ViewDelegate implementation looks like this:
 
 ```kotlin
 class MyViewDelegate(inflater: LayoutInflater) 
@@ -180,7 +180,7 @@ class MyViewDelegate(inflater: LayoutInflater)
 
 ```
 
-In this example, we're using `MyState` and `MyEvent` as the medium of communication between our Presenter and our ViewDelegate. These state and event classes can be anything you want. I like to use sealed kotlin classes to define them :
+In this example, we're using `MyState` and `MyEvent` as the medium of communication between our Presenter and our ViewDelegate. These state and event classes can be anything you want. One option is to use sealed kotlin classes to define them:
 
 ```kotlin
 sealed class MyState : ViewState {
@@ -203,7 +203,7 @@ Most Android apps have common patterns (loading data from network, displaying li
 
 Loading data from network, and display it in a `RecyclerView` is is by far the most common thing we Android developers have to implement, and Helium helps you cut down on a lot of boilerplate code, while keeping the structure clean:
 
-### DataListPresenter
+### ListPresenter
 
 The role of this class is to simply load some data asynchronously and push its current state.
 
@@ -219,7 +219,7 @@ States :
 
 This presenter can be used with any `ViewDelegate` that can render a `NetworkViewState`. Helium provides a ready-made list view delegate that can be used with this presenter:
 
-### DataListViewDelegate
+### ListViewDelegate
 
 This viewdelegate holds a recycler view, a loading spinner and a empty view container. It knows how to render any `NetworkViewState`.
 
@@ -239,7 +239,7 @@ This list view delegate is all you'll need to display a list of models of any ki
 
 This is a specialized `ViewDelegate` that is specific to recycler views. It holds the list item layout that can be bound to some data and recycled, and also provides the same mechanism to push events up to the presenter layer.
 
-This class is particularly useful when used with a `DataListViewDelegate`, as Helium will handle all the adapter code and the wiring for you.
+This class is particularly useful when used with a `ListViewDelegate`, as Helium will handle all the adapter code and the wiring for you.
 
 Configuration:
 

@@ -45,7 +45,7 @@ constructor(inflater: LayoutInflater,
     private val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view)
     private val progressBar: ProgressBar = view.findViewById(R.id.loader)
     private val emptyViewContainer: ViewGroup = view.findViewById(R.id.empty_view_container)
-    private val adapter: BaseRecyclerAdapter<T, E, VH> = BaseRecyclerAdapter(inflater, observer(), viewHolderFactory)
+    private val adapter: BaseRecyclerAdapter<T, E, VH> = BaseRecyclerAdapter(inflater, observer() as PublishSubject<E>, viewHolderFactory)
 
     init {
         recyclerView.layoutManager = layoutManager

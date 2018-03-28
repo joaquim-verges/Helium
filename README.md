@@ -188,7 +188,7 @@ Events:
 
 - Can push any view event, typically clicks, long presses, etc.
 
-## PagerViewDelegate
+### PagerViewDelegate
 
 Another widely used UI pattern is the `ViewPager`, so Helium provides a `ViewDelegate` that you can use out of the box.
 

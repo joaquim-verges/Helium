@@ -32,9 +32,9 @@ abstract class BasePresenter<S : ViewState, E: ViewEvent> : ViewModel(), Lifecyc
      * This is where the binding happens:
      * - viewDelegate subscribes to state updates
      * - presenter subscribes to view events
+     * - presenter gets access to lifecycle events
      *
-     * optionally, a LifecycleOwner can be passed in to get access to lifecycle events.
-     * If so, any method can be annotated with [@OnLifecycleEvent(Lifecycle.Event.ON_RESUME)]
+     * Any method can be annotated with [@OnLifecycleEvent(Lifecycle.Event.ON_RESUME)]
      * or any other [Lifecycle.Event] and will be called at the appropriate time.
      */
     open fun attach(viewDelegate: BaseViewDelegate<S, E>) {

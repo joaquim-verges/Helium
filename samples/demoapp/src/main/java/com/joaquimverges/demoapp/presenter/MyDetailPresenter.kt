@@ -1,7 +1,5 @@
 package com.joaquimverges.demoapp.presenter
 
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.OnLifecycleEvent
 import com.joaquimverges.demoapp.data.MyDdetailRepository
 import com.joaquimverges.demoapp.data.MyItem
 import com.joaquimverges.helium.event.ClickEvent

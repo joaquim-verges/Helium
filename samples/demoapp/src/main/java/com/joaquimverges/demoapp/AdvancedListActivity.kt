@@ -9,7 +9,7 @@ import com.joaquimverges.demoapp.presenter.MyListPresenter
 import com.joaquimverges.demoapp.view.GridSpacingDecorator
 import com.joaquimverges.demoapp.view.MyRecyclerItem
 import com.joaquimverges.helium.retained.RetainedPresenters
-import com.joaquimverges.helium.viewdelegate.DataListViewDelegate
+import com.joaquimverges.helium.viewdelegate.ListViewDelegate
 
 class AdvancedListActivity : AppCompatActivity() {
 
@@ -31,8 +31,8 @@ class AdvancedListActivity : AppCompatActivity() {
             }
         }
 
-        val viewDelegate = DataListViewDelegate(layoutInflater,
-                viewHolderFactory = { inflater, container ->
+        val viewDelegate = ListViewDelegate(layoutInflater,
+                recyclerItemFactory = { inflater, container ->
                     MyRecyclerItem(R.layout.grid_item_layout, inflater, container)
                 },
                 layoutManager = layoutManager,

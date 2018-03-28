@@ -7,11 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.joaquimverges.demoapp.presenter.MyDetailPresenter
-import com.joaquimverges.demoapp.presenter.MyListPresenter
 import com.joaquimverges.demoapp.view.MyDetailViewDelegate
-import com.joaquimverges.demoapp.view.MyRecyclerItem
 import com.joaquimverges.helium.retained.RetainedPresenters
-import com.joaquimverges.helium.viewdelegate.DataListViewDelegate
 
 class DetailFragment : Fragment() {
 
@@ -23,8 +20,6 @@ class DetailFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val viewDelegate = MyDetailViewDelegate(inflater, container)
-        presenter.attach(viewDelegate)
-        return viewDelegate.view
+        return MyDetailViewDelegate(inflater, container).also { presenter.attach(it) }.view
     }
 }

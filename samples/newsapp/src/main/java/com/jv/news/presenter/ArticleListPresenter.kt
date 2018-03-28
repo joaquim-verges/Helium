@@ -5,7 +5,7 @@ import android.content.Context
 import android.net.Uri
 import android.support.customtabs.CustomTabsIntent
 import android.support.v4.app.ShareCompat
-import com.joaquimverges.helium.presenter.DataListPresenter
+import com.joaquimverges.helium.presenter.ListPresenter
 import com.joaquimverges.helium.util.RefreshPolicy
 import com.jv.news.data.ArticleRepository
 import com.jv.news.data.model.Article
@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit
  */
 class ArticleListPresenter(repository: ArticleRepository = ArticleRepository(),
                            refreshPolicy: RefreshPolicy = RefreshPolicy(10, TimeUnit.MINUTES))
-    : DataListPresenter<Article, ArticleEvent>(repository, refreshPolicy) {
+    : ListPresenter<Article, ArticleEvent>(repository, refreshPolicy) {
 
     init {
         repository

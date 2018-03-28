@@ -18,8 +18,8 @@ import io.reactivex.schedulers.Schedulers
  * Optional: pass a RefreshPolicy to control how often the data should get reloaded.
  * default is once every 10 min.
  */
-open class DataListPresenter<T, E : ViewEvent>(private val repository: BaseRepository<List<T>>,
-                                               private val refreshPolicy: RefreshPolicy = RefreshPolicy())
+open class ListPresenter<T, E : ViewEvent>(private val repository: BaseRepository<List<T>>,
+                                           private val refreshPolicy: RefreshPolicy = RefreshPolicy())
     : BasePresenter<NetworkViewState<List<T>>, E>() {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)

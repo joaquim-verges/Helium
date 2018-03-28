@@ -8,10 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.joaquimverges.helium.event.ClickEvent
-import com.joaquimverges.helium.presenter.DataListPresenter
+import com.joaquimverges.helium.presenter.ListPresenter
 import com.joaquimverges.helium.repository.BaseRepository
 import com.joaquimverges.helium.viewdelegate.BaseRecyclerViewItem
-import com.joaquimverges.helium.viewdelegate.DataListViewDelegate
+import com.joaquimverges.helium.viewdelegate.ListViewDelegate
 import io.reactivex.Observable
 import io.reactivex.Single
 
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
     // PRESENTER
 
-    class MenuPresenter : DataListPresenter<MenuItem, ClickEvent<MenuItem>>(MenuRepository()) {
+    class MenuPresenter : ListPresenter<MenuItem, ClickEvent<MenuItem>>(MenuRepository()) {
 
         override fun onViewEvent(event: ClickEvent<MenuItem>) {
             val context = event.view.context
@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val viewDelegate = DataListViewDelegate(layoutInflater, { inflater, container ->
+        val viewDelegate = ListViewDelegate(layoutInflater, { inflater, container ->
             MenuRecyclerItem(inflater, container)
         })
         MenuPresenter().attach(viewDelegate)

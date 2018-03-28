@@ -2,6 +2,49 @@
 
 Lightweight MVP framework for Android. 100% Kotlin.
 
+## Benefits
+
+Helium follows the MVP pattern described below and helps you keep code clean and organized.
+
+It also provides some implementations that help you build common Android components like lists and viewpagers, saving you time and code.
+
+Here's a working app that displays a scrolling list of 100 words in 20 lines of code:
+
+```kotlin
+class SimpleListActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        ListViewDelegate(layoutInflater,
+                { inflater, container -> MyListItem(R.layout.list_item_layout, inflater, container) })
+                .apply { setContentView(view) }
+                .also { ListPresenter<String, ViewEvent>(MyRepository()).attach(it) }
+    }
+
+    class MyRepository : BaseRepository<List<String>> {
+        override fun getData(): Single<List<String>> = Observable.range(0, 100).map { i -> "Word number $i" }.toList()
+    }
+
+    class MyListItem(@LayoutRes layoutResId: Int, inflater: LayoutInflater, parent: ViewGroup)
+        : BaseRecyclerViewItem<String, ViewEvent>(layoutResId, inflater, parent) {
+        private val textView: TextView = view.findViewById(R.id.text_view)
+        override fun bind(data: String) {
+            textView.text = data
+        }
+    }
+}
+```
+
+The only custom logic needed is the data to display and the list item view that binds it, the rest is handled for you.
+
+These implementations come with a variety of customization options to use them direcly, or include them as subcomponents of your own components.
+
+## Apps
+
+Explore simple usages of the library in the [Demo App](/samples/demoapp).
+
+For a more full fledged app using Helium, check out [Helium News](/samples/newsapp). Also available on [Google Play](https://play.google.com/store/apps/details?id=com.jv.news).
+
+
 ## Philosphy
 
 This Framework aims to help you build Android apps fast and cleanly. 
@@ -20,7 +63,7 @@ It's a very classic MVP pattern that works for any component in your app.
 
 ## Implementation
 
-Helium follows the MVP pattern described above. The provided bases classes save development time and keep code clean and organized.
+The following bases classes are the building blocks for any components in your app:
 
 ### BaseRepository
 
@@ -53,17 +96,35 @@ Helium follows the MVP pattern described above. The provided bases classes save 
 ## Usage
 
 ```kotlin
-val presenter = MyPresenter()
-val viewDelegate = MyViewDelegate(layoutInflater)
-presenter.attach(viewDelegate)
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    val presenter = MyPresenter()
+    val viewDelegate = MyViewDelegate(layoutInflater)
+    presenter.attach(viewDelegate)
+    setContentView(viewDelegate.view)
+}
 ```
 
-This is all you need to create a component in an Activity or fragment.
+This is all you need to create a component and display it in an Activity.
 
 You can also make your presenter retained upon configuration changes by accessing it via the `RetainedPresenters.get()` method:
 
+This is an example of a retained presenter in a fragment:
+
 ```kotlin
-val presenter = RetainedPresenters.get(this, MyPresenter::class.java)
+class MyFragment : Fragment() {
+
+    private lateinit var presenter: MyDetailPresenter
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        presenter = RetainedPresenters.get(this, MyPresenter::class.java)
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return MyViewDelegate(inflater, container).also { presenter.attach(it) }.view
+    }
+}
 ```
 
 where `this` is an Activity or Fragment.
@@ -198,8 +259,4 @@ Configuration:
 
 There's also a handful of configuration options to customize your layout, view pager configuration, etc.
 
-## Samples
 
-You will find all the classes described above put into practice with simple examples in [samples/demoapp](/samples/demoapp).
-
-For a more full fledged app using Helium, check out [samples/newsapp](/samples/newsapp). Also available on [Google Play](https://play.google.com/store/apps/details?id=com.jv.news).

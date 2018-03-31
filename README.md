@@ -2,7 +2,7 @@
 
 Lightweight MVP framework for Android. 100% Kotlin.
 
-<img src="https://github.com/joaquim-verges/helium/docs/images/ic_launcher.png" width="100">
+<img src="https://github.com/joaquim-verges/Helium/blob/master/docs/images/ic_launcher.png" width="100">
 
 ## Benefits
 

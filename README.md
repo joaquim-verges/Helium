@@ -2,7 +2,7 @@
 
 Lightweight MVP framework for Android. 100% Kotlin.
 
-<img src="https://github.com/joaquim-verges/Helium/blob/master/docs/images/ic_launcher.png" width="100">
+<img src="https://github.com/joaquim-verges/Helium/blob/master/docs/images/ic_launcher.png" width="120">
 
 ## Benefits
 
@@ -263,6 +263,7 @@ There's also a handful of configuration options to customize your layout, view p
 
 ## License
 
+```
 Copyright (C) 2018 Joaquim Verges
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -276,3 +277,4 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+```

@@ -47,7 +47,7 @@ Explore simple usages of the library in the [Demo App](/samples/demoapp).
 For a more full fledged App using Helium, check out [Helium News](/samples/newsapp). Also available on [Google Play](https://play.google.com/store/apps/details?id=com.jv.news).
 
 
-<img src="https://github.com/joaquim-verges/Helium/blob/master/docs/images/news_ss_1.png" width="200"> <img src="https://github.com/joaquim-verges/Helium/blob/master/docs/images/news_ss_2.png" width="200">
+<img src="https://github.com/joaquim-verges/Helium/blob/master/docs/images/news_ss_1.png" width="240"> <img src="https://github.com/joaquim-verges/Helium/blob/master/docs/images/news_ss_2.png" width="240">
 
 ## Philosphy
 

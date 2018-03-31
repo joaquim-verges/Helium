@@ -1,3 +1,5 @@
+![banner](/docs/images/he-header.png)
+
 # Helium
 
 Lightweight MVP framework for Android. 100% Kotlin.

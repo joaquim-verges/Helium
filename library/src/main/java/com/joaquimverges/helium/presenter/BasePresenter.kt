@@ -1,10 +1,15 @@
 package com.joaquimverges.helium.presenter
 
-import android.arch.lifecycle.*
-import com.joaquimverges.helium.viewdelegate.BaseViewDelegate
+import android.arch.lifecycle.Lifecycle
+import android.arch.lifecycle.LifecycleObserver
+import android.arch.lifecycle.LifecycleOwner
+import android.arch.lifecycle.ViewModel
 import com.joaquimverges.helium.event.ViewEvent
 import com.joaquimverges.helium.state.ViewState
-import com.trello.rxlifecycle2.kotlin.bindToLifecycle
+import com.joaquimverges.helium.util.autoDispose
+import com.joaquimverges.helium.viewdelegate.BaseViewDelegate
+import com.uber.autodispose.AutoDispose.autoDisposable
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -18,7 +23,7 @@ import io.reactivex.subjects.BehaviorSubject
  * @see [com.joaquimverges.helium.state.ViewState]
  * @see [com.joaquimverges.helium.event.ViewEvent]
  */
-abstract class BasePresenter<S : ViewState, E: ViewEvent> : ViewModel(), LifecycleObserver {
+abstract class BasePresenter<S : ViewState, E : ViewEvent> : ViewModel(), LifecycleObserver {
 
     private val disposables: CompositeDisposable = CompositeDisposable()
     private val viewState: BehaviorSubject<S> = BehaviorSubject.create()
@@ -38,9 +43,11 @@ abstract class BasePresenter<S : ViewState, E: ViewEvent> : ViewModel(), Lifecyc
      * or any other [Lifecycle.Event] and will be called at the appropriate time.
      */
     open fun attach(viewDelegate: BaseViewDelegate<S, E>) {
-        observer().bindToLifecycle(viewDelegate.view).subscribe { viewDelegate.render(it) }
-        viewDelegate.observer().bindToLifecycle(viewDelegate.view).subscribe { onViewEvent(it) }
-        (viewDelegate.view.context as? LifecycleOwner)?.lifecycle?.addObserver(this)
+        val lifecycle: Lifecycle = viewDelegate.lifecycle
+                ?: throw IllegalArgumentException("Cannot attach view delegates that don't have a lifecycle aware context")
+        observer().autoDispose(lifecycle).subscribe { viewDelegate.render(it) }
+        viewDelegate.observer().autoDispose(lifecycle).subscribe { onViewEvent(it) }
+        lifecycle.addObserver(this)
     }
 
     /**

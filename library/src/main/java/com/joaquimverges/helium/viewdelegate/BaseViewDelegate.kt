@@ -1,5 +1,7 @@
 package com.joaquimverges.helium.viewdelegate
 
+import android.arch.lifecycle.Lifecycle
+import android.arch.lifecycle.LifecycleOwner
 import android.content.Context
 import android.support.annotation.LayoutRes
 import android.view.LayoutInflater
@@ -40,6 +42,7 @@ abstract class BaseViewDelegate<in S : ViewState, E : ViewEvent>(val view: View,
                 view: View = inflater.inflate(layoutResId, container, addToContainer)) : this(view)
 
     protected val context: Context = view.context
+    internal val lifecycle : Lifecycle? = (context as? LifecycleOwner)?.lifecycle
 
     /**
      * Implement this method to render a layout according to the latest pushed ViewState
@@ -49,7 +52,7 @@ abstract class BaseViewDelegate<in S : ViewState, E : ViewEvent>(val view: View,
     /**
      * Observe the ViewEvent changes from this ViewDelegate
      */
-    fun observer() : Observable<E> = viewEventsObservable
+    fun observer(): Observable<E> = viewEventsObservable
 
     /**
      * Pushes a new ViewEvent, which will trigger active subscribers

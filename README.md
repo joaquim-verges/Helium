@@ -36,9 +36,9 @@ class SimpleListActivity : AppCompatActivity() {
 }
 ```
 
-The only custom logic needed is the data to display and the list item view that binds it, the rest is handled for you.
-
-These implementations come with a variety of customization options to use them direcly, or include them as subcomponents of your own components.
+You just need to write how to get the data and the list item view that displays it, the rest is handled for you.
+ 
+These implementations come with a variety of customization options to use them directly, or include them as subcomponents of your own components.
 
 ## Apps
 

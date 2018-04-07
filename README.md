@@ -93,7 +93,7 @@ The following bases classes are the building blocks for any components in your a
 ### Notes on the implementaion
 
  - Uses [RxJava](https://github.com/ReactiveX/RxJava) to handle communication between Presenters and ViewDelegates
- - Uses [RxLifecycle](https://github.com/trello/RxLifecycle) to automatically dispose subscriptions, no need to worry about cleaning up or detaching anything
+ - Uses [AutoDispose](https://github.com/uber/AutoDispose) to automatically dispose subscriptions, no need to worry about cleaning up or detaching anything
  - Uses `ViewModel` from the [Android Architecture Components](https://developer.android.com/topic/libraries/architecture/viewmodel.html) to retain presenters across configuration changes
  - Each of the three classes are independent from each other can be re-used for other components
 

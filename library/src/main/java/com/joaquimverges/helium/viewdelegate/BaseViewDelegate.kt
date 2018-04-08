@@ -24,8 +24,8 @@ import io.reactivex.subjects.PublishSubject
  * @see com.joaquimverges.helium.event.ViewEvent
  * @see com.joaquimverges.helium.presenter.BasePresenter
  */
-abstract class BaseViewDelegate<in S : ViewState, E : ViewEvent>(val view: View,
-                                                                 private val viewEventsObservable: PublishSubject<E> = PublishSubject.create()) {
+abstract class BaseViewDelegate<in S : ViewState, E : ViewEvent>
+(val view: View, private val viewEventsObservable: PublishSubject<E> = PublishSubject.create()) {
 
     /**
      * Convenience constructor that inflates the layout for you.
@@ -42,7 +42,7 @@ abstract class BaseViewDelegate<in S : ViewState, E : ViewEvent>(val view: View,
                 view: View = inflater.inflate(layoutResId, container, addToContainer)) : this(view)
 
     protected val context: Context = view.context
-    internal val lifecycle : Lifecycle? = (context as? LifecycleOwner)?.lifecycle
+    internal val lifecycle: Lifecycle? = (context as? LifecycleOwner)?.lifecycle
 
     /**
      * Implement this method to render a layout according to the latest pushed ViewState

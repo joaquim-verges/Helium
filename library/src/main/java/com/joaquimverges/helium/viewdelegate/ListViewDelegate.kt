@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import androidx.view.isVisible
+import androidx.core.view.isVisible
 import com.joaquimverges.helium.R
 import com.joaquimverges.helium.event.ViewEvent
 import com.joaquimverges.helium.state.NetworkViewState

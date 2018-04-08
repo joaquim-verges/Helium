@@ -6,11 +6,10 @@ import android.view.View
 import com.joaquimverges.helium.event.ViewEvent
 import com.joaquimverges.helium.state.ViewState
 import com.joaquimverges.helium.viewdelegate.BaseViewDelegate
+import com.nhaarman.mockito_kotlin.never
 import com.nhaarman.mockito_kotlin.spy
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
-import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.PublishSubject
 import junit.framework.TestCase
 import org.junit.Before
 import org.junit.Test
@@ -28,8 +27,6 @@ class BasePresenterTest : TestCase() {
 
     private val viewEvent = SimpleViewEvent()
     private val viewState = SimpleViewState()
-    private val viewStateObservable = BehaviorSubject.create<ViewState>()
-    private val viewEventObservable = PublishSubject.create<ViewEvent>()
 
     lateinit var presenter: BasePresenter<ViewState, ViewEvent>
     lateinit var viewDelegate: BaseViewDelegate<ViewState, ViewEvent>
@@ -40,7 +37,7 @@ class BasePresenterTest : TestCase() {
         whenever(view.context).thenReturn(context)
         whenever(lifecycle.currentState).thenReturn(Lifecycle.State.CREATED)
 
-        viewDelegate = spy(TestViewDelegate(view, viewEventObservable))
+        viewDelegate = spy(TestViewDelegate(view))
         presenter = spy(TestPresenter())
 
         whenever(viewDelegate.lifecycle).thenReturn(lifecycle)
@@ -60,10 +57,26 @@ class BasePresenterTest : TestCase() {
     }
 
     @Test
+    fun testViewStateBeforeAttach() {
+        presenter.pushState(viewState)
+        verify(viewDelegate, never()).render(viewState)
+        boostrapAttach()
+        verify(viewDelegate).render(viewState)
+    }
+
+    @Test
     fun testViewEvent() {
         boostrapAttach()
         viewDelegate.pushEvent(viewEvent)
         verify(presenter).onViewEvent(viewEvent)
+    }
+
+    @Test
+    fun testViewEventBeforeAttach() {
+        viewDelegate.pushEvent(viewEvent)
+        verify(presenter, never()).onViewEvent(viewEvent)
+        boostrapAttach()
+        verify(presenter, never()).onViewEvent(viewEvent)
     }
 
     private fun boostrapAttach() {
@@ -74,13 +87,11 @@ class BasePresenterTest : TestCase() {
     class SimpleViewState : ViewState
 
     class TestPresenter : BasePresenter<ViewState, ViewEvent>() {
-
         override fun onViewEvent(event: ViewEvent) {
         }
     }
 
-    class TestViewDelegate(layout: View, subject: PublishSubject<ViewEvent>) : BaseViewDelegate<ViewState, ViewEvent>(layout, subject) {
-
+    class TestViewDelegate(layout: View) : BaseViewDelegate<ViewState, ViewEvent>(layout) {
         override fun render(viewState: ViewState) {
         }
     }

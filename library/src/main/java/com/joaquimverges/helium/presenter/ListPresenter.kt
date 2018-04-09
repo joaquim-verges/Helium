@@ -23,7 +23,7 @@ open class ListPresenter<T, E : ViewEvent>(private val repository: BaseRepositor
     : BasePresenter<NetworkViewState<List<T>>, E>() {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    private fun refresh() {
+    internal fun refreshIfNeeded() {
         if (refreshPolicy.shouldRefresh()) {
             loadData()
         }

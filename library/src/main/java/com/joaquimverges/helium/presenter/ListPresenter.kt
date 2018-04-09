@@ -16,7 +16,7 @@ import io.reactivex.schedulers.Schedulers
  * - publishes network states (loading, empty, error, success) to the attached ViewDelegate
  *
  * Optional: pass a RefreshPolicy to control how often the data should get reloaded.
- * default is once every 10 min.
+ * default is to refresh on every resume. Consider passing your own refresh policy to meet your use case.
  */
 open class ListPresenter<T, E : ViewEvent>(private val repository: BaseRepository<List<T>>,
                                            private val refreshPolicy: RefreshPolicy = RefreshPolicy())

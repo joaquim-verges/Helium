@@ -2,7 +2,7 @@ package com.jv.news.data
 
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import androidx.content.edit
+import androidx.core.content.edit
 import com.joaquimverges.helium.repository.BaseRepository
 import com.jv.news.App
 import com.jv.news.data.model.ArticleSource

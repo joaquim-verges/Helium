@@ -4,6 +4,14 @@ Lightweight MVP framework for Android. 100% Kotlin.
 
 <img src="https://github.com/joaquim-verges/Helium/blob/master/docs/images/ic_launcher.png" width="140">
 
+## Download
+
+[ ![Download](https://api.bintray.com/packages/joaquim-verges/maven/Helium/images/download.svg) ](https://bintray.com/joaquim-verges/maven/Helium/_latestVersion)
+
+```
+implementation 'com.joaquimverges:helium:x.y.z'
+```
+
 ## Benefits
 
 Helium follows the MVP pattern described below and helps you keep code clean and organized.

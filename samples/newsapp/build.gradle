@@ -4,7 +4,7 @@ apply plugin: 'kotlin-kapt'
 
 android {
     project.ext {
-        API_KEY = project.hasProperty("API_KEY") ? project.API_KEY : ""
+        API_KEY = project.hasProperty("API_KEY") ? project.API_KEY : "\"\""
     }
 
     compileSdkVersion 27

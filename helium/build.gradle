@@ -27,7 +27,6 @@ ext {
 
 android {
     compileSdkVersion 27
-    buildToolsVersion "27.0.3"
     publishNonDefault true
 
     defaultConfig {
@@ -62,10 +61,10 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    api 'io.reactivex.rxjava2:rxjava:2.1.8'
-    api 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    api 'io.reactivex.rxjava2:rxjava:2.1.13'
+    api 'io.reactivex.rxjava2:rxandroid:2.0.2'
     api "android.arch.lifecycle:extensions:1.1.1"
-    api 'com.uber.autodispose:autodispose-android-archcomponents-kotlin:0.7.0'
+    api 'com.uber.autodispose:autodispose-android-archcomponents-kotlin:0.8.0'
     api 'com.android.support:recyclerview-v7:27.1.1'
     api 'androidx.core:core-ktx:0.3'
 }

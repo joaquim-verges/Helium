@@ -54,3 +54,5 @@ samples/newsapp/src/main/res/values/private_strings.xml
 
 samples/demoapp/release/*
 samples/newsapp/release/*
+
+samples/newsapp/gradle.properties

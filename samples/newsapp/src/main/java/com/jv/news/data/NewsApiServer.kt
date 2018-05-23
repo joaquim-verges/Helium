@@ -1,7 +1,6 @@
 package com.jv.news.data
 
-import com.jv.news.App
-import com.jv.news.R
+import com.jv.news.BuildConfig
 import com.jv.news.data.model.ArticleResponse
 import com.jv.news.data.model.SourcesResponse
 import io.reactivex.Single
@@ -18,7 +17,7 @@ import retrofit2.http.Query
  */
 object NewsApiServer {
 
-    private val API_KEY = App.context.resources.getString(R.string.api_key)
+    private val API_KEY = BuildConfig.API_KEY
     private const val BASE_URL = "https://newsapi.org/v2/"
     private const val ENDPOINT_ARTICLES = "everything?language=en&pageSize=100"
     private const val ENDPOINT_SOURCES = "sources?language=en"

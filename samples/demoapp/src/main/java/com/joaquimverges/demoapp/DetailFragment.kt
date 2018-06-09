@@ -13,6 +13,7 @@ import com.joaquimverges.helium.retained.RetainedPresenters
 class DetailFragment : Fragment() {
 
     private lateinit var presenter: MyDetailPresenter
+    private lateinit var viewDelegate: MyDetailViewDelegate
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -20,6 +21,12 @@ class DetailFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return MyDetailViewDelegate(inflater, container).also { presenter.attach(it) }.view
+        viewDelegate = MyDetailViewDelegate(inflater, container)
+        return viewDelegate.view
+    }
+
+    override fun onStart() {
+        super.onStart()
+        presenter.attach(viewDelegate)
     }
 }

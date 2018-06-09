@@ -129,6 +129,7 @@ This is an example of a retained presenter in a fragment:
 class MyFragment : Fragment() {
 
     private lateinit var presenter: MyDetailPresenter
+    private lateinit var viewDelegate: MyDetailViewDelegate
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -136,7 +137,13 @@ class MyFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return MyViewDelegate(inflater, container).also { presenter.attach(it) }.view
+        viewDelegate = MyViewDelegate(inflater, container)
+        return viewDelegate.view
+    }
+
+    override fun onStart() {
+        super.onStart()
+        presenter.attach(viewDelegate)
     }
 }
 ```

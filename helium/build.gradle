@@ -26,12 +26,12 @@ ext {
 }
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion compile_sdk
     publishNonDefault true
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 27
+        minSdkVersion min_sdk
+        targetSdkVersion target_sdk
         versionCode 1
         versionName "0.1.0"
 
@@ -54,14 +54,15 @@ android {
 }
 
 dependencies {
-    testImplementation 'junit:junit:4.12'
-    testImplementation "com.nhaarman:mockito-kotlin:1.5.0"
-    testImplementation "org.robolectric:robolectric:3.8"
+    testImplementation "junit:junit:$junit_version"
+    testImplementation "com.nhaarman:mockito-kotlin:$mockito_kotlin_version"
+    testImplementation "org.robolectric:robolectric:$robolectric_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    api 'io.reactivex.rxjava2:rxjava:2.1.13'
-    api 'io.reactivex.rxjava2:rxandroid:2.0.2'
-    implementation "android.arch.lifecycle:extensions:1.1.0"
-    implementation 'com.uber.autodispose:autodispose-android-archcomponents-kotlin:0.8.0'
+
+    api "io.reactivex.rxjava2:rxjava:$rxjava_version"
+    api "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
+    implementation "android.arch.lifecycle:extensions:$arch_lifecycle_version"
+    implementation "com.uber.autodispose:autodispose-android-archcomponents-kotlin:$autodispose_version"
 }
 
 apply from: 'publish.gradle'

@@ -2,14 +2,11 @@ package com.joaquimverges.helium.presenter
 
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleObserver
-import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.ViewModel
 import com.joaquimverges.helium.event.ViewEvent
 import com.joaquimverges.helium.state.ViewState
 import com.joaquimverges.helium.util.autoDispose
 import com.joaquimverges.helium.viewdelegate.BaseViewDelegate
-import com.uber.autodispose.AutoDispose.autoDisposable
-import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable

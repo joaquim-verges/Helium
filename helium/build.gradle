@@ -36,7 +36,6 @@ android {
         versionName "0.1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {
@@ -58,14 +57,11 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     testImplementation "com.nhaarman:mockito-kotlin:1.5.0"
     testImplementation "org.robolectric:robolectric:3.8"
-
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
     api 'io.reactivex.rxjava2:rxjava:2.1.13'
     api 'io.reactivex.rxjava2:rxandroid:2.0.2'
-    api "android.arch.lifecycle:extensions:1.1.1"
-    api 'com.uber.autodispose:autodispose-android-archcomponents-kotlin:0.8.0'
-    api 'com.android.support:recyclerview-v7:27.1.1'
-    api 'androidx.core:core-ktx:0.3'
+    implementation "android.arch.lifecycle:extensions:1.1.0"
+    implementation 'com.uber.autodispose:autodispose-android-archcomponents-kotlin:0.8.0'
 }
+
 apply from: 'publish.gradle'

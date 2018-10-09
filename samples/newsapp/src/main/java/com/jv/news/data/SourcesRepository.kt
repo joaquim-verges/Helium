@@ -2,7 +2,6 @@ package com.jv.news.data
 
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import androidx.core.content.edit
 import com.joaquimverges.helium.repository.BaseRepository
 import com.jv.news.App
 import com.jv.news.data.model.ArticleSource
@@ -51,7 +50,7 @@ class SourcesRepository(private val preferences: SharedPreferences = PreferenceM
     }
 
     private fun persistToDisk() {
-        preferences.edit { putStringSet(SELECTED_SOURCES, sources) }
+        preferences.edit().putStringSet(SELECTED_SOURCES, sources).apply()
     }
 
     private fun isSelected(articleSource: ArticleSource): Boolean {

@@ -7,11 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import androidx.core.view.isVisible
 import com.joaquimverges.helium.R
 import com.joaquimverges.helium.event.ViewEvent
 import com.joaquimverges.helium.state.NetworkViewState
 import io.reactivex.subjects.PublishSubject
+import java.util.Collections.emptyList
 
 /**
  * A convenience ViewDelegate that displays a list of data.
@@ -55,15 +55,19 @@ constructor(inflater: LayoutInflater,
     }
 
     override fun render(viewState: NetworkViewState<List<T>>) {
-        progressBar.isVisible = false
-        emptyViewContainer.isVisible = false
+        progressBar.setVisible(false)
+        emptyViewContainer.setVisible(false)
         when (viewState) {
-            is NetworkViewState.Loading -> progressBar.isVisible = adapter.itemCount == 0
+            is NetworkViewState.Loading -> progressBar.setVisible(adapter.itemCount == 0)
             is NetworkViewState.DataReady -> adapter.setItems(viewState.data)
             is NetworkViewState.Empty -> {
                 adapter.setItems(emptyList())
-                emptyViewContainer.isVisible = true
+                emptyViewContainer.setVisible(true)
             }
         }
+    }
+
+    private fun View.setVisible(value: Boolean) {
+        visibility = if(value) View.VISIBLE else View.GONE
     }
 }

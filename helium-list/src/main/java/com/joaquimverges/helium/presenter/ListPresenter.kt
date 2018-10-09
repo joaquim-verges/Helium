@@ -7,8 +7,6 @@ import com.joaquimverges.helium.repository.BaseRepository
 import com.joaquimverges.helium.state.NetworkViewState
 import com.joaquimverges.helium.util.RefreshPolicy
 import com.joaquimverges.helium.util.async
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 
 /**
  * A Typical Presenter base implementation:

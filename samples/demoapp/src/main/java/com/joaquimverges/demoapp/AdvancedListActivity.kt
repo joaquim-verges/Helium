@@ -10,6 +10,7 @@ import com.joaquimverges.demoapp.view.GridSpacingDecorator
 import com.joaquimverges.demoapp.view.MyRecyclerItem
 import com.joaquimverges.helium.retained.RetainedPresenters
 import com.joaquimverges.helium.viewdelegate.ListViewDelegate
+import kotlin.jvm.java
 
 class AdvancedListActivity : AppCompatActivity() {
 

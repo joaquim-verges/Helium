@@ -7,11 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.joaquimverges.helium.event.ClickEvent
-import com.joaquimverges.helium.presenter.ListPresenter
-import com.joaquimverges.helium.repository.BaseRepository
-import com.joaquimverges.helium.viewdelegate.BaseRecyclerViewItem
-import com.joaquimverges.helium.viewdelegate.ListViewDelegate
+import com.joaquimverges.helium.core.event.ClickEvent
+import com.joaquimverges.helium.ui.presenter.ListPresenter
+import com.joaquimverges.helium.ui.repository.BaseRepository
+import com.joaquimverges.helium.ui.viewdelegate.BaseRecyclerViewItem
+import com.joaquimverges.helium.ui.viewdelegate.ListViewDelegate
 import io.reactivex.Observable
 import io.reactivex.Single
 

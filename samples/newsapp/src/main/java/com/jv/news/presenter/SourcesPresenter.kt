@@ -1,7 +1,7 @@
 package com.jv.news.presenter
 
-import com.joaquimverges.helium.presenter.ListPresenter
-import com.joaquimverges.helium.util.RefreshPolicy
+import com.joaquimverges.helium.ui.presenter.ListPresenter
+import com.joaquimverges.helium.ui.util.RefreshPolicy
 import com.jv.news.data.SourcesRepository
 import com.jv.news.data.model.SourcesCategoryGroup
 import com.jv.news.view.event.SourceEvent

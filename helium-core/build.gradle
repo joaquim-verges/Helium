@@ -1,0 +1,50 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+ext {
+    artifact = 'helium-core'
+    libraryName = 'Helium Core'
+    libraryDescription = 'Lightwight MVP Framework for Android'
+}
+
+android {
+    compileSdkVersion compile_sdk
+    publishNonDefault true
+
+    defaultConfig {
+        minSdkVersion min_sdk
+        targetSdkVersion target_sdk
+        versionCode libraryVersionCode
+        versionName libraryVersion
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
+}
+
+dependencies {
+    testImplementation "junit:junit:$junit_version"
+    testImplementation "com.nhaarman:mockito-kotlin:$mockito_kotlin_version"
+    testImplementation "org.robolectric:robolectric:$robolectric_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    api "io.reactivex.rxjava2:rxjava:$rxjava_version"
+    api "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
+    implementation "android.arch.lifecycle:extensions:$arch_lifecycle_version"
+    implementation "com.uber.autodispose:autodispose-android-archcomponents-kotlin:$autodispose_version"
+}
+
+apply from: '../publish.gradle'

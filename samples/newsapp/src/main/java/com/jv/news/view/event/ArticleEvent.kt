@@ -1,7 +1,7 @@
 package com.jv.news.view.event
 
 import android.content.Context
-import com.joaquimverges.helium.event.ViewEvent
+import com.joaquimverges.helium.core.event.ViewEvent
 import com.jv.news.data.model.Article
 
 /**

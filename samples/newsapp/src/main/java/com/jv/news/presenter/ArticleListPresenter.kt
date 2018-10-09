@@ -5,8 +5,8 @@ import android.content.Context
 import android.net.Uri
 import android.support.customtabs.CustomTabsIntent
 import android.support.v4.app.ShareCompat
-import com.joaquimverges.helium.presenter.ListPresenter
-import com.joaquimverges.helium.util.RefreshPolicy
+import com.joaquimverges.helium.ui.presenter.ListPresenter
+import com.joaquimverges.helium.ui.util.RefreshPolicy
 import com.jv.news.data.ArticleRepository
 import com.jv.news.data.model.Article
 import com.jv.news.view.event.ArticleEvent

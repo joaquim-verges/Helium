@@ -1,1 +1,1 @@
-include ':helium', ':samples:newsapp', ':samples:demoapp'
+include ':helium-core', ':samples:newsapp', ':samples:demoapp', ':helium-ui'

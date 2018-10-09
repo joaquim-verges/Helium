@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.joaquimverges.demoapp.presenter.MyDetailPresenter
 import com.joaquimverges.demoapp.view.MyDetailViewDelegate
-import com.joaquimverges.helium.retained.RetainedPresenters
+import com.joaquimverges.helium.core.retained.RetainedPresenters
 
 class DetailFragment : Fragment() {
 

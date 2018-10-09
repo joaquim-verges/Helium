@@ -6,9 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import androidx.core.view.isVisible
-import com.joaquimverges.helium.state.NetworkViewState
-import com.joaquimverges.helium.viewdelegate.BaseViewDelegate
+import com.joaquimverges.helium.ui.state.NetworkViewState
+import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
 import com.jv.news.R
 import com.jv.news.data.model.ArticleSource
 import com.jv.news.data.model.SourcesCategoryGroup
@@ -35,9 +34,9 @@ class SourcesViewDelegate internal constructor(contentView: View) : BaseViewDele
     }
 
     override fun render(viewState: NetworkViewState<List<SourcesCategoryGroup>>) {
-        progressBar.isVisible = false
+        progressBar.visibility = View.GONE
         when (viewState) {
-            is NetworkViewState.Loading -> progressBar.isVisible = recyclerView.adapter?.itemCount == 0
+            is NetworkViewState.Loading -> progressBar.visibility = if (recyclerView.adapter?.itemCount == 0) View.VISIBLE else View.GONE
             is NetworkViewState.DataReady -> recyclerView.adapter = createAdapter(viewState.data)
         }
     }

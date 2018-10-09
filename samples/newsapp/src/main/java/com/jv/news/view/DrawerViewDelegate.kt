@@ -7,9 +7,9 @@ import android.support.v4.widget.DrawerLayout
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import com.joaquimverges.helium.event.ViewEvent
-import com.joaquimverges.helium.state.ViewState
-import com.joaquimverges.helium.viewdelegate.BaseViewDelegate
+import com.joaquimverges.helium.core.event.ViewEvent
+import com.joaquimverges.helium.core.state.ViewState
+import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
 import com.jv.news.App
 import com.jv.news.R
 import com.jv.news.util.VersionUtil

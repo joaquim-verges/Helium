@@ -7,13 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.core.view.isVisible
 import com.joaquimverges.demoapp.R
 import com.joaquimverges.demoapp.data.Colors
 import com.joaquimverges.demoapp.data.MyItem
-import com.joaquimverges.helium.event.ClickEvent
-import com.joaquimverges.helium.state.NetworkViewState
-import com.joaquimverges.helium.viewdelegate.BaseViewDelegate
+import com.joaquimverges.helium.core.event.ClickEvent
+import com.joaquimverges.helium.ui.state.NetworkViewState
+import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
 
 /**
  * @author joaquim
@@ -32,15 +31,15 @@ class MyDetailViewDelegate(inflater: LayoutInflater, container: ViewGroup?)
         TransitionManager.beginDelayedTransition(detailColorView as ViewGroup)
         when (viewState) {
             is NetworkViewState.Loading -> {
-                loader.isVisible = true
-                detailColorView.isVisible = false
+                loader.visibility = View.VISIBLE
+                detailColorView.visibility = View.GONE
             }
             is NetworkViewState.DataReady -> {
                 val item = viewState.data
                 val color = ContextCompat.getColor(context, item.color)
-                loader.isVisible = false
+                loader.visibility = View.GONE
                 colorNameView.text = Colors.toHexString(color)
-                detailColorView.isVisible = true
+                detailColorView.visibility = View.VISIBLE
                 detailColorView.setBackgroundColor(color)
                 detailColorView.setOnClickListener { v -> pushEvent(ClickEvent(v, item)) }
             }

@@ -6,7 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.joaquimverges.helium.viewdelegate.ListViewDelegate
+import com.joaquimverges.helium.ui.viewdelegate.ListViewDelegate
 import com.jv.news.R
 import com.jv.news.data.model.Article
 import com.jv.news.view.adapter.ArticleGridItemViewHolder

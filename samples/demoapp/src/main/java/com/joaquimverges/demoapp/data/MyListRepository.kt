@@ -1,7 +1,7 @@
 package com.joaquimverges.demoapp.data
 
 import com.joaquimverges.demoapp.data.Colors.randomColor
-import com.joaquimverges.helium.repository.BaseRepository
+import com.joaquimverges.helium.ui.repository.BaseRepository
 import io.reactivex.Flowable
 import io.reactivex.Single
 import java.util.concurrent.TimeUnit

@@ -21,8 +21,8 @@ import io.reactivex.subjects.PublishSubject
  * @param view the root view of the layout
  * @param viewEventsObservable the Observable that will receive the view events, like user clicks.
  *
- * @see com.joaquimverges.helium.event.ViewEvent
- * @see com.joaquimverges.helium.presenter.BasePresenter
+ * @see com.joaquimverges.helium.core.event.ViewEvent
+ * @see com.joaquimverges.helium.core.presenter.BasePresenter
  */
 abstract class BaseViewDelegate<in S : ViewState, E : ViewEvent>
 (val view: View, private val viewEventsObservable: PublishSubject<E> = PublishSubject.create()) {

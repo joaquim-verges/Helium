@@ -27,8 +27,8 @@ import java.util.Collections.emptyList
  * @param layoutManager optional custom layoutManager. Default is LinearLayoutManager.
  * @param recyclerViewConfig optional hook to configure the recyclerView with custom item decorators, touch handlers, scroll listeners, etc.
  *
- * @see com.joaquimverges.helium.presenter.ListPresenter
- * @see com.joaquimverges.helium.state.NetworkViewState
+ * @see com.joaquimverges.helium.ui.presenter.ListPresenter
+ * @see com.joaquimverges.helium.ui.state.NetworkViewState
  */
 class ListViewDelegate<T, E : ViewEvent, VH : BaseRecyclerViewItem<T, E>>
 constructor(inflater: LayoutInflater,

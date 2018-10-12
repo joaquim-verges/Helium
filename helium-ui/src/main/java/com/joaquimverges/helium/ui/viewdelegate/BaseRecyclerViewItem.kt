@@ -15,7 +15,6 @@ import io.reactivex.subjects.PublishSubject
  * - Can emit ViewEvent objects up to the Presenter (click for example)
  *
  * @param view The root of the layout for this list item
- * @param viewEvents the observable to push ViewEvent objects to
  */
 abstract class BaseRecyclerViewItem<in T, V : ViewEvent>(val view: View) : RecyclerView.ViewHolder(view) {
 

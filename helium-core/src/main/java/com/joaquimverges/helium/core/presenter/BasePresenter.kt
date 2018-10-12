@@ -16,9 +16,9 @@ import io.reactivex.subjects.BehaviorSubject
  * Presenters holds and publishes ViewState changes to a ViewDelegate for rendering.
  * It also receives any published ViewEvent from the attached ViewDelegate.
  *
- * @see [com.joaquimverges.helium.viewdelegate.BaseViewDelegate]
- * @see [com.joaquimverges.helium.state.ViewState]
- * @see [com.joaquimverges.helium.event.ViewEvent]
+ * @see [com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate]
+ * @see [com.joaquimverges.helium.core.state.ViewState]
+ * @see [com.joaquimverges.helium.core.event.ViewEvent]
  */
 abstract class BasePresenter<S : ViewState, E : ViewEvent> : ViewModel(), LifecycleObserver {
 

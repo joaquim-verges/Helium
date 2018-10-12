@@ -18,7 +18,7 @@ import com.joaquimverges.helium.core.util.async
  * default is to refresh on every resume. Consider passing your own refresh policy to meet your use case.
  */
 open class ListPresenter<T, E : ViewEvent>(private val repository: BaseRepository<List<T>>,
-                                                                               private val refreshPolicy: RefreshPolicy = RefreshPolicy())
+                                           private val refreshPolicy: RefreshPolicy = RefreshPolicy())
     : BasePresenter<NetworkViewState<List<T>>, E>() {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)

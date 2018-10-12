@@ -9,7 +9,7 @@ buildscript {
         siteUrl = 'https://github.com/joaquim-vergges/helium'
         gitUrl = 'https://github.com/joaquim-vergges/helium.git'
 
-        libraryVersion = '0.1.1'
+        libraryVersion = '0.2.0'
         libraryVersionCode = 2
 
         developerId = 'joaquim-verges'

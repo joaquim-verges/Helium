@@ -3,8 +3,8 @@ apply plugin: 'kotlin-android'
 
 ext {
     artifact = 'helium-core'
-    libraryName = 'Helium Core'
-    libraryDescription = 'Lightwight MVP Framework for Android'
+    libraryName = 'helium-core'
+    libraryDescription = 'Core classes for Helium: MVP Framework for Android'
 }
 
 android {

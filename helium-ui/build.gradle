@@ -3,8 +3,8 @@ apply plugin: 'kotlin-android'
 
 ext {
     artifact = 'helium-ui'
-    libraryName = 'Helium UI'
-    libraryDescription = 'UI components for Helium'
+    libraryName = 'helium-ui'
+    libraryDescription = 'UI components for Helium: MVP Framework for Android'
 }
 
 android {

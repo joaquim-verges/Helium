@@ -5,8 +5,8 @@ import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.joaquimverges.demoapp.data.MyItem
-import com.joaquimverges.helium.event.ClickEvent
-import com.joaquimverges.helium.viewdelegate.BaseRecyclerViewItem
+import com.joaquimverges.helium.core.event.ClickEvent
+import com.joaquimverges.helium.ui.viewdelegate.BaseRecyclerViewItem
 
 /**
  * @author joaquim

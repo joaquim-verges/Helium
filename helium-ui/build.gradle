@@ -1,14 +1,20 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
+ext {
+    artifact = 'helium-ui'
+    libraryName = 'Helium UI'
+    libraryDescription = 'UI components for Helium'
+}
+
 android {
     compileSdkVersion compile_sdk
 
     defaultConfig {
         minSdkVersion min_sdk
         targetSdkVersion target_sdk
-        versionCode 1
-        versionName "1.0"
+        versionCode libraryVersionCode
+        versionName libraryVersion
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -32,3 +38,5 @@ dependencies {
     implementation "com.android.support:appcompat-v7:$support_lib_version"
     implementation "com.android.support:recyclerview-v7:$support_lib_version"
 }
+
+apply from: '../publish.gradle'

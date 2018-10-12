@@ -1,9 +1,9 @@
 package com.jv.news.presenter
 
-import com.joaquimverges.helium.event.ViewEvent
-import com.joaquimverges.helium.presenter.BasePresenter
-import com.joaquimverges.helium.state.ViewState
-import com.joaquimverges.helium.viewdelegate.BaseViewDelegate
+import com.joaquimverges.helium.core.event.ViewEvent
+import com.joaquimverges.helium.core.presenter.BasePresenter
+import com.joaquimverges.helium.core.state.ViewState
+import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
 import com.jv.news.data.ArticleRepository
 import com.jv.news.data.SourcesRepository
 import com.jv.news.view.DrawerViewDelegate

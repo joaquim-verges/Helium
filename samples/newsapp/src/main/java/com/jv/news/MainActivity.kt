@@ -2,7 +2,7 @@ package com.jv.news
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.joaquimverges.helium.retained.RetainedPresenters
+import com.joaquimverges.helium.core.retained.RetainedPresenters
 import com.jv.news.presenter.MainPresenter
 import com.jv.news.view.DrawerViewDelegate
 

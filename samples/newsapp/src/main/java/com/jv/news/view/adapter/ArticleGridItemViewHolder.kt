@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import com.joaquimverges.helium.viewdelegate.BaseRecyclerViewItem
+import com.joaquimverges.helium.ui.viewdelegate.BaseRecyclerViewItem
 import com.jv.news.R
 import com.jv.news.data.model.Article
 import com.jv.news.view.event.ArticleEvent

@@ -2,10 +2,10 @@ package com.joaquimverges.demoapp.presenter
 
 import com.joaquimverges.demoapp.data.MyDdetailRepository
 import com.joaquimverges.demoapp.data.MyItem
-import com.joaquimverges.helium.event.ClickEvent
-import com.joaquimverges.helium.presenter.BasePresenter
-import com.joaquimverges.helium.state.NetworkViewState
-import com.joaquimverges.helium.util.async
+import com.joaquimverges.helium.core.event.ClickEvent
+import com.joaquimverges.helium.core.presenter.BasePresenter
+import com.joaquimverges.helium.ui.state.NetworkViewState
+import com.joaquimverges.helium.core.util.async
 
 /**
  * @author joaquim

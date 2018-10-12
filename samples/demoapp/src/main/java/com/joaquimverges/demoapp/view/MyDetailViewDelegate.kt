@@ -10,9 +10,9 @@ import android.widget.TextView
 import com.joaquimverges.demoapp.R
 import com.joaquimverges.demoapp.data.Colors
 import com.joaquimverges.demoapp.data.MyItem
-import com.joaquimverges.helium.event.ClickEvent
-import com.joaquimverges.helium.state.NetworkViewState
-import com.joaquimverges.helium.viewdelegate.BaseViewDelegate
+import com.joaquimverges.helium.core.event.ClickEvent
+import com.joaquimverges.helium.ui.state.NetworkViewState
+import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
 
 /**
  * @author joaquim

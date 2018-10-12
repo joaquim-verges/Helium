@@ -2,7 +2,7 @@ package com.jv.news.data
 
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import com.joaquimverges.helium.repository.BaseRepository
+import com.joaquimverges.helium.ui.repository.BaseRepository
 import com.jv.news.App
 import com.jv.news.data.model.ArticleSource
 import com.jv.news.data.model.SourcesCategoryGroup

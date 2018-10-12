@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import com.joaquimverges.helium.state.NetworkViewState
-import com.joaquimverges.helium.viewdelegate.BaseViewDelegate
+import com.joaquimverges.helium.ui.state.NetworkViewState
+import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
 import com.jv.news.R
 import com.jv.news.data.model.ArticleSource
 import com.jv.news.data.model.SourcesCategoryGroup

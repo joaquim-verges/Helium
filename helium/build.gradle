@@ -2,27 +2,9 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 ext {
-    bintrayRepo = 'maven'
-    bintrayName = 'Helium'
-
-    publishedGroupId = 'com.joaquimverges'
-    libraryName = 'Helium'
     artifact = 'helium'
-
+    libraryName = 'Helium Core'
     libraryDescription = 'Lightwight MVP Framework for Android'
-
-    siteUrl = 'https://github.com/joaquim-vergges/helium'
-    gitUrl = 'https://github.com/joaquim-vergges/helium.git'
-
-    libraryVersion = '0.1.0'
-
-    developerId = 'joaquim-verges'
-    developerName = 'Joaquim Verges'
-    developerEmail = 'jverges@gmail.com'
-
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
 }
 
 android {
@@ -32,8 +14,8 @@ android {
     defaultConfig {
         minSdkVersion min_sdk
         targetSdkVersion target_sdk
-        versionCode 1
-        versionName "0.1.0"
+        versionCode libraryVersionCode
+        versionName libraryVersion
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -65,4 +47,4 @@ dependencies {
     implementation "com.uber.autodispose:autodispose-android-archcomponents-kotlin:$autodispose_version"
 }
 
-apply from: 'publish.gradle'
+apply from: '../publish.gradle'

@@ -1,6 +1,6 @@
 package com.jv.news.data
 
-import com.joaquimverges.helium.repository.BaseRepository
+import com.joaquimverges.helium.ui.repository.BaseRepository
 import com.jv.news.data.model.Article
 import com.jv.news.data.model.ArticleResponse
 import io.reactivex.Single

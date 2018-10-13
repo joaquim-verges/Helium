@@ -6,10 +6,11 @@ Lightweight MVP framework for Android. 100% Kotlin.
 
 ## Download
 
-[ ![Download](https://api.bintray.com/packages/joaquim-verges/maven/Helium/images/download.svg) ](https://bintray.com/joaquim-verges/maven/Helium/_latestVersion)
+[ ![Download](https://api.bintray.com/packages/joaquim-verges/maven/helium/images/download.svg) ](https://bintray.com/joaquim-verges/maven/helium/_latestVersion)
 
 ```
-implementation 'com.joaquimverges:helium:x.y.z'
+implementation 'com.joaquimverges:helium-core:x.y.z' // core classes
+implementation 'com.joaquimverges:helium-ui:x.y.z'   // ui components
 ```
 
 ## Benefits

@@ -78,15 +78,15 @@ bintray {
     override = true
     pkg {
         repo = bintrayRepo
-        name = libraryName
-        desc = libraryDescription
+        name = bintrayName
+        desc = bintrayDescription
         websiteUrl = siteUrl
         vcsUrl = gitUrl
         licenses = allLicenses
         publish = true
         publicDownloadNumbers = true
         version {
-            desc = libraryDescription
+            desc = bintrayDescription
             gpg {
                 sign = true
                 passphrase = properties.getProperty("bintray.gpg.password")

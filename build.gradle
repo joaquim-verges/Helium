@@ -4,6 +4,8 @@ buildscript {
 
     ext {
         bintrayRepo = 'maven'
+        bintrayName = 'Helium'
+        bintrayDescription = 'Helium: MVP Framework for Android'
         publishedGroupId = 'com.joaquimverges'
 
         siteUrl = 'https://github.com/joaquim-vergges/helium'

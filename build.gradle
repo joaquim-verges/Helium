@@ -3,25 +3,6 @@
 buildscript {
 
     ext {
-        bintrayRepo = 'maven'
-        bintrayName = 'Helium'
-        bintrayDescription = 'Helium: MVP Framework for Android'
-        publishedGroupId = 'com.joaquimverges'
-
-        siteUrl = 'https://github.com/joaquim-vergges/helium'
-        gitUrl = 'https://github.com/joaquim-vergges/helium.git'
-
-        libraryVersion = '0.2.0'
-        libraryVersionCode = 2
-
-        developerId = 'joaquim-verges'
-        developerName = 'Joaquim Verges'
-        developerEmail = 'joaquim.verges@gmail.com'
-
-        licenseName = 'The Apache Software License, Version 2.0'
-        licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-        allLicenses = ["Apache-2.0"]
-
         compile_sdk = 27
         min_sdk = 14
         target_sdk = 27

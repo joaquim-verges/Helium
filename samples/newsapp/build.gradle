@@ -6,7 +6,7 @@ android {
     compileSdkVersion compile_sdk
     defaultConfig {
         applicationId "com.jv.news"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion target_sdk
         multiDexEnabled true
         versionCode 1

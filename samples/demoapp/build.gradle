@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.joaquimverges.demoapp"
-        minSdkVersion min_sdk
+        minSdkVersion 23
         targetSdkVersion target_sdk
         versionCode 1
         versionName "1.0"

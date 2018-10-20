@@ -6,7 +6,7 @@ Lightweight MVP framework for Android. 100% Kotlin.
 
 ## Download
 
-[ ![Download](https://api.bintray.com/packages/joaquim-verges/maven/Helium/images/download.svg) ](https://bintray.com/joaquim-verges/maven/Helium/_latestVersion)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.joaquimverges.helium/helium-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.joaquimverges.helium/helium-core/)
 
 ```
 implementation 'com.joaquimverges:helium-core:x.y.z' // core classes
@@ -99,7 +99,7 @@ The following bases classes are the building blocks for any components in your a
 - This is the only place where you hold context or views
 - no business logic here, only enough to render views
 
-### Notes on the implementaion
+### Notes on the implementation
 
  - Uses [RxJava](https://github.com/ReactiveX/RxJava) to handle communication between Presenters and ViewDelegates
  - Uses [AutoDispose](https://github.com/uber/AutoDispose) to automatically dispose subscriptions, no need to worry about cleaning up or detaching anything

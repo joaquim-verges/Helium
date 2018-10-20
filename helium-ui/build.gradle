@@ -39,4 +39,4 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:$support_lib_version"
 }
 
-apply from: '../publish.gradle'
+apply from: '../maven-push.gradle'

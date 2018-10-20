@@ -47,4 +47,4 @@ dependencies {
     implementation "com.uber.autodispose:autodispose-android-archcomponents-kotlin:$autodispose_version"
 }
 
-apply from: '../publish.gradle'
+apply from: '../maven-push.gradle'

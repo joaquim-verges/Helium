@@ -3,6 +3,7 @@ package com.joaquimverges.helium.core.viewdelegate
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleOwner
 import android.content.Context
+import android.support.annotation.IdRes
 import android.support.annotation.LayoutRes
 import android.view.LayoutInflater
 import android.view.View
@@ -43,6 +44,11 @@ abstract class BaseViewDelegate<in S : ViewState, E : ViewEvent>
 
     protected val context: Context = view.context
     internal val lifecycle: Lifecycle? = (context as? LifecycleOwner)?.lifecycle
+
+    /**
+     * Convenience method to find a view by id within this ViewDelegate
+     */
+    protected fun <V : View> findView(@IdRes resId: Int): V = view.findViewById(resId)
 
     /**
      * Implement this method to render a layout according to the latest pushed ViewState

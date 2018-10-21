@@ -42,5 +42,6 @@ dependencies {
     releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:1.5.4"
     implementation project(':helium-core')
     implementation project(':helium-ui')
+    implementation project(':helium-navigation')
 }
 

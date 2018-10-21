@@ -17,17 +17,12 @@ import com.jv.news.view.event.SourceEvent
 /**
  * @author joaquim
  */
-class SourcesViewDelegate internal constructor(contentView: View) : BaseViewDelegate<NetworkViewState<List<SourcesCategoryGroup>>, SourceEvent>(contentView) {
-
-    companion object {
-        fun create(inflater: LayoutInflater, parent: ViewGroup): SourcesViewDelegate {
-            return SourcesViewDelegate(inflater.inflate(R.layout.view_sources_list, parent, true))
-        }
-    }
+class SourcesViewDelegate internal constructor(inflater: LayoutInflater)
+    : BaseViewDelegate<NetworkViewState<List<SourcesCategoryGroup>>, SourceEvent>(R.layout.view_sources_list, inflater) {
 
     private val layoutManager: LinearLayoutManager = LinearLayoutManager(context)
-    private val recyclerView: RecyclerView = contentView.findViewById((R.id.sources_list))
-    private val progressBar: ProgressBar = contentView.findViewById((R.id.loader))
+    private val recyclerView: RecyclerView = findView((R.id.sources_list))
+    private val progressBar: ProgressBar = findView((R.id.loader))
 
     init {
         recyclerView.layoutManager = layoutManager

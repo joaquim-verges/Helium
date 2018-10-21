@@ -39,7 +39,7 @@ abstract class BasePresenter<S : ViewState, E : ViewEvent> : ViewModel(), Lifecy
      * Any method can be annotated with [@OnLifecycleEvent(Lifecycle.Event.ON_RESUME)]
      * or any other [Lifecycle.Event] and will be called at the appropriate time.
      */
-    open fun attach(viewDelegate: BaseViewDelegate<S, E>) {
+    fun attach(viewDelegate: BaseViewDelegate<S, E>) {
         val lifecycle: Lifecycle = viewDelegate.lifecycle
                 ?: throw IllegalArgumentException("Cannot attach view delegates that don't have a lifecycle aware context")
         observer().autoDispose(lifecycle).subscribe { viewDelegate.render(it) }

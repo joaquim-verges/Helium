@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.joaquimverges.helium.ui.viewdelegate.ListViewDelegate
+import com.jv.news.App.Companion.context
 import com.jv.news.R
 import com.jv.news.data.model.Article
 import com.jv.news.view.adapter.ArticleGridItemViewHolder
@@ -20,9 +21,9 @@ object ArticleListViewDelegate {
     private const val DOUBLE_SPAN_COUNT = 2
     private const val SINGLE_SPAN_COUNT = 1
 
-    fun create(inflater: LayoutInflater, parent: ViewGroup, emptyViewClickListener: () -> Unit): ListViewDelegate<Article, ArticleEvent, ArticleGridItemViewHolder> {
-        val spacing: Int = parent.resources.getDimensionPixelSize(R.dimen.grid_spacing)
+    fun create(inflater: LayoutInflater, emptyViewClickListener: () -> Unit): ListViewDelegate<Article, ArticleEvent, ArticleGridItemViewHolder> {
         val context = inflater.context
+        val spacing: Int = context.resources.getDimensionPixelSize(R.dimen.grid_spacing)
         val orientation = when (context.resources.configuration.orientation) {
             Configuration.ORIENTATION_LANDSCAPE -> LinearLayoutManager.HORIZONTAL
             else -> LinearLayoutManager.VERTICAL
@@ -44,8 +45,6 @@ object ArticleListViewDelegate {
                 recyclerItemFactory = { layoutInflater, container ->
                     ArticleGridItemViewHolder(layoutInflater, container)
                 },
-                container = parent,
-                addToContainer = true,
                 layoutManager = layoutManager,
                 recyclerViewConfig = { recyclerView ->
                     recyclerView.addItemDecoration(SpacesItemDecoration(spacing, orientation))

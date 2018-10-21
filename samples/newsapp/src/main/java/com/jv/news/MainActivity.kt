@@ -1,19 +1,43 @@
 package com.jv.news
 
+import android.os.Build
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import com.joaquimverges.helium.core.retained.RetainedPresenters
+import com.joaquimverges.helium.navigation.viewdelegate.NavDrawerViewDelegate
 import com.jv.news.presenter.MainPresenter
-import com.jv.news.view.DrawerViewDelegate
+import com.jv.news.util.VersionUtil
+import com.jv.news.view.ArticleListViewDelegate
+import com.jv.news.view.SourcesViewDelegate
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val articlesPresenter = RetainedPresenters.get(this, MainPresenter::class.java)
-        DrawerViewDelegate(layoutInflater).let {
-            articlesPresenter.attach(it)
+        setLightStatusBar()
+
+        val mainPresenter = RetainedPresenters.get(this, MainPresenter::class.java)
+
+        val articleViewDelegate = ArticleListViewDelegate.create(layoutInflater) {
+            // TODO refactor empty view into a real view delegate
+        }
+        val sourcesViewDelegate = SourcesViewDelegate(layoutInflater)
+
+        mainPresenter.articlePresenter.attach(articleViewDelegate)
+        mainPresenter.sourcesPresenter.attach(sourcesViewDelegate)
+
+        NavDrawerViewDelegate(articleViewDelegate, sourcesViewDelegate).also {
             setContentView(it.view)
+            mainPresenter.attach(it)
+        }
+    }
+
+    private fun setLightStatusBar() {
+        if (VersionUtil.isAtLeastApi(Build.VERSION_CODES.M)) {
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            window.statusBarColor = ContextCompat.getColor(App.context, R.color.background_view)
         }
     }
 }

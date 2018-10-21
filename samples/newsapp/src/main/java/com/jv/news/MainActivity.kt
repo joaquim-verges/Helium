@@ -6,11 +6,9 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.joaquimverges.helium.core.retained.RetainedPresenters
-import com.joaquimverges.helium.navigation.viewdelegate.NavDrawerViewDelegate
 import com.jv.news.presenter.MainPresenter
 import com.jv.news.util.VersionUtil
-import com.jv.news.view.ArticleListViewDelegate
-import com.jv.news.view.SourcesViewDelegate
+import com.jv.news.view.MainViewDelegate
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,16 +17,7 @@ class MainActivity : AppCompatActivity() {
         setLightStatusBar()
 
         val mainPresenter = RetainedPresenters.get(this, MainPresenter::class.java)
-
-        val articleViewDelegate = ArticleListViewDelegate.create(layoutInflater) {
-            // TODO refactor empty view into a real view delegate
-        }
-        val sourcesViewDelegate = SourcesViewDelegate(layoutInflater)
-
-        mainPresenter.articlePresenter.attach(articleViewDelegate)
-        mainPresenter.sourcesPresenter.attach(sourcesViewDelegate)
-
-        NavDrawerViewDelegate(articleViewDelegate, sourcesViewDelegate).also {
+        MainViewDelegate(layoutInflater).also {
             setContentView(it.view)
             mainPresenter.attach(it)
         }

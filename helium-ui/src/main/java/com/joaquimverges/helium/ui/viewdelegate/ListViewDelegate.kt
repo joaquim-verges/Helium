@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import com.joaquimverges.helium.core.event.ViewEvent
+import com.joaquimverges.helium.core.state.ViewState
 import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
 import com.joaquimverges.helium.ui.R
 import com.joaquimverges.helium.ui.state.NetworkViewState
@@ -26,11 +27,12 @@ import java.util.Collections.emptyList
  * @param container whether the layout should be added to the passed container
  * @param layoutManager optional custom layoutManager. Default is LinearLayoutManager.
  * @param recyclerViewConfig optional hook to configure the recyclerView with custom item decorators, touch handlers, scroll listeners, etc.
+ * @param emptyViewDelegate optional view delegate to show when the list adapter is empty
  *
  * @see com.joaquimverges.helium.ui.presenter.ListPresenter
  * @see com.joaquimverges.helium.ui.state.NetworkViewState
  */
-class ListViewDelegate<T, E : ViewEvent, VH : BaseRecyclerViewItem<T, E>>
+open class ListViewDelegate<T, E : ViewEvent, VH : BaseRecyclerViewItem<T, E>>
 constructor(inflater: LayoutInflater,
             recyclerItemFactory: (LayoutInflater, ViewGroup) -> VH,
             // optional layout properties
@@ -40,7 +42,7 @@ constructor(inflater: LayoutInflater,
             // optional list config
             layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(inflater.context),
             recyclerViewConfig: ((RecyclerView) -> Unit)? = null,
-            emptyView: View? = null)
+            emptyViewDelegate: BaseViewDelegate<*, E>? = null)
     : BaseViewDelegate<NetworkViewState<List<T>>, E>(layoutResId, inflater, container, addToContainer) {
 
     private val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view)
@@ -52,7 +54,10 @@ constructor(inflater: LayoutInflater,
         recyclerView.layoutManager = layoutManager
         recyclerViewConfig?.invoke(recyclerView)
         recyclerView.adapter = adapter
-        emptyView?.let { emptyViewContainer.addView(emptyView) }
+        emptyViewDelegate?.let {
+            it.observer().subscribe { event : E -> pushEvent(event) }
+            emptyViewContainer.addView(it.view)
+        }
     }
 
     override fun render(viewState: NetworkViewState<List<T>>) {

@@ -10,4 +10,5 @@ import com.jv.news.data.model.Article
 sealed class ArticleEvent : ViewEvent {
     data class Clicked(val context: Context, val article: Article) : ArticleEvent()
     data class LongPressed(val context: Context, val article: Article) : ArticleEvent()
+    object GetMoreSources : ArticleEvent()
 }

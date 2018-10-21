@@ -4,14 +4,14 @@ import com.joaquimverges.demoapp.data.MyDdetailRepository
 import com.joaquimverges.demoapp.data.MyItem
 import com.joaquimverges.helium.core.event.ClickEvent
 import com.joaquimverges.helium.core.presenter.BasePresenter
-import com.joaquimverges.helium.ui.state.NetworkViewState
+import com.joaquimverges.helium.ui.state.ListViewState
 import com.joaquimverges.helium.core.util.async
 
 /**
  * @author joaquim
  */
 class MyDetailPresenter(private val repository: MyDdetailRepository = MyDdetailRepository())
-    : BasePresenter<NetworkViewState<MyItem>, ClickEvent<MyItem>>() {
+    : BasePresenter<ListViewState<MyItem>, ClickEvent<MyItem>>() {
 
     init {
         loadDetailModel()
@@ -21,10 +21,10 @@ class MyDetailPresenter(private val repository: MyDdetailRepository = MyDdetailR
         repository
                 .getData()
                 .async()
-                .doOnSubscribe { pushState(NetworkViewState.Loading()) }
+                .doOnSubscribe { pushState(ListViewState.Loading()) }
                 .subscribe(
-                        { item -> pushState(NetworkViewState.DataReady(item)) },
-                        { error -> pushState(NetworkViewState.Error(error)) }
+                        { item -> pushState(ListViewState.DataReady(item)) },
+                        { error -> pushState(ListViewState.Error(error)) }
                 )
     }
 

@@ -4,9 +4,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ProgressBar
-import com.joaquimverges.helium.ui.state.NetworkViewState
+import com.joaquimverges.helium.ui.state.ListViewState
 import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
 import com.jv.news.R
 import com.jv.news.data.model.ArticleSource
@@ -18,7 +17,7 @@ import com.jv.news.view.event.SourceEvent
  * @author joaquim
  */
 class SourcesViewDelegate internal constructor(inflater: LayoutInflater)
-    : BaseViewDelegate<NetworkViewState<List<SourcesCategoryGroup>>, SourceEvent>(R.layout.view_sources_list, inflater) {
+    : BaseViewDelegate<ListViewState<List<SourcesCategoryGroup>>, SourceEvent>(R.layout.view_sources_list, inflater) {
 
     private val layoutManager: LinearLayoutManager = LinearLayoutManager(context)
     private val recyclerView: RecyclerView = findView((R.id.sources_list))
@@ -28,11 +27,11 @@ class SourcesViewDelegate internal constructor(inflater: LayoutInflater)
         recyclerView.layoutManager = layoutManager
     }
 
-    override fun render(viewState: NetworkViewState<List<SourcesCategoryGroup>>) {
+    override fun render(viewState: ListViewState<List<SourcesCategoryGroup>>) {
         progressBar.visibility = View.GONE
         when (viewState) {
-            is NetworkViewState.Loading -> progressBar.visibility = if (recyclerView.adapter?.itemCount == 0) View.VISIBLE else View.GONE
-            is NetworkViewState.DataReady -> recyclerView.adapter = createAdapter(viewState.data)
+            is ListViewState.Loading -> progressBar.visibility = if (recyclerView.adapter?.itemCount == 0) View.VISIBLE else View.GONE
+            is ListViewState.DataReady -> recyclerView.adapter = createAdapter(viewState.data)
         }
     }
 

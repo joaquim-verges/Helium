@@ -3,7 +3,7 @@ package com.joaquimverges.helium.ui.presenter
 
 import com.joaquimverges.helium.core.event.ViewEvent
 import com.joaquimverges.helium.ui.repository.BaseRepository
-import com.joaquimverges.helium.ui.state.NetworkViewState
+import com.joaquimverges.helium.ui.state.ListViewState
 import com.joaquimverges.helium.ui.util.RefreshPolicy
 import com.nhaarman.mockito_kotlin.*
 import io.reactivex.Observable
@@ -52,9 +52,9 @@ class ListPresenterTest {
     @Test
     fun testRefreshWithData() {
         presenter.loadData()
-        verify(presenter).pushState(any<NetworkViewState.Loading<List<TestItem>>>())
+        verify(presenter).pushState(any<ListViewState.Loading<List<TestItem>>>())
         testScheduler.triggerActions()
-        verify(presenter).pushState(any<NetworkViewState.DataReady<List<TestItem>>>())
+        verify(presenter).pushState(any<ListViewState.DataReady<List<TestItem>>>())
         verify(refreshPolicy).updateLastRefreshedTime()
     }
 
@@ -62,9 +62,9 @@ class ListPresenterTest {
     fun testRefreshWithNoData() {
         whenever(repo.getData()).thenReturn(Single.just(emptyList()))
         presenter.loadData()
-        verify(presenter).pushState(any<NetworkViewState.Loading<List<TestItem>>>())
+        verify(presenter).pushState(any<ListViewState.Loading<List<TestItem>>>())
         testScheduler.triggerActions()
-        verify(presenter).pushState(any<NetworkViewState.Empty<List<TestItem>>>())
+        verify(presenter).pushState(any<ListViewState.Empty<List<TestItem>>>())
         verify(refreshPolicy).updateLastRefreshedTime()
     }
 
@@ -72,9 +72,9 @@ class ListPresenterTest {
     fun testRefreshError() {
         whenever(repo.getData()).thenReturn(Single.error<List<TestItem>>(RuntimeException("error")))
         presenter.loadData()
-        verify(presenter).pushState(any<NetworkViewState.Loading<List<TestItem>>>())
+        verify(presenter).pushState(any<ListViewState.Loading<List<TestItem>>>())
         testScheduler.triggerActions()
-        verify(presenter).pushState(any<NetworkViewState.Error<List<TestItem>>>())
+        verify(presenter).pushState(any<ListViewState.Error<List<TestItem>>>())
         verify(refreshPolicy, never()).updateLastRefreshedTime()
     }
 }

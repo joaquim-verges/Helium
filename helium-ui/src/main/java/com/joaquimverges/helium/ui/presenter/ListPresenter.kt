@@ -5,7 +5,7 @@ import android.arch.lifecycle.OnLifecycleEvent
 import com.joaquimverges.helium.core.event.ViewEvent
 import com.joaquimverges.helium.core.presenter.BasePresenter
 import com.joaquimverges.helium.ui.repository.BaseRepository
-import com.joaquimverges.helium.ui.state.NetworkViewState
+import com.joaquimverges.helium.ui.state.ListViewState
 import com.joaquimverges.helium.ui.util.RefreshPolicy
 import com.joaquimverges.helium.core.util.async
 
@@ -19,7 +19,7 @@ import com.joaquimverges.helium.core.util.async
  */
 open class ListPresenter<T, E : ViewEvent>(private val repository: BaseRepository<List<T>>,
                                            private val refreshPolicy: RefreshPolicy = RefreshPolicy())
-    : BasePresenter<NetworkViewState<List<T>>, E>() {
+    : BasePresenter<ListViewState<List<T>>, E>() {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     internal fun refreshIfNeeded() {
@@ -31,17 +31,17 @@ open class ListPresenter<T, E : ViewEvent>(private val repository: BaseRepositor
     fun loadData() {
         repository.getData()
                 .async()
-                .doOnSubscribe { pushState(NetworkViewState.Loading()) }
+                .doOnSubscribe { pushState(ListViewState.Loading()) }
                 .doOnSuccess { refreshPolicy.updateLastRefreshedTime() }
                 .subscribe(
                         { sources ->
                             if (sources.isNotEmpty()) {
-                                pushState(NetworkViewState.DataReady(sources))
+                                pushState(ListViewState.DataReady(sources))
                             } else {
-                                pushState(NetworkViewState.Empty())
+                                pushState(ListViewState.Empty())
                             }
                         },
-                        { error -> pushState(NetworkViewState.Error(error)) }
+                        { error -> pushState(ListViewState.Error(error)) }
                 ).autoDispose()
     }
 

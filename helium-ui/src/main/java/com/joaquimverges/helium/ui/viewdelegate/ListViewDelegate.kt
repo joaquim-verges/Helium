@@ -8,10 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import com.joaquimverges.helium.core.event.ViewEvent
-import com.joaquimverges.helium.core.state.ViewState
 import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
 import com.joaquimverges.helium.ui.R
-import com.joaquimverges.helium.ui.state.NetworkViewState
+import com.joaquimverges.helium.ui.state.ListViewState
 import io.reactivex.subjects.PublishSubject
 import java.util.Collections.emptyList
 
@@ -30,7 +29,7 @@ import java.util.Collections.emptyList
  * @param emptyViewDelegate optional view delegate to show when the list adapter is empty
  *
  * @see com.joaquimverges.helium.ui.presenter.ListPresenter
- * @see com.joaquimverges.helium.ui.state.NetworkViewState
+ * @see com.joaquimverges.helium.ui.state.ListViewState
  */
 open class ListViewDelegate<T, E : ViewEvent, VH : BaseRecyclerViewItem<T, E>>
 constructor(inflater: LayoutInflater,
@@ -43,7 +42,7 @@ constructor(inflater: LayoutInflater,
             layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(inflater.context),
             recyclerViewConfig: ((RecyclerView) -> Unit)? = null,
             emptyViewDelegate: BaseViewDelegate<*, E>? = null)
-    : BaseViewDelegate<NetworkViewState<List<T>>, E>(layoutResId, inflater, container, addToContainer) {
+    : BaseViewDelegate<ListViewState<List<T>>, E>(layoutResId, inflater, container, addToContainer) {
 
     private val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view)
     private val progressBar: ProgressBar = view.findViewById(R.id.loader)
@@ -60,13 +59,13 @@ constructor(inflater: LayoutInflater,
         }
     }
 
-    override fun render(viewState: NetworkViewState<List<T>>) {
+    override fun render(viewState: ListViewState<List<T>>) {
         progressBar.setVisible(false)
         emptyViewContainer.setVisible(false)
         when (viewState) {
-            is NetworkViewState.Loading -> progressBar.setVisible(adapter.itemCount == 0)
-            is NetworkViewState.DataReady -> adapter.setItems(viewState.data)
-            is NetworkViewState.Empty -> {
+            is ListViewState.Loading -> progressBar.setVisible(adapter.itemCount == 0)
+            is ListViewState.DataReady -> adapter.setItems(viewState.data)
+            is ListViewState.Empty -> {
                 adapter.setItems(emptyList())
                 emptyViewContainer.setVisible(true)
             }

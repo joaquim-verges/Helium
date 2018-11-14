@@ -22,7 +22,7 @@ Here's a working app that displays a scrolling list of 100 words in 20 lines of 
 
 ```kotlin
     class SimpleListActivity : AppCompatActivity() {
-        override fun onCreate(savedInstanceState: Bundle?) {
+        override fun onCreate(savedInstanceState: Bundle) {
             super.onCreate(savedInstanceState)
             ListViewDelegate(layoutInflater,
                     { inflater, container -> MyListItem(R.layout.list_item_layout, inflater, container) })
@@ -111,7 +111,7 @@ This is all you need to create a component and display it in an Activity:
 
 ```kotlin
 class MyActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle) {
         super.onCreate(savedInstanceState)
         val presenter = MyPresenter()
         val viewDelegate = MyViewDelegate(layoutInflater)
@@ -131,12 +131,12 @@ class MyFragment : Fragment() {
     private lateinit var presenter: MyDetailPresenter
     private lateinit var viewDelegate: MyDetailViewDelegate
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         presenter = RetainedPresenters.get(this, MyPresenter::class.java)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View {
         viewDelegate = MyViewDelegate(inflater, container)
         return viewDelegate.view
     }

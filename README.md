@@ -7,7 +7,7 @@ Lightweight MVP framework for Android. 100% Kotlin.
 ## Download
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.joaquimverges.helium/helium-core.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:com.joaquimverges.helium)
-```
+```groovy
 implementation 'com.joaquimverges.helium:helium-core:x.y.z' // core classes
 implementation 'com.joaquimverges.helium:helium-ui:x.y.z'   // ui components
 ```
@@ -21,27 +21,27 @@ It also provides some implementations that help you build common Android compone
 Here's a working app that displays a scrolling list of 100 words in 20 lines of code:
 
 ```kotlin
-class SimpleListActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        ListViewDelegate(layoutInflater,
-                { inflater, container -> MyListItem(R.layout.list_item_layout, inflater, container) })
-                .apply { setContentView(view) }
-                .also { ListPresenter<String, ViewEvent>(MyRepository()).attach(it) }
-    }
+    class SimpleListActivity : AppCompatActivity() {
+        override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
+            ListViewDelegate(layoutInflater,
+                    { inflater, container -> MyListItem(R.layout.list_item_layout, inflater, container) })
+                    .apply { setContentView(view) }
+                    .also { ListPresenter<String, ViewEvent>(MyRepository()).attach(it) }
+        }
 
-    class MyRepository : BaseRepository<List<String>> {
-        override fun getData() = Observable.range(0, 100).map { i -> "Word number $i" }.toList()
-    }
+        class MyRepository : BaseRepository<List<String>> {
+            override fun getData() = Observable.range(0, 100).map { i -> "Word number $i" }.toList()
+        }
 
-    class MyListItem(@LayoutRes layoutResId: Int, inflater: LayoutInflater, parent: ViewGroup)
-        : BaseRecyclerViewItem<String, ViewEvent>(layoutResId, inflater, parent) {
-        private val textView: TextView = view.findViewById(R.id.text_view)
-        override fun bind(data: String) {
-            textView.text = data
+        class MyListItem(@LayoutRes layoutResId: Int, inflater: LayoutInflater, parent: ViewGroup)
+            : BaseRecyclerViewItem<String, ViewEvent>(layoutResId, inflater, parent) {
+            private val textView: TextView = view.findViewById(R.id.text_view)
+            override fun bind(data: String) {
+                textView.text = data
+            }
         }
     }
-}
 ```
 
 You just need to write how to get the data and the list item view that displays it, the rest is handled for you.
@@ -151,7 +151,7 @@ class MyFragment : Fragment() {
 A typical Presenter implementation looks like this:
 
 ```kotlin
-class MyPresenter(repository: MyRepository()) : BasePresenter<MyState, MyEvent> {
+class MyPresenter(repository: MyRepository) : BasePresenter<MyState, MyEvent>() {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     private fun loadData() {
@@ -167,8 +167,8 @@ class MyPresenter(repository: MyRepository()) : BasePresenter<MyState, MyEvent> 
 
     override fun onViewEvent(event : MyEvent) {
         when(event) {
-            is Click -> ...
-            is LongPress -> ...
+            is Click -> handleClick()
+            is LongPress -> handleLongPress()
         }
     }
 }

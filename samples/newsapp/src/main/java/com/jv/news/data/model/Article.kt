@@ -5,7 +5,7 @@ import java.util.*
 /**
  * @author jverges
  */
-data class Article (
+data class Article(
     var source: ArticleSource? = null,
     var author: String? = null,
     var title: String? = null,

@@ -28,23 +28,25 @@ object NewsApiServer {
     init {
 
         val client = OkHttpClient.Builder()
-                .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY })
-                .addInterceptor({
-                    val original = it.request()
-                    it.proceed(original
-                            .newBuilder()
-                            .header("X-Api-Key", API_KEY)
-                            .method(original.method(), original.body())
-                            .build())
-                })
-                .build()
+            .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY })
+            .addInterceptor({
+                val original = it.request()
+                it.proceed(
+                    original
+                        .newBuilder()
+                        .header("X-Api-Key", API_KEY)
+                        .method(original.method(), original.body())
+                        .build()
+                )
+            })
+            .build()
 
         val retrofit = Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .client(client)
-                .build()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .client(client)
+            .build()
         service = retrofit.create(NewsApiService::class.java)
     }
 

@@ -18,7 +18,7 @@ import com.jv.news.view.event.ArticleEvent
 /**
  * @author joaquim
  */
-class ArticleListViewDelegate(inflater: LayoutInflater): BaseViewDelegate<ArticleListState, ArticleEvent>(R.layout.view_article_list, inflater) {
+class ArticleListViewDelegate(inflater: LayoutInflater) : BaseViewDelegate<ArticleListState, ArticleEvent>(R.layout.view_article_list, inflater) {
 
     companion object {
         private const val DOUBLE_SPAN_COUNT = 2
@@ -51,22 +51,21 @@ class ArticleListViewDelegate(inflater: LayoutInflater): BaseViewDelegate<Articl
         }
 
         return ListViewDelegate(
-                inflater,
-                recyclerItemFactory = { layoutInflater, container ->
-                    ArticleGridItemViewHolder(layoutInflater, container)
-                },
-                container = listContainer,
-                addToContainer = true,
-                layoutManager = layoutManager,
-                recyclerViewConfig = { recyclerView ->
-                    recyclerView.addItemDecoration(SpacesItemDecoration(spacing, orientation))
-                },
-                emptyViewDelegate = EmptyViewDelegate(inflater)
+            inflater,
+            recyclerItemFactory = { layoutInflater, container ->
+                ArticleGridItemViewHolder(layoutInflater, container)
+            },
+            container = listContainer,
+            addToContainer = true,
+            layoutManager = layoutManager,
+            recyclerViewConfig = { recyclerView ->
+                recyclerView.addItemDecoration(SpacesItemDecoration(spacing, orientation))
+            },
+            emptyViewDelegate = EmptyViewDelegate(inflater)
         )
     }
 
-    class EmptyViewDelegate(inflater: LayoutInflater)
-        : BaseViewDelegate<ViewState, ArticleEvent>(R.layout.empty_view, inflater) {
+    class EmptyViewDelegate(inflater: LayoutInflater) : BaseViewDelegate<ViewState, ArticleEvent>(R.layout.empty_view, inflater) {
 
         private val openDrawerButton = findView<View>(R.id.open_drawer_button)
 

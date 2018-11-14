@@ -25,10 +25,12 @@ abstract class BaseRecyclerViewItem<in T, V : ViewEvent>(val view: View) : Recyc
      * @param inflater a valid LayoutInflater
      * @param container mandatory container to inflate the view with
      */
-    constructor(@LayoutRes layoutResId: Int,
-                inflater: LayoutInflater,
-                container: ViewGroup,
-                view : View = inflater.inflate(layoutResId, container, false)) : this(view)
+    constructor(
+        @LayoutRes layoutResId: Int,
+        inflater: LayoutInflater,
+        container: ViewGroup,
+        view: View = inflater.inflate(layoutResId, container, false)
+    ) : this(view)
 
     internal var viewEvents: PublishSubject<V>? = null
 

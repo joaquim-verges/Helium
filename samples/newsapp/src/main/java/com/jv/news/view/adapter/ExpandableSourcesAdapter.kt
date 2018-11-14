@@ -11,8 +11,8 @@ import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup
 /**
  * @author joaquim
  */
-class ExpandableSourcesAdapter(private val context: Context, categoryGroups: List<SourcesCategoryGroup> = mutableListOf())
-    : CheckableChildRecyclerViewAdapter<SourcesCategoryGroupViewHolder, SourceViewHolder>(categoryGroups) {
+class ExpandableSourcesAdapter(private val context: Context, categoryGroups: List<SourcesCategoryGroup> = mutableListOf()) :
+    CheckableChildRecyclerViewAdapter<SourcesCategoryGroupViewHolder, SourceViewHolder>(categoryGroups) {
 
     override fun onCreateCheckChildViewHolder(parent: ViewGroup?, viewType: Int): SourceViewHolder = SourceViewHolder.create(context, parent)
 

@@ -17,16 +17,19 @@ import com.jv.news.view.event.ArticleEvent
 /**
  * @author jverges
  */
-class ArticleGridItemViewHolder(inflater: LayoutInflater,
-                                parent: ViewGroup,
-                                itemView: View = inflater.inflate(R.layout.view_article_item, parent, false))
-    : BaseRecyclerViewItem<Article, ArticleEvent>(itemView) {
+class ArticleGridItemViewHolder(
+    inflater: LayoutInflater,
+    parent: ViewGroup,
+    itemView: View = inflater.inflate(R.layout.view_article_item, parent, false)
+) : BaseRecyclerViewItem<Article, ArticleEvent>(itemView) {
 
     private val mMediaView: ImageView = itemView.findViewById(R.id.article_media)
     private val mTitleView: TextView = itemView.findViewById(R.id.article_title)
     private val mDescriptionView: TextView = itemView.findViewById(R.id.article_description)
-    private val colors = intArrayOf(android.R.color.holo_red_dark, android.R.color.holo_green_dark,
-            android.R.color.holo_blue_dark, android.R.color.holo_orange_dark, android.R.color.holo_purple)
+    private val colors = intArrayOf(
+        android.R.color.holo_red_dark, android.R.color.holo_green_dark,
+        android.R.color.holo_blue_dark, android.R.color.holo_orange_dark, android.R.color.holo_purple
+    )
 
     private val context: Context = itemView.context
 

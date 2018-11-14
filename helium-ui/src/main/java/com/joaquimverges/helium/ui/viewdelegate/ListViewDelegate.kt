@@ -32,17 +32,18 @@ import java.util.Collections.emptyList
  * @see com.joaquimverges.helium.ui.state.ListViewState
  */
 open class ListViewDelegate<T, E : ViewEvent, VH : BaseRecyclerViewItem<T, E>>
-constructor(inflater: LayoutInflater,
-            recyclerItemFactory: (LayoutInflater, ViewGroup) -> VH,
-            // optional layout properties
-            @LayoutRes layoutResId : Int = R.layout.view_list,
-            container: ViewGroup? = null,
-            addToContainer: Boolean = false,
-            // optional list config
-            layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(inflater.context),
-            recyclerViewConfig: ((RecyclerView) -> Unit)? = null,
-            emptyViewDelegate: BaseViewDelegate<*, E>? = null)
-    : BaseViewDelegate<ListViewState<List<T>>, E>(layoutResId, inflater, container, addToContainer) {
+constructor(
+    inflater: LayoutInflater,
+    recyclerItemFactory: (LayoutInflater, ViewGroup) -> VH,
+    // optional layout properties
+    @LayoutRes layoutResId: Int = R.layout.view_list,
+    container: ViewGroup? = null,
+    addToContainer: Boolean = false,
+    // optional list config
+    layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(inflater.context),
+    recyclerViewConfig: ((RecyclerView) -> Unit)? = null,
+    emptyViewDelegate: BaseViewDelegate<*, E>? = null
+) : BaseViewDelegate<ListViewState<List<T>>, E>(layoutResId, inflater, container, addToContainer) {
 
     private val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view)
     private val progressBar: ProgressBar = view.findViewById(R.id.loader)
@@ -54,7 +55,7 @@ constructor(inflater: LayoutInflater,
         recyclerViewConfig?.invoke(recyclerView)
         recyclerView.adapter = adapter
         emptyViewDelegate?.let {
-            it.observer().subscribe { event : E -> pushEvent(event) }
+            it.observer().subscribe { event: E -> pushEvent(event) }
             emptyViewContainer.addView(it.view)
         }
     }
@@ -73,6 +74,6 @@ constructor(inflater: LayoutInflater,
     }
 
     private fun View.setVisible(value: Boolean) {
-        visibility = if(value) View.VISIBLE else View.GONE
+        visibility = if (value) View.VISIBLE else View.GONE
     }
 }

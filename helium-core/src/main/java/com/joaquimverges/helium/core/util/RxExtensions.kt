@@ -17,7 +17,7 @@ fun <T> Single<T>.async(): Single<T> {
     return subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
 }
 
-fun <T> Observable<T>.autoDispose(lifecycle: Lifecycle) : ObservableSubscribeProxy<T> {
+fun <T> Observable<T>.autoDispose(lifecycle: Lifecycle): ObservableSubscribeProxy<T> {
     val scope = AndroidLifecycleScopeProvider.from(lifecycle)
     return `as`(AutoDispose.autoDisposable<T>(scope))
 }

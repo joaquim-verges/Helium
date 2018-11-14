@@ -4,10 +4,10 @@ import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.OnLifecycleEvent
 import com.joaquimverges.helium.core.event.ViewEvent
 import com.joaquimverges.helium.core.presenter.BasePresenter
+import com.joaquimverges.helium.core.util.async
 import com.joaquimverges.helium.ui.repository.BaseRepository
 import com.joaquimverges.helium.ui.state.ListViewState
 import com.joaquimverges.helium.ui.util.RefreshPolicy
-import com.joaquimverges.helium.core.util.async
 
 /**
  * A Typical Presenter base implementation:
@@ -17,9 +17,10 @@ import com.joaquimverges.helium.core.util.async
  * Optional: pass a RefreshPolicy to control how often the data should get reloaded.
  * default is to refresh on every resume. Consider passing your own refresh policy to meet your use case.
  */
-open class ListPresenter<T, E : ViewEvent>(private val repository: BaseRepository<List<T>>,
-                                           private val refreshPolicy: RefreshPolicy = RefreshPolicy())
-    : BasePresenter<ListViewState<List<T>>, E>() {
+open class ListPresenter<T, E : ViewEvent>(
+    private val repository: BaseRepository<List<T>>,
+    private val refreshPolicy: RefreshPolicy = RefreshPolicy()
+) : BasePresenter<ListViewState<List<T>>, E>() {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     internal fun refreshIfNeeded() {
@@ -30,19 +31,19 @@ open class ListPresenter<T, E : ViewEvent>(private val repository: BaseRepositor
 
     fun loadData() {
         repository.getData()
-                .async()
-                .doOnSubscribe { pushState(ListViewState.Loading()) }
-                .doOnSuccess { refreshPolicy.updateLastRefreshedTime() }
-                .subscribe(
-                        { sources ->
-                            if (sources.isNotEmpty()) {
-                                pushState(ListViewState.DataReady(sources))
-                            } else {
-                                pushState(ListViewState.Empty())
-                            }
-                        },
-                        { error -> pushState(ListViewState.Error(error)) }
-                ).autoDispose()
+            .async()
+            .doOnSubscribe { pushState(ListViewState.Loading()) }
+            .doOnSuccess { refreshPolicy.updateLastRefreshedTime() }
+            .subscribe(
+                { sources ->
+                    if (sources.isNotEmpty()) {
+                        pushState(ListViewState.DataReady(sources))
+                    } else {
+                        pushState(ListViewState.Empty())
+                    }
+                },
+                { error -> pushState(ListViewState.Error(error)) }
+            ).autoDispose()
     }
 
     override fun onViewEvent(event: E) {

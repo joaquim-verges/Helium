@@ -4,22 +4,23 @@ import android.support.v4.app.*
 import android.support.v4.view.ViewPager
 import android.view.ViewGroup
 import com.joaquimverges.helium.core.event.ViewEvent
-import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
 import com.joaquimverges.helium.core.state.ViewState
+import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
 import com.joaquimverges.helium.ui.R
 
 /**
  * A simple ViewPager view delegate
  */
-open class PagerViewDelegate(activity: FragmentActivity,
-                             fragmentPageProvider: FragmentPageProvider,
-                            // optional layout properties
-                             layoutResId: Int = R.layout.view_pager,
-                             container: ViewGroup? = null,
-                             addToContainer: Boolean = false,
-                             // optional view pager config
-                             viewPagerConfig: ((ViewPager) -> Unit)? = null)
-    : BaseViewDelegate<ViewState, ViewEvent>(layoutResId, activity.layoutInflater, container, addToContainer) {
+open class PagerViewDelegate(
+    activity: FragmentActivity,
+    fragmentPageProvider: FragmentPageProvider,
+    // optional layout properties
+    layoutResId: Int = R.layout.view_pager,
+    container: ViewGroup? = null,
+    addToContainer: Boolean = false,
+    // optional view pager config
+    viewPagerConfig: ((ViewPager) -> Unit)? = null
+) : BaseViewDelegate<ViewState, ViewEvent>(layoutResId, activity.layoutInflater, container, addToContainer) {
 
     private val maxRetainedPages = 5
     private val pager: ViewPager = view.findViewById(R.id.view_pager)

@@ -6,6 +6,6 @@ import com.joaquimverges.helium.core.state.ViewState
  * @author joaquim
  */
 sealed class ArticleListState : ViewState {
-    object ArticlesLoaded: ArticleListState()
-    object MoreSourcesRequested: ArticleListState()
+    object ArticlesLoaded : ArticleListState()
+    object MoreSourcesRequested : ArticleListState()
 }

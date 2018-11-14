@@ -10,9 +10,10 @@ import java.util.concurrent.TimeUnit
 /**
  * @author joaquim
  */
-class SourcesPresenter(private val sourcesRepository: SourcesRepository = SourcesRepository(),
-                       refreshPolicy: RefreshPolicy = RefreshPolicy(1, TimeUnit.HOURS))
-    : ListPresenter<SourcesCategoryGroup, SourceEvent>(sourcesRepository, refreshPolicy) {
+class SourcesPresenter(
+    private val sourcesRepository: SourcesRepository = SourcesRepository(),
+    refreshPolicy: RefreshPolicy = RefreshPolicy(1, TimeUnit.HOURS)
+) : ListPresenter<SourcesCategoryGroup, SourceEvent>(sourcesRepository, refreshPolicy) {
 
     override fun onViewEvent(event: SourceEvent) {
         when (event) {

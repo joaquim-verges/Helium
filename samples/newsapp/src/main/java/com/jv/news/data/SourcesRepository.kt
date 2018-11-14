@@ -13,8 +13,10 @@ import io.reactivex.subjects.PublishSubject
 /**
  * @author joaquim
  */
-class SourcesRepository(private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(App.context.applicationContext),
-                        private val api: NewsApiServer.NewsApiService = NewsApiServer.service) : BaseRepository<List<SourcesCategoryGroup>> {
+class SourcesRepository(
+    private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(App.context.applicationContext),
+    private val api: NewsApiServer.NewsApiService = NewsApiServer.service
+) : BaseRepository<List<SourcesCategoryGroup>> {
 
     companion object {
         private const val SELECTED_SOURCES = "selected_sources"
@@ -25,8 +27,8 @@ class SourcesRepository(private val preferences: SharedPreferences = PreferenceM
 
     override fun getData(): Single<List<SourcesCategoryGroup>> {
         return api.getSources()
-                .map { it.sources.groupBy { it.category } }
-                .map { it.mapNotNull { mapEntry -> mapEntry.key?.let { SourcesCategoryGroup(it, mapEntry.value) { source -> isSelected(source) } } } }
+            .map { it.sources.groupBy { it.category } }
+            .map { it.mapNotNull { mapEntry -> mapEntry.key?.let { SourcesCategoryGroup(it, mapEntry.value) { source -> isSelected(source) } } } }
     }
 
     fun getSelectedSourceIds(): MutableSet<String> {

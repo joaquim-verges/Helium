@@ -19,24 +19,26 @@ import java.util.concurrent.TimeUnit
 /**
  * @author: joaquim
  */
-class ArticleListPresenter(repository: ArticleRepository = ArticleRepository(),
-                           refreshPolicy: RefreshPolicy = RefreshPolicy(10, TimeUnit.MINUTES),
-                           private val listPresenter: ListPresenter<Article, ArticleEvent> = ListPresenter(repository, refreshPolicy))
-    : BasePresenter<ArticleListState, ArticleEvent>() {
+class ArticleListPresenter(
+    repository: ArticleRepository = ArticleRepository(),
+    refreshPolicy: RefreshPolicy = RefreshPolicy(10, TimeUnit.MINUTES),
+    private val listPresenter: ListPresenter<Article, ArticleEvent> = ListPresenter(repository, refreshPolicy)
+) : BasePresenter<ArticleListState, ArticleEvent>() {
 
     init {
         repository
-                .sourcesUpdatedObserver()
-                .subscribe { listPresenter.loadData() }
-                .autoDispose()
+            .sourcesUpdatedObserver()
+            .subscribe { listPresenter.loadData() }
+            .autoDispose()
 
         // receive all list view events in this presenter
         listPresenter.propagateViewEventsTo(this)
-        // when the list loads data, propagate the state up to the MainPresenter so it can close the nav drawer
+        // when the list changes state, propagate the state up to the MainPresenter
+        // so it can close the nav drawer after 2s
         listPresenter.stateObserver()
-                .debounce(1, TimeUnit.SECONDS)
-                .subscribe { pushState(ArticleListState.ArticlesLoaded) }
-                .autoDispose()
+            .debounce(2, TimeUnit.SECONDS)
+            .subscribe { pushState(ArticleListState.ArticlesLoaded) }
+            .autoDispose()
     }
 
     override fun onAttached(viewDelegate: BaseViewDelegate<ArticleListState, ArticleEvent>) {
@@ -55,10 +57,11 @@ class ArticleListPresenter(repository: ArticleRepository = ArticleRepository(),
 
     private fun shareArticle(context: Context, article: Article) {
         context.startActivity(
-                ShareCompat.IntentBuilder
-                        .from(context as Activity)
-                        .setType("text/plain")
-                        .setText("${article.title} - ${article.url}").createChooserIntent()
+            ShareCompat.IntentBuilder
+                .from(context as Activity)
+                .setType("text/plain")
+                .setText("${article.title} - ${article.url}")
+                .createChooserIntent()
         )
     }
 

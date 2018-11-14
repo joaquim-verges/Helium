@@ -4,8 +4,6 @@ import android.support.v4.widget.DrawerLayout
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.joaquimverges.helium.core.event.ViewEvent
-import com.joaquimverges.helium.core.state.ViewState
 import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
 import com.joaquimverges.helium.navigation.R
 import com.joaquimverges.helium.navigation.event.NavDrawerEvent
@@ -14,11 +12,12 @@ import com.joaquimverges.helium.navigation.state.NavDrawerState
 /**
  * A view delegate that presents 2 view delegates in the form of a navigation drawer and main content
  */
-open class NavDrawerViewDelegate(val mainContentViewDelegate: BaseViewDelegate<*, *>,
-                                 val drawerViewDelegate: BaseViewDelegate<*, *>,
-                                 gravity: Int = Gravity.START,
-                                 drawerCustomisation: ((DrawerLayout) -> Unit)? = null)
-    : BaseViewDelegate<NavDrawerState, NavDrawerEvent>(R.layout.drawer_layout, LayoutInflater.from(mainContentViewDelegate.view.context)) {
+class NavDrawerViewDelegate(
+    mainContentViewDelegate: BaseViewDelegate<*, *>,
+    drawerViewDelegate: BaseViewDelegate<*, *>,
+    gravity: Int = Gravity.START,
+    drawerCustomisation: ((DrawerLayout) -> Unit)? = null
+) : BaseViewDelegate<NavDrawerState, NavDrawerEvent>(R.layout.drawer_layout, LayoutInflater.from(mainContentViewDelegate.view.context)) {
 
     private val drawerLayout = findView<DrawerLayout>(R.id.drawer_layout)
     private val mainContainer = findView<ViewGroup>(R.id.main_container)

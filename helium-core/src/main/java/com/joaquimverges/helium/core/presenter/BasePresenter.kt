@@ -43,7 +43,7 @@ abstract class BasePresenter<S : ViewState, E : ViewEvent> : ViewModel(), Lifecy
      */
     fun attach(viewDelegate: BaseViewDelegate<S, E>) {
         val lifecycle: Lifecycle = viewDelegate.lifecycle
-                ?: throw IllegalArgumentException("Cannot attach view delegates that don't have a lifecycle aware context")
+            ?: throw IllegalArgumentException("Cannot attach view delegates that don't have a lifecycle aware context")
         stateObserver().autoDispose(lifecycle).subscribe { viewDelegate.render(it) }
         viewDelegate.observer().autoDispose(lifecycle).subscribe { processViewEvent(it) }
         lifecycle.addObserver(this)
@@ -52,13 +52,14 @@ abstract class BasePresenter<S : ViewState, E : ViewEvent> : ViewModel(), Lifecy
 
     /**
      * Called when this presenter has successfully been attached to a ViewDelegate and its lifecycle
+     * This is as a good time to attach sub presenters to sub view delegates
      */
     open fun onAttached(viewDelegate: BaseViewDelegate<S, E>) {
         // override to attach sub presenters
     }
 
     /**
-     * Forward all ViewEvents received by this presenter to the given presenter
+     * Forward all [ViewEvent] received by this presenter to the given presenter
      */
     fun propagateViewEventsTo(otherPresenter: BasePresenter<*, E>) {
         viewEventDispatcher.subscribe { otherPresenter.processViewEvent(it) }.autoDispose()

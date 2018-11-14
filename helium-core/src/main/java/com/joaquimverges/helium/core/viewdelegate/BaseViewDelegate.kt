@@ -26,7 +26,7 @@ import io.reactivex.subjects.PublishSubject
  * @see com.joaquimverges.helium.core.presenter.BasePresenter
  */
 abstract class BaseViewDelegate<in S : ViewState, E : ViewEvent>
-(val view: View, private val viewEventsObservable: PublishSubject<E> = PublishSubject.create()) {
+    (val view: View, private val viewEventsObservable: PublishSubject<E> = PublishSubject.create()) {
 
     /**
      * Convenience constructor that inflates the layout for you.
@@ -36,11 +36,13 @@ abstract class BaseViewDelegate<in S : ViewState, E : ViewEvent>
      * @param container optional container to inflate the view with
      * @param addToContainer optional flag to also add the inflated layout to the passed container
      */
-    constructor(@LayoutRes layoutResId: Int,
-                inflater: LayoutInflater,
-                container: ViewGroup? = null,
-                addToContainer: Boolean = false,
-                view: View = inflater.inflate(layoutResId, container, addToContainer)) : this(view)
+    constructor(
+        @LayoutRes layoutResId: Int,
+        inflater: LayoutInflater,
+        container: ViewGroup? = null,
+        addToContainer: Boolean = false,
+        view: View = inflater.inflate(layoutResId, container, addToContainer)
+    ) : this(view)
 
     protected val context: Context = view.context
     internal val lifecycle: Lifecycle? = (context as? LifecycleOwner)?.lifecycle

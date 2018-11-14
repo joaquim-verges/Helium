@@ -15,15 +15,12 @@ object RetainedPresenters {
      * @param activity the Activity to bind this Presenter to
      * @param clazz the class of the Presenter to instantiate.
      */
-    fun <P : ViewModel> get(activity: FragmentActivity, clazz: Class<P>): P
-            = ViewModelProviders.of(activity).get(clazz)
+    fun <P : ViewModel> get(activity: FragmentActivity, clazz: Class<P>): P = ViewModelProviders.of(activity).get(clazz)
 
     /**
      * @param factory optional lambda to construct the Presenter yourself if it has non-empty constructors.
      */
-    fun <P : ViewModel> get(activity: FragmentActivity, clazz: Class<P>, factory: (Class<P>) -> P): P
-            = ViewModelProviders.of(activity, PresenterFactory(clazz, factory)).get(clazz)
+    fun <P : ViewModel> get(activity: FragmentActivity, clazz: Class<P>, factory: (Class<P>) -> P): P = ViewModelProviders.of(activity, PresenterFactory(clazz, factory)).get(clazz)
 
-    fun <P : ViewModel> get(fragment: Fragment, clazz: Class<P>): P
-            = ViewModelProviders.of(fragment).get(clazz)
+    fun <P : ViewModel> get(fragment: Fragment, clazz: Class<P>): P = ViewModelProviders.of(fragment).get(clazz)
 }

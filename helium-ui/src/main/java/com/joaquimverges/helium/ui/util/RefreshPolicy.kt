@@ -8,8 +8,10 @@ import java.util.concurrent.TimeUnit
  * @param refreshInterval The amount of time (in [timeUnit] unit) required between each refreshes
  * @param timeUnit the [TimeUnit] unit for [refreshInterval]
  */
-class RefreshPolicy(private val refreshInterval: Long = 0L,
-                    private val timeUnit: TimeUnit = TimeUnit.MINUTES) {
+class RefreshPolicy(
+    private val refreshInterval: Long = 0L,
+    private val timeUnit: TimeUnit = TimeUnit.MINUTES
+) {
 
     private var lastRefreshTime: Long = 0
 

@@ -7,5 +7,5 @@ import io.reactivex.Single
  * Here is where the actual data fetching/caching logic lives.
  */
 interface BaseRepository<T> {
-    fun getData() : Single<T>
+    fun getData(): Single<T>
 }

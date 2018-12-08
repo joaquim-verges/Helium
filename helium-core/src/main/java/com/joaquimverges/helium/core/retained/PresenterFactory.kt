@@ -6,7 +6,7 @@ import android.arch.lifecycle.ViewModelProvider
 /**
  * Kotlin-friendly Wrapper around ViewModelProvider.Factory
  */
-internal class PresenterFactory<T : ViewModel?>(
+class PresenterFactory<T : ViewModel?>(
     private val clazz: Class<T>,
     private val factory: (Class<T>) -> T
 ) : ViewModelProvider.Factory {

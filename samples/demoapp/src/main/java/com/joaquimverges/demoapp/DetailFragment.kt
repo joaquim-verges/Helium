@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.joaquimverges.demoapp.presenter.MyDetailPresenter
 import com.joaquimverges.demoapp.view.MyDetailViewDelegate
-import com.joaquimverges.helium.core.retained.RetainedPresenters
+import com.joaquimverges.helium.core.retained.getRetainedPresenter
 
 class DetailFragment : Fragment() {
 
@@ -17,7 +17,7 @@ class DetailFragment : Fragment() {
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        presenter = RetainedPresenters.get(this, MyDetailPresenter::class.java)
+        presenter = getRetainedPresenter()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

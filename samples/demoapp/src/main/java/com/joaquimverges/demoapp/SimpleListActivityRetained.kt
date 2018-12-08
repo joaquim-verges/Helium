@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.joaquimverges.demoapp.presenter.MyListPresenter
 import com.joaquimverges.demoapp.view.MyRecyclerItem
-import com.joaquimverges.helium.core.retained.RetainedPresenters
+import com.joaquimverges.helium.core.retained.getRetainedPresenter
 import com.joaquimverges.helium.ui.viewdelegate.ListViewDelegate
 
 class SimpleListActivityRetained : AppCompatActivity() {
@@ -14,7 +14,8 @@ class SimpleListActivityRetained : AppCompatActivity() {
         val viewDelegate = ListViewDelegate(layoutInflater, { inflater, container ->
             MyRecyclerItem(R.layout.list_item_layout, inflater, container)
         })
-        RetainedPresenters.get(this, MyListPresenter::class.java).attach(viewDelegate)
+
+        getRetainedPresenter<MyListPresenter>().attach(viewDelegate)
         setContentView(viewDelegate.view)
     }
 }

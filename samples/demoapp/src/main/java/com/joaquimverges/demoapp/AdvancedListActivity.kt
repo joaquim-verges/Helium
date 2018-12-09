@@ -8,9 +8,8 @@ import android.support.v7.widget.LinearLayoutManager
 import com.joaquimverges.demoapp.presenter.MyListPresenter
 import com.joaquimverges.demoapp.view.GridSpacingDecorator
 import com.joaquimverges.demoapp.view.MyRecyclerItem
-import com.joaquimverges.helium.core.retained.RetainedPresenters
+import com.joaquimverges.helium.core.retained.getRetainedPresenter
 import com.joaquimverges.helium.ui.viewdelegate.ListViewDelegate
-import kotlin.jvm.java
 
 class AdvancedListActivity : AppCompatActivity() {
 
@@ -33,17 +32,17 @@ class AdvancedListActivity : AppCompatActivity() {
         }
 
         val viewDelegate = ListViewDelegate(layoutInflater,
-                recyclerItemFactory = { inflater, container ->
-                    MyRecyclerItem(R.layout.grid_item_layout, inflater, container)
-                },
-                layoutManager = layoutManager,
-                recyclerViewConfig = {
-                    val padding = resources.getDimensionPixelSize(R.dimen.grid_spacing)
-                    it.addItemDecoration(GridSpacingDecorator(padding, orientation))
-                })
+            recyclerItemFactory = { inflater, container ->
+                MyRecyclerItem(R.layout.grid_item_layout, inflater, container)
+            },
+            layoutManager = layoutManager,
+            recyclerViewConfig = {
+                val padding = resources.getDimensionPixelSize(R.dimen.grid_spacing)
+                it.addItemDecoration(GridSpacingDecorator(padding, orientation))
+            })
 
 
-        RetainedPresenters.get(this, MyListPresenter::class.java).attach(viewDelegate)
+        getRetainedPresenter<MyListPresenter>().attach(viewDelegate)
         setContentView(viewDelegate.view)
     }
 }

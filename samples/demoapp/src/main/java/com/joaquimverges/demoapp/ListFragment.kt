@@ -10,7 +10,7 @@ import com.joaquimverges.demoapp.data.MyItem
 import com.joaquimverges.demoapp.presenter.MyListPresenter
 import com.joaquimverges.demoapp.view.MyRecyclerItem
 import com.joaquimverges.helium.core.event.ClickEvent
-import com.joaquimverges.helium.core.retained.RetainedPresenters
+import com.joaquimverges.helium.core.retained.getRetainedPresenter
 import com.joaquimverges.helium.ui.viewdelegate.ListViewDelegate
 
 class ListFragment : Fragment() {
@@ -20,7 +20,7 @@ class ListFragment : Fragment() {
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        presenter = RetainedPresenters.get(this, MyListPresenter::class.java)
+        presenter = getRetainedPresenter()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

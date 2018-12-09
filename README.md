@@ -121,7 +121,7 @@ class MyActivity : AppCompatActivity() {
 }
 ```
 
-You can also make your presenter retained upon configuration changes by accessing it via the `RetainedPresenters.get()` method:
+You can also make your presenter retained upon configuration changes by accessing it via the `getRetainedPresenter()` extension method:
 
 This is an example of a retained presenter in a fragment:
 
@@ -133,7 +133,7 @@ class MyFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        presenter = RetainedPresenters.get(this, MyPresenter::class.java)
+        presenter = getRetainedPresenter()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View {

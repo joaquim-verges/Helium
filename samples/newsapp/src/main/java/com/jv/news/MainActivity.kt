@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import com.joaquimverges.helium.core.retained.RetainedPresenters
+import com.joaquimverges.helium.core.retained.getRetainedPresenter
 import com.jv.news.presenter.MainPresenter
 import com.jv.news.util.VersionUtil
 import com.jv.news.view.MainViewDelegate
@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setLightStatusBar()
 
-        val mainPresenter = RetainedPresenters.get(this, MainPresenter::class.java)
+        val mainPresenter = getRetainedPresenter<MainPresenter>()
         MainViewDelegate(layoutInflater).also {
             setContentView(it.view)
             mainPresenter.attach(it)

@@ -18,6 +18,7 @@
             app:layout_constraintBottom_toTopOf="@+id/sources_list"
             android:layout_marginBottom="32dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="@color/text_primary"
             android:textStyle="bold"
             android:layout_marginStart="16dp"/>
 

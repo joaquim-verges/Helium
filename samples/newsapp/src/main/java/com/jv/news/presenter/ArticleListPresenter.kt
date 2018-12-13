@@ -35,7 +35,7 @@ class ArticleListPresenter(
         listPresenter.propagateViewEventsTo(this)
         // when the list changes state, propagate the state up to the MainPresenter
         // so it can close the nav drawer after 2s
-        listPresenter.stateObserver()
+        listPresenter.observeViewState()
             .debounce(2, TimeUnit.SECONDS)
             .subscribe { pushState(ArticleListState.ArticlesLoaded) }
             .autoDispose()

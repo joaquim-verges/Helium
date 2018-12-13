@@ -8,6 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
 
         <item name="android:windowBackground">@color/background_view</item>
+
+        <item name="android:textColorPrimary">@color/text_toolbar</item>
+
     </style>
 
 </resources>

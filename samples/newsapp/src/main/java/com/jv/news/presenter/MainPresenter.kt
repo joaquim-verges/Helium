@@ -4,6 +4,8 @@ import com.joaquimverges.helium.core.event.ViewEvent
 import com.joaquimverges.helium.core.presenter.BasePresenter
 import com.joaquimverges.helium.core.state.ViewState
 import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
+import com.joaquimverges.helium.navigation.event.ToolbarEvent
+import com.joaquimverges.helium.navigation.presenter.ToolbarPresenter
 import com.joaquimverges.helium.navigation.state.NavDrawerState
 import com.jv.news.data.ArticleRepository
 import com.jv.news.data.SourcesRepository
@@ -21,12 +23,19 @@ class MainPresenter : BasePresenter<ViewState, ViewEvent>() {
 
     private val articlePresenter = ArticleListPresenter(articleRepo)
     private val sourcesPresenter = SourcesPresenter(sourcesRepo)
+    private val toolbarPresenter = ToolbarPresenter()
 
     init {
-        articlePresenter.stateObserver().subscribe { state ->
+        articlePresenter.observeViewState().subscribe { state ->
             when (state) {
                 ArticleListState.ArticlesLoaded -> pushState(NavDrawerState.Closed)
                 ArticleListState.MoreSourcesRequested -> pushState(NavDrawerState.Opened)
+            }
+        }.autoDispose()
+
+        toolbarPresenter.observeViewEvents().subscribe {
+            when (it) {
+                is ToolbarEvent.HomeClicked -> pushState(NavDrawerState.Opened)
             }
         }.autoDispose()
     }
@@ -35,6 +44,7 @@ class MainPresenter : BasePresenter<ViewState, ViewEvent>() {
         (viewDelegate as MainViewDelegate).run {
             articlePresenter.attach(mainView)
             sourcesPresenter.attach(drawerView)
+            toolbarPresenter.attach(toolbarView)
         }
     }
 

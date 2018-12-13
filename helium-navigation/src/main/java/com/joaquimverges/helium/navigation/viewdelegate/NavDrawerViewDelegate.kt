@@ -17,7 +17,10 @@ class NavDrawerViewDelegate(
     drawerViewDelegate: BaseViewDelegate<*, *>,
     gravity: Int = Gravity.START,
     drawerCustomisation: ((DrawerLayout) -> Unit)? = null
-) : BaseViewDelegate<NavDrawerState, NavDrawerEvent>(R.layout.drawer_layout, LayoutInflater.from(mainContentViewDelegate.view.context)) {
+) : BaseViewDelegate<NavDrawerState, NavDrawerEvent>(
+    R.layout.drawer_layout,
+    LayoutInflater.from(mainContentViewDelegate.view.context)
+) {
 
     private val drawerLayout = findView<DrawerLayout>(R.id.drawer_layout)
     private val mainContainer = findView<ViewGroup>(R.id.main_container)

@@ -5,7 +5,7 @@ import com.joaquimverges.helium.navigation.event.NavDrawerEvent
 import com.joaquimverges.helium.navigation.state.NavDrawerState
 
 /**
- * @author joaquim
+ * Presenter Managing a DrawerLayout
  */
 class NavDrawerPresenter : BasePresenter<NavDrawerState, NavDrawerEvent>() {
 

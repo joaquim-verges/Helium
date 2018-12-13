@@ -3,7 +3,7 @@ package com.joaquimverges.helium.navigation.event
 import com.joaquimverges.helium.core.event.ViewEvent
 
 /**
- * @author joaqu
+ * User events coming from a [NavDrawerViewDelegate]
  */
 sealed class NavDrawerEvent : ViewEvent {
     object DrawerOpened : NavDrawerEvent()

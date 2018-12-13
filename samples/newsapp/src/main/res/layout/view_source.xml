@@ -18,6 +18,7 @@
             android:gravity="center_vertical"
             android:checked="false"
             android:checkMark="@drawable/ic_check_state"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@color/text_primary"/>
 
 </LinearLayout>

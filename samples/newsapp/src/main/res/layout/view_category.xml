@@ -15,6 +15,7 @@
             android:textAllCaps="true"
             android:drawablePadding="@dimen/small_padding"
             android:drawableLeft="@drawable/ic_arrow_drop_down"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/text_primary"/>
 
 </LinearLayout>

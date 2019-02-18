@@ -10,6 +10,7 @@ import com.joaquimverges.helium.navigation.state.NavDrawerState
 class NavDrawerPresenter : BasePresenter<NavDrawerState, NavDrawerEvent>() {
 
     override fun onViewEvent(event: NavDrawerEvent) {
-        // might want to do actions on drawer open / closed
+        // get events via observeViewEvents()
+        // or subclass can handle their own events
     }
 }

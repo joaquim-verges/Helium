@@ -47,6 +47,7 @@ open class ListPresenter<T, E : ViewEvent>(
     }
 
     override fun onViewEvent(event: E) {
-        // Subclasses can implement this if needed
+        // get events via observeViewEvents()
+        // or subclass can handle their own events
     }
 }

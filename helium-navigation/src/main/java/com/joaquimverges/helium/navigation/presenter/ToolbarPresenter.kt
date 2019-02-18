@@ -10,6 +10,7 @@ import com.joaquimverges.helium.navigation.event.ToolbarEvent
 class ToolbarPresenter : BasePresenter<ViewState, ToolbarEvent>() {
 
     override fun onViewEvent(event: ToolbarEvent) {
-        // subclasses can handle their toolbar events
+        // get events via observeViewEvents()
+        // or subclass can handle their own events
     }
 }

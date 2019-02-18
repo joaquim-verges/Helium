@@ -29,6 +29,7 @@ abstract class BasePresenter<S : ViewState, E : ViewEvent> : ViewModel(), Lifecy
 
     /**
      * Implement this method to react to any ViewEvent emissions from the attached ViewDelegate.
+     * View events can also be observed externally via [observeViewEvents]
      */
     abstract fun onViewEvent(event: E)
 

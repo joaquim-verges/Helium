@@ -15,7 +15,7 @@ import com.joaquimverges.helium.navigation.event.ToolbarEvent
  */
 class ToolbarViewDelegate(
     inflater: LayoutInflater,
-    @MenuRes menuResId: Int,
+    @MenuRes menuResId: Int? = null,
     actionBarCustomization: ((ActionBar) -> Unit)? = null
 ) : BaseViewDelegate<ViewState, ToolbarEvent>(
     R.layout.toolbar_layout,
@@ -34,7 +34,7 @@ class ToolbarViewDelegate(
             true
         }
         toolbar.setNavigationOnClickListener { pushEvent(ToolbarEvent.HomeClicked) }
-        toolbar.inflateMenu(menuResId)
+        menuResId?.let { toolbar.inflateMenu(it) }
     }
 
     override fun render(viewState: ViewState) {

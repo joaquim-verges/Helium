@@ -22,8 +22,9 @@ class MainActivity : AppCompatActivity() {
     enum class MenuItem(val title: String) {
         LIST_NOT_RETAINED("List (not retained)"),
         LIST_RETAINED("List (retained)"),
+        LIST_RETAINED_FRAGMENT("List Fragment (retained)"),
         ADVANCED_LIST("Advanced List"),
-        VIEW_PAGER("ViewPager")
+        VIEW_PAGER("ViewPager"),
     }
 
     class MenuRepository : BaseRepository<List<MenuItem>> {
@@ -40,6 +41,7 @@ class MainActivity : AppCompatActivity() {
             val activityClass = when (event.data) {
                 MainActivity.MenuItem.LIST_NOT_RETAINED -> SimpleListActivity::class.java
                 MainActivity.MenuItem.LIST_RETAINED -> SimpleListActivityRetained::class.java
+                MainActivity.MenuItem.LIST_RETAINED_FRAGMENT -> SimpleListFragmentActivityRetained::class.java
                 MainActivity.MenuItem.ADVANCED_LIST -> AdvancedListActivity::class.java
                 MainActivity.MenuItem.VIEW_PAGER -> ViewPagerActivity::class.java
             }

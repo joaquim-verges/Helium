@@ -1,6 +1,6 @@
 package com.joaquimverges.demoapp.presenter
 
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import android.widget.Toast
 import com.joaquimverges.demoapp.data.Colors
 import com.joaquimverges.demoapp.data.MyListRepository

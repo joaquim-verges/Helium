@@ -1,9 +1,9 @@
 package com.jv.news.view
 
 import android.graphics.Rect
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 
 /**
@@ -13,7 +13,7 @@ class SpacesItemDecoration(private val space: Int, orientation: Int) : RecyclerV
 
     private val isHorizontal = orientation == LinearLayoutManager.HORIZONTAL
 
-    override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
+    override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
 
         val position = parent.getChildLayoutPosition(view)
         val manager = parent.layoutManager as GridLayoutManager

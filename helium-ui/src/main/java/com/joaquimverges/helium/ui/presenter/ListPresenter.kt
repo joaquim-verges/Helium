@@ -1,7 +1,7 @@
 package com.joaquimverges.helium.ui.presenter
 
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.OnLifecycleEvent
 import com.joaquimverges.helium.core.event.ViewEvent
 import com.joaquimverges.helium.core.presenter.BasePresenter
 import com.joaquimverges.helium.core.util.async

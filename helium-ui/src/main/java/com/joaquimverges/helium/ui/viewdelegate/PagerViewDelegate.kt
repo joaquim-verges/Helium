@@ -1,8 +1,9 @@
 package com.joaquimverges.helium.ui.viewdelegate
 
-import android.support.v4.app.*
-import android.support.v4.view.ViewPager
+import androidx.core.app.*
+import androidx.viewpager.widget.ViewPager
 import android.view.ViewGroup
+import androidx.fragment.app.*
 import com.joaquimverges.helium.core.event.ViewEvent
 import com.joaquimverges.helium.core.state.ViewState
 import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate

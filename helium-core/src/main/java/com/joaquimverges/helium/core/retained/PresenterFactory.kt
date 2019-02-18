@@ -1,7 +1,7 @@
 package com.joaquimverges.helium.core.retained
 
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 
 /**
  * Kotlin-friendly Wrapper around ViewModelProvider.Factory

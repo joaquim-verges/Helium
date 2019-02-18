@@ -1,8 +1,8 @@
 package com.joaquimverges.helium.core.presenter
 
-import android.arch.lifecycle.Lifecycle
-import android.support.v4.app.FragmentActivity
+import androidx.lifecycle.Lifecycle
 import android.view.View
+import androidx.fragment.app.FragmentActivity
 import com.joaquimverges.helium.core.event.ViewEvent
 import com.joaquimverges.helium.core.state.ViewState
 import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate

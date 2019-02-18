@@ -11,13 +11,18 @@ android {
     compileSdkVersion compile_sdk
     publishNonDefault true
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     defaultConfig {
         minSdkVersion min_sdk
         targetSdkVersion target_sdk
         versionCode project.properties[VERSION_CODE]
         versionName project.properties[VERSION_NAME]
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -43,7 +48,7 @@ dependencies {
 
     api "io.reactivex.rxjava2:rxjava:$rxjava_version"
     api "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
-    implementation "android.arch.lifecycle:extensions:$arch_lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-extensions:$arch_lifecycle_version"
     implementation "com.uber.autodispose:autodispose-android-archcomponents-ktx:$autodispose_version"
 }
 

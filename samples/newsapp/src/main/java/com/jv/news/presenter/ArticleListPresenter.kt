@@ -3,8 +3,8 @@ package com.jv.news.presenter
 import android.app.Activity
 import android.content.Context
 import android.net.Uri
-import android.support.customtabs.CustomTabsIntent
-import android.support.v4.app.ShareCompat
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.app.ShareCompat
 import com.joaquimverges.helium.core.presenter.BasePresenter
 import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
 import com.joaquimverges.helium.ui.presenter.ListPresenter

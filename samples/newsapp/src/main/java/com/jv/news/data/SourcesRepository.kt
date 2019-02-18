@@ -22,7 +22,7 @@ class SourcesRepository(
         private const val SELECTED_SOURCES = "selected_sources"
     }
 
-    private val sources = mutableSetOf<String>().apply { addAll(preferences.getStringSet(SELECTED_SOURCES, mutableSetOf())) }
+    private val sources = mutableSetOf<String>().apply { addAll(preferences.getStringSet(SELECTED_SOURCES, mutableSetOf())?.toList() ?: listOf()) }
     private val sourcesSubject = PublishSubject.create<Set<String>>()
 
     override fun getData(): Single<List<SourcesCategoryGroup>> {

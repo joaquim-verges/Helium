@@ -1,10 +1,10 @@
 package com.joaquimverges.helium.core.viewdelegate
 
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.LifecycleOwner
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import android.content.Context
-import android.support.annotation.IdRes
-import android.support.annotation.LayoutRes
+import androidx.annotation.IdRes
+import androidx.annotation.LayoutRes
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

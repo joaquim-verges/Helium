@@ -1,7 +1,7 @@
 package com.joaquimverges.demoapp.view
 
-import android.support.annotation.LayoutRes
-import android.support.v4.content.ContextCompat
+import androidx.annotation.LayoutRes
+import androidx.core.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.joaquimverges.demoapp.data.MyItem

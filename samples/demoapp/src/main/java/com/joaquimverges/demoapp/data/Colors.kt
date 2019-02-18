@@ -1,7 +1,7 @@
 package com.joaquimverges.demoapp.data
 
-import android.support.annotation.ColorInt
-import android.support.annotation.ColorRes
+import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
 
 /**
  * @author joaquim

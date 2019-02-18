@@ -1,6 +1,6 @@
 package com.joaquimverges.demoapp.view
 
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View

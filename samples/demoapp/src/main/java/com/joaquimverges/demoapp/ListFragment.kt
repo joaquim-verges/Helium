@@ -25,7 +25,7 @@ class ListFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         viewDelegate = ListViewDelegate(inflater, { layoutInflater, parentContainer ->
-            MyRecyclerItem(R.layout.list_item_layout, inflater, parentContainer)
+            MyRecyclerItem(layoutInflater, parentContainer)
         })
         return viewDelegate.view
     }

@@ -5,4 +5,5 @@
     <dimen name="normal_padding">16dp</dimen>
     <dimen name="small_padding">8dp</dimen>
     <dimen name="grid_spacing">8dp</dimen>
+    <dimen name="default_radius">6dp</dimen>
 </resources>

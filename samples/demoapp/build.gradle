@@ -31,8 +31,6 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "androidx.appcompat:appcompat:$support_lib_version"
-    implementation "androidx.recyclerview:recyclerview:$support_lib_version"
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
     implementation project(':helium-core')
     implementation project(':helium-ui')

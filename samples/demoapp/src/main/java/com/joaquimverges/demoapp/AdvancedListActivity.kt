@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.joaquimverges.demoapp.presenter.MyListPresenter
 import com.joaquimverges.demoapp.view.GridSpacingDecorator
+import com.joaquimverges.demoapp.view.MyCardRecyclerItem
 import com.joaquimverges.demoapp.view.MyRecyclerItem
 import com.joaquimverges.helium.core.retained.getRetainedPresenter
 import com.joaquimverges.helium.ui.viewdelegate.ListViewDelegate
@@ -33,7 +34,7 @@ class AdvancedListActivity : AppCompatActivity() {
 
         val viewDelegate = ListViewDelegate(layoutInflater,
             recyclerItemFactory = { inflater, container ->
-                MyRecyclerItem(R.layout.grid_item_layout, inflater, container)
+                MyCardRecyclerItem(inflater, container)
             },
             layoutManager = layoutManager,
             recyclerViewConfig = {

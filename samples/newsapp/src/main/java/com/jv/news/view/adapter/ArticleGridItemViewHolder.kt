@@ -23,9 +23,9 @@ class ArticleGridItemViewHolder(
     itemView: View = inflater.inflate(R.layout.view_article_item, parent, false)
 ) : BaseRecyclerViewItem<Article, ArticleEvent>(itemView) {
 
-    private val mMediaView: ImageView = itemView.findViewById(R.id.article_media)
-    private val mTitleView: TextView = itemView.findViewById(R.id.article_title)
-    private val mDescriptionView: TextView = itemView.findViewById(R.id.article_description)
+    private val mMediaView: ImageView = findView(R.id.article_media)
+    private val mTitleView: TextView = findView(R.id.article_title)
+    private val mDescriptionView: TextView = findView(R.id.article_description)
     private val colors = intArrayOf(
         android.R.color.holo_red_dark, android.R.color.holo_green_dark,
         android.R.color.holo_blue_dark, android.R.color.holo_orange_dark, android.R.color.holo_purple

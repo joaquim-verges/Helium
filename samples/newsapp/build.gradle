@@ -30,11 +30,7 @@ android {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
-    implementation "androidx.appcompat:appcompat:$support_lib_version"
-    implementation "androidx.recyclerview:recyclerview:$support_lib_version"
-    implementation "androidx.cardview:cardview:$support_lib_version"
     implementation "androidx.legacy:legacy-support-v13:$support_lib_version"
-    implementation "com.google.android.material:material:$support_lib_version"
     implementation "androidx.palette:palette:$support_lib_version"
     implementation "androidx.browser:browser:$support_lib_version"
     implementation "com.squareup.retrofit2:retrofit:2.3.0"

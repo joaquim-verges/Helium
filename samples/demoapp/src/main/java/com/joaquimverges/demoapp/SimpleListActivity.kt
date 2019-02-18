@@ -10,7 +10,7 @@ class SimpleListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val viewDelegate = ListViewDelegate(layoutInflater, { inflater, container ->
-            MyRecyclerItem(R.layout.list_item_layout, inflater, container)
+            MyRecyclerItem(inflater, container)
         })
         MyListPresenter().attach(viewDelegate)
         setContentView(viewDelegate.view)

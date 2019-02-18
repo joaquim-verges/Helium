@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.IdRes
 import com.joaquimverges.helium.core.event.ViewEvent
 import io.reactivex.subjects.PublishSubject
 
@@ -37,4 +38,9 @@ abstract class BaseRecyclerViewItem<in T, V : ViewEvent>(val view: View) : Recyc
     abstract fun bind(data: T)
 
     fun pushEvent(event: V) = viewEvents?.onNext(event)
+
+    /**
+     * Convenience method to find a view by id within this recyclerViewItem
+     */
+    protected fun <V : View> findView(@IdRes resId: Int): V = itemView.findViewById(resId)
 }

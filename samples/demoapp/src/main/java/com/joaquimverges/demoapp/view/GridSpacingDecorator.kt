@@ -13,7 +13,7 @@ class GridSpacingDecorator(private val space: Int, orientation: Int) : RecyclerV
 
     private val isHorizontal = orientation == LinearLayoutManager.HORIZONTAL
 
-    override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
+    override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
 
         val position = parent.getChildLayoutPosition(view)
         val manager = parent.layoutManager as GridLayoutManager

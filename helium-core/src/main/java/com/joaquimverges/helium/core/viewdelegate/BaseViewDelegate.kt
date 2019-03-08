@@ -1,13 +1,13 @@
 package com.joaquimverges.helium.core.viewdelegate
 
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
 import android.content.Context
-import androidx.annotation.IdRes
-import androidx.annotation.LayoutRes
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.IdRes
+import androidx.annotation.LayoutRes
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import com.joaquimverges.helium.core.event.ViewEvent
 import com.joaquimverges.helium.core.state.ViewState
 import io.reactivex.Observable
@@ -25,8 +25,12 @@ import io.reactivex.subjects.PublishSubject
  * @see com.joaquimverges.helium.core.event.ViewEvent
  * @see com.joaquimverges.helium.core.presenter.BasePresenter
  */
-abstract class BaseViewDelegate<in S : ViewState, E : ViewEvent>
-    (val view: View, private val viewEventsObservable: PublishSubject<E> = PublishSubject.create()) {
+abstract class BaseViewDelegate<in S : ViewState, E : ViewEvent>(
+    val view: View,
+    private val viewEventsObservable: PublishSubject<E> = PublishSubject.create(),
+    protected val context: Context = view.context,
+    internal val lifecycle: Lifecycle? = (context as? LifecycleOwner)?.lifecycle
+) {
 
     /**
      * Convenience constructor that inflates the layout for you.
@@ -43,9 +47,6 @@ abstract class BaseViewDelegate<in S : ViewState, E : ViewEvent>
         addToContainer: Boolean = false,
         view: View = inflater.inflate(layoutResId, container, addToContainer)
     ) : this(view)
-
-    protected val context: Context = view.context
-    internal val lifecycle: Lifecycle? = (context as? LifecycleOwner)?.lifecycle
 
     /**
      * Convenience method to find a view by id within this ViewDelegate

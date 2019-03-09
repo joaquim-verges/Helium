@@ -1,8 +1,15 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
+ext {
+    artifact = 'helium-test'
+    libraryName = 'helium-test'
+    libraryDescription = 'Test classes for testing Helium presenters and view delegates'
+}
+
 android {
     compileSdkVersion compile_sdk
+    publishNonDefault true
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -25,16 +32,16 @@ android {
         }
     }
 
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    testImplementation project(':helium-test')
+    api "junit:junit:$junit_version"
+    api "com.nhaarman:mockito-kotlin:$mockito_kotlin_version"
+    api "org.robolectric:robolectric:$robolectric_version"
     implementation project(':helium-core')
-
-    api "androidx.appcompat:appcompat:$support_lib_version"
-    api "androidx.recyclerview:recyclerview:$support_lib_version"
-    api "com.google.android.material:material:$material_lib_version"
 }
-
-apply from: '../maven-push.gradle'

@@ -1,12 +1,14 @@
 package com.joaquimverges.helium.ui.presenter
 
-
 import com.joaquimverges.helium.core.event.ViewEvent
-import com.joaquimverges.helium.test.TestViewDelegate
+import com.joaquimverges.helium.test.HeliumTestCase
+import com.joaquimverges.helium.test.viewdelegate.TestViewDelegate
 import com.joaquimverges.helium.ui.repository.BaseRepository
 import com.joaquimverges.helium.ui.state.ListViewState
 import com.joaquimverges.helium.ui.util.RefreshPolicy
-import com.nhaarman.mockito_kotlin.*
+import com.nhaarman.mockito_kotlin.never
+import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.plugins.RxAndroidPlugins
@@ -14,13 +16,10 @@ import io.reactivex.plugins.RxJavaPlugins
 import io.reactivex.schedulers.TestScheduler
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
-import org.robolectric.RobolectricTestRunner
 
-@RunWith(RobolectricTestRunner::class)
-class ListPresenterTest {
+class ListPresenterTest : HeliumTestCase() {
 
     class TestItem
 

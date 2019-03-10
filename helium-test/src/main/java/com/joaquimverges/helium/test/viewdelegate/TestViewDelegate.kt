@@ -1,4 +1,4 @@
-package com.joaquimverges.helium.test
+package com.joaquimverges.helium.test.viewdelegate
 
 import android.content.Context
 import android.view.View

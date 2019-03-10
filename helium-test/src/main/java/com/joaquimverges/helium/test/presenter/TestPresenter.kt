@@ -1,4 +1,4 @@
-package com.joaquimverges.helium.test
+package com.joaquimverges.helium.test.presenter
 
 import com.joaquimverges.helium.core.event.ViewEvent
 import com.joaquimverges.helium.core.presenter.BasePresenter

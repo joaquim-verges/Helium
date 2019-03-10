@@ -2,15 +2,13 @@ package com.joaquimverges.helium.test
 
 import com.joaquimverges.helium.core.event.ViewEvent
 import com.joaquimverges.helium.core.state.ViewState
-import junit.framework.TestCase
+import com.joaquimverges.helium.test.presenter.TestPresenter
+import com.joaquimverges.helium.test.viewdelegate.TestViewDelegate
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.mockito.MockitoAnnotations
-import org.robolectric.RobolectricTestRunner
 
-@RunWith(RobolectricTestRunner::class)
-class CoreTests : TestCase() {
+class CoreTests : HeliumTestCase() {
 
     class SimpleViewEvent : ViewEvent
     class SimpleViewState : ViewState
@@ -24,7 +22,7 @@ class CoreTests : TestCase() {
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
-        viewDelegate = com.joaquimverges.helium.test.TestViewDelegate()
+        viewDelegate = TestViewDelegate()
         presenter = TestPresenter()
     }
 

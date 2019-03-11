@@ -1,12 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
-ext {
-    artifact = 'helium-test'
-    libraryName = 'helium-test'
-    libraryDescription = 'Test classes for testing Helium presenters and view delegates'
-}
-
 android {
     compileSdkVersion compile_sdk
     publishNonDefault true

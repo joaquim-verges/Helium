@@ -10,6 +10,9 @@ Lightweight MVP framework for Android. 100% Kotlin.
 ```groovy
 implementation 'com.joaquimverges.helium:helium-core:x.y.z' // core classes
 implementation 'com.joaquimverges.helium:helium-ui:x.y.z'   // ui components
+implementation 'com.joaquimverges.helium:helium-navigation:x.y.z'   // navigation components
+
+testImplementation 'com.joaquimverges.helium:helium-test:x.y.z'   // unit test helper classes
 ```
 
 ## Benefits

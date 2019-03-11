@@ -1,12 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
-ext {
-    artifact = 'helium-core'
-    libraryName = 'helium-core'
-    libraryDescription = 'Core classes for Helium: MVP Framework for Android'
-}
-
 android {
     compileSdkVersion compile_sdk
     publishNonDefault true

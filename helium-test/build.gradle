@@ -39,3 +39,5 @@ dependencies {
     api "org.robolectric:robolectric:$robolectric_version"
     implementation project(':helium-core')
 }
+
+apply from: '../maven-push.gradle'

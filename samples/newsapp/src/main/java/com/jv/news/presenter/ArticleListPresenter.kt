@@ -7,6 +7,9 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.app.ShareCompat
 import com.joaquimverges.helium.core.presenter.BasePresenter
 import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
+import com.joaquimverges.helium.navigation.event.ToolbarEvent
+import com.joaquimverges.helium.navigation.presenter.ToolbarPresenter
+import com.joaquimverges.helium.navigation.state.NavDrawerState
 import com.joaquimverges.helium.ui.presenter.ListPresenter
 import com.joaquimverges.helium.ui.util.RefreshPolicy
 import com.jv.news.data.ArticleRepository
@@ -22,7 +25,8 @@ import java.util.concurrent.TimeUnit
 class ArticleListPresenter(
     repository: ArticleRepository = ArticleRepository(),
     refreshPolicy: RefreshPolicy = RefreshPolicy(10, TimeUnit.MINUTES),
-    private val listPresenter: ListPresenter<Article, ArticleEvent> = ListPresenter(repository, refreshPolicy)
+    private val listPresenter: ListPresenter<Article, ArticleEvent> = ListPresenter(repository, refreshPolicy),
+    private val toolbarPresenter: ToolbarPresenter = ToolbarPresenter()
 ) : BasePresenter<ArticleListState, ArticleEvent>() {
 
     init {
@@ -39,11 +43,18 @@ class ArticleListPresenter(
             .debounce(2, TimeUnit.SECONDS)
             .subscribe { pushState(ArticleListState.ArticlesLoaded) }
             .autoDispose()
+
+        toolbarPresenter.observeViewEvents().subscribe {
+            when (it) {
+                is ToolbarEvent.HomeClicked -> pushState(ArticleListState.MoreSourcesRequested)
+            }
+        }.autoDispose()
     }
 
     override fun onAttached(viewDelegate: BaseViewDelegate<ArticleListState, ArticleEvent>) {
-        (viewDelegate as ArticleListViewDelegate).run {
+        (viewDelegate as? ArticleListViewDelegate)?.run {
             listPresenter.attach(listViewDelegate)
+            toolbarPresenter.attach(toolbarViewDelegate)
         }
     }
 

@@ -1,13 +1,15 @@
 package com.jv.news.view
 
 import android.content.res.Configuration
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.joaquimverges.helium.core.state.ViewState
 import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
+import com.joaquimverges.helium.navigation.viewdelegate.CollapsingToolbarScreenViewDelegate
+import com.joaquimverges.helium.navigation.viewdelegate.ToolbarViewDelegate
 import com.joaquimverges.helium.ui.viewdelegate.ListViewDelegate
 import com.jv.news.R
 import com.jv.news.data.model.Article
@@ -18,22 +20,47 @@ import com.jv.news.view.event.ArticleEvent
 /**
  * @author joaquim
  */
-class ArticleListViewDelegate(inflater: LayoutInflater) : BaseViewDelegate<ArticleListState, ArticleEvent>(R.layout.view_article_list, inflater) {
+class ArticleListViewDelegate(
+    inflater: LayoutInflater
+) : BaseViewDelegate<ArticleListState, ArticleEvent>(
+    R.layout.view_article_list,
+    inflater
+) {
 
     companion object {
         private const val DOUBLE_SPAN_COUNT = 2
         private const val SINGLE_SPAN_COUNT = 1
     }
 
-    private val listContainer = findView<ViewGroup>(R.id.list_container)
+    val toolbarViewDelegate = inflateToolbar(inflater)
+    val listViewDelegate = inflateListView(inflater)
+    private val container = findView<ViewGroup>(R.id.article_list_container)
+    private val collapsingHeaderTemplate = CollapsingToolbarScreenViewDelegate(inflater, toolbarViewDelegate, listViewDelegate)
 
-    val listViewDelegate = inflateListView(inflater, listContainer)
+    init {
+        container.addView(collapsingHeaderTemplate.view)
+    }
 
     override fun render(viewState: ArticleListState) {
         // no-op
     }
 
-    private fun inflateListView(inflater: LayoutInflater, listContainer: ViewGroup): ListViewDelegate<Article, ArticleEvent, ArticleGridItemViewHolder> {
+    private fun inflateToolbar(inflater: LayoutInflater): ToolbarViewDelegate {
+        return ToolbarViewDelegate(
+            inflater,
+            actionBarCustomization = {
+                it.setDisplayHomeAsUpEnabled(true)
+                it.setHomeAsUpIndicator(R.drawable.ic_menu)
+            },
+            toolbarCustomization = {
+                it.visibility = when (context.resources.configuration.orientation) {
+                    Configuration.ORIENTATION_LANDSCAPE -> View.GONE
+                    else -> View.VISIBLE
+                }
+            })
+    }
+
+    private fun inflateListView(inflater: LayoutInflater): ListViewDelegate<Article, ArticleEvent, ArticleGridItemViewHolder> {
         val context = inflater.context
         val spacing: Int = context.resources.getDimensionPixelSize(R.dimen.grid_spacing)
         val orientation = when (context.resources.configuration.orientation) {
@@ -55,8 +82,6 @@ class ArticleListViewDelegate(inflater: LayoutInflater) : BaseViewDelegate<Artic
             recyclerItemFactory = { layoutInflater, container ->
                 ArticleGridItemViewHolder(layoutInflater, container)
             },
-            container = listContainer,
-            addToContainer = true,
             layoutManager = layoutManager,
             recyclerViewConfig = { recyclerView ->
                 recyclerView.addItemDecoration(SpacesItemDecoration(spacing, orientation))

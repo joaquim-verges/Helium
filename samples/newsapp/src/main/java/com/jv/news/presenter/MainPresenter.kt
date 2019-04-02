@@ -23,7 +23,6 @@ class MainPresenter : BasePresenter<ViewState, ViewEvent>() {
 
     private val articlePresenter = ArticleListPresenter(articleRepo)
     private val sourcesPresenter = SourcesPresenter(sourcesRepo)
-    private val toolbarPresenter = ToolbarPresenter()
 
     init {
         articlePresenter.observeViewState().subscribe { state ->
@@ -32,19 +31,12 @@ class MainPresenter : BasePresenter<ViewState, ViewEvent>() {
                 ArticleListState.MoreSourcesRequested -> pushState(NavDrawerState.Opened)
             }
         }.autoDispose()
-
-        toolbarPresenter.observeViewEvents().subscribe {
-            when (it) {
-                is ToolbarEvent.HomeClicked -> pushState(NavDrawerState.Opened)
-            }
-        }.autoDispose()
     }
 
     override fun onAttached(viewDelegate: BaseViewDelegate<ViewState, ViewEvent>) {
         (viewDelegate as MainViewDelegate).run {
             articlePresenter.attach(mainView)
             sourcesPresenter.attach(drawerView)
-            toolbarPresenter.attach(toolbarView)
         }
     }
 

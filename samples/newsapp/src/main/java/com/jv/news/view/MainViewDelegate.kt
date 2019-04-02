@@ -15,20 +15,14 @@ import com.jv.news.R
  */
 class MainViewDelegate(
     inflater: LayoutInflater,
-    val toolbarView: ToolbarViewDelegate = ToolbarViewDelegate(inflater) {
-        it.setDisplayHomeAsUpEnabled(true)
-        it.setHomeAsUpIndicator(R.drawable.ic_menu)
-    },
     val mainView: ArticleListViewDelegate = ArticleListViewDelegate(inflater),
     val drawerView: SourcesViewDelegate = SourcesViewDelegate(inflater),
     private val navDrawer: NavDrawerViewDelegate = NavDrawerViewDelegate(mainView, drawerView)
 ) : BaseViewDelegate<ViewState, ViewEvent>(R.layout.activity_main, inflater) {
 
-    private val toolbarContainer = findView<ViewGroup>(R.id.toolbar_container)
     private val mainContainer = findView<ViewGroup>(R.id.main_container)
 
     init {
-        toolbarContainer.addView(toolbarView.view)
         mainContainer.addView(navDrawer.view)
     }
 

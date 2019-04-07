@@ -48,7 +48,6 @@ class ArticleListViewDelegate(
         collapsingLayoutCustomization = {
             it.title = "Helium News"
             it.setExpandedTitleTypeface(Typeface.DEFAULT_BOLD)
-            it.setCollapsedTitleTypeface(Typeface.DEFAULT)
             it.expandedTitleMarginStart = context.resources.getDimensionPixelSize(R.dimen.expanded_toolbar_title_margin)
         },
         actionBarCustomization = {

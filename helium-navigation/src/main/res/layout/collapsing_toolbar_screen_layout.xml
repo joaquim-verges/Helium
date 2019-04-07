@@ -18,13 +18,13 @@
                 android:layout_height="match_parent"
                 app:expandedTitleGravity="bottom"
                 app:contentScrim="?attr/colorPrimary"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+                app:layout_scrollFlags="scroll|snap">
 
             <FrameLayout
                     android:id="@+id/collapsing_backdrop_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_collapseMode="parallax"/>
+                    app:layout_collapseMode="none"/>
 
             <androidx.appcompat.widget.Toolbar
                     android:id="@+id/collapsing_toolbar"
@@ -32,7 +32,7 @@
                     android:layout_height="?attr/actionBarSize"
                     style="@style/Base.V7.Widget.AppCompat.Toolbar"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                    app:layout_collapseMode="pin"/>
+                    app:layout_collapseMode="none"/>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>

@@ -7,10 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.appbar.AppBarLayout
 import com.joaquimverges.helium.core.event.ViewEvent
 import com.joaquimverges.helium.core.state.ViewState
 import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
 import com.joaquimverges.helium.navigation.viewdelegate.CollapsingToolbarScreenViewDelegate
+import com.joaquimverges.helium.navigation.viewdelegate.ScrollConfiguration
 import com.joaquimverges.helium.ui.viewdelegate.ListViewDelegate
 import com.jv.news.R
 import com.jv.news.data.model.Article
@@ -45,20 +47,24 @@ class ArticleListViewDelegate(
         inflater,
         listViewDelegate,
         HeaderViewDelegate(inflater),
+        scrollConfiguration = ScrollConfiguration(
+            scrollMode = ScrollConfiguration.ScrollMode.SCROLL_OFF_UNTIL_COLLAPSED,
+            toolbarCollapseMode = ScrollConfiguration.CollapseMode.PIN,
+            backdropCollapseMode = ScrollConfiguration.CollapseMode.NONE
+        ),
         collapsingLayoutCustomization = {
-            it.title = "Helium News"
+            it.title = context.getString(R.string.app_name)
             it.setExpandedTitleTypeface(Typeface.DEFAULT_BOLD)
             it.expandedTitleMarginStart = context.resources.getDimensionPixelSize(R.dimen.expanded_toolbar_title_margin)
-        },
-        actionBarCustomization = {
-            it.setDisplayHomeAsUpEnabled(true)
-            it.setHomeAsUpIndicator(R.drawable.ic_menu)
-        },
-        toolbarCustomization = {
+            // hidden in landscape
             it.visibility = when (context.resources.configuration.orientation) {
                 Configuration.ORIENTATION_LANDSCAPE -> View.GONE
                 else -> View.VISIBLE
             }
+        },
+        actionBarCustomization = {
+            it.setDisplayHomeAsUpEnabled(true)
+            it.setHomeAsUpIndicator(R.drawable.ic_menu)
         }
     )
     val toolbarViewDelegate = collapsingToolbarScreenViewDelegate.toolbarViewDelegate

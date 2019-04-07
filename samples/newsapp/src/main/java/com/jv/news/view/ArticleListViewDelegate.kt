@@ -1,15 +1,16 @@
 package com.jv.news.view
 
 import android.content.res.Configuration
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.joaquimverges.helium.core.event.ViewEvent
 import com.joaquimverges.helium.core.state.ViewState
 import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
 import com.joaquimverges.helium.navigation.viewdelegate.CollapsingToolbarScreenViewDelegate
-import com.joaquimverges.helium.navigation.viewdelegate.ToolbarViewDelegate
 import com.joaquimverges.helium.ui.viewdelegate.ListViewDelegate
 import com.jv.news.R
 import com.jv.news.data.model.Article
@@ -32,32 +33,43 @@ class ArticleListViewDelegate(
         private const val SINGLE_SPAN_COUNT = 1
     }
 
-    val toolbarViewDelegate = inflateToolbar(inflater)
+    class HeaderViewDelegate(inflater: LayoutInflater) : BaseViewDelegate<ViewState, ViewEvent>(R.layout.view_toolbar_backdrop, inflater) {
+        override fun render(viewState: ViewState) {
+
+        }
+    }
+
     val listViewDelegate = inflateListView(inflater)
     private val container = findView<ViewGroup>(R.id.article_list_container)
-    private val collapsingHeaderTemplate = CollapsingToolbarScreenViewDelegate(inflater, toolbarViewDelegate, listViewDelegate)
+    private val collapsingToolbarScreenViewDelegate = CollapsingToolbarScreenViewDelegate(
+        inflater,
+        listViewDelegate,
+        HeaderViewDelegate(inflater),
+        collapsingLayoutCustomization = {
+            it.title = "Helium News"
+            it.setExpandedTitleTypeface(Typeface.DEFAULT_BOLD)
+            it.setCollapsedTitleTypeface(Typeface.DEFAULT)
+            it.expandedTitleMarginStart = context.resources.getDimensionPixelSize(R.dimen.expanded_toolbar_title_margin)
+        },
+        actionBarCustomization = {
+            it.setDisplayHomeAsUpEnabled(true)
+            it.setHomeAsUpIndicator(R.drawable.ic_menu)
+        },
+        toolbarCustomization = {
+            it.visibility = when (context.resources.configuration.orientation) {
+                Configuration.ORIENTATION_LANDSCAPE -> View.GONE
+                else -> View.VISIBLE
+            }
+        }
+    )
+    val toolbarViewDelegate = collapsingToolbarScreenViewDelegate.toolbarViewDelegate
 
     init {
-        container.addView(collapsingHeaderTemplate.view)
+        container.addView(collapsingToolbarScreenViewDelegate.view)
     }
 
     override fun render(viewState: ArticleListState) {
         // no-op
-    }
-
-    private fun inflateToolbar(inflater: LayoutInflater): ToolbarViewDelegate {
-        return ToolbarViewDelegate(
-            inflater,
-            actionBarCustomization = {
-                it.setDisplayHomeAsUpEnabled(true)
-                it.setHomeAsUpIndicator(R.drawable.ic_menu)
-            },
-            toolbarCustomization = {
-                it.visibility = when (context.resources.configuration.orientation) {
-                    Configuration.ORIENTATION_LANDSCAPE -> View.GONE
-                    else -> View.VISIBLE
-                }
-            })
     }
 
     private fun inflateListView(inflater: LayoutInflater): ListViewDelegate<Article, ArticleEvent, ArticleGridItemViewHolder> {

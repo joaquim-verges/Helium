@@ -27,7 +27,9 @@ class CollapsingToolbarScreenViewDelegate(
     inflater: LayoutInflater,
     contentViewDelegate: BaseViewDelegate<*, *>,
     backdropViewDelegate: BaseViewDelegate<*, *>? = null,
-    scrollConfiguration: ScrollConfiguration = ScrollConfiguration.default(),
+    scrollConfiguration: ScrollConfiguration = backdropViewDelegate?.let {
+        ScrollConfiguration.defaultWithBackdrop()
+    } ?: ScrollConfiguration.default(),
     // Toolbar customization
     @MenuRes menuResId: Int? = null,
     collapsingLayoutCustomization: ((CollapsingToolbarLayout) -> Unit)? = null,
@@ -46,8 +48,13 @@ class CollapsingToolbarScreenViewDelegate(
     val toolbarViewDelegate = ToolbarViewDelegate(toolbarContainer, menuResId, actionBarCustomization, toolbarCustomization)
 
     init {
+        collapsingToolbarLayout.isTitleEnabled = false // collapsing toolbar title off by default
         listContainer.addView(contentViewDelegate.view)
-        backdropViewDelegate?.let { backdropContainer.addView(it.view) }
+        backdropViewDelegate?.let {
+            backdropContainer.addView(it.view)
+            // enable collapsing toolbar title if backdrop view is provided
+            collapsingToolbarLayout.isTitleEnabled = true
+        }
         collapsingLayoutCustomization?.invoke(collapsingToolbarLayout)
         (collapsingToolbarLayout.layoutParams as AppBarLayout.LayoutParams).scrollFlags = scrollConfiguration.scrollMode.scrollFlags
         (toolbarContainer.layoutParams as CollapsingToolbarLayout.LayoutParams).collapseMode = scrollConfiguration.toolbarCollapseMode.mode

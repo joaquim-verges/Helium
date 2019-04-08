@@ -18,6 +18,12 @@ data class ScrollConfiguration(
 
     companion object {
         fun default() = ScrollConfiguration(
+            ScrollMode.SCROLL_OFF_AND_SCROLL_BACK_IN,
+            CollapseMode.NONE,
+            CollapseMode.NONE
+        )
+
+        fun defaultWithBackdrop() = ScrollConfiguration(
             ScrollMode.SCROLL_OFF_UNTIL_COLLAPSED,
             CollapseMode.PIN,
             CollapseMode.PARALLAX

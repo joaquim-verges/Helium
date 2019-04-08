@@ -17,11 +17,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.joaquimverges.demoapp.SimpleListActivity" />
-        <activity android:name="com.joaquimverges.demoapp.ViewPagerActivity" />
-        <activity android:name="com.joaquimverges.demoapp.SimpleListActivityRetained" />
-        <activity android:name="com.joaquimverges.demoapp.SimpleListFragmentActivityRetained" />
-        <activity android:name="com.joaquimverges.demoapp.AdvancedListActivity" />
+        <activity android:name="com.joaquimverges.demoapp.SimpleListActivity"/>
+        <activity android:name="com.joaquimverges.demoapp.ViewPagerActivity"/>
+        <activity android:name="com.joaquimverges.demoapp.SimpleListActivityRetained"/>
+        <activity android:name="com.joaquimverges.demoapp.SimpleListFragmentActivityRetained"/>
+        <activity
+                android:name="com.joaquimverges.demoapp.AdvancedListActivity"
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
     </application>
 
 </manifest>

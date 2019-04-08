@@ -47,11 +47,6 @@ class ArticleListViewDelegate(
         inflater,
         listViewDelegate,
         HeaderViewDelegate(inflater),
-        scrollConfiguration = ScrollConfiguration(
-            scrollMode = ScrollConfiguration.ScrollMode.SCROLL_OFF_UNTIL_COLLAPSED,
-            toolbarCollapseMode = ScrollConfiguration.CollapseMode.PIN,
-            backdropCollapseMode = ScrollConfiguration.CollapseMode.NONE
-        ),
         collapsingLayoutCustomization = {
             it.title = context.getString(R.string.app_name)
             it.setExpandedTitleTypeface(Typeface.DEFAULT_BOLD)

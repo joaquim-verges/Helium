@@ -34,4 +34,5 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
     implementation project(':helium-core')
     implementation project(':helium-ui')
+    implementation project(':helium-navigation')
 }

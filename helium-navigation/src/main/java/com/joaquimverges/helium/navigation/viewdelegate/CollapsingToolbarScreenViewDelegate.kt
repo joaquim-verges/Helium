@@ -23,7 +23,7 @@ import com.joaquimverges.helium.navigation.R
  * @param actionBarCustomization: Extra customization for the ActionBar (likely up navigation controls)
  * @param toolbarCustomization: Extra customization for the Toolbar (any other styling)
  */
-class CollapsingToolbarScreenViewDelegate(
+open class CollapsingToolbarScreenViewDelegate<S: ViewState, E: ViewEvent>(
     inflater: LayoutInflater,
     contentViewDelegate: BaseViewDelegate<*, *>,
     backdropViewDelegate: BaseViewDelegate<*, *>? = null,
@@ -35,7 +35,7 @@ class CollapsingToolbarScreenViewDelegate(
     collapsingLayoutCustomization: ((CollapsingToolbarLayout) -> Unit)? = null,
     actionBarCustomization: ((ActionBar) -> Unit)? = null,
     toolbarCustomization: ((Toolbar) -> Unit)? = null
-) : BaseViewDelegate<ViewState, ViewEvent>(
+) : BaseViewDelegate<S, E>(
     R.layout.collapsing_toolbar_screen_layout,
     inflater
 ) {
@@ -61,7 +61,7 @@ class CollapsingToolbarScreenViewDelegate(
         (backdropContainer.layoutParams as CollapsingToolbarLayout.LayoutParams).collapseMode = scrollConfiguration.backdropCollapseMode.mode
     }
 
-    override fun render(viewState: ViewState) {
+    override fun render(viewState: S) {
 
     }
 }

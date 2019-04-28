@@ -17,6 +17,12 @@ data class ScrollConfiguration(
 ) {
 
     companion object {
+        fun noScroll() = ScrollConfiguration(
+            ScrollMode.NO_SCROLL,
+            CollapseMode.NONE,
+            CollapseMode.NONE
+        )
+
         fun default() = ScrollConfiguration(
             ScrollMode.SCROLL_OFF_AND_SCROLL_BACK_IN,
             CollapseMode.NONE,
@@ -31,6 +37,7 @@ data class ScrollConfiguration(
     }
 
     enum class ScrollMode(@AppBarLayout.LayoutParams.ScrollFlags val scrollFlags: Int) {
+        NO_SCROLL(0),
         SCROLL_OFF(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL),
         SCROLL_OFF_UNTIL_COLLAPSED(
             AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL

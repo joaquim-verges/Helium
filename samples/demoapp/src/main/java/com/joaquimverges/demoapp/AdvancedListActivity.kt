@@ -14,6 +14,7 @@ import com.joaquimverges.helium.core.event.ViewEvent
 import com.joaquimverges.helium.core.retained.getRetainedPresenter
 import com.joaquimverges.helium.core.state.ViewState
 import com.joaquimverges.helium.navigation.viewdelegate.CollapsingToolbarScreenViewDelegate
+import com.joaquimverges.helium.navigation.viewdelegate.ScrollConfiguration
 import com.joaquimverges.helium.ui.viewdelegate.ListViewDelegate
 
 class AdvancedListActivity : AppCompatActivity() {

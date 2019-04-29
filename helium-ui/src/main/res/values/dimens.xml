@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="default_card_image_height">180dp</dimen>
+    <dimen name="default_card_image_height">160dp</dimen>
+    <dimen name="default_card_radius">6dp</dimen>
+    <dimen name="default_card_elevation">1dp</dimen>
+    <dimen name="default_card_translation_z">2dp</dimen>
+    <dimen name="default_card_padding">8dp</dimen>
 </resources>

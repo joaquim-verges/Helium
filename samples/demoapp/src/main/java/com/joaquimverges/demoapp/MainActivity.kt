@@ -7,10 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.joaquimverges.demoapp.view.GridSpacingDecorator
 import com.joaquimverges.helium.core.event.ClickEvent
 import com.joaquimverges.helium.ui.presenter.ListPresenter
 import com.joaquimverges.helium.ui.repository.BaseRepository
 import com.joaquimverges.helium.ui.viewdelegate.BaseRecyclerViewItem
+import com.joaquimverges.helium.ui.viewdelegate.CardRecyclerItem
 import com.joaquimverges.helium.ui.viewdelegate.ListViewDelegate
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -56,7 +58,7 @@ class MainActivity : AppCompatActivity() {
     class MenuRecyclerItem(inflater: LayoutInflater,
                            parent: ViewGroup,
                            root: View = inflater.inflate(R.layout.menu_item_layout, parent, false))
-        : BaseRecyclerViewItem<MenuItem, ClickEvent<MenuItem>>(root) {
+        : CardRecyclerItem<MenuItem, ClickEvent<MenuItem>>(root, inflater, parent) {
 
         private val title = root.findViewById<TextView>(R.id.menu_title)
 
@@ -73,6 +75,8 @@ class MainActivity : AppCompatActivity() {
 
         val viewDelegate = ListViewDelegate(layoutInflater, { inflater, container ->
             MenuRecyclerItem(inflater, container)
+        }, recyclerViewConfig = {
+            it.addItemDecoration(GridSpacingDecorator(resources.getDimensionPixelSize(R.dimen.menu_padding)))
         })
         MenuPresenter().attach(viewDelegate)
         setContentView(viewDelegate.view)

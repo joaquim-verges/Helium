@@ -3,9 +3,6 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical"
               android:gravity="center"
-              android:paddingTop="@dimen/menu_padding"
-              android:paddingStart="@dimen/menu_padding"
-              android:paddingEnd="@dimen/menu_padding"
               android:layout_width="match_parent"
               android:layout_height="wrap_content">
 
@@ -15,7 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/menu_padding"
-            android:background="@drawable/menu_item_background"
+            android:background="@color/colorPrimary"
             android:foreground="?selectableItemBackground"
             android:textAppearance="@style/TextAppearance.AppCompat.Button"
             android:textSize="18sp"/>

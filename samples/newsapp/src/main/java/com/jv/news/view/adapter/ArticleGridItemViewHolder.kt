@@ -1,13 +1,12 @@
 package com.jv.news.view.adapter
 
-import android.content.Context
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import com.bumptech.glide.Glide
 import com.joaquimverges.helium.ui.viewdelegate.BaseRecyclerViewItem
 import com.jv.news.R
@@ -30,8 +29,6 @@ class ArticleGridItemViewHolder(
         android.R.color.holo_red_dark, android.R.color.holo_green_dark,
         android.R.color.holo_blue_dark, android.R.color.holo_orange_dark, android.R.color.holo_purple
     )
-
-    private val context: Context = itemView.context
 
     override fun bind(data: Article) {
         val color = randomColor(data)

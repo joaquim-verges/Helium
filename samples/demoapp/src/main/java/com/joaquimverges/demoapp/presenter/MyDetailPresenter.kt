@@ -1,6 +1,6 @@
 package com.joaquimverges.demoapp.presenter
 
-import com.joaquimverges.demoapp.data.MyDdetailRepository
+import com.joaquimverges.demoapp.data.MyDetailRepository
 import com.joaquimverges.demoapp.data.MyItem
 import com.joaquimverges.helium.core.event.ClickEvent
 import com.joaquimverges.helium.core.presenter.BasePresenter
@@ -10,7 +10,7 @@ import com.joaquimverges.helium.core.util.async
 /**
  * @author joaquim
  */
-class MyDetailPresenter(private val repository: MyDdetailRepository = MyDdetailRepository())
+class MyDetailPresenter(private val repository: MyDetailRepository = MyDetailRepository())
     : BasePresenter<ListViewState<MyItem>, ClickEvent<MyItem>>() {
 
     init {

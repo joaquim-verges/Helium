@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         LIST_RETAINED("List (retained)"),
         LIST_RETAINED_FRAGMENT("List Fragment (retained)"),
         ADVANCED_LIST("Advanced List"),
+        CARD_LIST("Card List"),
         VIEW_PAGER("ViewPager"),
     }
 
@@ -39,11 +40,12 @@ class MainActivity : AppCompatActivity() {
         override fun onViewEvent(event: ClickEvent<MenuItem>) {
             val context = event.view.context
             val activityClass = when (event.data) {
-                MainActivity.MenuItem.LIST_NOT_RETAINED -> SimpleListActivity::class.java
-                MainActivity.MenuItem.LIST_RETAINED -> SimpleListActivityRetained::class.java
-                MainActivity.MenuItem.LIST_RETAINED_FRAGMENT -> SimpleListFragmentActivityRetained::class.java
-                MainActivity.MenuItem.ADVANCED_LIST -> AdvancedListActivity::class.java
-                MainActivity.MenuItem.VIEW_PAGER -> ViewPagerActivity::class.java
+                MenuItem.LIST_NOT_RETAINED -> SimpleListActivity::class.java
+                MenuItem.LIST_RETAINED -> SimpleListActivityRetained::class.java
+                MenuItem.LIST_RETAINED_FRAGMENT -> SimpleListFragmentActivityRetained::class.java
+                MenuItem.ADVANCED_LIST -> AdvancedListActivity::class.java
+                MenuItem.CARD_LIST -> CardListActivity::class.java
+                MenuItem.VIEW_PAGER -> ViewPagerActivity::class.java
             }
             context.startActivity(Intent(context, activityClass))
         }

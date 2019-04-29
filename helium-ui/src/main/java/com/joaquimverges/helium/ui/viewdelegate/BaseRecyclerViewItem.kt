@@ -1,5 +1,6 @@
 package com.joaquimverges.helium.ui.viewdelegate
 
+import android.content.Context
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
@@ -34,6 +35,7 @@ abstract class BaseRecyclerViewItem<in T, V : ViewEvent>(val view: View) : Recyc
     ) : this(view)
 
     internal var viewEvents: PublishSubject<V>? = null
+    protected var context: Context = itemView.context
 
     abstract fun bind(data: T)
 

@@ -9,11 +9,11 @@ import java.util.concurrent.TimeUnit
 /**
  * @author joaquim
  */
-class MyDdetailRepository : BaseRepository<MyItem> {
+class MyDetailRepository : BaseRepository<MyItem> {
 
     override fun getData(): Single<MyItem> {
         return Single
-                .just(MyItem(randomColor(Random().nextInt())))
-                .delay(1, TimeUnit.SECONDS)
+            .just(randomColor(Random().nextInt()).run { MyItem(color, name.toLowerCase().replace("_", " ")) })
+            .delay(1, TimeUnit.SECONDS)
     }
 }

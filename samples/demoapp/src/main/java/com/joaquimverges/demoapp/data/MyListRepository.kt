@@ -13,7 +13,7 @@ class MyListRepository : BaseRepository<List<MyItem>> {
 
     override fun getData(): Single<List<MyItem>> {
         return Flowable.range(0, 100)
-                .map { i -> MyItem(randomColor(i)) }
+                .map { i -> randomColor(i).run { MyItem(color, name.toLowerCase().replace("_", " ")) } }
                 .toList()
                 .delay(1, TimeUnit.SECONDS)
     }

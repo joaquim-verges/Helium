@@ -3,7 +3,6 @@ package com.joaquimverges.demoapp
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
-import android.view.ViewStub
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,7 +13,6 @@ import com.joaquimverges.helium.core.event.ViewEvent
 import com.joaquimverges.helium.core.retained.getRetainedPresenter
 import com.joaquimverges.helium.core.state.ViewState
 import com.joaquimverges.helium.navigation.viewdelegate.CollapsingToolbarScreenViewDelegate
-import com.joaquimverges.helium.navigation.viewdelegate.ScrollConfiguration
 import com.joaquimverges.helium.ui.viewdelegate.ListViewDelegate
 
 class AdvancedListActivity : AppCompatActivity() {

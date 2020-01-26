@@ -2,57 +2,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:gravity="center"
-              android:background="@drawable/ic_launcher_background"
+              android:background="@color/colorPrimary"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
     <ImageView
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:tint="#FFF"
+            android:tint="#000"
             android:src="@drawable/ic_helium"
             android:layout_marginBottom="@dimen/normal_padding"/>
 
-    <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="helium"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textColor="#FFF"
-            android:textStyle="bold"
-            android:layout_marginRight="4dp"
-            android:textSize="36sp"
-            android:fontFamily="sans-serif-smallcaps"
-            android:layout_gravity="center"/>
-
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="news"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textColor="#7FFF"
-            android:textSize="38sp"
-            android:fontFamily="sans-serif-smallcaps"
-            android:layout_gravity="center"/>
-
-    </LinearLayout>
-
     <Space
             android:layout_width="0dp"
-            android:layout_height="100dp"/>
+            android:layout_height="8dp"/>
 
     <TextView
             android:id="@+id/open_drawer_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Get started"
-            android:padding="@dimen/normal_padding"
             android:background="@drawable/button_background"
-            android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Colored"
-            android:layout_gravity="center"/>
+            android:padding="@dimen/normal_padding"
+            android:text="Get started"
+            android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button" />
 
 </LinearLayout>

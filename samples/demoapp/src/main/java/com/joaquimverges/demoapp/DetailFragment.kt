@@ -15,7 +15,7 @@ class DetailFragment : Fragment() {
     private lateinit var presenter: MyDetailPresenter
     private lateinit var viewDelegate: MyDetailViewDelegate
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         presenter = getRetainedPresenter()
     }

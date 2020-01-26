@@ -32,8 +32,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     implementation project(':helium-core')
-    implementation "androidx.appcompat:appcompat:$support_lib_version"
-    implementation "com.google.android.material:material:$support_lib_version"
+    api "androidx.appcompat:appcompat:$appcompat_version"
+    api "com.google.android.material:material:$material_lib_version"
 }
 
 apply from: '../maven-push.gradle'

@@ -18,7 +18,7 @@ class ListFragment : Fragment() {
     private lateinit var presenter: MyListPresenter
     private lateinit var viewDelegate: ListViewDelegate<MyItem, ClickEvent<MyItem>, MyRecyclerItem>
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         presenter = getRetainedPresenter()
     }

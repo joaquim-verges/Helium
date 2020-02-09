@@ -1,7 +1,10 @@
 package com.joaquimverges.helium.ui.viewdelegate
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.joaquimverges.helium.core.event.ViewEvent
 import io.reactivex.Observable
@@ -19,7 +22,16 @@ class BaseRecyclerAdapter<in T, E : ViewEvent, VH : BaseRecyclerViewItem<T, E>>(
     private val viewEvents: PublishSubject<E> = PublishSubject.create()
 ) : RecyclerView.Adapter<VH>() {
 
-    private val mArticles = mutableListOf<T>()
+    private val diff = AsyncListDiffer<T>(this, object : DiffUtil.ItemCallback<T>() {
+        override fun areItemsTheSame(oldItem: T, newItem: T): Boolean {
+            return oldItem == newItem
+        }
+
+        @SuppressLint("DiffUtilEquals")
+        override fun areContentsTheSame(oldItem: T, newItem: T): Boolean {
+            return oldItem == newItem
+        }
+    })
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         val holder = viewHolderFactory.invoke(inflater, parent)
@@ -36,21 +48,14 @@ class BaseRecyclerAdapter<in T, E : ViewEvent, VH : BaseRecyclerViewItem<T, E>>(
     }
 
     private fun getItem(position: Int): T {
-        return mArticles[position]
+        return diff.currentList[position]
     }
 
     override fun getItemCount(): Int {
-        return mArticles.size
+        return diff.currentList.size
     }
 
     fun setItems(items: List<T>) {
-        mArticles.clear()
-        mArticles.addAll(items)
-        notifyDataSetChanged()
-    }
-
-    fun appendItems(items: List<T>) {
-        mArticles.addAll(items)
-        notifyDataSetChanged()
+        diff.submitList(items)
     }
 }

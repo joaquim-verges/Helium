@@ -53,6 +53,9 @@ object NewsApiServer {
         @GET(ENDPOINT_ARTICLES)
         fun getArticles(@Query("sources") source: String, @Query("page") page: Int): Single<ArticleResponse>
 
+        @GET(ENDPOINT_ARTICLES)
+        fun getArticlesByInterest(@Query("q") query: String, @Query("page") page: Int, @Query("sortBy") sort: String = "relevancy"): Single<ArticleResponse>
+
         @GET(ENDPOINT_SOURCES)
         fun getSources(): Single<SourcesResponse>
     }

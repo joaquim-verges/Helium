@@ -5,6 +5,7 @@ import com.jv.news.data.model.Article
 import com.jv.news.data.model.ArticleResponse
 import io.reactivex.Maybe
 import io.reactivex.Single
+import java.net.URL
 
 /**
  * @author joaquim
@@ -40,6 +41,7 @@ class ArticleRepository(
                 response.articles
                     .filter { it.url != null && it.urlToImage != null }
                     .distinctBy { it.title }
+                    .distinctBy { URL(it.url).path }
             }
     }
 

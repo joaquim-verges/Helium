@@ -22,9 +22,9 @@ class ArticleGridItemViewHolder(
     itemView: View = inflater.inflate(R.layout.view_article_item, parent, false)
 ) : BaseRecyclerViewItem<Article, ArticleEvent>(itemView) {
 
-    private val mMediaView: ImageView = findView(R.id.article_media)
-    private val mTitleView: TextView = findView(R.id.article_title)
-    private val mDescriptionView: TextView = findView(R.id.article_description)
+    private val mediaView: ImageView = findView(R.id.article_media)
+    private val titleView: TextView = findView(R.id.article_title)
+    private val sourcesView: TextView = findView(R.id.article_source)
     private val colors = intArrayOf(
         android.R.color.holo_red_dark, android.R.color.holo_green_dark,
         android.R.color.holo_blue_dark, android.R.color.holo_orange_dark, android.R.color.holo_purple
@@ -32,14 +32,14 @@ class ArticleGridItemViewHolder(
 
     override fun bind(data: Article) {
         val color = randomColor(data)
-        mMediaView.setBackgroundColor(color)
-        mTitleView.text = data.title
-        mDescriptionView.text = data.source?.name
+        mediaView.setBackgroundColor(color)
+        titleView.text = data.title
+        sourcesView.text = data.source?.name
         ContextCompat.getDrawable(context, R.drawable.label_background)?.let {
             DrawableCompat.setTint(it, color)
-            mDescriptionView.background = it
+            sourcesView.background = it
         }
-        Glide.with(context).load(data.urlToImage).into(mMediaView)
+        Glide.with(context).load(data.urlToImage).into(mediaView)
         itemView.setOnClickListener {
             pushEvent(ArticleEvent.Clicked(context, data))
         }

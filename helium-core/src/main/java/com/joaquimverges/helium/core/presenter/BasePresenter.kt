@@ -44,7 +44,6 @@ abstract class BasePresenter<S : ViewState, E : ViewEvent> : ViewModel(), Lifecy
      */
     fun attach(viewDelegate: BaseViewDelegate<S, E>) {
         val lifecycle: Lifecycle = viewDelegate.lifecycle
-            ?: throw IllegalArgumentException("Cannot attach view delegates that don't have a lifecycle aware context")
         observeViewState().autoDispose(lifecycle).subscribe { viewDelegate.render(it) }
         viewDelegate.observer().autoDispose(lifecycle).subscribe { processViewEvent(it) }
         lifecycle.addObserver(this)

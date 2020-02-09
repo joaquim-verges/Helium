@@ -6,6 +6,7 @@ import com.joaquimverges.demoapp.data.Colors
 import com.joaquimverges.demoapp.data.MyListRepository
 import com.joaquimverges.demoapp.data.MyItem
 import com.joaquimverges.helium.core.event.ClickEvent
+import com.joaquimverges.helium.ui.event.ListViewEvent
 import com.joaquimverges.helium.ui.presenter.ListPresenter
 import com.joaquimverges.helium.ui.util.RefreshPolicy
 import java.util.concurrent.TimeUnit
@@ -15,9 +16,14 @@ import java.util.concurrent.TimeUnit
  */
 class MyListPresenter : ListPresenter<MyItem, ClickEvent<MyItem>>(MyListRepository(), RefreshPolicy(5, TimeUnit.MINUTES)) {
 
-    override fun onViewEvent(event: ClickEvent<MyItem>) {
-        val context = event.view.context
-        val clickedColor = ContextCompat.getColor(context, event.data.color)
-        Toast.makeText(context, "Clicked color ${Colors.toHexString(clickedColor)}", Toast.LENGTH_SHORT).show()
+    override fun onViewEvent(event: ListViewEvent<ClickEvent<MyItem>>) {
+        when(event) {
+           is ListViewEvent.ListItemEvent -> {
+               val context = event.itemEvent.view.context
+               val clickedColor = ContextCompat.getColor(context, event.itemEvent.data.color)
+               Toast.makeText(context, "Clicked color ${Colors.toHexString(clickedColor)}", Toast.LENGTH_SHORT).show()
+           }
+        }
+
     }
 }

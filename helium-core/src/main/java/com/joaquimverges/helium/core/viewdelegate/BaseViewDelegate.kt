@@ -28,9 +28,8 @@ import io.reactivex.subjects.PublishSubject
 abstract class BaseViewDelegate<in S : ViewState, E : ViewEvent>(
     val view: View,
     private val viewEventsObservable: PublishSubject<E> = PublishSubject.create(),
-    protected val context: Context = view.context,
-    internal val lifecycle: Lifecycle? = (context as? LifecycleOwner)?.lifecycle
-) {
+    protected val context: Context = view.context
+) : LifecycleOwner {
 
     /**
      * Convenience constructor that inflates the layout for you.
@@ -67,4 +66,9 @@ abstract class BaseViewDelegate<in S : ViewState, E : ViewEvent>(
      * Pushes a new ViewEvent, which will trigger active subscribers
      */
     fun pushEvent(event: E) = viewEventsObservable.onNext(event)
+
+    override fun getLifecycle(): Lifecycle {
+        return (context as? LifecycleOwner)?.lifecycle
+            ?: throw IllegalArgumentException("${this::class.java} does not have a Lifecycle aware context")
+    }
 }

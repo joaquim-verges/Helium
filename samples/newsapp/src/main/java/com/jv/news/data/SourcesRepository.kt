@@ -27,8 +27,8 @@ class SourcesRepository(
 
     override fun getData(): Single<List<SourcesCategoryGroup>> {
         return api.getSources()
-            .map { it.sources.groupBy { it.category } }
-            .map { it.mapNotNull { mapEntry -> mapEntry.key?.let { SourcesCategoryGroup(it, mapEntry.value) { source -> isSelected(source) } } } }
+            .map { it.sources.groupBy { source -> source.category } }
+            .map { it.mapNotNull { mapEntry -> mapEntry.key?.let { name -> SourcesCategoryGroup(name, mapEntry.value) { source -> isSelected(source) } } } }
     }
 
     fun getSelectedSourceIds(): MutableSet<String> {

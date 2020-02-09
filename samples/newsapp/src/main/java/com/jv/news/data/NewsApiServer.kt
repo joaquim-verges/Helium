@@ -20,16 +20,15 @@ object NewsApiServer {
 
     private val API_KEY = App.context.resources.getString(R.string.api_key)
     private const val BASE_URL = "https://newsapi.org/v2/"
-    private const val ENDPOINT_ARTICLES = "everything?language=en&pageSize=100"
+    private const val ENDPOINT_ARTICLES = "everything?language=en&pageSize=20"
     private const val ENDPOINT_SOURCES = "sources?language=en"
 
     val service: NewsApiService
 
     init {
-
         val client = OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY })
-            .addInterceptor({
+            .addInterceptor {
                 val original = it.request()
                 it.proceed(
                     original
@@ -38,7 +37,7 @@ object NewsApiServer {
                         .method(original.method(), original.body())
                         .build()
                 )
-            })
+            }
             .build()
 
         val retrofit = Retrofit.Builder()
@@ -52,7 +51,7 @@ object NewsApiServer {
 
     interface NewsApiService {
         @GET(ENDPOINT_ARTICLES)
-        fun getArticles(@Query("sources") source: String): Single<ArticleResponse>
+        fun getArticles(@Query("sources") source: String, @Query("page") page: Int): Single<ArticleResponse>
 
         @GET(ENDPOINT_SOURCES)
         fun getSources(): Single<SourcesResponse>

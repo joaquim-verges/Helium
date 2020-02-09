@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.joaquimverges.demoapp.view.GridSpacingDecorator
 import com.joaquimverges.helium.core.event.ClickEvent
+import com.joaquimverges.helium.ui.event.ListViewEvent
 import com.joaquimverges.helium.ui.presenter.ListPresenter
 import com.joaquimverges.helium.ui.repository.BaseRepository
 import com.joaquimverges.helium.ui.viewdelegate.BaseRecyclerViewItem
@@ -39,17 +40,22 @@ class MainActivity : AppCompatActivity() {
 
     class MenuPresenter : ListPresenter<MenuItem, ClickEvent<MenuItem>>(MenuRepository()) {
 
-        override fun onViewEvent(event: ClickEvent<MenuItem>) {
-            val context = event.view.context
-            val activityClass = when (event.data) {
-                MenuItem.LIST_NOT_RETAINED -> SimpleListActivity::class.java
-                MenuItem.LIST_RETAINED -> SimpleListActivityRetained::class.java
-                MenuItem.LIST_RETAINED_FRAGMENT -> SimpleListFragmentActivityRetained::class.java
-                MenuItem.ADVANCED_LIST -> AdvancedListActivity::class.java
-                MenuItem.CARD_LIST -> CardListActivity::class.java
-                MenuItem.VIEW_PAGER -> ViewPagerActivity::class.java
+        override fun onViewEvent(event: ListViewEvent<ClickEvent<MenuItem>>) {
+            when (event) {
+                is ListViewEvent.ListItemEvent -> {
+                    val itemEvent = event.itemEvent
+                    val context = itemEvent.view.context
+                    val activityClass = when (itemEvent.data) {
+                        MenuItem.LIST_NOT_RETAINED -> SimpleListActivity::class.java
+                        MenuItem.LIST_RETAINED -> SimpleListActivityRetained::class.java
+                        MenuItem.LIST_RETAINED_FRAGMENT -> SimpleListFragmentActivityRetained::class.java
+                        MenuItem.ADVANCED_LIST -> AdvancedListActivity::class.java
+                        MenuItem.CARD_LIST -> CardListActivity::class.java
+                        MenuItem.VIEW_PAGER -> ViewPagerActivity::class.java
+                    }
+                    context.startActivity(Intent(context, activityClass))
+                }
             }
-            context.startActivity(Intent(context, activityClass))
         }
     }
 

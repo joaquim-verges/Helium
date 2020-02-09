@@ -1,5 +1,6 @@
 package com.joaquimverges.helium.ui.repository
 
+import io.reactivex.Maybe
 import io.reactivex.Single
 
 /**
@@ -8,4 +9,5 @@ import io.reactivex.Single
  */
 interface BaseRepository<T> {
     fun getData(): Single<T>
+    fun paginate(): Maybe<T> = Maybe.empty()
 }

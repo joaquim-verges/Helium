@@ -1,17 +1,19 @@
 package com.joaquimverges.helium.ui.viewdelegate
 
-import androidx.annotation.LayoutRes
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import androidx.annotation.LayoutRes
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.joaquimverges.helium.core.event.ViewEvent
+import com.joaquimverges.helium.core.util.autoDispose
 import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
 import com.joaquimverges.helium.ui.R
+import com.joaquimverges.helium.ui.event.ListViewEvent
 import com.joaquimverges.helium.ui.state.ListViewState
-import io.reactivex.subjects.PublishSubject
 import java.util.Collections.emptyList
 
 /**
@@ -43,19 +45,41 @@ constructor(
     layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(inflater.context),
     recyclerViewConfig: ((RecyclerView) -> Unit)? = null,
     emptyViewDelegate: BaseViewDelegate<*, E>? = null
-) : BaseViewDelegate<ListViewState<List<T>>, E>(layoutResId, inflater, container, addToContainer) {
+) : BaseViewDelegate<ListViewState<List<T>>, ListViewEvent<E>>(layoutResId, inflater, container, addToContainer) {
 
     private val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view)
     private val progressBar: ProgressBar = view.findViewById(R.id.loader)
     private val emptyViewContainer: ViewGroup = view.findViewById(R.id.empty_view_container)
-    private val adapter: BaseRecyclerAdapter<T, E, VH> = BaseRecyclerAdapter(inflater, observer() as PublishSubject<E>, recyclerItemFactory)
+    private val adapter: BaseRecyclerAdapter<T, E, VH> = BaseRecyclerAdapter(inflater, recyclerItemFactory)
 
     init {
         recyclerView.layoutManager = layoutManager
         recyclerViewConfig?.invoke(recyclerView)
         recyclerView.adapter = adapter
+        // scrolling
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            private var lastItemCountHalfway = 0
+            private var lastItemCountBottom = 0
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val totalItems = recyclerView.adapter?.itemCount ?: 0
+                val firstPosition = (recyclerView.layoutManager as? LinearLayoutManager)?.findFirstVisibleItemPosition()
+                    ?: (recyclerView.layoutManager as? GridLayoutManager)?.findFirstVisibleItemPosition() ?: 0
+                if (firstPosition > (totalItems / 2) && lastItemCountHalfway != totalItems) {
+                    lastItemCountHalfway = totalItems
+                    pushEvent(ListViewEvent.UserScrolledHalfWay())
+                }
+                if (firstPosition + recyclerView.childCount >= totalItems && lastItemCountBottom != totalItems) {
+                    lastItemCountBottom = totalItems
+                    pushEvent(ListViewEvent.UserScrolledBottom())
+                }
+            }
+        })
+        // adapter items
+        adapter.observeItemEvents().autoDispose(lifecycle).subscribe { ev -> pushEvent(ListViewEvent.ListItemEvent(ev)) }
+        // empty view
         emptyViewDelegate?.let {
-            it.observer().subscribe { event: E -> pushEvent(event) }
+            it.observer().autoDispose(lifecycle).subscribe { event: E -> pushEvent(ListViewEvent.EmptyViewEvent(event)) }
             emptyViewContainer.addView(it.view)
         }
     }

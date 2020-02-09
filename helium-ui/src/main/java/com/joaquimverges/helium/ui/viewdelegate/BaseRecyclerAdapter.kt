@@ -1,9 +1,10 @@
 package com.joaquimverges.helium.ui.viewdelegate
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.joaquimverges.helium.core.event.ViewEvent
+import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 
 /**
@@ -14,8 +15,8 @@ import io.reactivex.subjects.PublishSubject
  */
 class BaseRecyclerAdapter<in T, E : ViewEvent, VH : BaseRecyclerViewItem<T, E>>(
     private val inflater: LayoutInflater,
-    private val viewEvents: PublishSubject<E>,
-    private val viewHolderFactory: (LayoutInflater, ViewGroup) -> VH
+    private val viewHolderFactory: (LayoutInflater, ViewGroup) -> VH,
+    private val viewEvents: PublishSubject<E> = PublishSubject.create()
 ) : RecyclerView.Adapter<VH>() {
 
     private val mArticles = mutableListOf<T>()
@@ -30,6 +31,10 @@ class BaseRecyclerAdapter<in T, E : ViewEvent, VH : BaseRecyclerViewItem<T, E>>(
         holder.bind(getItem(position))
     }
 
+    fun observeItemEvents(): Observable<E> {
+        return viewEvents.hide()
+    }
+
     private fun getItem(position: Int): T {
         return mArticles[position]
     }
@@ -40,6 +45,11 @@ class BaseRecyclerAdapter<in T, E : ViewEvent, VH : BaseRecyclerViewItem<T, E>>(
 
     fun setItems(items: List<T>) {
         mArticles.clear()
+        mArticles.addAll(items)
+        notifyDataSetChanged()
+    }
+
+    fun appendItems(items: List<T>) {
         mArticles.addAll(items)
         notifyDataSetChanged()
     }

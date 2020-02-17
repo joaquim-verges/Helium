@@ -20,13 +20,16 @@ class TestViewDelegate<S : ViewState, E : ViewEvent>(
     }
 ) : BaseViewDelegate<S, E>(
     view = mockView,
-    context = mockContext,
-    lifecycle = mockLifecycle
+    context = mockContext
 ) {
     private var lastRenderedState: ViewState? = null
 
     override fun render(viewState: S) {
         lastRenderedState = viewState
+    }
+
+    override fun getLifecycle(): Lifecycle {
+        return mockLifecycle
     }
 
     fun assertHasRendered(state: ViewState) {

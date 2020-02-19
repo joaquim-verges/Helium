@@ -34,6 +34,7 @@ dependencies {
 
     api "androidx.appcompat:appcompat:$appcompat_version"
     api "androidx.recyclerview:recyclerview:$recyclerview_version"
+    api "androidx.swiperefreshlayout:swiperefreshlayout:$swiperefresh_version"
     api "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
     api "com.google.android.material:material:$material_lib_version"
 }

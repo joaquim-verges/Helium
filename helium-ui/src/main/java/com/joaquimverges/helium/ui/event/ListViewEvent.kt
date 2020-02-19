@@ -8,6 +8,7 @@ import com.joaquimverges.helium.core.event.ViewEvent
 sealed class ListViewEvent<E : ViewEvent> : ViewEvent {
     class UserScrolledHalfWay<E : ViewEvent> : ListViewEvent<E>()
     class UserScrolledBottom<E : ViewEvent> : ListViewEvent<E>()
+    class SwipedToRefresh<E: ViewEvent> : ListViewEvent<E>()
     data class ListItemEvent<E : ViewEvent>(val itemEvent: E) : ListViewEvent<E>()
     data class EmptyViewEvent<E : ViewEvent>(val emptyViewEvent: E) : ListViewEvent<E>()
 }

@@ -44,6 +44,7 @@ class ArticleListPresenter(
                 is ListViewEvent.ListItemEvent -> onViewEvent(it.itemEvent)
                 is ListViewEvent.EmptyViewEvent -> onViewEvent(it.emptyViewEvent)
                 is ListViewEvent.UserScrolledBottom -> listPresenter.paginate()
+                is ListViewEvent.SwipedToRefresh -> listPresenter.loadData()
             }
         }.autoDispose()
         // when the list changes state, propagate the state up to the MainPresenter

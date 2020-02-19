@@ -77,7 +77,8 @@ class ArticleListViewDelegate(
                 recyclerViewConfig = { recyclerView ->
                     recyclerView.addItemDecoration(SpacesItemDecoration(spacing, orientation))
                 },
-                emptyViewDelegate = EmptyViewDelegate(inflater)
+                emptyViewDelegate = EmptyViewDelegate(inflater),
+                swipeToRefreshEnabled = true
             )
         }
 

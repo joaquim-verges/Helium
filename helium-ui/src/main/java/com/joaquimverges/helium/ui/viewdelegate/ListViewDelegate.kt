@@ -8,6 +8,7 @@ import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.joaquimverges.helium.core.event.ViewEvent
 import com.joaquimverges.helium.core.util.autoDispose
 import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
@@ -44,10 +45,12 @@ constructor(
     // optional list config
     layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(inflater.context),
     recyclerViewConfig: ((RecyclerView) -> Unit)? = null,
-    emptyViewDelegate: BaseViewDelegate<*, E>? = null
+    emptyViewDelegate: BaseViewDelegate<*, E>? = null,
+    swipeToRefreshEnabled: Boolean = false
 ) : BaseViewDelegate<ListViewState<List<T>>, ListViewEvent<E>>(layoutResId, inflater, container, addToContainer) {
 
     private val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view)
+    private val swipeRefreshLayout: SwipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout)
     private val progressBar: ProgressBar = view.findViewById(R.id.loader)
     private val emptyViewContainer: ViewGroup = view.findViewById(R.id.empty_view_container)
     private val adapter: BaseRecyclerAdapter<T, E, VH> = BaseRecyclerAdapter(inflater, recyclerItemFactory)
@@ -56,6 +59,9 @@ constructor(
         recyclerView.layoutManager = layoutManager
         recyclerViewConfig?.invoke(recyclerView)
         recyclerView.adapter = adapter
+        // swipe to refresh
+        swipeRefreshLayout.isEnabled = swipeToRefreshEnabled
+        swipeRefreshLayout.setOnRefreshListener { pushEvent(ListViewEvent.SwipedToRefresh()) }
         // scrolling
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             private var lastItemCountHalfway = 0
@@ -87,6 +93,7 @@ constructor(
     override fun render(viewState: ListViewState<List<T>>) {
         progressBar.setVisible(false)
         emptyViewContainer.setVisible(false)
+        swipeRefreshLayout.isRefreshing = false
         when (viewState) {
             is ListViewState.Loading -> progressBar.setVisible(adapter.itemCount == 0)
             is ListViewState.DataReady -> adapter.setItems(viewState.data)

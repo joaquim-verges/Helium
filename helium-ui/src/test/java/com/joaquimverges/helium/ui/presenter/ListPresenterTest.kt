@@ -10,6 +10,7 @@ import com.joaquimverges.helium.ui.util.RefreshPolicy
 import com.nhaarman.mockito_kotlin.never
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
+import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.plugins.RxAndroidPlugins
@@ -80,5 +81,34 @@ class ListPresenterTest : HeliumTestCase() {
         testScheduler.triggerActions()
         testViewDelegate.assertHasRendered(ListViewState.Error<List<TestItem>>(error))
         verify(refreshPolicy, never()).updateLastRefreshedTime()
+    }
+
+    @Test
+    fun testPagination() {
+        presenter.loadData()
+        testViewDelegate.assertHasRendered(ListViewState.Loading<List<TestItem>>())
+        testScheduler.triggerActions()
+        testViewDelegate.assertHasRendered(ListViewState.DataReady<List<TestItem>>(testData))
+        verify(refreshPolicy).updateLastRefreshedTime()
+
+        // paginate once
+        whenever(repo.paginate()).thenReturn(Maybe.just(listOf(TestItem())))
+        presenter.paginate()
+        testViewDelegate.assertHasRendered(ListViewState.Loading<List<TestItem>>())
+        testScheduler.triggerActions()
+        testViewDelegate.assertHasRendered(ListViewState.DataReady<List<TestItem>>(testData + TestItem()))
+
+        // paginate twice
+        whenever(repo.paginate()).thenReturn(Maybe.just(listOf(TestItem())))
+        presenter.paginate()
+        testViewDelegate.assertHasRendered(ListViewState.Loading<List<TestItem>>())
+        testScheduler.triggerActions()
+        testViewDelegate.assertHasRendered(ListViewState.DataReady<List<TestItem>>(testData + TestItem() + TestItem()))
+
+        // refresh initial
+        presenter.loadData()
+        testViewDelegate.assertHasRendered(ListViewState.Loading<List<TestItem>>())
+        testScheduler.triggerActions()
+        testViewDelegate.assertHasRendered(ListViewState.DataReady<List<TestItem>>(testData))
     }
 }

@@ -54,6 +54,8 @@ constructor(
     private val progressBar: ProgressBar = view.findViewById(R.id.loader)
     private val emptyViewContainer: ViewGroup = view.findViewById(R.id.empty_view_container)
     private val adapter: BaseRecyclerAdapter<T, E, VH> = BaseRecyclerAdapter(inflater, recyclerItemFactory)
+    private var lastItemCountHalfway = 0
+    private var lastItemCountBottom = 0
 
     init {
         recyclerView.layoutManager = layoutManager
@@ -64,9 +66,6 @@ constructor(
         swipeRefreshLayout.setOnRefreshListener { pushEvent(ListViewEvent.SwipedToRefresh()) }
         // scrolling
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            private var lastItemCountHalfway = 0
-            private var lastItemCountBottom = 0
-
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 val totalItems = recyclerView.adapter?.itemCount ?: 0
                 val firstPosition = (recyclerView.layoutManager as? LinearLayoutManager)?.findFirstVisibleItemPosition()
@@ -97,12 +96,20 @@ constructor(
         swipeRefreshLayout.isRefreshing = (viewState is ListViewState.Loading && !emptyAdapter)
         when (viewState) {
             is ListViewState.Loading -> progressBar.setVisible(emptyAdapter)
-            is ListViewState.DataReady -> adapter.setItems(viewState.data)
+            is ListViewState.DataReady -> {
+                adapter.setItems(viewState.data)
+                resetScrollCounts()
+            }
             is ListViewState.Empty -> {
                 adapter.setItems(emptyList())
                 emptyViewContainer.setVisible(true)
             }
         }
+    }
+
+    private fun resetScrollCounts() {
+        lastItemCountHalfway = 0
+        lastItemCountBottom = 0
     }
 
     private fun View.setVisible(value: Boolean) {

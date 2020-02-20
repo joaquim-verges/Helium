@@ -10,8 +10,13 @@ import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
+import org.junit.Assert.fail
 import org.mockito.internal.matchers.apachecommons.ReflectionEquals
 
+/**
+ * Utility class for unit testing presenters with a generic view delegate.
+ * Has handy methods to assert last rendered states.
+ */
 class TestViewDelegate<S : ViewState, E : ViewEvent>(
     mockView: View = mock(),
     mockContext: Context = mock(),
@@ -32,13 +37,15 @@ class TestViewDelegate<S : ViewState, E : ViewEvent>(
         return mockLifecycle
     }
 
-    fun assertHasRendered(state: ViewState) {
-        assert(ReflectionEquals(state).matches(lastRenderedState))
+    fun assertLastRendered(state: ViewState) {
+        if (!ReflectionEquals(lastRenderedState).matches(state)) {
+            fail("assertLastRendered failed\n\nExpected:\n\n$state\n\nbut last state rendered was:\n\n$lastRenderedState")
+        }
     }
 
     fun assertNothingRendered() {
         if (lastRenderedState != null) {
-            throw IllegalStateException("Expected no state rendered but actually rendered: $lastRenderedState")
+            fail("Expected no state rendered but actually rendered: $lastRenderedState")
         }
     }
 

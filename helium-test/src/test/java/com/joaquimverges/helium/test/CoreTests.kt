@@ -37,7 +37,7 @@ class CoreTests : HeliumTestCase() {
         bootstrapAttach()
         presenter.pushState(viewState)
         presenter.assertState(viewState)
-        viewDelegate.assertHasRendered(viewState)
+        viewDelegate.assertLastRendered(viewState)
     }
 
     @Test
@@ -46,7 +46,7 @@ class CoreTests : HeliumTestCase() {
         presenter.assertState(viewState)
         viewDelegate.assertNothingRendered()
         bootstrapAttach()
-        viewDelegate.assertHasRendered(viewState)
+        viewDelegate.assertLastRendered(viewState)
     }
 
     @Test

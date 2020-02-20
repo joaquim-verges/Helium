@@ -93,9 +93,10 @@ constructor(
     override fun render(viewState: ListViewState<List<T>>) {
         progressBar.setVisible(false)
         emptyViewContainer.setVisible(false)
-        swipeRefreshLayout.isRefreshing = viewState is ListViewState.Loading
+        val emptyAdapter = adapter.itemCount == 0
+        swipeRefreshLayout.isRefreshing = (viewState is ListViewState.Loading && !emptyAdapter)
         when (viewState) {
-            is ListViewState.Loading -> progressBar.setVisible(adapter.itemCount == 0)
+            is ListViewState.Loading -> progressBar.setVisible(emptyAdapter)
             is ListViewState.DataReady -> adapter.setItems(viewState.data)
             is ListViewState.Empty -> {
                 adapter.setItems(emptyList())

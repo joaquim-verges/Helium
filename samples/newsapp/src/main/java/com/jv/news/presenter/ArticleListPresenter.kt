@@ -26,10 +26,10 @@ import java.util.concurrent.TimeUnit
  * @author: joaquim
  */
 class ArticleListPresenter(
-    private val repository: ArticleRepository = ArticleRepository(),
+    private val repository: ArticleRepository,
     refreshPolicy: RefreshPolicy = RefreshPolicy(10, TimeUnit.MINUTES),
-    private val listPresenter: ListPresenter<Article, ArticleEvent> = ListPresenter(repository, refreshPolicy),
-    private val toolbarPresenter: ToolbarPresenter = ToolbarPresenter()
+    internal val listPresenter: ListPresenter<Article, ArticleEvent> = ListPresenter(repository, refreshPolicy),
+    internal val toolbarPresenter: ToolbarPresenter = ToolbarPresenter()
 ) : BasePresenter<ArticleListState, ArticleEvent>() {
 
     init {
@@ -59,13 +59,6 @@ class ArticleListPresenter(
                 is ToolbarEvent.HomeClicked -> pushState(ArticleListState.MoreSourcesRequested)
             }
         }.autoDispose()
-    }
-
-    override fun onAttached(viewDelegate: BaseViewDelegate<ArticleListState, ArticleEvent>) {
-        (viewDelegate as? ArticleListViewDelegate)?.run {
-            listPresenter.attach(listViewDelegate)
-            toolbarPresenter.attach(toolbarViewDelegate)
-        }
     }
 
     override fun onViewEvent(event: ArticleEvent) {

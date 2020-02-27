@@ -3,9 +3,9 @@ package com.joaquimverges.helium.core.presenter
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModel
+import com.joaquimverges.helium.core.attacher.AppBlock
 import com.joaquimverges.helium.core.event.ViewEvent
 import com.joaquimverges.helium.core.state.ViewState
-import com.joaquimverges.helium.core.util.autoDispose
 import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
@@ -43,19 +43,7 @@ abstract class BasePresenter<S : ViewState, E : ViewEvent> : ViewModel(), Lifecy
      * or any other [Lifecycle.Event] and will be called at the appropriate time.
      */
     fun attach(viewDelegate: BaseViewDelegate<S, E>) {
-        val lifecycle: Lifecycle = viewDelegate.lifecycle
-        observeViewState().autoDispose(lifecycle).subscribe { viewDelegate.render(it) }
-        viewDelegate.observer().autoDispose(lifecycle).subscribe { processViewEvent(it) }
-        lifecycle.addObserver(this)
-        onAttached(viewDelegate)
-    }
-
-    /**
-     * Called when this presenter has successfully been attached to a ViewDelegate and its lifecycle
-     * This is as a good time to attach sub presenters to sub view delegates
-     */
-    open fun onAttached(viewDelegate: BaseViewDelegate<S, E>) {
-        // override to attach sub presenters
+        AppBlock(this, viewDelegate).assemble()
     }
 
     /**
@@ -90,7 +78,7 @@ abstract class BasePresenter<S : ViewState, E : ViewEvent> : ViewModel(), Lifecy
 
     // internal functions
 
-    private fun processViewEvent(event: E) {
+    internal fun processViewEvent(event: E) {
         onViewEvent(event)
         viewEventDispatcher.onNext(event)
     }

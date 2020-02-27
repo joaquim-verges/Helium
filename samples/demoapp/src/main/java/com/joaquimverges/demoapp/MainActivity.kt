@@ -8,11 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.joaquimverges.demoapp.view.GridSpacingDecorator
+import com.joaquimverges.helium.core.attacher.plus
 import com.joaquimverges.helium.core.event.ClickEvent
 import com.joaquimverges.helium.ui.event.ListViewEvent
 import com.joaquimverges.helium.ui.presenter.ListPresenter
 import com.joaquimverges.helium.ui.repository.BaseRepository
-import com.joaquimverges.helium.ui.viewdelegate.BaseRecyclerViewItem
 import com.joaquimverges.helium.ui.viewdelegate.CardRecyclerItem
 import com.joaquimverges.helium.ui.viewdelegate.ListViewDelegate
 import io.reactivex.Observable
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
     // PRESENTER
 
-    class MenuPresenter : ListPresenter<MenuItem, ClickEvent<MenuItem>>(MenuRepository()) {
+    class MenuLogicBlock : ListPresenter<MenuItem, ClickEvent<MenuItem>>(MenuRepository()) {
 
         override fun onViewEvent(event: ListViewEvent<ClickEvent<MenuItem>>) {
             when (event) {
@@ -79,12 +79,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val viewDelegate = ListViewDelegate(layoutInflater, { inflater, container ->
+        val listBlock = ListViewDelegate(layoutInflater, { inflater, container ->
             MenuRecyclerItem(inflater, container)
         }, recyclerViewConfig = {
             it.addItemDecoration(GridSpacingDecorator(resources.getDimensionPixelSize(R.dimen.menu_padding)))
         })
-        MenuPresenter().attach(viewDelegate)
-        setContentView(viewDelegate.view)
+        (MenuLogicBlock() + listBlock).assemble()
+        setContentView(listBlock.view)
     }
 }

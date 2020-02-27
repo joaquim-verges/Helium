@@ -7,7 +7,6 @@ import com.joaquimverges.helium.core.state.ViewState
 import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
 import com.joaquimverges.helium.navigation.state.NavDrawerState
 import com.joaquimverges.helium.navigation.viewdelegate.NavDrawerViewDelegate
-import com.joaquimverges.helium.navigation.viewdelegate.ToolbarViewDelegate
 import com.jv.news.R
 
 /**
@@ -15,9 +14,9 @@ import com.jv.news.R
  */
 class MainViewDelegate(
     inflater: LayoutInflater,
-    val mainView: ArticleListViewDelegate = ArticleListViewDelegate(inflater),
-    val drawerView: SourcesViewDelegate = SourcesViewDelegate(inflater),
-    private val navDrawer: NavDrawerViewDelegate = NavDrawerViewDelegate(mainView, drawerView)
+    internal val articleView: ArticleListViewDelegate = ArticleListViewDelegate(inflater),
+    internal val drawerView: SourcesViewDelegate = SourcesViewDelegate(inflater),
+    private val navDrawer: NavDrawerViewDelegate = NavDrawerViewDelegate(articleView, drawerView)
 ) : BaseViewDelegate<ViewState, ViewEvent>(R.layout.activity_main, inflater) {
 
     private val mainContainer = findView<ViewGroup>(R.id.main_container)

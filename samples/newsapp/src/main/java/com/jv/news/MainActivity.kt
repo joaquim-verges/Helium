@@ -2,12 +2,16 @@ package com.jv.news
 
 import android.os.Build
 import android.os.Bundle
-import androidx.core.content.ContextCompat
-import androidx.appcompat.app.AppCompatActivity
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import com.joaquimverges.helium.core.attacher.AppBlock
+import com.joaquimverges.helium.core.attacher.plus
 import com.joaquimverges.helium.core.retained.getRetainedPresenter
+import com.jv.news.presenter.ArticleListPresenter
 import com.jv.news.presenter.MainPresenter
 import com.jv.news.util.VersionUtil
+import com.jv.news.view.ArticleListViewDelegate
 import com.jv.news.view.MainViewDelegate
 
 class MainActivity : AppCompatActivity() {
@@ -16,11 +20,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setLightStatusBar()
 
-        val mainPresenter = getRetainedPresenter<MainPresenter>()
-        MainViewDelegate(layoutInflater).also {
+        val logic = getRetainedPresenter<MainPresenter>()
+        val ui = MainViewDelegate(layoutInflater).also {
             setContentView(it.view)
-            mainPresenter.attach(it)
         }
+        MainBlock.create(logic, ui).assemble()
     }
 
     private fun setLightStatusBar() {
@@ -28,5 +32,25 @@ class MainActivity : AppCompatActivity() {
             window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
             window.statusBarColor = ContextCompat.getColor(App.context, R.color.colorPrimary)
         }
+    }
+
+    object MainBlock {
+        fun create(logic: MainPresenter, ui: MainViewDelegate) = AppBlock(
+            logic, ui,
+            listOf(
+                ArticleListBlock.create(logic.articlePresenter, ui.articleView),
+                logic.sourcesPresenter + ui.drawerView
+            )
+        )
+    }
+
+    object ArticleListBlock {
+        fun create(logic: ArticleListPresenter, ui: ArticleListViewDelegate) = AppBlock(
+            logic, ui,
+            listOf(
+                logic.toolbarPresenter + ui.toolbarViewDelegate,
+                logic.listPresenter + ui.listViewDelegate
+            )
+        )
     }
 }

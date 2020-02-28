@@ -8,4 +8,4 @@ package com.joaquimverges.helium.core.event
  * @see com.joaquimverges.helium.core.presenter.BasePresenter
  * @see com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
  */
-interface ViewEvent
+interface BlockEvent

@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import com.google.android.material.card.MaterialCardView
-import com.joaquimverges.helium.core.event.ViewEvent
+import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.ui.R
 
 /**
@@ -16,7 +16,7 @@ import com.joaquimverges.helium.ui.R
  * @param cardLayout: Default card layout
  * @param cardViewConfig: lambda to configure the [MaterialCardView]
  */
-abstract class CardRecyclerItem<in T, V : ViewEvent>(
+abstract class CardRecyclerItem<in T, V : BlockEvent>(
     contentView: View,
     inflater: LayoutInflater,
     container: ViewGroup,

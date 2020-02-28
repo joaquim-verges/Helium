@@ -5,9 +5,9 @@ import android.view.View
 import android.widget.ProgressBar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.joaquimverges.helium.core.BaseViewDelegate
-import com.joaquimverges.helium.ui.event.ListViewEvent
-import com.joaquimverges.helium.ui.state.ListViewState
+import com.joaquimverges.helium.core.UiBlock
+import com.joaquimverges.helium.ui.event.ListBlockEvent
+import com.joaquimverges.helium.ui.state.ListBlockState
 import com.jv.news.R
 import com.jv.news.data.model.ArticleSource
 import com.jv.news.data.model.SourcesCategoryGroup
@@ -18,7 +18,7 @@ import com.jv.news.view.event.SourceEvent
  * @author joaquim
  */
 class SourcesViewDelegate internal constructor(inflater: LayoutInflater) :
-    BaseViewDelegate<ListViewState<List<SourcesCategoryGroup>>, ListViewEvent<SourceEvent>>(R.layout.view_sources_list, inflater) {
+    UiBlock<ListBlockState<List<SourcesCategoryGroup>>, ListBlockEvent<SourceEvent>>(R.layout.view_sources_list, inflater) {
 
     private val layoutManager: LinearLayoutManager = LinearLayoutManager(context)
     private val recyclerView: RecyclerView = findView((R.id.sources_list))
@@ -28,11 +28,11 @@ class SourcesViewDelegate internal constructor(inflater: LayoutInflater) :
         recyclerView.layoutManager = layoutManager
     }
 
-    override fun render(viewState: ListViewState<List<SourcesCategoryGroup>>) {
+    override fun render(viewState: ListBlockState<List<SourcesCategoryGroup>>) {
         progressBar.visibility = View.GONE
         when (viewState) {
-            is ListViewState.Loading -> progressBar.visibility = if (recyclerView.adapter?.itemCount == 0) View.VISIBLE else View.GONE
-            is ListViewState.DataReady -> recyclerView.adapter = createAdapter(viewState.data)
+            is ListBlockState.Loading -> progressBar.visibility = if (recyclerView.adapter?.itemCount == 0) View.VISIBLE else View.GONE
+            is ListBlockState.DataReady -> recyclerView.adapter = createAdapter(viewState.data)
         }
     }
 
@@ -40,9 +40,9 @@ class SourcesViewDelegate internal constructor(inflater: LayoutInflater) :
         return ExpandableSourcesAdapter(context, groups).apply {
             setChildClickListener { view, checked, group, childIndex ->
                 if (checked) {
-                    pushEvent(ListViewEvent.ListItemEvent(SourceEvent.Selected(view.context, group.items[childIndex] as ArticleSource)))
+                    pushEvent(ListBlockEvent.ListItemEvent(SourceEvent.Selected(view.context, group.items[childIndex] as ArticleSource)))
                 } else {
-                    pushEvent(ListViewEvent.ListItemEvent(SourceEvent.Unselected(view.context, group.items[childIndex] as ArticleSource)))
+                    pushEvent(ListBlockEvent.ListItemEvent(SourceEvent.Unselected(view.context, group.items[childIndex] as ArticleSource)))
                 }
             }
         }

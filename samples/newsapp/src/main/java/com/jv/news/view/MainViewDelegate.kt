@@ -2,9 +2,9 @@ package com.jv.news.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.joaquimverges.helium.core.event.ViewEvent
-import com.joaquimverges.helium.core.state.ViewState
-import com.joaquimverges.helium.core.BaseViewDelegate
+import com.joaquimverges.helium.core.event.BlockEvent
+import com.joaquimverges.helium.core.state.BlockState
+import com.joaquimverges.helium.core.UiBlock
 import com.joaquimverges.helium.navigation.state.NavDrawerState
 import com.joaquimverges.helium.navigation.viewdelegate.NavDrawerViewDelegate
 import com.jv.news.R
@@ -17,7 +17,7 @@ class MainViewDelegate(
     internal val articleView: ArticleListViewDelegate = ArticleListViewDelegate(inflater),
     internal val drawerView: SourcesViewDelegate = SourcesViewDelegate(inflater),
     private val navDrawer: NavDrawerViewDelegate = NavDrawerViewDelegate(articleView, drawerView)
-) : BaseViewDelegate<ViewState, ViewEvent>(R.layout.activity_main, inflater) {
+) : UiBlock<BlockState, BlockEvent>(R.layout.activity_main, inflater) {
 
     private val mainContainer = findView<ViewGroup>(R.id.main_container)
 
@@ -25,9 +25,9 @@ class MainViewDelegate(
         mainContainer.addView(navDrawer.view)
     }
 
-    override fun render(viewState: ViewState) {
-        when (viewState) {
-            is NavDrawerState -> navDrawer.render(viewState)
+    override fun render(blockState: BlockState) {
+        when (blockState) {
+            is NavDrawerState -> navDrawer.render(blockState)
         }
     }
 }

@@ -4,7 +4,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.joaquimverges.helium.core.BaseViewDelegate
+import com.joaquimverges.helium.core.UiBlock
 import com.joaquimverges.helium.navigation.R
 import com.joaquimverges.helium.navigation.event.NavDrawerEvent
 import com.joaquimverges.helium.navigation.state.NavDrawerState
@@ -13,11 +13,11 @@ import com.joaquimverges.helium.navigation.state.NavDrawerState
  * A view delegate that presents 2 view delegates in the form of a navigation drawer and main content
  */
 class NavDrawerViewDelegate(
-    mainContentViewDelegate: BaseViewDelegate<*, *>,
-    drawerViewDelegate: BaseViewDelegate<*, *>,
+    mainContentViewDelegate: UiBlock<*, *>,
+    drawerViewDelegate: UiBlock<*, *>,
     gravity: Int = Gravity.START,
     drawerCustomisation: ((DrawerLayout) -> Unit)? = null
-) : BaseViewDelegate<NavDrawerState, NavDrawerEvent>(
+) : UiBlock<NavDrawerState, NavDrawerEvent>(
     R.layout.drawer_layout,
     LayoutInflater.from(mainContentViewDelegate.view.context)
 ) {

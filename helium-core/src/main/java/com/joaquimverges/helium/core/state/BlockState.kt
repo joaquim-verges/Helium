@@ -7,4 +7,4 @@ package com.joaquimverges.helium.core.state
  * @see com.joaquimverges.helium.core.presenter.BasePresenter
  * @see com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
  */
-interface ViewState
+interface BlockState

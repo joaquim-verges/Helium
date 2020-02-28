@@ -1,11 +1,11 @@
 package com.joaquimverges.helium.ui.presenter
 
-import com.joaquimverges.helium.core.event.ViewEvent
+import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.test.HeliumTestCase
 import com.joaquimverges.helium.test.viewdelegate.TestViewDelegate
-import com.joaquimverges.helium.ui.event.ListViewEvent
+import com.joaquimverges.helium.ui.event.ListBlockEvent
 import com.joaquimverges.helium.ui.repository.BaseRepository
-import com.joaquimverges.helium.ui.state.ListViewState
+import com.joaquimverges.helium.ui.state.ListBlockState
 import com.joaquimverges.helium.ui.util.RefreshPolicy
 import com.nhaarman.mockito_kotlin.never
 import com.nhaarman.mockito_kotlin.verify
@@ -28,9 +28,9 @@ class ListPresenterTest : HeliumTestCase() {
     @Mock lateinit var refreshPolicy: RefreshPolicy
     @Mock lateinit var repo: BaseRepository<List<TestItem>>
 
-    private lateinit var presenter: ListPresenter<TestItem, ViewEvent>
+    private lateinit var presenter: ListPresenter<TestItem, BlockEvent>
     private val testScheduler = TestScheduler()
-    private val testViewDelegate = TestViewDelegate<ListViewState<List<TestItem>>, ListViewEvent<ViewEvent>>()
+    private val testViewDelegate = TestViewDelegate<ListBlockState<List<TestItem>>, ListBlockEvent<BlockEvent>>()
     private val testData = Observable.range(0, 20).map { TestItem() }.toList().blockingGet()
 
     @Before
@@ -47,18 +47,18 @@ class ListPresenterTest : HeliumTestCase() {
     fun testRefreshPolicy() {
         whenever(refreshPolicy.shouldRefresh()).thenReturn(false)
         presenter.refreshIfNeeded()
-        testViewDelegate.assertLastRendered(ListViewState.Init<TestItem>())
+        testViewDelegate.assertLastRendered(ListBlockState.Init<TestItem>())
         whenever(refreshPolicy.shouldRefresh()).thenReturn(true)
         presenter.refreshIfNeeded()
-        testViewDelegate.assertLastRendered(ListViewState.Loading<TestItem>())
+        testViewDelegate.assertLastRendered(ListBlockState.Loading<TestItem>())
     }
 
     @Test
     fun testRefreshWithData() {
         presenter.loadData()
-        testViewDelegate.assertLastRendered(ListViewState.Loading<List<TestItem>>())
+        testViewDelegate.assertLastRendered(ListBlockState.Loading<List<TestItem>>())
         testScheduler.triggerActions()
-        testViewDelegate.assertLastRendered(ListViewState.DataReady<List<TestItem>>(testData))
+        testViewDelegate.assertLastRendered(ListBlockState.DataReady<List<TestItem>>(testData))
         verify(refreshPolicy).updateLastRefreshedTime()
     }
 
@@ -66,9 +66,9 @@ class ListPresenterTest : HeliumTestCase() {
     fun testRefreshWithNoData() {
         whenever(repo.getData()).thenReturn(Single.just(emptyList()))
         presenter.loadData()
-        testViewDelegate.assertLastRendered(ListViewState.Loading<List<TestItem>>())
+        testViewDelegate.assertLastRendered(ListBlockState.Loading<List<TestItem>>())
         testScheduler.triggerActions()
-        testViewDelegate.assertLastRendered(ListViewState.Empty<List<TestItem>>())
+        testViewDelegate.assertLastRendered(ListBlockState.Empty<List<TestItem>>())
         verify(refreshPolicy).updateLastRefreshedTime()
     }
 
@@ -77,18 +77,18 @@ class ListPresenterTest : HeliumTestCase() {
         val error = RuntimeException("error")
         whenever(repo.getData()).thenReturn(Single.error<List<TestItem>>(error))
         presenter.loadData()
-        testViewDelegate.assertLastRendered(ListViewState.Loading<List<TestItem>>())
+        testViewDelegate.assertLastRendered(ListBlockState.Loading<List<TestItem>>())
         testScheduler.triggerActions()
-        testViewDelegate.assertLastRendered(ListViewState.Error<List<TestItem>>(error))
+        testViewDelegate.assertLastRendered(ListBlockState.Error<List<TestItem>>(error))
         verify(refreshPolicy, never()).updateLastRefreshedTime()
     }
 
     @Test
     fun testPagination() {
         presenter.loadData()
-        testViewDelegate.assertLastRendered(ListViewState.Loading<List<TestItem>>())
+        testViewDelegate.assertLastRendered(ListBlockState.Loading<List<TestItem>>())
         testScheduler.triggerActions()
-        testViewDelegate.assertLastRendered(ListViewState.DataReady<List<TestItem>>(testData))
+        testViewDelegate.assertLastRendered(ListBlockState.DataReady<List<TestItem>>(testData))
         verify(refreshPolicy).updateLastRefreshedTime()
 
         // paginate once
@@ -96,18 +96,18 @@ class ListPresenterTest : HeliumTestCase() {
         whenever(repo.paginate()).thenReturn(Maybe.just(page1))
         presenter.paginate()
         testScheduler.triggerActions()
-        testViewDelegate.assertLastRendered(ListViewState.DataReady<List<TestItem>>(testData + page1))
+        testViewDelegate.assertLastRendered(ListBlockState.DataReady<List<TestItem>>(testData + page1))
 
         // paginate twice
         val page2 = listOf(TestItem())
         whenever(repo.paginate()).thenReturn(Maybe.just(page2))
         presenter.paginate()
         testScheduler.triggerActions()
-        testViewDelegate.assertLastRendered(ListViewState.DataReady<List<TestItem>>(testData + page1 + page2))
+        testViewDelegate.assertLastRendered(ListBlockState.DataReady<List<TestItem>>(testData + page1 + page2))
 
         // refresh initial
         presenter.loadData()
         testScheduler.triggerActions()
-        testViewDelegate.assertLastRendered(ListViewState.DataReady<List<TestItem>>(testData))
+        testViewDelegate.assertLastRendered(ListBlockState.DataReady<List<TestItem>>(testData))
     }
 }

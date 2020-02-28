@@ -10,7 +10,7 @@ import android.widget.TextView
 import com.joaquimverges.demoapp.view.GridSpacingDecorator
 import com.joaquimverges.helium.core.plus
 import com.joaquimverges.helium.core.event.ClickEvent
-import com.joaquimverges.helium.ui.event.ListViewEvent
+import com.joaquimverges.helium.ui.event.ListBlockEvent
 import com.joaquimverges.helium.ui.presenter.ListPresenter
 import com.joaquimverges.helium.ui.repository.BaseRepository
 import com.joaquimverges.helium.ui.viewdelegate.CardRecyclerItem
@@ -40,9 +40,9 @@ class MainActivity : AppCompatActivity() {
 
     class MenuLogicBlock : ListPresenter<MenuItem, ClickEvent<MenuItem>>(MenuRepository()) {
 
-        override fun onViewEvent(event: ListViewEvent<ClickEvent<MenuItem>>) {
+        override fun onUiEvent(event: ListBlockEvent<ClickEvent<MenuItem>>) {
             when (event) {
-                is ListViewEvent.ListItemEvent -> {
+                is ListBlockEvent.ListItemEvent -> {
                     val itemEvent = event.itemEvent
                     val context = itemEvent.view.context
                     val activityClass = when (itemEvent.data) {

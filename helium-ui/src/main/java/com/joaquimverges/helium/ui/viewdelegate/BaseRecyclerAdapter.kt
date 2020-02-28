@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.joaquimverges.helium.core.event.ViewEvent
+import com.joaquimverges.helium.core.event.BlockEvent
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 
@@ -16,7 +16,7 @@ import io.reactivex.subjects.PublishSubject
  * @param viewEvents the observable to push ViewEvent objects to
  * @param viewHolderFactory Provides how to create ViewHolders for this list
  */
-class BaseRecyclerAdapter<in T, E : ViewEvent, VH : BaseRecyclerViewItem<T, E>>(
+class BaseRecyclerAdapter<in T, E : BlockEvent, VH : BaseRecyclerViewItem<T, E>>(
     private val inflater: LayoutInflater,
     private val viewHolderFactory: (LayoutInflater, ViewGroup) -> VH,
     private val viewEvents: PublishSubject<E> = PublishSubject.create()

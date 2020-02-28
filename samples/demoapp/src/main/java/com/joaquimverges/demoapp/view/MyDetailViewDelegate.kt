@@ -11,14 +11,14 @@ import com.joaquimverges.demoapp.R
 import com.joaquimverges.demoapp.data.Colors
 import com.joaquimverges.demoapp.data.MyItem
 import com.joaquimverges.helium.core.event.ClickEvent
-import com.joaquimverges.helium.ui.state.ListViewState
-import com.joaquimverges.helium.core.BaseViewDelegate
+import com.joaquimverges.helium.ui.state.ListBlockState
+import com.joaquimverges.helium.core.UiBlock
 
 /**
  * @author joaquim
  */
 class MyDetailViewDelegate(inflater: LayoutInflater, container: ViewGroup?)
-    : BaseViewDelegate<ListViewState<MyItem>, ClickEvent<MyItem>>(
+    : UiBlock<ListBlockState<MyItem>, ClickEvent<MyItem>>(
         R.layout.detail_layout,
         inflater,
         container) {
@@ -27,14 +27,14 @@ class MyDetailViewDelegate(inflater: LayoutInflater, container: ViewGroup?)
     private val colorNameView: TextView = view.findViewById(R.id.color_name)
     private val loader: ProgressBar = view.findViewById(R.id.loader)
 
-    override fun render(viewState: ListViewState<MyItem>) {
+    override fun render(viewState: ListBlockState<MyItem>) {
         TransitionManager.beginDelayedTransition(detailColorView as ViewGroup)
         when (viewState) {
-            is ListViewState.Loading -> {
+            is ListBlockState.Loading -> {
                 loader.visibility = View.VISIBLE
                 detailColorView.visibility = View.GONE
             }
-            is ListViewState.DataReady -> {
+            is ListBlockState.DataReady -> {
                 val item = viewState.data
                 val color = ContextCompat.getColor(context, item.color)
                 loader.visibility = View.GONE

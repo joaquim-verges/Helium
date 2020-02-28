@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.IdRes
-import com.joaquimverges.helium.core.event.ViewEvent
+import com.joaquimverges.helium.core.event.BlockEvent
 import io.reactivex.subjects.PublishSubject
 
 /**
@@ -18,7 +18,7 @@ import io.reactivex.subjects.PublishSubject
  *
  * @param view The root of the layout for this list item
  */
-abstract class BaseRecyclerViewItem<in T, V : ViewEvent>(val view: View) : RecyclerView.ViewHolder(view) {
+abstract class BaseRecyclerViewItem<in T, V : BlockEvent>(val view: View) : RecyclerView.ViewHolder(view) {
 
     /**
      * Convenience constructor to inflate the layout for you.

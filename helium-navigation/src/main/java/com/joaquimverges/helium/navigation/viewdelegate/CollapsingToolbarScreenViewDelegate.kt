@@ -7,9 +7,9 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.Toolbar
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
-import com.joaquimverges.helium.core.event.ViewEvent
-import com.joaquimverges.helium.core.state.ViewState
-import com.joaquimverges.helium.core.BaseViewDelegate
+import com.joaquimverges.helium.core.event.BlockEvent
+import com.joaquimverges.helium.core.state.BlockState
+import com.joaquimverges.helium.core.UiBlock
 import com.joaquimverges.helium.navigation.R
 
 /**
@@ -23,10 +23,10 @@ import com.joaquimverges.helium.navigation.R
  * @param actionBarCustomization: Extra customization for the ActionBar (likely up navigation controls)
  * @param toolbarCustomization: Extra customization for the Toolbar (any other styling)
  */
-open class CollapsingToolbarScreenViewDelegate<S: ViewState, E: ViewEvent>(
+open class CollapsingToolbarScreenViewDelegate<S: BlockState, E: BlockEvent>(
     inflater: LayoutInflater,
-    contentViewDelegate: BaseViewDelegate<*, *>,
-    backdropViewDelegate: BaseViewDelegate<*, *>? = null,
+    contentViewDelegate: UiBlock<*, *>,
+    backdropViewDelegate: UiBlock<*, *>? = null,
     scrollConfiguration: ScrollConfiguration = backdropViewDelegate?.let {
         ScrollConfiguration.defaultWithBackdrop()
     } ?: ScrollConfiguration.default(),
@@ -36,7 +36,7 @@ open class CollapsingToolbarScreenViewDelegate<S: ViewState, E: ViewEvent>(
     collapsingLayoutCustomization: ((CollapsingToolbarLayout) -> Unit)? = null,
     actionBarCustomization: ((ActionBar) -> Unit)? = null,
     toolbarCustomization: ((Toolbar) -> Unit)? = null
-) : BaseViewDelegate<S, E>(
+) : UiBlock<S, E>(
     R.layout.collapsing_toolbar_screen_layout,
     inflater
 ) {

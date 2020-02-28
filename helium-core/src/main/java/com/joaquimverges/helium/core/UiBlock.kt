@@ -8,26 +8,26 @@ import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
-import com.joaquimverges.helium.core.event.ViewEvent
-import com.joaquimverges.helium.core.state.ViewState
+import com.joaquimverges.helium.core.event.BlockEvent
+import com.joaquimverges.helium.core.state.BlockState
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 
 /**
- * Base class for ViewDelegates.
+ * Base class for UiBlocks.
  * - Responsible for accessing and holding Android views
- * - Renders ViewState when attached to a Presenter
- * - Emits ViewEvent objects to the Presenter (clicks, animation ends, etc...)
+ * - Renders BlockState when attached to a LogicBLock
+ * - Emits BlockEvent objects to the LogicBlock (clicks, animation ends, etc...)
  *
  * @param view the root view of the layout
- * @param viewEventsObservable the Observable that will receive the view events, like user clicks.
+ * @param eventsObservable the Observable that will receive the UI events, like user clicks.
  *
- * @see com.joaquimverges.helium.core.event.ViewEvent
- * @see com.joaquimverges.helium.core.presenter.BasePresenter
+ * @see com.joaquimverges.helium.core.event.BlockEvent
+ * @see com.joaquimverges.helium.core.LogicBlock
  */
-abstract class BaseViewDelegate<in S : ViewState, E : ViewEvent>(
+abstract class UiBlock<in S : BlockState, E : BlockEvent>(
     val view: View,
-    private val viewEventsObservable: PublishSubject<E> = PublishSubject.create(),
+    private val eventsObservable: PublishSubject<E> = PublishSubject.create(),
     protected val context: Context = view.context
 ) : LifecycleOwner {
 
@@ -48,7 +48,7 @@ abstract class BaseViewDelegate<in S : ViewState, E : ViewEvent>(
     ) : this(view)
 
     /**
-     * Convenience method to find a view by id within this ViewDelegate
+     * Convenience method to find a view by id within this UiBlock
      */
     protected fun <V : View> findView(@IdRes resId: Int): V = view.findViewById(resId)
 
@@ -58,14 +58,14 @@ abstract class BaseViewDelegate<in S : ViewState, E : ViewEvent>(
     abstract fun render(viewState: S)
 
     /**
-     * Observe the ViewEvent changes from this ViewDelegate
+     * Observe the events pushed from this UiBlock
      */
-    fun observer(): Observable<E> = viewEventsObservable
+    fun observer(): Observable<E> = eventsObservable
 
     /**
-     * Pushes a new ViewEvent, which will trigger active subscribers
+     * Pushes a new BlockEvent, which will trigger active subscribers LogicBlocks
      */
-    fun pushEvent(event: E) = viewEventsObservable.onNext(event)
+    fun pushEvent(event: E) = eventsObservable.onNext(event)
 
     override fun getLifecycle(): Lifecycle {
         return (context as? LifecycleOwner)?.lifecycle

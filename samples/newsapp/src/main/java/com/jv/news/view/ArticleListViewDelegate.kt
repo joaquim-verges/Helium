@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.joaquimverges.helium.core.event.ViewEvent
-import com.joaquimverges.helium.core.state.ViewState
-import com.joaquimverges.helium.core.BaseViewDelegate
+import com.joaquimverges.helium.core.event.BlockEvent
+import com.joaquimverges.helium.core.state.BlockState
+import com.joaquimverges.helium.core.UiBlock
 import com.joaquimverges.helium.navigation.viewdelegate.CollapsingToolbarScreenViewDelegate
 import com.joaquimverges.helium.ui.viewdelegate.ListViewDelegate
 import com.jv.news.App.Companion.context
@@ -85,13 +85,13 @@ class ArticleListViewDelegate(
         // no-op
     }
 
-    class HeaderViewDelegate(inflater: LayoutInflater) : BaseViewDelegate<ViewState, ViewEvent>(R.layout.view_toolbar_backdrop, inflater) {
-        override fun render(viewState: ViewState) {
+    class HeaderViewDelegate(inflater: LayoutInflater) : UiBlock<BlockState, BlockEvent>(R.layout.view_toolbar_backdrop, inflater) {
+        override fun render(blockState: BlockState) {
             // no-op
         }
     }
 
-    class EmptyViewDelegate(inflater: LayoutInflater) : BaseViewDelegate<ViewState, ArticleEvent>(R.layout.empty_view, inflater) {
+    class EmptyViewDelegate(inflater: LayoutInflater) : UiBlock<BlockState, ArticleEvent>(R.layout.empty_view, inflater) {
 
         private val openDrawerButton = findView<View>(R.id.open_drawer_button)
 
@@ -99,7 +99,7 @@ class ArticleListViewDelegate(
             openDrawerButton.setOnClickListener { pushEvent(ArticleEvent.GetMoreSources) }
         }
 
-        override fun render(viewState: ViewState) {
+        override fun render(blockState: BlockState) {
             // no-op
         }
     }

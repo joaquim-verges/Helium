@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.google.android.material.card.MaterialCardView
-import com.joaquimverges.helium.core.event.ViewEvent
+import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.ui.R
 
 /**
@@ -18,7 +18,7 @@ import com.joaquimverges.helium.ui.R
  * @param contentView: override the view to be added inside the card
  * @param cardViewConfig: optional lambda to configure the [MaterialCardView]
  */
-abstract class ContentCardRecyclerItem<in T, V : ViewEvent>(
+abstract class ContentCardRecyclerItem<in T, V : BlockEvent>(
     inflater: LayoutInflater,
     container: ViewGroup,
     contentImageHeight: Int = inflater.context.resources.getDimensionPixelSize(R.dimen.default_card_image_height),

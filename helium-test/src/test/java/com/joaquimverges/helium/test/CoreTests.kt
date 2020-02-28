@@ -1,7 +1,7 @@
 package com.joaquimverges.helium.test
 
-import com.joaquimverges.helium.core.event.ViewEvent
-import com.joaquimverges.helium.core.state.ViewState
+import com.joaquimverges.helium.core.event.BlockEvent
+import com.joaquimverges.helium.core.state.BlockState
 import com.joaquimverges.helium.test.presenter.TestPresenter
 import com.joaquimverges.helium.test.viewdelegate.TestViewDelegate
 import org.junit.Before
@@ -10,14 +10,14 @@ import org.mockito.MockitoAnnotations
 
 class CoreTests : HeliumTestCase() {
 
-    class SimpleViewEvent : ViewEvent
-    class SimpleViewState : ViewState
+    class SimpleBlockEvent : BlockEvent
+    class SimpleBlockState : BlockState
 
-    private val viewEvent = SimpleViewEvent()
-    private val viewState = SimpleViewState()
+    private val viewEvent = SimpleBlockEvent()
+    private val viewState = SimpleBlockState()
 
-    private lateinit var presenter: TestPresenter<SimpleViewState, SimpleViewEvent>
-    private lateinit var viewDelegate: TestViewDelegate<SimpleViewState, SimpleViewEvent>
+    private lateinit var presenter: TestPresenter<SimpleBlockState, SimpleBlockEvent>
+    private lateinit var viewDelegate: TestViewDelegate<SimpleBlockState, SimpleBlockEvent>
 
     @Before
     fun setup() {

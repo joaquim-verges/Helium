@@ -5,10 +5,10 @@ import android.content.Context
 import android.net.Uri
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.app.ShareCompat
-import com.joaquimverges.helium.core.BasePresenter
+import com.joaquimverges.helium.core.LogicBlock
 import com.joaquimverges.helium.navigation.event.ToolbarEvent
 import com.joaquimverges.helium.navigation.presenter.ToolbarPresenter
-import com.joaquimverges.helium.ui.event.ListViewEvent
+import com.joaquimverges.helium.ui.event.ListBlockEvent
 import com.joaquimverges.helium.ui.presenter.ListPresenter
 import com.joaquimverges.helium.ui.util.RefreshPolicy
 import com.jv.news.data.ArticleRepository
@@ -25,7 +25,7 @@ class ArticleListPresenter(
     refreshPolicy: RefreshPolicy = RefreshPolicy(10, TimeUnit.MINUTES),
     internal val listPresenter: ListPresenter<Article, ArticleEvent> = ListPresenter(repository, refreshPolicy),
     internal val toolbarPresenter: ToolbarPresenter = ToolbarPresenter()
-) : BasePresenter<ArticleListState, ArticleEvent>() {
+) : LogicBlock<ArticleListState, ArticleEvent>() {
 
     init {
         repository
@@ -34,29 +34,29 @@ class ArticleListPresenter(
             .autoDispose()
 
         // receive all list item view events in this presenter
-        listPresenter.observeViewEvents().subscribe {
+        listPresenter.observeEvents().subscribe {
             when (it) {
-                is ListViewEvent.ListItemEvent -> onViewEvent(it.itemEvent)
-                is ListViewEvent.EmptyViewEvent -> onViewEvent(it.emptyViewEvent)
-                is ListViewEvent.UserScrolledBottom -> listPresenter.paginate()
-                is ListViewEvent.SwipedToRefresh -> listPresenter.loadData()
+                is ListBlockEvent.ListItemEvent -> onUiEvent(it.itemEvent)
+                is ListBlockEvent.EmptyBlockEvent -> onUiEvent(it.emptyViewEvent)
+                is ListBlockEvent.UserScrolledBottom -> listPresenter.paginate()
+                is ListBlockEvent.SwipedToRefresh -> listPresenter.loadData()
             }
         }.autoDispose()
         // when the list changes state, propagate the state up to the MainPresenter
         // so it can close the nav drawer after 2s
-        listPresenter.observeViewState()
+        listPresenter.observeState()
             .debounce(2, TimeUnit.SECONDS)
             .subscribe { pushState(ArticleListState.ArticlesLoaded) }
             .autoDispose()
 
-        toolbarPresenter.observeViewEvents().subscribe {
+        toolbarPresenter.observeEvents().subscribe {
             when (it) {
                 is ToolbarEvent.HomeClicked -> pushState(ArticleListState.MoreSourcesRequested)
             }
         }.autoDispose()
     }
 
-    override fun onViewEvent(event: ArticleEvent) {
+    override fun onUiEvent(event: ArticleEvent) {
         when (event) {
             is ArticleEvent.Clicked -> openArticle(event.context, event.article)
             is ArticleEvent.LongPressed -> shareArticle(event.context, event.article)

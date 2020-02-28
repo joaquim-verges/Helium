@@ -9,12 +9,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.joaquimverges.helium.core.event.ViewEvent
+import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.util.autoDispose
-import com.joaquimverges.helium.core.BaseViewDelegate
+import com.joaquimverges.helium.core.UiBlock
 import com.joaquimverges.helium.ui.R
-import com.joaquimverges.helium.ui.event.ListViewEvent
-import com.joaquimverges.helium.ui.state.ListViewState
+import com.joaquimverges.helium.ui.event.ListBlockEvent
+import com.joaquimverges.helium.ui.state.ListBlockState
 import java.util.Collections.emptyList
 
 /**
@@ -32,9 +32,9 @@ import java.util.Collections.emptyList
  * @param emptyViewDelegate optional view delegate to show when the list adapter is empty
  *
  * @see com.joaquimverges.helium.ui.presenter.ListPresenter
- * @see com.joaquimverges.helium.ui.state.ListViewState
+ * @see com.joaquimverges.helium.ui.state.ListBlockState
  */
-open class ListViewDelegate<T, E : ViewEvent, VH : BaseRecyclerViewItem<T, E>>
+open class ListViewDelegate<T, E : BlockEvent, VH : BaseRecyclerViewItem<T, E>>
 constructor(
     inflater: LayoutInflater,
     recyclerItemFactory: (LayoutInflater, ViewGroup) -> VH,
@@ -45,9 +45,9 @@ constructor(
     // optional list config
     layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(inflater.context),
     recyclerViewConfig: ((RecyclerView) -> Unit)? = null,
-    emptyViewDelegate: BaseViewDelegate<*, E>? = null,
+    emptyViewDelegate: UiBlock<*, E>? = null,
     swipeToRefreshEnabled: Boolean = false
-) : BaseViewDelegate<ListViewState<List<T>>, ListViewEvent<E>>(layoutResId, inflater, container, addToContainer) {
+) : UiBlock<ListBlockState<List<T>>, ListBlockEvent<E>>(layoutResId, inflater, container, addToContainer) {
 
     private val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view)
     private val swipeRefreshLayout: SwipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout)
@@ -63,7 +63,7 @@ constructor(
         recyclerView.adapter = adapter
         // swipe to refresh
         swipeRefreshLayout.isEnabled = swipeToRefreshEnabled
-        swipeRefreshLayout.setOnRefreshListener { pushEvent(ListViewEvent.SwipedToRefresh()) }
+        swipeRefreshLayout.setOnRefreshListener { pushEvent(ListBlockEvent.SwipedToRefresh()) }
         // scrolling
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -72,35 +72,35 @@ constructor(
                     ?: (recyclerView.layoutManager as? GridLayoutManager)?.findFirstVisibleItemPosition() ?: 0
                 if (firstPosition > (totalItems / 2) && lastItemCountHalfway != totalItems) {
                     lastItemCountHalfway = totalItems
-                    pushEvent(ListViewEvent.UserScrolledHalfWay())
+                    pushEvent(ListBlockEvent.UserScrolledHalfWay())
                 }
                 if (firstPosition + recyclerView.childCount >= totalItems && lastItemCountBottom != totalItems) {
                     lastItemCountBottom = totalItems
-                    pushEvent(ListViewEvent.UserScrolledBottom())
+                    pushEvent(ListBlockEvent.UserScrolledBottom())
                 }
             }
         })
         // adapter items
-        adapter.observeItemEvents().autoDispose(lifecycle).subscribe { ev -> pushEvent(ListViewEvent.ListItemEvent(ev)) }
+        adapter.observeItemEvents().autoDispose(lifecycle).subscribe { ev -> pushEvent(ListBlockEvent.ListItemEvent(ev)) }
         // empty view
         emptyViewDelegate?.let {
-            it.observer().autoDispose(lifecycle).subscribe { event: E -> pushEvent(ListViewEvent.EmptyViewEvent(event)) }
+            it.observer().autoDispose(lifecycle).subscribe { event: E -> pushEvent(ListBlockEvent.EmptyBlockEvent(event)) }
             emptyViewContainer.addView(it.view)
         }
     }
 
-    override fun render(viewState: ListViewState<List<T>>) {
+    override fun render(viewState: ListBlockState<List<T>>) {
         progressBar.setVisible(false)
         emptyViewContainer.setVisible(false)
         val emptyAdapter = adapter.itemCount == 0
-        swipeRefreshLayout.isRefreshing = (viewState is ListViewState.Loading && !emptyAdapter)
+        swipeRefreshLayout.isRefreshing = (viewState is ListBlockState.Loading && !emptyAdapter)
         when (viewState) {
-            is ListViewState.Loading -> progressBar.setVisible(emptyAdapter)
-            is ListViewState.DataReady -> {
+            is ListBlockState.Loading -> progressBar.setVisible(emptyAdapter)
+            is ListBlockState.DataReady -> {
                 adapter.setItems(viewState.data)
                 resetScrollCounts()
             }
-            is ListViewState.Empty -> {
+            is ListBlockState.Empty -> {
                 adapter.setItems(emptyList())
                 emptyViewContainer.setVisible(true)
             }

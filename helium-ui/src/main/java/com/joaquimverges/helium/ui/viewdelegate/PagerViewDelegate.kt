@@ -3,9 +3,9 @@ package com.joaquimverges.helium.ui.viewdelegate
 import androidx.viewpager.widget.ViewPager
 import android.view.ViewGroup
 import androidx.fragment.app.*
-import com.joaquimverges.helium.core.event.ViewEvent
-import com.joaquimverges.helium.core.state.ViewState
-import com.joaquimverges.helium.core.BaseViewDelegate
+import com.joaquimverges.helium.core.event.BlockEvent
+import com.joaquimverges.helium.core.state.BlockState
+import com.joaquimverges.helium.core.UiBlock
 import com.joaquimverges.helium.ui.R
 
 /**
@@ -20,7 +20,7 @@ open class PagerViewDelegate(
     addToContainer: Boolean = false,
     // optional view pager config
     viewPagerConfig: ((ViewPager) -> Unit)? = null
-) : BaseViewDelegate<ViewState, ViewEvent>(layoutResId, activity.layoutInflater, container, addToContainer) {
+) : UiBlock<BlockState, BlockEvent>(layoutResId, activity.layoutInflater, container, addToContainer) {
 
     private val maxRetainedPages = 5
     private val pager: ViewPager = view.findViewById(R.id.view_pager)
@@ -51,7 +51,7 @@ open class PagerViewDelegate(
         override fun getCount() = fragmentPageProvider.getCount()
     }
 
-    override fun render(viewState: ViewState) {
+    override fun render(blockState: BlockState) {
         // for subclasses to render more things if needed
     }
 }

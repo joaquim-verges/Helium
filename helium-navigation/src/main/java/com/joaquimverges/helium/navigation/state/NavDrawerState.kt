@@ -1,11 +1,11 @@
 package com.joaquimverges.helium.navigation.state
 
-import com.joaquimverges.helium.core.state.ViewState
+import com.joaquimverges.helium.core.state.BlockState
 
 /**
  * @author joaquim
  */
-sealed class NavDrawerState : ViewState {
+sealed class NavDrawerState : BlockState {
     object Opened : NavDrawerState()
     object Closed : NavDrawerState()
 }

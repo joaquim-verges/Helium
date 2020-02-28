@@ -1,8 +1,8 @@
 package com.jv.news.presenter
 
-import com.joaquimverges.helium.core.event.ViewEvent
-import com.joaquimverges.helium.core.BasePresenter
-import com.joaquimverges.helium.core.state.ViewState
+import com.joaquimverges.helium.core.event.BlockEvent
+import com.joaquimverges.helium.core.LogicBlock
+import com.joaquimverges.helium.core.state.BlockState
 import com.joaquimverges.helium.navigation.state.NavDrawerState
 import com.jv.news.data.ArticleRepository
 import com.jv.news.data.SourcesRepository
@@ -12,7 +12,7 @@ import com.jv.news.presenter.state.ArticleListState
  * @author joaquim
  */
 
-class MainPresenter : BasePresenter<ViewState, ViewEvent>() {
+class MainPresenter : LogicBlock<BlockState, BlockEvent>() {
 
     private val sourcesRepo = SourcesRepository()
     private val articleRepo = ArticleRepository(sourcesRepo)
@@ -21,7 +21,7 @@ class MainPresenter : BasePresenter<ViewState, ViewEvent>() {
     internal val sourcesPresenter = SourcesPresenter(sourcesRepo)
 
     init {
-        articlePresenter.observeViewState().subscribe { state ->
+        articlePresenter.observeState().subscribe { state ->
             when (state) {
                 ArticleListState.ArticlesLoaded -> pushState(NavDrawerState.Closed)
                 ArticleListState.MoreSourcesRequested -> pushState(NavDrawerState.Opened)
@@ -29,7 +29,7 @@ class MainPresenter : BasePresenter<ViewState, ViewEvent>() {
         }.autoDispose()
     }
 
-    override fun onViewEvent(event: ViewEvent) {
+    override fun onUiEvent(event: BlockEvent) {
         // no-op for now
     }
 }

@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.joaquimverges.demoapp.presenter.MyListPresenter
 import com.joaquimverges.demoapp.view.GridSpacingDecorator
 import com.joaquimverges.demoapp.view.MyCardRecyclerItem
-import com.joaquimverges.helium.core.event.ViewEvent
+import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.retained.getRetainedLogicBlock
-import com.joaquimverges.helium.core.state.ViewState
+import com.joaquimverges.helium.core.state.BlockState
 import com.joaquimverges.helium.navigation.viewdelegate.CollapsingToolbarScreenViewDelegate
 import com.joaquimverges.helium.ui.viewdelegate.ListViewDelegate
 
@@ -47,7 +47,7 @@ class AdvancedListActivity : AppCompatActivity() {
 
         getRetainedLogicBlock<MyListPresenter>().attach(listViewDelegate)
         setContentView(
-            CollapsingToolbarScreenViewDelegate<ViewState, ViewEvent>(
+            CollapsingToolbarScreenViewDelegate<BlockState, BlockEvent>(
                 layoutInflater,
                 listViewDelegate,
                 collapsingLayoutCustomization = {

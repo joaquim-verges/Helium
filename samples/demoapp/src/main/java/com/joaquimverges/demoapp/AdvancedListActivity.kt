@@ -6,9 +6,9 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.joaquimverges.demoapp.presenter.MyListLogic
-import com.joaquimverges.demoapp.view.GridSpacingDecorator
-import com.joaquimverges.demoapp.view.MyCardListItem
+import com.joaquimverges.demoapp.logic.MyListLogic
+import com.joaquimverges.demoapp.ui.GridSpacingDecorator
+import com.joaquimverges.demoapp.ui.MyCardListItem
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.retained.getRetainedLogicBlock
 import com.joaquimverges.helium.core.state.BlockState
@@ -35,7 +35,7 @@ class AdvancedListActivity : AppCompatActivity() {
             }
         }
 
-        val listViewDelegate = ListUi(layoutInflater,
+        val listUi = ListUi(layoutInflater,
             recyclerItemFactory = { inflater, container ->
                 MyCardListItem(inflater, container)
             },
@@ -45,11 +45,11 @@ class AdvancedListActivity : AppCompatActivity() {
                 it.addItemDecoration(GridSpacingDecorator(padding, orientation))
             })
 
-        getRetainedLogicBlock<MyListLogic>().attach(listViewDelegate)
+        getRetainedLogicBlock<MyListLogic>().attach(listUi)
         setContentView(
             CollapsingToolbarScreenUi<BlockState, BlockEvent>(
                 layoutInflater,
-                listViewDelegate,
+                listUi,
                 collapsingLayoutCustomization = {
                     val visibility = when (resources.configuration.orientation) {
                         Configuration.ORIENTATION_LANDSCAPE -> View.GONE

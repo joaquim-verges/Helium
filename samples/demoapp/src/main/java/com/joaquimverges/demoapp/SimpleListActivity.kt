@@ -2,18 +2,19 @@ package com.joaquimverges.demoapp
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.joaquimverges.demoapp.presenter.MyListLogic
-import com.joaquimverges.demoapp.view.MyRecyclerItem
+import com.joaquimverges.demoapp.logic.MyListLogic
+import com.joaquimverges.demoapp.ui.MyListItem
+import com.joaquimverges.helium.core.plus
 import com.joaquimverges.helium.ui.list.ListUi
 
 class SimpleListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val viewDelegate = ListUi(layoutInflater, { inflater, container ->
-            MyRecyclerItem(inflater, container)
+        val listUi = ListUi(layoutInflater, { inflater, container ->
+            MyListItem(inflater, container)
         })
-        MyListLogic().attach(viewDelegate)
-        setContentView(viewDelegate.view)
+        (MyListLogic() + listUi).assemble()
+        setContentView(listUi.view)
     }
 }
 

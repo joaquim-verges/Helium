@@ -17,7 +17,7 @@ class ArticleRepository(
 
     private var page = 1
 
-    override fun getData(): Single<List<Article>> {
+    override fun getFirstPage(): Single<List<Article>> {
         page = 1
         return fetch()
     }

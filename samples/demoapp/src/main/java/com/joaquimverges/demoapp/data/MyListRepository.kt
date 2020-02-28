@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit
  */
 class MyListRepository : ListRepository<List<MyItem>> {
 
-    override fun getData(): Single<List<MyItem>> {
+    override fun getFirstPage(): Single<List<MyItem>> {
         return Flowable.range(0, 100)
                 .map { i -> randomColor(i).run { MyItem(color, name.toLowerCase().replace("_", " ")) } }
                 .toList()

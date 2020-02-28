@@ -14,7 +14,7 @@ import com.joaquimverges.helium.core.util.autoDispose
 import com.joaquimverges.helium.core.UiBlock
 import com.joaquimverges.helium.ui.R
 import com.joaquimverges.helium.ui.list.event.ListBlockEvent
-import com.joaquimverges.helium.ui.list.state.ListBlockState
+import com.joaquimverges.helium.ui.list.state.DataLoadState
 import com.joaquimverges.helium.ui.list.adapter.ListAdapter
 import com.joaquimverges.helium.ui.list.adapter.ListItem
 import java.util.Collections.emptyList
@@ -49,7 +49,7 @@ constructor(
     recyclerViewConfig: ((RecyclerView) -> Unit)? = null,
     emptyViewDelegate: UiBlock<*, E>? = null,
     swipeToRefreshEnabled: Boolean = false
-) : UiBlock<ListBlockState<List<T>>, ListBlockEvent<E>>(layoutResId, inflater, container, addToContainer) {
+) : UiBlock<DataLoadState<List<T>>, ListBlockEvent<E>>(layoutResId, inflater, container, addToContainer) {
 
     private val recyclerView: RecyclerView = view.findViewById(R.id.recycler_view)
     private val swipeRefreshLayout: SwipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout)
@@ -91,18 +91,18 @@ constructor(
         }
     }
 
-    override fun render(viewState: ListBlockState<List<T>>) {
+    override fun render(viewState: DataLoadState<List<T>>) {
         progressBar.setVisible(false)
         emptyViewContainer.setVisible(false)
         val emptyAdapter = adapter.itemCount == 0
-        swipeRefreshLayout.isRefreshing = (viewState is ListBlockState.Loading && !emptyAdapter)
+        swipeRefreshLayout.isRefreshing = (viewState is DataLoadState.Loading && !emptyAdapter)
         when (viewState) {
-            is ListBlockState.Loading -> progressBar.setVisible(emptyAdapter)
-            is ListBlockState.DataReady -> {
+            is DataLoadState.Loading -> progressBar.setVisible(emptyAdapter)
+            is DataLoadState.Ready -> {
                 adapter.setItems(viewState.data)
                 resetScrollCounts()
             }
-            is ListBlockState.Empty -> {
+            is DataLoadState.Empty -> {
                 adapter.setItems(emptyList())
                 emptyViewContainer.setVisible(true)
             }

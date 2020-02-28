@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.joaquimverges.demoapp.view.GridSpacingDecorator
+import com.joaquimverges.demoapp.ui.GridSpacingDecorator
 import com.joaquimverges.helium.core.plus
 import com.joaquimverges.helium.core.event.ClickEvent
 import com.joaquimverges.helium.ui.list.event.ListBlockEvent
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
     class MenuRepository : ListRepository<List<MenuItem>> {
         private fun getMenuItems() = MenuItem.values().toList()
-        override fun getData(): Single<List<MenuItem>> = Observable.fromIterable(getMenuItems()).toList()
+        override fun getFirstPage(): Single<List<MenuItem>> = Observable.fromIterable(getMenuItems()).toList()
     }
 
     // PRESENTER
@@ -79,12 +79,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val uiBlock = ListUi(layoutInflater, { inflater, container ->
+        val listUi = ListUi(layoutInflater, { inflater, container ->
             MenuListItem(inflater, container)
         }, recyclerViewConfig = {
             it.addItemDecoration(GridSpacingDecorator(resources.getDimensionPixelSize(R.dimen.menu_padding)))
         })
-        (MenuLogicBlock() + uiBlock).assemble()
-        setContentView(uiBlock.view)
+        (MenuLogicBlock() + listUi).assemble()
+        setContentView(listUi.view)
     }
 }

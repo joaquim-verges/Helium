@@ -1,4 +1,4 @@
-package com.joaquimverges.demoapp.presenter
+package com.joaquimverges.demoapp.logic
 
 import androidx.core.content.ContextCompat
 import android.widget.Toast

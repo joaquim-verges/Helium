@@ -7,7 +7,7 @@ import com.joaquimverges.helium.core.LogicBlock
 import com.joaquimverges.helium.core.util.async
 import com.joaquimverges.helium.ui.list.event.ListBlockEvent
 import com.joaquimverges.helium.ui.list.repository.ListRepository
-import com.joaquimverges.helium.ui.list.state.ListBlockState
+import com.joaquimverges.helium.ui.list.state.DataLoadState
 import com.joaquimverges.helium.ui.util.RefreshPolicy
 import io.reactivex.subjects.PublishSubject
 
@@ -22,7 +22,7 @@ import io.reactivex.subjects.PublishSubject
 open class ListLogic<T, E : BlockEvent>(
     private val repository: ListRepository<List<T>>,
     private val refreshPolicy: RefreshPolicy = RefreshPolicy()
-) : LogicBlock<ListBlockState<List<T>>, ListBlockEvent<E>>() {
+) : LogicBlock<DataLoadState<List<T>>, ListBlockEvent<E>>() {
 
     sealed class PaginationEvent<T> {
         data class FirstPageLoaded<T>(val data: List<T>) : PaginationEvent<T>()
@@ -32,17 +32,17 @@ open class ListLogic<T, E : BlockEvent>(
     private val paginationEvents = PublishSubject.create<PaginationEvent<T>>()
 
     init {
-        paginationEvents.scan<ListBlockState<List<T>>>(
-            ListBlockState.Init(),
+        paginationEvents.scan<DataLoadState<List<T>>>(
+            DataLoadState.Init(),
             { prevState, paginationEvent ->
                 when (paginationEvent) {
                     is PaginationEvent.FirstPageLoaded -> {
-                        ListBlockState.DataReady(paginationEvent.data)
+                        DataLoadState.Ready(paginationEvent.data)
                     }
                     is PaginationEvent.AdditionalPageLoaded -> {
                         when (prevState) {
-                            is ListBlockState.DataReady -> {
-                                ListBlockState.DataReady(prevState.data + paginationEvent.data)
+                            is DataLoadState.Ready -> {
+                                DataLoadState.Ready(prevState.data + paginationEvent.data)
                             }
                             else -> prevState
                         }
@@ -62,19 +62,19 @@ open class ListLogic<T, E : BlockEvent>(
     }
 
     fun loadFirstPage() {
-        repository.getData()
+        repository.getFirstPage()
             .async()
-            .doOnSubscribe { pushState(ListBlockState.Loading()) }
+            .doOnSubscribe { pushState(DataLoadState.Loading()) }
             .doOnSuccess { refreshPolicy.updateLastRefreshedTime() }
             .subscribe(
                 { data ->
                     if (data.isNotEmpty()) {
                         paginationEvents.onNext(PaginationEvent.FirstPageLoaded(data))
                     } else {
-                        pushState(ListBlockState.Empty())
+                        pushState(DataLoadState.Empty())
                     }
                 },
-                { error -> pushState(ListBlockState.Error(error)) }
+                { error -> pushState(DataLoadState.Error(error)) }
             ).autoDispose()
     }
 
@@ -87,7 +87,7 @@ open class ListLogic<T, E : BlockEvent>(
                         paginationEvents.onNext(PaginationEvent.AdditionalPageLoaded(paginatedData))
                     }
                 },
-                { error -> pushState(ListBlockState.Error(error)) }
+                { error -> pushState(DataLoadState.Error(error)) }
             ).autoDispose()
     }
 

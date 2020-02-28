@@ -1,4 +1,4 @@
-package com.joaquimverges.demoapp.view
+package com.joaquimverges.demoapp.ui
 
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater

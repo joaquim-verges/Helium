@@ -6,27 +6,27 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.joaquimverges.demoapp.presenter.MyDetailPresenter
-import com.joaquimverges.demoapp.view.MyDetailViewDelegate
+import com.joaquimverges.demoapp.logic.MyDetailLogic
+import com.joaquimverges.demoapp.ui.MyDetailUi
 import com.joaquimverges.helium.core.retained.getRetainedLogicBlock
 
 class DetailFragment : Fragment() {
 
-    private lateinit var presenter: MyDetailPresenter
-    private lateinit var viewDelegate: MyDetailViewDelegate
+    private lateinit var logic: MyDetailLogic
+    private lateinit var ui: MyDetailUi
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        presenter = getRetainedLogicBlock()
+        logic = getRetainedLogicBlock()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        viewDelegate = MyDetailViewDelegate(inflater, container)
-        return viewDelegate.view
+        ui = MyDetailUi(inflater, container)
+        return ui.view
     }
 
     override fun onStart() {
         super.onStart()
-        presenter.attach(viewDelegate)
+        logic.attach(ui)
     }
 }

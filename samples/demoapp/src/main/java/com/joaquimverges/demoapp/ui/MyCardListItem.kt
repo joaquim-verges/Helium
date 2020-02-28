@@ -1,4 +1,4 @@
-package com.joaquimverges.demoapp.view
+package com.joaquimverges.demoapp.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

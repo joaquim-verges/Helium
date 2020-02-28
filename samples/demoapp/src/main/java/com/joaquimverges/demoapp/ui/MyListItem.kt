@@ -1,4 +1,4 @@
-package com.joaquimverges.demoapp.view
+package com.joaquimverges.demoapp.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -11,7 +11,7 @@ import com.joaquimverges.helium.ui.list.adapter.ListItem
 /**
  * @author joaquim
  */
-class MyRecyclerItem(inflater: LayoutInflater, container: ViewGroup) :
+class MyListItem(inflater: LayoutInflater, container: ViewGroup) :
     ListItem<MyItem, ClickEvent<MyItem>>(R.layout.list_item_layout, inflater, container) {
 
     override fun bind(data: MyItem) {

@@ -25,7 +25,7 @@ class SourcesRepository(
     private val sources = mutableSetOf<String>().apply { addAll(preferences.getStringSet(SELECTED_SOURCES, mutableSetOf())?.toList() ?: listOf()) }
     private val sourcesSubject = PublishSubject.create<Set<String>>()
 
-    override fun getData(): Single<List<SourcesCategoryGroup>> {
+    override fun getFirstPage(): Single<List<SourcesCategoryGroup>> {
         return api.getSources()
             .map { it.sources.groupBy { source -> source.category } }
             .map { it.mapNotNull { mapEntry -> mapEntry.key?.let { name -> SourcesCategoryGroup(name, mapEntry.value) { source -> isSelected(source) } } } }

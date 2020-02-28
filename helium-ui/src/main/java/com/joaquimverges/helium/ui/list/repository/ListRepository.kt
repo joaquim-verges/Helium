@@ -8,6 +8,6 @@ import io.reactivex.Single
  * Here is where the actual data fetching/caching logic lives.
  */
 interface ListRepository<T> {
-    fun getData(): Single<T>
+    fun getFirstPage(): Single<T>
     fun paginate(): Maybe<T> = Maybe.empty()
 }

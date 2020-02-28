@@ -1,4 +1,4 @@
-package com.joaquimverges.helium.ui.viewdelegate
+package com.joaquimverges.helium.ui.list.card
 
 import android.view.LayoutInflater
 import android.view.View
@@ -11,20 +11,20 @@ import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.ui.R
 
 /**
- * RecyclerItem wrapped around a [MaterialCardView] with convenience methods to bind a simple material card
+ * ListItem wrapped around a [MaterialCardView] with convenience methods to bind a simple material card
  * @param inflater: a valid LayoutInflater
  * @param container: the container (generally a recyclerView),
- * @param contentImageHeight: override the height (in pixels) of the image inside the card (default 180dp)
+ * @param contentImageHeight: override the height (in pixels) of the image inside the card (default 160dp)
  * @param contentView: override the view to be added inside the card
  * @param cardViewConfig: optional lambda to configure the [MaterialCardView]
  */
-abstract class ContentCardRecyclerItem<in T, V : BlockEvent>(
+abstract class ContentCardListItem<in T, V : BlockEvent>(
     inflater: LayoutInflater,
     container: ViewGroup,
     contentImageHeight: Int = inflater.context.resources.getDimensionPixelSize(R.dimen.default_card_image_height),
     contentView: View = inflater.inflate(R.layout.view_content_card_layout, container, false),
     cardViewConfig: ((MaterialCardView) -> Unit)? = null
-) : CardRecyclerItem<T, V>(contentView, inflater, container, cardViewConfig = cardViewConfig) {
+) : CardListItem<T, V>(contentView, inflater, container, cardViewConfig = cardViewConfig) {
 
     private val img = findView<ImageView>(R.id.content_card_image)
     private val title = findView<TextView>(R.id.content_card_title)

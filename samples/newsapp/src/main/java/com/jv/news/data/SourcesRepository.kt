@@ -2,7 +2,7 @@ package com.jv.news.data
 
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import com.joaquimverges.helium.ui.repository.BaseRepository
+import com.joaquimverges.helium.ui.list.repository.ListRepository
 import com.jv.news.App
 import com.jv.news.data.model.ArticleSource
 import com.jv.news.data.model.SourcesCategoryGroup
@@ -16,7 +16,7 @@ import io.reactivex.subjects.PublishSubject
 class SourcesRepository(
     private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(App.context.applicationContext),
     private val api: NewsApiServer.NewsApiService = NewsApiServer.service
-) : BaseRepository<List<SourcesCategoryGroup>> {
+) : ListRepository<List<SourcesCategoryGroup>> {
 
     companion object {
         private const val SELECTED_SOURCES = "selected_sources"

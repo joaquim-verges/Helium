@@ -1,7 +1,7 @@
 package com.joaquimverges.demoapp.data
 
 import com.joaquimverges.demoapp.data.Colors.randomColor
-import com.joaquimverges.helium.ui.repository.BaseRepository
+import com.joaquimverges.helium.ui.list.repository.ListRepository
 import io.reactivex.Single
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit
 /**
  * @author joaquim
  */
-class MyDetailRepository : BaseRepository<MyItem> {
+class MyDetailRepository : ListRepository<MyItem> {
 
     override fun getData(): Single<MyItem> {
         return Single

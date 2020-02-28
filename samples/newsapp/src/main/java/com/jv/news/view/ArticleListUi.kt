@@ -10,7 +10,7 @@ import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.state.BlockState
 import com.joaquimverges.helium.core.UiBlock
 import com.joaquimverges.helium.navigation.toolbar.CollapsingToolbarScreenUi
-import com.joaquimverges.helium.ui.viewdelegate.ListViewDelegate
+import com.joaquimverges.helium.ui.list.ListUi
 import com.jv.news.App.Companion.context
 import com.jv.news.R
 import com.jv.news.data.model.Article
@@ -23,10 +23,10 @@ import com.jv.news.view.event.ArticleEvent
  */
 class ArticleListUi(
     inflater: LayoutInflater,
-    val listViewDelegate: ListViewDelegate<Article, ArticleEvent, ArticleGridItemViewHolder> = inflateListView(inflater)
+    val listUi: ListUi<Article, ArticleEvent, ArticleGridItemViewHolder> = inflateListView(inflater)
 ) : CollapsingToolbarScreenUi<ArticleListState, ArticleEvent>(
     inflater,
-    listViewDelegate,
+    listUi,
     HeaderViewDelegate(inflater),
     collapsingLayoutCustomization = {
         it.title = context.getString(R.string.app_name)
@@ -48,7 +48,7 @@ class ArticleListUi(
         private const val DOUBLE_SPAN_COUNT = 2
         private const val SINGLE_SPAN_COUNT = 1
 
-        private fun inflateListView(inflater: LayoutInflater): ListViewDelegate<Article, ArticleEvent, ArticleGridItemViewHolder> {
+        private fun inflateListView(inflater: LayoutInflater): ListUi<Article, ArticleEvent, ArticleGridItemViewHolder> {
             val context = inflater.context
             val spacing: Int = context.resources.getDimensionPixelSize(R.dimen.grid_spacing)
             val orientation = when (context.resources.configuration.orientation) {
@@ -65,7 +65,7 @@ class ArticleListUi(
                 }
             }
 
-            return ListViewDelegate(
+            return ListUi(
                 inflater,
                 recyclerItemFactory = { layoutInflater, container ->
                     ArticleGridItemViewHolder(layoutInflater, container)

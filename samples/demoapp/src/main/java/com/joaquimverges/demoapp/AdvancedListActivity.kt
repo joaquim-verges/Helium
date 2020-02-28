@@ -6,14 +6,14 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.joaquimverges.demoapp.presenter.MyListPresenter
+import com.joaquimverges.demoapp.presenter.MyListLogic
 import com.joaquimverges.demoapp.view.GridSpacingDecorator
-import com.joaquimverges.demoapp.view.MyCardRecyclerItem
+import com.joaquimverges.demoapp.view.MyCardListItem
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.retained.getRetainedLogicBlock
 import com.joaquimverges.helium.core.state.BlockState
 import com.joaquimverges.helium.navigation.toolbar.CollapsingToolbarScreenUi
-import com.joaquimverges.helium.ui.viewdelegate.ListViewDelegate
+import com.joaquimverges.helium.ui.list.ListUi
 
 class AdvancedListActivity : AppCompatActivity() {
 
@@ -35,9 +35,9 @@ class AdvancedListActivity : AppCompatActivity() {
             }
         }
 
-        val listViewDelegate = ListViewDelegate(layoutInflater,
+        val listViewDelegate = ListUi(layoutInflater,
             recyclerItemFactory = { inflater, container ->
-                MyCardRecyclerItem(inflater, container)
+                MyCardListItem(inflater, container)
             },
             layoutManager = layoutManager,
             recyclerViewConfig = {
@@ -45,7 +45,7 @@ class AdvancedListActivity : AppCompatActivity() {
                 it.addItemDecoration(GridSpacingDecorator(padding, orientation))
             })
 
-        getRetainedLogicBlock<MyListPresenter>().attach(listViewDelegate)
+        getRetainedLogicBlock<MyListLogic>().attach(listViewDelegate)
         setContentView(
             CollapsingToolbarScreenUi<BlockState, BlockEvent>(
                 layoutInflater,

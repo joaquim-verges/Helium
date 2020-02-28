@@ -1,7 +1,7 @@
 package com.joaquimverges.demoapp.data
 
 import com.joaquimverges.demoapp.data.Colors.randomColor
-import com.joaquimverges.helium.ui.repository.BaseRepository
+import com.joaquimverges.helium.ui.list.repository.ListRepository
 import io.reactivex.Flowable
 import io.reactivex.Single
 import java.util.concurrent.TimeUnit
@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit
 /**
  * @author joaquim
  */
-class MyListRepository : BaseRepository<List<MyItem>> {
+class MyListRepository : ListRepository<List<MyItem>> {
 
     override fun getData(): Single<List<MyItem>> {
         return Flowable.range(0, 100)

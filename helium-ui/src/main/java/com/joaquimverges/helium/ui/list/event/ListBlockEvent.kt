@@ -1,4 +1,4 @@
-package com.joaquimverges.helium.ui.event
+package com.joaquimverges.helium.ui.list.event
 
 import com.joaquimverges.helium.core.event.BlockEvent
 

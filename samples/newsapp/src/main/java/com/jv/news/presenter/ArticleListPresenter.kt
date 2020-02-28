@@ -8,8 +8,8 @@ import androidx.core.app.ShareCompat
 import com.joaquimverges.helium.core.LogicBlock
 import com.joaquimverges.helium.navigation.toolbar.ToolbarEvent
 import com.joaquimverges.helium.navigation.toolbar.ToolbarLogic
-import com.joaquimverges.helium.ui.event.ListBlockEvent
-import com.joaquimverges.helium.ui.presenter.ListPresenter
+import com.joaquimverges.helium.ui.list.event.ListBlockEvent
+import com.joaquimverges.helium.ui.list.ListLogic
 import com.joaquimverges.helium.ui.util.RefreshPolicy
 import com.jv.news.data.ArticleRepository
 import com.jv.news.data.model.Article
@@ -23,28 +23,31 @@ import java.util.concurrent.TimeUnit
 class ArticleListPresenter(
     private val repository: ArticleRepository,
     refreshPolicy: RefreshPolicy = RefreshPolicy(10, TimeUnit.MINUTES),
-    internal val listPresenter: ListPresenter<Article, ArticleEvent> = ListPresenter(repository, refreshPolicy),
+    internal val listLogic: ListLogic<Article, ArticleEvent> = ListLogic(
+        repository,
+        refreshPolicy
+    ),
     internal val toolbarLogic: ToolbarLogic = ToolbarLogic()
 ) : LogicBlock<ArticleListState, ArticleEvent>() {
 
     init {
         repository
             .sourcesUpdatedObserver()
-            .subscribe { listPresenter.loadData() }
+            .subscribe { listLogic.loadFirstPage() }
             .autoDispose()
 
-        // receive all list item view events in this presenter
-        listPresenter.observeEvents().subscribe {
+        // receive all list item view events in this block
+        listLogic.observeEvents().subscribe {
             when (it) {
                 is ListBlockEvent.ListItemEvent -> onUiEvent(it.itemEvent)
                 is ListBlockEvent.EmptyBlockEvent -> onUiEvent(it.emptyViewEvent)
-                is ListBlockEvent.UserScrolledBottom -> listPresenter.paginate()
-                is ListBlockEvent.SwipedToRefresh -> listPresenter.loadData()
+                is ListBlockEvent.UserScrolledBottom -> listLogic.paginate()
+                is ListBlockEvent.SwipedToRefresh -> listLogic.loadFirstPage()
             }
         }.autoDispose()
         // when the list changes state, propagate the state up to the MainPresenter
         // so it can close the nav drawer after 2s
-        listPresenter.observeState()
+        listLogic.observeState()
             .debounce(2, TimeUnit.SECONDS)
             .subscribe { pushState(ArticleListState.ArticlesLoaded) }
             .autoDispose()

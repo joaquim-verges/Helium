@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
             logic, ui,
             listOf(
                 logic.toolbarLogic + ui.toolbarViewDelegate,
-                logic.listPresenter + ui.listViewDelegate
+                logic.listLogic + ui.listUi
             )
         )
     }

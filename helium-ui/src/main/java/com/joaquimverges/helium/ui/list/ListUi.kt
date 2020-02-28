@@ -1,4 +1,4 @@
-package com.joaquimverges.helium.ui.viewdelegate
+package com.joaquimverges.helium.ui.list
 
 import android.view.LayoutInflater
 import android.view.View
@@ -13,14 +13,16 @@ import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.util.autoDispose
 import com.joaquimverges.helium.core.UiBlock
 import com.joaquimverges.helium.ui.R
-import com.joaquimverges.helium.ui.event.ListBlockEvent
-import com.joaquimverges.helium.ui.state.ListBlockState
+import com.joaquimverges.helium.ui.list.event.ListBlockEvent
+import com.joaquimverges.helium.ui.list.state.ListBlockState
+import com.joaquimverges.helium.ui.list.adapter.ListAdapter
+import com.joaquimverges.helium.ui.list.adapter.ListItem
 import java.util.Collections.emptyList
 
 /**
- * A convenience ViewDelegate that displays a list of data.
+ * A convenience UiBlock that displays a list of data.
  * Handles displaying the list in a RecyclerView, with a ProgressBar while loading.
- * Responds to NetworkViewState changes emitted from a Presenter.
+ * Responds to ListBlockState changes emitted from a compatible LogicBlock.
  *
  * @param inflater LayoutInflater to inflate the view hierarchy
  * @param recyclerItemFactory Provides how to create ViewHolders for item views
@@ -34,7 +36,7 @@ import java.util.Collections.emptyList
  * @see com.joaquimverges.helium.ui.presenter.ListPresenter
  * @see com.joaquimverges.helium.ui.state.ListBlockState
  */
-open class ListViewDelegate<T, E : BlockEvent, VH : BaseRecyclerViewItem<T, E>>
+open class ListUi<T, E : BlockEvent, VH : ListItem<T, E>>
 constructor(
     inflater: LayoutInflater,
     recyclerItemFactory: (LayoutInflater, ViewGroup) -> VH,
@@ -53,7 +55,7 @@ constructor(
     private val swipeRefreshLayout: SwipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout)
     private val progressBar: ProgressBar = view.findViewById(R.id.loader)
     private val emptyViewContainer: ViewGroup = view.findViewById(R.id.empty_view_container)
-    private val adapter: BaseRecyclerAdapter<T, E, VH> = BaseRecyclerAdapter(inflater, recyclerItemFactory)
+    private val adapter: ListAdapter<T, E, VH> = ListAdapter(inflater, recyclerItemFactory)
     private var lastItemCountHalfway = 0
     private var lastItemCountBottom = 0
 

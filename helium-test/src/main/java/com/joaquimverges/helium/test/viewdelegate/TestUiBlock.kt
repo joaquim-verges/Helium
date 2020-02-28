@@ -14,10 +14,10 @@ import org.junit.Assert.fail
 import org.mockito.internal.matchers.apachecommons.ReflectionEquals
 
 /**
- * Utility class for unit testing presenters with a generic view delegate.
+ * Utility class for unit testing a LogicBlock with a generic UiBlock.
  * Has handy methods to assert last rendered states.
  */
-class TestViewDelegate<S : BlockState, E : BlockEvent>(
+class TestUiBlock<S : BlockState, E : BlockEvent>(
     mockView: View = mock(),
     mockContext: Context = mock(),
     private val mockLifecycle: Lifecycle = mock<Lifecycle>().apply {

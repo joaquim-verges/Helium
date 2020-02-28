@@ -2,8 +2,8 @@ package com.joaquimverges.helium.test
 
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.state.BlockState
-import com.joaquimverges.helium.test.presenter.TestPresenter
-import com.joaquimverges.helium.test.viewdelegate.TestViewDelegate
+import com.joaquimverges.helium.test.presenter.TestLogicBLock
+import com.joaquimverges.helium.test.viewdelegate.TestUiBlock
 import org.junit.Before
 import org.junit.Test
 import org.mockito.MockitoAnnotations
@@ -16,56 +16,56 @@ class CoreTests : HeliumTestCase() {
     private val viewEvent = SimpleBlockEvent()
     private val viewState = SimpleBlockState()
 
-    private lateinit var presenter: TestPresenter<SimpleBlockState, SimpleBlockEvent>
-    private lateinit var viewDelegate: TestViewDelegate<SimpleBlockState, SimpleBlockEvent>
+    private lateinit var logicBLock: TestLogicBLock<SimpleBlockState, SimpleBlockEvent>
+    private lateinit var uiBlock: TestUiBlock<SimpleBlockState, SimpleBlockEvent>
 
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
-        viewDelegate = TestViewDelegate()
-        presenter = TestPresenter()
+        uiBlock = TestUiBlock()
+        logicBLock = TestLogicBLock()
     }
 
     @Test
     fun testAttach() {
-        presenter.attach(viewDelegate)
-        viewDelegate.assertAttached(presenter)
+        logicBLock.attach(uiBlock)
+        uiBlock.assertAttached(logicBLock)
     }
 
     @Test
     fun testViewState() {
         bootstrapAttach()
-        presenter.pushState(viewState)
-        presenter.assertState(viewState)
-        viewDelegate.assertLastRendered(viewState)
+        logicBLock.pushState(viewState)
+        logicBLock.assertState(viewState)
+        uiBlock.assertLastRendered(viewState)
     }
 
     @Test
     fun testViewStateBeforeAttach() {
-        presenter.pushState(viewState)
-        presenter.assertState(viewState)
-        viewDelegate.assertNothingRendered()
+        logicBLock.pushState(viewState)
+        logicBLock.assertState(viewState)
+        uiBlock.assertNothingRendered()
         bootstrapAttach()
-        viewDelegate.assertLastRendered(viewState)
+        uiBlock.assertLastRendered(viewState)
     }
 
     @Test
     fun testViewEvent() {
         bootstrapAttach()
-        viewDelegate.pushEvent(viewEvent)
-        presenter.assertOnEvent(viewEvent)
+        uiBlock.pushEvent(viewEvent)
+        logicBLock.assertOnEvent(viewEvent)
     }
 
     @Test
     fun testViewEventBeforeAttach() {
-        viewDelegate.pushEvent(viewEvent)
-        presenter.assertNoEvents()
+        uiBlock.pushEvent(viewEvent)
+        logicBLock.assertNoEvents()
         bootstrapAttach()
-        presenter.assertNoEvents()
+        logicBLock.assertNoEvents()
     }
 
     private fun bootstrapAttach() {
-        presenter.attach(viewDelegate)
+        logicBLock.attach(uiBlock)
     }
 
 }

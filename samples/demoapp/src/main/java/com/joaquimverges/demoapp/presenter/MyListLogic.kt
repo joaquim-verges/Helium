@@ -6,15 +6,15 @@ import com.joaquimverges.demoapp.data.Colors
 import com.joaquimverges.demoapp.data.MyListRepository
 import com.joaquimverges.demoapp.data.MyItem
 import com.joaquimverges.helium.core.event.ClickEvent
-import com.joaquimverges.helium.ui.event.ListBlockEvent
-import com.joaquimverges.helium.ui.presenter.ListPresenter
+import com.joaquimverges.helium.ui.list.event.ListBlockEvent
+import com.joaquimverges.helium.ui.list.ListLogic
 import com.joaquimverges.helium.ui.util.RefreshPolicy
 import java.util.concurrent.TimeUnit
 
 /**
  * @author joaquim
  */
-class MyListPresenter : ListPresenter<MyItem, ClickEvent<MyItem>>(MyListRepository(), RefreshPolicy(5, TimeUnit.MINUTES)) {
+class MyListLogic : ListLogic<MyItem, ClickEvent<MyItem>>(MyListRepository(), RefreshPolicy(5, TimeUnit.MINUTES)) {
 
     override fun onUiEvent(event: ListBlockEvent<ClickEvent<MyItem>>) {
         when(event) {

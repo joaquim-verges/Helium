@@ -2,7 +2,6 @@ package com.joaquimverges.demoapp.view
 
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -10,10 +9,10 @@ import androidx.core.content.ContextCompat
 import com.joaquimverges.demoapp.data.Colors
 import com.joaquimverges.demoapp.data.MyItem
 import com.joaquimverges.helium.core.event.ClickEvent
-import com.joaquimverges.helium.ui.viewdelegate.ContentCardRecyclerItem
+import com.joaquimverges.helium.ui.list.card.ContentCardListItem
 
-class MyContentCardRecyclerItem(inflater: LayoutInflater, container: ViewGroup)
-    : ContentCardRecyclerItem<MyItem, ClickEvent<MyItem>>(inflater, container) {
+class MyContentCardListItem(inflater: LayoutInflater, container: ViewGroup)
+    : ContentCardListItem<MyItem, ClickEvent<MyItem>>(inflater, container) {
 
     override fun bindTitle(data: MyItem, view: TextView) {
         view.text = data.name

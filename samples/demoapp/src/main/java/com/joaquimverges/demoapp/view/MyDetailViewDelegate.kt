@@ -11,7 +11,7 @@ import com.joaquimverges.demoapp.R
 import com.joaquimverges.demoapp.data.Colors
 import com.joaquimverges.demoapp.data.MyItem
 import com.joaquimverges.helium.core.event.ClickEvent
-import com.joaquimverges.helium.ui.state.ListBlockState
+import com.joaquimverges.helium.ui.list.state.ListBlockState
 import com.joaquimverges.helium.core.UiBlock
 
 /**

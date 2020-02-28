@@ -1,4 +1,4 @@
-package com.joaquimverges.helium.ui.state
+package com.joaquimverges.helium.ui.list.state
 
 import com.joaquimverges.helium.core.state.BlockState
 

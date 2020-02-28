@@ -18,7 +18,7 @@ class MainPresenter : LogicBlock<BlockState, BlockEvent>() {
     private val articleRepo = ArticleRepository(sourcesRepo)
 
     internal val articlePresenter = ArticleListPresenter(articleRepo)
-    internal val sourcesPresenter = SourcesPresenter(sourcesRepo)
+    internal val sourcesPresenter = SourcesLogic(sourcesRepo)
 
     init {
         articlePresenter.observeState().subscribe { state ->

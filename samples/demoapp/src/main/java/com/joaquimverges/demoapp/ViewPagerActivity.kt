@@ -3,7 +3,7 @@ package com.joaquimverges.demoapp
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
-import com.joaquimverges.helium.ui.viewdelegate.PagerViewDelegate
+import com.joaquimverges.helium.ui.viewpager.PagerViewDelegate
 
 class ViewPagerActivity : AppCompatActivity() {
 

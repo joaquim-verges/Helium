@@ -1,26 +1,26 @@
-package com.joaquimverges.helium.ui.presenter
+package com.joaquimverges.helium.ui.list
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.OnLifecycleEvent
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.LogicBlock
 import com.joaquimverges.helium.core.util.async
-import com.joaquimverges.helium.ui.event.ListBlockEvent
-import com.joaquimverges.helium.ui.repository.BaseRepository
-import com.joaquimverges.helium.ui.state.ListBlockState
+import com.joaquimverges.helium.ui.list.event.ListBlockEvent
+import com.joaquimverges.helium.ui.list.repository.ListRepository
+import com.joaquimverges.helium.ui.list.state.ListBlockState
 import com.joaquimverges.helium.ui.util.RefreshPolicy
 import io.reactivex.subjects.PublishSubject
 
 /**
- * A Typical Presenter base implementation:
+ * A Typical List logic implementation:
  * - loads data from a Repository asynchronously when the activity/fragment is resumed
- * - publishes network states (loading, empty, error, success) to the attached ViewDelegate
+ * - publishes loading states (loading, empty, error, success) to the attached UiBlock
  *
  * Optional: pass a RefreshPolicy to control how often the data should get reloaded.
  * default is to refresh on every resume. Consider passing your own refresh policy to meet your use case.
  */
-open class ListPresenter<T, E : BlockEvent>(
-    private val repository: BaseRepository<List<T>>,
+open class ListLogic<T, E : BlockEvent>(
+    private val repository: ListRepository<List<T>>,
     private val refreshPolicy: RefreshPolicy = RefreshPolicy()
 ) : LogicBlock<ListBlockState<List<T>>, ListBlockEvent<E>>() {
 
@@ -57,11 +57,11 @@ open class ListPresenter<T, E : BlockEvent>(
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     internal fun refreshIfNeeded() {
         if (refreshPolicy.shouldRefresh()) {
-            loadData()
+            loadFirstPage()
         }
     }
 
-    fun loadData() {
+    fun loadFirstPage() {
         repository.getData()
             .async()
             .doOnSubscribe { pushState(ListBlockState.Loading()) }

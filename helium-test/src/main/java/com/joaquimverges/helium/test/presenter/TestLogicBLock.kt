@@ -5,7 +5,10 @@ import com.joaquimverges.helium.core.LogicBlock
 import com.joaquimverges.helium.core.state.BlockState
 import org.mockito.internal.matchers.apachecommons.ReflectionEquals
 
-class TestPresenter<S : BlockState, E : BlockEvent> : LogicBlock<S, E>() {
+/**
+ * Utility class used to test UiBlocks in isolation
+ */
+class TestLogicBLock<S : BlockState, E : BlockEvent> : LogicBlock<S, E>() {
 
     private var lastReceivedEvent: BlockEvent? = null
     private var lastBlockState: BlockState? = null

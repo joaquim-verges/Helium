@@ -1,7 +1,7 @@
 package com.jv.news.presenter
 
-import com.joaquimverges.helium.ui.event.ListBlockEvent
-import com.joaquimverges.helium.ui.presenter.ListPresenter
+import com.joaquimverges.helium.ui.list.event.ListBlockEvent
+import com.joaquimverges.helium.ui.list.ListLogic
 import com.joaquimverges.helium.ui.util.RefreshPolicy
 import com.jv.news.data.SourcesRepository
 import com.jv.news.data.model.SourcesCategoryGroup
@@ -11,10 +11,10 @@ import java.util.concurrent.TimeUnit
 /**
  * @author joaquim
  */
-class SourcesPresenter(
+class SourcesLogic(
     private val sourcesRepository: SourcesRepository = SourcesRepository(),
     refreshPolicy: RefreshPolicy = RefreshPolicy(1, TimeUnit.HOURS)
-) : ListPresenter<SourcesCategoryGroup, SourceEvent>(sourcesRepository, refreshPolicy) {
+) : ListLogic<SourcesCategoryGroup, SourceEvent>(sourcesRepository, refreshPolicy) {
 
     override fun onUiEvent(event: ListBlockEvent<SourceEvent>) {
         when (event) {

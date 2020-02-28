@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import com.bumptech.glide.Glide
-import com.joaquimverges.helium.ui.viewdelegate.BaseRecyclerViewItem
+import com.joaquimverges.helium.ui.list.adapter.ListItem
 import com.jv.news.R
 import com.jv.news.data.model.Article
 import com.jv.news.view.event.ArticleEvent
@@ -20,7 +20,7 @@ class ArticleGridItemViewHolder(
     inflater: LayoutInflater,
     parent: ViewGroup,
     itemView: View = inflater.inflate(R.layout.view_article_item, parent, false)
-) : BaseRecyclerViewItem<Article, ArticleEvent>(itemView) {
+) : ListItem<Article, ArticleEvent>(itemView) {
 
     private val mediaView: ImageView = findView(R.id.article_media)
     private val titleView: TextView = findView(R.id.article_title)

@@ -1,6 +1,6 @@
 package com.jv.news.data
 
-import com.joaquimverges.helium.ui.repository.BaseRepository
+import com.joaquimverges.helium.ui.list.repository.ListRepository
 import com.jv.news.data.model.Article
 import com.jv.news.data.model.ArticleResponse
 import io.reactivex.Maybe
@@ -13,7 +13,7 @@ import java.net.URL
 class ArticleRepository(
     private val sourcesRepository: SourcesRepository = SourcesRepository(),
     private val api: NewsApiServer.NewsApiService = NewsApiServer.service
-) : BaseRepository<List<Article>> {
+) : ListRepository<List<Article>> {
 
     private var page = 1
 

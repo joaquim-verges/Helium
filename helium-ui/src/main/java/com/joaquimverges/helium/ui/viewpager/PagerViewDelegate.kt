@@ -1,4 +1,4 @@
-package com.joaquimverges.helium.ui.viewdelegate
+package com.joaquimverges.helium.ui.viewpager
 
 import androidx.viewpager.widget.ViewPager
 import android.view.ViewGroup

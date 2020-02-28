@@ -1,4 +1,4 @@
-package com.joaquimverges.helium.ui.viewdelegate
+package com.joaquimverges.helium.ui.list.adapter
 
 import android.content.Context
 import androidx.annotation.LayoutRes
@@ -11,14 +11,14 @@ import com.joaquimverges.helium.core.event.BlockEvent
 import io.reactivex.subjects.PublishSubject
 
 /**
- * Base class for Recycler view items.
+ * Base class for RecyclerView items.
  * - Responsible for accessing and holding Android views.
  * - Can bind a model to an Android view within the list
  * - Can emit ViewEvent objects up to the Presenter (click for example)
  *
  * @param view The root of the layout for this list item
  */
-abstract class BaseRecyclerViewItem<in T, V : BlockEvent>(val view: View) : RecyclerView.ViewHolder(view) {
+abstract class ListItem<in T, V : BlockEvent>(val view: View) : RecyclerView.ViewHolder(view) {
 
     /**
      * Convenience constructor to inflate the layout for you.

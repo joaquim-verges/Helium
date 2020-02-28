@@ -6,13 +6,13 @@ import androidx.core.content.ContextCompat
 import com.joaquimverges.demoapp.R
 import com.joaquimverges.demoapp.data.MyItem
 import com.joaquimverges.helium.core.event.ClickEvent
-import com.joaquimverges.helium.ui.viewdelegate.BaseRecyclerViewItem
+import com.joaquimverges.helium.ui.list.adapter.ListItem
 
 /**
  * @author joaquim
  */
 class MyRecyclerItem(inflater: LayoutInflater, container: ViewGroup) :
-    BaseRecyclerViewItem<MyItem, ClickEvent<MyItem>>(R.layout.list_item_layout, inflater, container) {
+    ListItem<MyItem, ClickEvent<MyItem>>(R.layout.list_item_layout, inflater, container) {
 
     override fun bind(data: MyItem) {
         view.setBackgroundColor(ContextCompat.getColor(view.context, data.color))

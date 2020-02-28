@@ -1,4 +1,4 @@
-package com.joaquimverges.helium.ui.viewdelegate
+package com.joaquimverges.helium.ui.list.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -16,7 +16,7 @@ import io.reactivex.subjects.PublishSubject
  * @param viewEvents the observable to push ViewEvent objects to
  * @param viewHolderFactory Provides how to create ViewHolders for this list
  */
-class BaseRecyclerAdapter<in T, E : BlockEvent, VH : BaseRecyclerViewItem<T, E>>(
+class ListAdapter<in T, E : BlockEvent, VH : ListItem<T, E>>(
     private val inflater: LayoutInflater,
     private val viewHolderFactory: (LayoutInflater, ViewGroup) -> VH,
     private val viewEvents: PublishSubject<E> = PublishSubject.create()

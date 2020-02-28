@@ -10,11 +10,11 @@ import android.widget.TextView
 import com.joaquimverges.demoapp.view.GridSpacingDecorator
 import com.joaquimverges.helium.core.plus
 import com.joaquimverges.helium.core.event.ClickEvent
-import com.joaquimverges.helium.ui.event.ListBlockEvent
-import com.joaquimverges.helium.ui.presenter.ListPresenter
-import com.joaquimverges.helium.ui.repository.BaseRepository
-import com.joaquimverges.helium.ui.viewdelegate.CardRecyclerItem
-import com.joaquimverges.helium.ui.viewdelegate.ListViewDelegate
+import com.joaquimverges.helium.ui.list.event.ListBlockEvent
+import com.joaquimverges.helium.ui.list.ListLogic
+import com.joaquimverges.helium.ui.list.repository.ListRepository
+import com.joaquimverges.helium.ui.list.card.CardListItem
+import com.joaquimverges.helium.ui.list.ListUi
 import io.reactivex.Observable
 import io.reactivex.Single
 
@@ -31,14 +31,14 @@ class MainActivity : AppCompatActivity() {
         VIEW_PAGER("ViewPager"),
     }
 
-    class MenuRepository : BaseRepository<List<MenuItem>> {
+    class MenuRepository : ListRepository<List<MenuItem>> {
         private fun getMenuItems() = MenuItem.values().toList()
         override fun getData(): Single<List<MenuItem>> = Observable.fromIterable(getMenuItems()).toList()
     }
 
     // PRESENTER
 
-    class MenuLogicBlock : ListPresenter<MenuItem, ClickEvent<MenuItem>>(MenuRepository()) {
+    class MenuLogicBlock : ListLogic<MenuItem, ClickEvent<MenuItem>>(MenuRepository()) {
 
         override fun onUiEvent(event: ListBlockEvent<ClickEvent<MenuItem>>) {
             when (event) {
@@ -61,10 +61,10 @@ class MainActivity : AppCompatActivity() {
 
     // VIEW
 
-    class MenuRecyclerItem(inflater: LayoutInflater,
-                           parent: ViewGroup,
-                           root: View = inflater.inflate(R.layout.menu_item_layout, parent, false))
-        : CardRecyclerItem<MenuItem, ClickEvent<MenuItem>>(root, inflater, parent) {
+    class MenuListItem(inflater: LayoutInflater,
+                       parent: ViewGroup,
+                       root: View = inflater.inflate(R.layout.menu_item_layout, parent, false))
+        : CardListItem<MenuItem, ClickEvent<MenuItem>>(root, inflater, parent) {
 
         private val title = root.findViewById<TextView>(R.id.menu_title)
 
@@ -79,8 +79,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val uiBlock = ListViewDelegate(layoutInflater, { inflater, container ->
-            MenuRecyclerItem(inflater, container)
+        val uiBlock = ListUi(layoutInflater, { inflater, container ->
+            MenuListItem(inflater, container)
         }, recyclerViewConfig = {
             it.addItemDecoration(GridSpacingDecorator(resources.getDimensionPixelSize(R.dimen.menu_padding)))
         })

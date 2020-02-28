@@ -38,8 +38,8 @@ class MainActivity : AppCompatActivity() {
         fun create(logic: MainScreenLogic, ui: MainScreenUi) = AppBlock(
             logic, ui,
             listOf(
-                ArticleListAppBlock.create(logic.articlePresenter, ui.articleView),
-                logic.sourcesPresenter + ui.drawerView
+                ArticleListAppBlock.create(logic.articleListLogic, ui.articleView),
+                logic.sourcesLogic + ui.drawerView
             )
         )
     }
@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         fun create(logic: ArticleListLogic, ui: ArticleListUi) = AppBlock(
             logic, ui,
             listOf(
-                logic.toolbarLogic + ui.toolbarViewDelegate,
+                logic.toolbarLogic + ui.toolbarUi,
                 logic.listLogic + ui.listUi
             )
         )

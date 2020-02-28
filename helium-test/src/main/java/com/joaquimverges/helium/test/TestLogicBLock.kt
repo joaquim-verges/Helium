@@ -1,4 +1,4 @@
-package com.joaquimverges.helium.test.presenter
+package com.joaquimverges.helium.test
 
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.LogicBlock

@@ -8,16 +8,16 @@ import com.joaquimverges.helium.core.UiBlock
 import com.joaquimverges.helium.navigation.R
 
 /**
- * A UiBlock that presents 2 view delegates in the form of a navigation drawer and main content
+ * A UiBlock that presents 2 UiBlocks in the form of a navigation drawer and main content
  */
 class NavDrawerUi(
-    mainContentViewDelegate: UiBlock<*, *>,
-    drawerViewDelegate: UiBlock<*, *>,
+    mainContentUi: UiBlock<*, *>,
+    drawerUi: UiBlock<*, *>,
     gravity: Int = Gravity.START,
     drawerCustomisation: ((DrawerLayout) -> Unit)? = null
 ) : UiBlock<NavDrawerState, NavDrawerEvent>(
     R.layout.drawer_layout,
-    LayoutInflater.from(mainContentViewDelegate.view.context)
+    LayoutInflater.from(mainContentUi.view.context)
 ) {
 
     private val drawerLayout = findView<DrawerLayout>(R.id.drawer_layout)
@@ -27,8 +27,8 @@ class NavDrawerUi(
     init {
         drawerCustomisation?.invoke(drawerLayout)
         (drawerContainer.layoutParams as DrawerLayout.LayoutParams).gravity = gravity
-        mainContainer.addView(mainContentViewDelegate.view)
-        drawerContainer.addView(drawerViewDelegate.view)
+        mainContainer.addView(mainContentUi.view)
+        drawerContainer.addView(drawerUi.view)
     }
 
     override fun render(viewState: NavDrawerState) {

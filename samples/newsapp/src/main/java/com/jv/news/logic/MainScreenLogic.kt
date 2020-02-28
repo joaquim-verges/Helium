@@ -17,11 +17,11 @@ class MainScreenLogic : LogicBlock<BlockState, BlockEvent>() {
     private val sourcesRepo = SourcesRepository()
     private val articleRepo = ArticleRepository(sourcesRepo)
 
-    internal val articlePresenter = ArticleListLogic(articleRepo)
-    internal val sourcesPresenter = SourcesLogic(sourcesRepo)
+    internal val articleListLogic = ArticleListLogic(articleRepo)
+    internal val sourcesLogic = SourcesLogic(sourcesRepo)
 
     init {
-        articlePresenter.observeState().subscribe { state ->
+        articleListLogic.observeState().subscribe { state ->
             when (state) {
                 ArticleListState.ArticlesLoaded -> pushState(NavDrawerState.Closed)
                 ArticleListState.MoreSourcesRequested -> pushState(NavDrawerState.Opened)

@@ -31,10 +31,10 @@ import java.util.Collections.emptyList
  * @param container whether the layout should be added to the passed container
  * @param layoutManager optional custom layoutManager. Default is LinearLayoutManager.
  * @param recyclerViewConfig optional hook to configure the recyclerView with custom item decorators, touch handlers, scroll listeners, etc.
- * @param emptyViewDelegate optional view delegate to show when the list adapter is empty
+ * @param emptyUiBlock optional ui block to show when the list adapter is empty
  *
- * @see com.joaquimverges.helium.ui.presenter.ListPresenter
- * @see com.joaquimverges.helium.ui.state.ListBlockState
+ * @see com.joaquimverges.helium.ui.list.ListLogic
+ * @see com.joaquimverges.helium.ui.list.state.DataLoadState
  */
 open class ListUi<T, E : BlockEvent, VH : ListItem<T, E>>
 constructor(
@@ -47,7 +47,7 @@ constructor(
     // optional list config
     layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(inflater.context),
     recyclerViewConfig: ((RecyclerView) -> Unit)? = null,
-    emptyViewDelegate: UiBlock<*, E>? = null,
+    emptyUiBlock: UiBlock<*, E>? = null,
     swipeToRefreshEnabled: Boolean = false
 ) : UiBlock<DataLoadState<List<T>>, ListBlockEvent<E>>(layoutResId, inflater, container, addToContainer) {
 
@@ -85,7 +85,7 @@ constructor(
         // adapter items
         adapter.observeItemEvents().autoDispose(lifecycle).subscribe { ev -> pushEvent(ListBlockEvent.ListItemEvent(ev)) }
         // empty view
-        emptyViewDelegate?.let {
+        emptyUiBlock?.let {
             it.observer().autoDispose(lifecycle).subscribe { event: E -> pushEvent(ListBlockEvent.EmptyBlockEvent(event)) }
             emptyViewContainer.addView(it.view)
         }

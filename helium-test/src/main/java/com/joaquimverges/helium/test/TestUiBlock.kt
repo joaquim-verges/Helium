@@ -1,4 +1,4 @@
-package com.joaquimverges.helium.test.viewdelegate
+package com.joaquimverges.helium.test
 
 import android.content.Context
 import android.view.View
@@ -49,7 +49,7 @@ class TestUiBlock<S : BlockState, E : BlockEvent>(
         }
     }
 
-    fun assertAttached(presenter: LogicBlock<S, E>) {
-        verify(mockLifecycle).addObserver(presenter)
+    fun assertAttached(block: LogicBlock<S, E>) {
+        verify(mockLifecycle).addObserver(block)
     }
 }

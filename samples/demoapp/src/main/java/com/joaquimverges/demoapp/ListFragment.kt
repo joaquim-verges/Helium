@@ -15,12 +15,12 @@ import com.joaquimverges.helium.ui.list.ListUi
 
 class ListFragment : Fragment() {
 
-    private lateinit var presenter: MyListLogic
+    private lateinit var listLogic: MyListLogic
     private lateinit var listUi: ListUi<MyItem, ClickEvent<MyItem>, MyListItem>
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        presenter = getRetainedLogicBlock()
+        listLogic = getRetainedLogicBlock()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -32,6 +32,6 @@ class ListFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        presenter.attach(listUi)
+        listLogic.attach(listUi)
     }
 }

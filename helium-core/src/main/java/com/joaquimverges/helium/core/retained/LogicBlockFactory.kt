@@ -16,6 +16,6 @@ class LogicBlockFactory<T : ViewModel?>(
             @Suppress("UNCHECKED_CAST")
             return factory.invoke(clazz) as T
         }
-        throw IllegalArgumentException("Unknown Presenter class: $modelClass")
+        throw IllegalArgumentException("Unknown LogicBlock class: $modelClass")
     }
 }

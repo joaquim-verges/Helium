@@ -1,9 +1,8 @@
-package com.joaquimverges.helium.ui.presenter
+package com.joaquimverges.helium.ui.list
 
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.test.HeliumTestCase
-import com.joaquimverges.helium.test.viewdelegate.TestUiBlock
-import com.joaquimverges.helium.ui.list.ListLogic
+import com.joaquimverges.helium.test.TestUiBlock
 import com.joaquimverges.helium.ui.list.event.ListBlockEvent
 import com.joaquimverges.helium.ui.list.repository.ListRepository
 import com.joaquimverges.helium.ui.list.state.DataLoadState

@@ -6,19 +6,19 @@ import com.joaquimverges.helium.core.state.BlockState
 import com.joaquimverges.helium.core.util.autoDispose
 
 /**
- * Class responsible for connecting Presenters and ViewDelegates together.
+ * Class responsible for assembling LogicBlocks and UiBlocks together.
  */
 class AppBlock<S : BlockState, E : BlockEvent>(
-    private val presenter: LogicBlock<S, E>,
-    private val viewDelegate: UiBlock<S, E>,
+    private val logic: LogicBlock<S, E>,
+    private val ui: UiBlock<S, E>,
     private val childBlocks: List<AppBlock<*, *>> = emptyList()
 ) {
 
     fun assemble() {
-        val lifecycle: Lifecycle = viewDelegate.lifecycle
-        presenter.observeState().autoDispose(lifecycle).subscribe { viewDelegate.render(it) }
-        viewDelegate.observer().autoDispose(lifecycle).subscribe { presenter.processEvent(it) }
-        lifecycle.addObserver(presenter)
+        val lifecycle: Lifecycle = ui.lifecycle
+        logic.observeState().autoDispose(lifecycle).subscribe { ui.render(it) }
+        ui.observer().autoDispose(lifecycle).subscribe { logic.processEvent(it) }
+        lifecycle.addObserver(logic)
 
         childBlocks.forEach {
             it.assemble()

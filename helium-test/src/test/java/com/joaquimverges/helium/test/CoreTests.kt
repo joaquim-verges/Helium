@@ -2,8 +2,6 @@ package com.joaquimverges.helium.test
 
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.state.BlockState
-import com.joaquimverges.helium.test.presenter.TestLogicBLock
-import com.joaquimverges.helium.test.viewdelegate.TestUiBlock
 import org.junit.Before
 import org.junit.Test
 import org.mockito.MockitoAnnotations

@@ -27,7 +27,7 @@ class ArticleListUi(
 ) : CollapsingToolbarScreenUi<ArticleListState, ArticleEvent>(
     inflater,
     listUi,
-    HeaderViewDelegate(inflater),
+    HeaderUi(inflater),
     collapsingLayoutCustomization = {
         it.title = context.getString(R.string.app_name)
         it.setExpandedTitleTypeface(Typeface.DEFAULT_BOLD)
@@ -74,7 +74,7 @@ class ArticleListUi(
                 recyclerViewConfig = { recyclerView ->
                     recyclerView.addItemDecoration(SpacesItemDecoration(spacing, orientation))
                 },
-                emptyViewDelegate = EmptyViewDelegate(inflater),
+                emptyUiBlock = EmptyUi(inflater),
                 swipeToRefreshEnabled = true
             )
         }
@@ -85,13 +85,13 @@ class ArticleListUi(
         // no-op
     }
 
-    class HeaderViewDelegate(inflater: LayoutInflater) : UiBlock<BlockState, BlockEvent>(R.layout.view_toolbar_backdrop, inflater) {
+    class HeaderUi(inflater: LayoutInflater) : UiBlock<BlockState, BlockEvent>(R.layout.view_toolbar_backdrop, inflater) {
         override fun render(blockState: BlockState) {
             // no-op
         }
     }
 
-    class EmptyViewDelegate(inflater: LayoutInflater) : UiBlock<BlockState, ArticleEvent>(R.layout.empty_view, inflater) {
+    class EmptyUi(inflater: LayoutInflater) : UiBlock<BlockState, ArticleEvent>(R.layout.empty_view, inflater) {
 
         private val openDrawerButton = findView<View>(R.id.open_drawer_button)
 

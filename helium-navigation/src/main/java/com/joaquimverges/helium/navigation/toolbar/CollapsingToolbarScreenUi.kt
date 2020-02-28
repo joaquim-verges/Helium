@@ -15,8 +15,8 @@ import com.joaquimverges.helium.navigation.R
 /**
  * A UiBlock that renders a screen with a collapsing toolbar that scrolls away with the content
  * @param inflater
- * @param contentViewDelegate: The content of the screen (should contain a recyclerView or NestedScrollView)
- * @param backdropViewDelegate: Optional header to display behind the toolbar (usually an image or solid color)
+ * @param contentUi: The content of the screen (should contain a recyclerView or NestedScrollView)
+ * @param backdropUi: Optional header to display behind the toolbar (usually an image or solid color)
  * @param scrollConfiguration: Optional configuration for the scroll behaviors
  * @param menuResId: Optional xml menu file to populate the toolbar
  * @param collapsingLayoutCustomization: Extra CollapsingToolbarLayout customization (likely title and styles)
@@ -25,9 +25,9 @@ import com.joaquimverges.helium.navigation.R
  */
 open class CollapsingToolbarScreenUi<S: BlockState, E: BlockEvent>(
     inflater: LayoutInflater,
-    contentViewDelegate: UiBlock<*, *>,
-    backdropViewDelegate: UiBlock<*, *>? = null,
-    scrollConfiguration: ScrollConfiguration = backdropViewDelegate?.let {
+    contentUi: UiBlock<*, *>,
+    backdropUi: UiBlock<*, *>? = null,
+    scrollConfiguration: ScrollConfiguration = backdropUi?.let {
         ScrollConfiguration.defaultWithBackdrop()
     } ?: ScrollConfiguration.default(),
     // Toolbar customization
@@ -47,12 +47,12 @@ open class CollapsingToolbarScreenUi<S: BlockState, E: BlockEvent>(
     private val listContainer = findView<ViewGroup>(R.id.collapsing_list_container)
     private val backdropContainer = findView<ViewGroup>(R.id.collapsing_backdrop_container)
 
-    val toolbarViewDelegate = ToolbarUi(toolbarContainer, menuResId, actionBarCustomization, toolbarCustomization)
+    val toolbarUi = ToolbarUi(toolbarContainer, menuResId, actionBarCustomization, toolbarCustomization)
 
     init {
         collapsingToolbarLayout.isTitleEnabled = false // collapsing toolbar title off by default
-        listContainer.addView(contentViewDelegate.view)
-        backdropViewDelegate?.let {
+        listContainer.addView(contentUi.view)
+        backdropUi?.let {
             backdropContainer.addView(it.view)
             // enable collapsing toolbar title if backdrop view is provided
             collapsingToolbarLayout.isTitleEnabled = true

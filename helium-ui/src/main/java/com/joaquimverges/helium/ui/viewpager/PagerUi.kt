@@ -9,9 +9,9 @@ import com.joaquimverges.helium.core.UiBlock
 import com.joaquimverges.helium.ui.R
 
 /**
- * A simple ViewPager view delegate
+ * A simple ViewPager UiBlock
  */
-open class PagerViewDelegate(
+open class PagerUi(
     activity: FragmentActivity,
     fragmentPageProvider: FragmentPageProvider,
     // optional layout properties

@@ -1,10 +1,10 @@
 package com.joaquimverges.helium.core.state
 
 /**
- * Base interface to describe view state.
- * Presenters emit ViewState objects to their ViewDelegates for rendering.
+ * Base interface to describe a block state.
+ * A LogicBlock emits BlockState objects to a UiBlock for rendering.
  *
- * @see com.joaquimverges.helium.core.presenter.BasePresenter
- * @see com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
+ * @see com.joaquimverges.helium.core.LogicBlock
+ * @see com.joaquimverges.helium.core.UiBlock
  */
 interface BlockState

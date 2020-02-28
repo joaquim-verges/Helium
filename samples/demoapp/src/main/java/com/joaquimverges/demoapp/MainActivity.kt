@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         override fun getFirstPage(): Single<List<MenuItem>> = Observable.fromIterable(getMenuItems()).toList()
     }
 
-    // PRESENTER
+    // Logic
 
     class MenuLogicBlock : ListLogic<MenuItem, ClickEvent<MenuItem>>(MenuRepository()) {
 

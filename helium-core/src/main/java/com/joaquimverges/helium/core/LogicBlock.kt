@@ -42,20 +42,20 @@ abstract class LogicBlock<S : BlockState, E : BlockEvent> : ViewModel(), Lifecyc
     }
 
     /**
-     * Convenience method to Forward all [BlockEvent] received by this presenter to the given presenter
-     * Must have compatible [BlockEvent] for both presenters
+     * Convenience method to Forward all [BlockEvent] received by this LogicBlock to another given LogicBlock
+     * Must have compatible [BlockEvent] for both blocks.
      */
-    fun propagateViewEventsTo(otherBlock: LogicBlock<*, E>) {
+    fun propagateEventsTo(otherBlock: LogicBlock<*, E>) {
         eventDispatcher.subscribe { otherBlock.processEvent(it) }.autoDispose()
     }
 
     /**
-     * Observe ViewState changes from this Presenter
+     * Observe state changes from this LogicBlock
      */
     fun observeState(): Observable<S> = state
 
     /**
-     * Observe ViewEvents received by this Presenter, useful for propagating events to other presenters
+     * Observe events received by this LogicBlock, useful for propagating events to parent LogicBlocks
      */
     fun observeEvents(): Observable<E> = eventDispatcher
 
@@ -65,7 +65,7 @@ abstract class LogicBlock<S : BlockState, E : BlockEvent> : ViewModel(), Lifecyc
     fun pushState(state: S) = this.state.onNext(state)
 
     /**
-     * Will automatically dispose this subscription when the presenter gets cleared
+     * Will automatically dispose this subscription when the block gets cleared
      */
     fun Disposable.autoDispose() = disposables.add(this)
 

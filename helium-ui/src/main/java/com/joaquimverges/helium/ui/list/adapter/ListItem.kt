@@ -14,7 +14,7 @@ import io.reactivex.subjects.PublishSubject
  * Base class for RecyclerView items.
  * - Responsible for accessing and holding Android views.
  * - Can bind a model to an Android view within the list
- * - Can emit ViewEvent objects up to the Presenter (click for example)
+ * - Can emit BlockEvent objects propagated up to a LogicBlock (clicks for example)
  *
  * @param view The root of the layout for this list item
  */

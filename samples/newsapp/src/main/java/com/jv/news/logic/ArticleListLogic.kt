@@ -45,7 +45,7 @@ class ArticleListLogic(
                 is ListBlockEvent.SwipedToRefresh -> listLogic.loadFirstPage()
             }
         }.autoDispose()
-        // when the list changes state, propagate the state up to the MainPresenter
+        // when the list changes state, propagate the state up to the MainScreen
         // so it can close the nav drawer after 2s
         listLogic.observeState()
             .debounce(2, TimeUnit.SECONDS)

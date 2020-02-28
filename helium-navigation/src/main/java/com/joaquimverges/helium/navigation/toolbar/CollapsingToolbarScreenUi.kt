@@ -13,7 +13,7 @@ import com.joaquimverges.helium.core.UiBlock
 import com.joaquimverges.helium.navigation.R
 
 /**
- * A view delegate that renders a screen with a collapsing toolbar that scrolls away with the content
+ * A UiBlock that renders a screen with a collapsing toolbar that scrolls away with the content
  * @param inflater
  * @param contentViewDelegate: The content of the screen (should contain a recyclerView or NestedScrollView)
  * @param backdropViewDelegate: Optional header to display behind the toolbar (usually an image or solid color)
@@ -23,7 +23,7 @@ import com.joaquimverges.helium.navigation.R
  * @param actionBarCustomization: Extra customization for the ActionBar (likely up navigation controls)
  * @param toolbarCustomization: Extra customization for the Toolbar (any other styling)
  */
-open class CollapsingToolbarScreenViewDelegate<S: BlockState, E: BlockEvent>(
+open class CollapsingToolbarScreenUi<S: BlockState, E: BlockEvent>(
     inflater: LayoutInflater,
     contentViewDelegate: UiBlock<*, *>,
     backdropViewDelegate: UiBlock<*, *>? = null,
@@ -47,7 +47,7 @@ open class CollapsingToolbarScreenViewDelegate<S: BlockState, E: BlockEvent>(
     private val listContainer = findView<ViewGroup>(R.id.collapsing_list_container)
     private val backdropContainer = findView<ViewGroup>(R.id.collapsing_backdrop_container)
 
-    val toolbarViewDelegate = ToolbarViewDelegate(toolbarContainer, menuResId, actionBarCustomization, toolbarCustomization)
+    val toolbarViewDelegate = ToolbarUi(toolbarContainer, menuResId, actionBarCustomization, toolbarCustomization)
 
     init {
         collapsingToolbarLayout.isTitleEnabled = false // collapsing toolbar title off by default

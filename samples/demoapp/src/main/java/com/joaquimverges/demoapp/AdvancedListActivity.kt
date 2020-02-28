@@ -12,7 +12,7 @@ import com.joaquimverges.demoapp.view.MyCardRecyclerItem
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.retained.getRetainedLogicBlock
 import com.joaquimverges.helium.core.state.BlockState
-import com.joaquimverges.helium.navigation.toolbar.CollapsingToolbarScreenViewDelegate
+import com.joaquimverges.helium.navigation.toolbar.CollapsingToolbarScreenUi
 import com.joaquimverges.helium.ui.viewdelegate.ListViewDelegate
 
 class AdvancedListActivity : AppCompatActivity() {
@@ -47,7 +47,7 @@ class AdvancedListActivity : AppCompatActivity() {
 
         getRetainedLogicBlock<MyListPresenter>().attach(listViewDelegate)
         setContentView(
-            CollapsingToolbarScreenViewDelegate<BlockState, BlockEvent>(
+            CollapsingToolbarScreenUi<BlockState, BlockEvent>(
                 layoutInflater,
                 listViewDelegate,
                 collapsingLayoutCustomization = {

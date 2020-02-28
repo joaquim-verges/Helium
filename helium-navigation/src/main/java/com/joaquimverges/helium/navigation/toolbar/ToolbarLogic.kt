@@ -7,7 +7,7 @@ import com.joaquimverges.helium.navigation.toolbar.ToolbarEvent
 /**
  * Presenter managing a Toolbar
  */
-class ToolbarPresenter : LogicBlock<BlockState, ToolbarEvent>() {
+class ToolbarLogic : LogicBlock<BlockState, ToolbarEvent>() {
 
     override fun onUiEvent(event: ToolbarEvent) {
         // get events via observeViewEvents()

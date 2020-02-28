@@ -13,9 +13,9 @@ import com.joaquimverges.helium.core.UiBlock
 import com.joaquimverges.helium.navigation.R
 
 /**
- * A view delegate that renders a toolbar
+ * A UiBlock that renders a toolbar
  */
-class ToolbarViewDelegate(
+class ToolbarUi(
     view: View,
     @MenuRes menuResId: Int? = null,
     actionBarCustomization: ((ActionBar) -> Unit)? = null,

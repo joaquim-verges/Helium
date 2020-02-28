@@ -7,7 +7,7 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.app.ShareCompat
 import com.joaquimverges.helium.core.LogicBlock
 import com.joaquimverges.helium.navigation.toolbar.ToolbarEvent
-import com.joaquimverges.helium.navigation.toolbar.ToolbarPresenter
+import com.joaquimverges.helium.navigation.toolbar.ToolbarLogic
 import com.joaquimverges.helium.ui.event.ListBlockEvent
 import com.joaquimverges.helium.ui.presenter.ListPresenter
 import com.joaquimverges.helium.ui.util.RefreshPolicy
@@ -24,7 +24,7 @@ class ArticleListPresenter(
     private val repository: ArticleRepository,
     refreshPolicy: RefreshPolicy = RefreshPolicy(10, TimeUnit.MINUTES),
     internal val listPresenter: ListPresenter<Article, ArticleEvent> = ListPresenter(repository, refreshPolicy),
-    internal val toolbarPresenter: ToolbarPresenter = ToolbarPresenter()
+    internal val toolbarLogic: ToolbarLogic = ToolbarLogic()
 ) : LogicBlock<ArticleListState, ArticleEvent>() {
 
     init {
@@ -49,7 +49,7 @@ class ArticleListPresenter(
             .subscribe { pushState(ArticleListState.ArticlesLoaded) }
             .autoDispose()
 
-        toolbarPresenter.observeEvents().subscribe {
+        toolbarLogic.observeEvents().subscribe {
             when (it) {
                 is ToolbarEvent.HomeClicked -> pushState(ArticleListState.MoreSourcesRequested)
             }

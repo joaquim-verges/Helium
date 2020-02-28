@@ -8,9 +8,9 @@ import com.joaquimverges.helium.core.UiBlock
 import com.joaquimverges.helium.navigation.R
 
 /**
- * A view delegate that presents 2 view delegates in the form of a navigation drawer and main content
+ * A UiBlock that presents 2 view delegates in the form of a navigation drawer and main content
  */
-class NavDrawerViewDelegate(
+class NavDrawerUi(
     mainContentViewDelegate: UiBlock<*, *>,
     drawerViewDelegate: UiBlock<*, *>,
     gravity: Int = Gravity.START,

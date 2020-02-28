@@ -8,7 +8,7 @@ import com.joaquimverges.demoapp.view.MyContentCardRecyclerItem
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.retained.getRetainedLogicBlock
 import com.joaquimverges.helium.core.state.BlockState
-import com.joaquimverges.helium.navigation.toolbar.CollapsingToolbarScreenViewDelegate
+import com.joaquimverges.helium.navigation.toolbar.CollapsingToolbarScreenUi
 import com.joaquimverges.helium.ui.viewdelegate.ListViewDelegate
 
 class CardListActivity : AppCompatActivity() {
@@ -28,7 +28,7 @@ class CardListActivity : AppCompatActivity() {
 
         getRetainedLogicBlock<MyListPresenter>().attach(listViewDelegate)
         setContentView(
-            CollapsingToolbarScreenViewDelegate<BlockState, BlockEvent>(
+            CollapsingToolbarScreenUi<BlockState, BlockEvent>(
                 layoutInflater,
                 listViewDelegate
             ).view

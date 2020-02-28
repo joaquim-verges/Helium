@@ -11,7 +11,7 @@ import com.joaquimverges.helium.core.retained.getRetainedLogicBlock
 import com.jv.news.presenter.ArticleListPresenter
 import com.jv.news.presenter.MainPresenter
 import com.jv.news.util.VersionUtil
-import com.jv.news.view.ArticleListViewDelegate
+import com.jv.news.view.ArticleListUi
 import com.jv.news.view.MainViewDelegate
 
 class MainActivity : AppCompatActivity() {
@@ -45,10 +45,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     object ArticleListBlock {
-        fun create(logic: ArticleListPresenter, ui: ArticleListViewDelegate) = AppBlock(
+        fun create(logic: ArticleListPresenter, ui: ArticleListUi) = AppBlock(
             logic, ui,
             listOf(
-                logic.toolbarPresenter + ui.toolbarViewDelegate,
+                logic.toolbarLogic + ui.toolbarViewDelegate,
                 logic.listPresenter + ui.listViewDelegate
             )
         )

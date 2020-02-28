@@ -6,7 +6,7 @@ import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.state.BlockState
 import com.joaquimverges.helium.core.UiBlock
 import com.joaquimverges.helium.navigation.drawer.NavDrawerState
-import com.joaquimverges.helium.navigation.drawer.NavDrawerViewDelegate
+import com.joaquimverges.helium.navigation.drawer.NavDrawerUi
 import com.jv.news.R
 
 /**
@@ -14,9 +14,9 @@ import com.jv.news.R
  */
 class MainViewDelegate(
     inflater: LayoutInflater,
-    internal val articleView: ArticleListViewDelegate = ArticleListViewDelegate(inflater),
+    internal val articleView: ArticleListUi = ArticleListUi(inflater),
     internal val drawerView: SourcesViewDelegate = SourcesViewDelegate(inflater),
-    private val navDrawer: NavDrawerViewDelegate = NavDrawerViewDelegate(
+    private val navDrawer: NavDrawerUi = NavDrawerUi(
         articleView,
         drawerView
     )

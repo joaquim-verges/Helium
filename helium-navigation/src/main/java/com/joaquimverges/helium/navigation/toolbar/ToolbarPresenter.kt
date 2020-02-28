@@ -1,8 +1,8 @@
-package com.joaquimverges.helium.navigation.presenter
+package com.joaquimverges.helium.navigation.toolbar
 
 import com.joaquimverges.helium.core.LogicBlock
 import com.joaquimverges.helium.core.state.BlockState
-import com.joaquimverges.helium.navigation.event.ToolbarEvent
+import com.joaquimverges.helium.navigation.toolbar.ToolbarEvent
 
 /**
  * Presenter managing a Toolbar

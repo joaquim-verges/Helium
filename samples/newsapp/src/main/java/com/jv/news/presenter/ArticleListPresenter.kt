@@ -6,8 +6,8 @@ import android.net.Uri
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.app.ShareCompat
 import com.joaquimverges.helium.core.LogicBlock
-import com.joaquimverges.helium.navigation.event.ToolbarEvent
-import com.joaquimverges.helium.navigation.presenter.ToolbarPresenter
+import com.joaquimverges.helium.navigation.toolbar.ToolbarEvent
+import com.joaquimverges.helium.navigation.toolbar.ToolbarPresenter
 import com.joaquimverges.helium.ui.event.ListBlockEvent
 import com.joaquimverges.helium.ui.presenter.ListPresenter
 import com.joaquimverges.helium.ui.util.RefreshPolicy

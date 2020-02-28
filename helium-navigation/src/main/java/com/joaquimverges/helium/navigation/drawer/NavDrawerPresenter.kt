@@ -1,8 +1,6 @@
-package com.joaquimverges.helium.navigation.presenter
+package com.joaquimverges.helium.navigation.drawer
 
 import com.joaquimverges.helium.core.LogicBlock
-import com.joaquimverges.helium.navigation.event.NavDrawerEvent
-import com.joaquimverges.helium.navigation.state.NavDrawerState
 
 /**
  * Presenter Managing a DrawerLayout

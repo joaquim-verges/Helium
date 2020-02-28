@@ -1,4 +1,4 @@
-package com.joaquimverges.helium.navigation.viewdelegate
+package com.joaquimverges.helium.navigation.toolbar
 
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout

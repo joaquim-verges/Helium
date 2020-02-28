@@ -3,7 +3,7 @@ package com.jv.news.presenter
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.LogicBlock
 import com.joaquimverges.helium.core.state.BlockState
-import com.joaquimverges.helium.navigation.state.NavDrawerState
+import com.joaquimverges.helium.navigation.drawer.NavDrawerState
 import com.jv.news.data.ArticleRepository
 import com.jv.news.data.SourcesRepository
 import com.jv.news.presenter.state.ArticleListState

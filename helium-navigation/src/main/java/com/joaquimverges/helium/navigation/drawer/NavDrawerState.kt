@@ -1,4 +1,4 @@
-package com.joaquimverges.helium.navigation.state
+package com.joaquimverges.helium.navigation.drawer
 
 import com.joaquimverges.helium.core.state.BlockState
 

@@ -1,4 +1,4 @@
-package com.joaquimverges.helium.navigation.viewdelegate
+package com.joaquimverges.helium.navigation.drawer
 
 import androidx.drawerlayout.widget.DrawerLayout
 import android.view.Gravity
@@ -6,8 +6,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.joaquimverges.helium.core.UiBlock
 import com.joaquimverges.helium.navigation.R
-import com.joaquimverges.helium.navigation.event.NavDrawerEvent
-import com.joaquimverges.helium.navigation.state.NavDrawerState
 
 /**
  * A view delegate that presents 2 view delegates in the form of a navigation drawer and main content

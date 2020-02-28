@@ -1,4 +1,4 @@
-package com.joaquimverges.helium.navigation.event
+package com.joaquimverges.helium.navigation.drawer
 
 import com.joaquimverges.helium.core.event.BlockEvent
 

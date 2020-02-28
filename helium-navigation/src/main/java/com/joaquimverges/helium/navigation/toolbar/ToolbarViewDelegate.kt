@@ -1,4 +1,4 @@
-package com.joaquimverges.helium.navigation.viewdelegate
+package com.joaquimverges.helium.navigation.toolbar
 
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +11,6 @@ import androidx.appcompat.widget.Toolbar
 import com.joaquimverges.helium.core.state.BlockState
 import com.joaquimverges.helium.core.UiBlock
 import com.joaquimverges.helium.navigation.R
-import com.joaquimverges.helium.navigation.event.ToolbarEvent
 
 /**
  * A view delegate that renders a toolbar

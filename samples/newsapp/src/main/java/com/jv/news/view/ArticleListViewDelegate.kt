@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.state.BlockState
 import com.joaquimverges.helium.core.UiBlock
-import com.joaquimverges.helium.navigation.viewdelegate.CollapsingToolbarScreenViewDelegate
+import com.joaquimverges.helium.navigation.toolbar.CollapsingToolbarScreenViewDelegate
 import com.joaquimverges.helium.ui.viewdelegate.ListViewDelegate
 import com.jv.news.App.Companion.context
 import com.jv.news.R

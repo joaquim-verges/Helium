@@ -8,7 +8,7 @@ import com.joaquimverges.demoapp.view.MyContentCardRecyclerItem
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.retained.getRetainedLogicBlock
 import com.joaquimverges.helium.core.state.BlockState
-import com.joaquimverges.helium.navigation.viewdelegate.CollapsingToolbarScreenViewDelegate
+import com.joaquimverges.helium.navigation.toolbar.CollapsingToolbarScreenViewDelegate
 import com.joaquimverges.helium.ui.viewdelegate.ListViewDelegate
 
 class CardListActivity : AppCompatActivity() {

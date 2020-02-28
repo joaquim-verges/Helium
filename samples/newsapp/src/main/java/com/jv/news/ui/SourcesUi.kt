@@ -1,4 +1,4 @@
-package com.jv.news.view
+package com.jv.news.ui
 
 import android.view.LayoutInflater
 import android.view.View
@@ -11,13 +11,13 @@ import com.joaquimverges.helium.ui.list.state.DataLoadState
 import com.jv.news.R
 import com.jv.news.data.model.ArticleSource
 import com.jv.news.data.model.SourcesCategoryGroup
-import com.jv.news.view.adapter.ExpandableSourcesAdapter
-import com.jv.news.view.event.SourceEvent
+import com.jv.news.ui.adapter.ExpandableSourcesAdapter
+import com.jv.news.ui.event.SourceEvent
 
 /**
  * @author joaquim
  */
-class SourcesViewDelegate internal constructor(inflater: LayoutInflater) :
+class SourcesUi internal constructor(inflater: LayoutInflater) :
     UiBlock<DataLoadState<List<SourcesCategoryGroup>>, ListBlockEvent<SourceEvent>>(R.layout.view_sources_list, inflater) {
 
     private val layoutManager: LinearLayoutManager = LinearLayoutManager(context)

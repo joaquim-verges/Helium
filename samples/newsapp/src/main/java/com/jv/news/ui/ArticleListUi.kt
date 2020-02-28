@@ -1,4 +1,4 @@
-package com.jv.news.view
+package com.jv.news.ui
 
 import android.content.res.Configuration
 import android.graphics.Typeface
@@ -14,16 +14,16 @@ import com.joaquimverges.helium.ui.list.ListUi
 import com.jv.news.App.Companion.context
 import com.jv.news.R
 import com.jv.news.data.model.Article
-import com.jv.news.presenter.state.ArticleListState
-import com.jv.news.view.adapter.ArticleGridItemViewHolder
-import com.jv.news.view.event.ArticleEvent
+import com.jv.news.logic.state.ArticleListState
+import com.jv.news.ui.adapter.ArticleGridItem
+import com.jv.news.ui.event.ArticleEvent
 
 /**
  * @author joaquim
  */
 class ArticleListUi(
     inflater: LayoutInflater,
-    val listUi: ListUi<Article, ArticleEvent, ArticleGridItemViewHolder> = inflateListView(inflater)
+    val listUi: ListUi<Article, ArticleEvent, ArticleGridItem> = inflateListView(inflater)
 ) : CollapsingToolbarScreenUi<ArticleListState, ArticleEvent>(
     inflater,
     listUi,
@@ -48,7 +48,7 @@ class ArticleListUi(
         private const val DOUBLE_SPAN_COUNT = 2
         private const val SINGLE_SPAN_COUNT = 1
 
-        private fun inflateListView(inflater: LayoutInflater): ListUi<Article, ArticleEvent, ArticleGridItemViewHolder> {
+        private fun inflateListView(inflater: LayoutInflater): ListUi<Article, ArticleEvent, ArticleGridItem> {
             val context = inflater.context
             val spacing: Int = context.resources.getDimensionPixelSize(R.dimen.grid_spacing)
             val orientation = when (context.resources.configuration.orientation) {
@@ -68,7 +68,7 @@ class ArticleListUi(
             return ListUi(
                 inflater,
                 recyclerItemFactory = { layoutInflater, container ->
-                    ArticleGridItemViewHolder(layoutInflater, container)
+                    ArticleGridItem(layoutInflater, container)
                 },
                 layoutManager = layoutManager,
                 recyclerViewConfig = { recyclerView ->

@@ -1,4 +1,4 @@
-package com.jv.news.view.adapter
+package com.jv.news.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -13,11 +13,11 @@ import com.thoughtbot.expandablecheckrecyclerview.viewholders.CheckableChildView
 /**
  * @author joaquim
  */
-class SourceViewHolder(root: View) : CheckableChildViewHolder(root) {
+class SourceListItem(root: View) : CheckableChildViewHolder(root) {
 
     companion object {
-        fun create(context: Context, parent: ViewGroup?): SourceViewHolder {
-            return SourceViewHolder(LayoutInflater.from(context).inflate(R.layout.view_source, parent, false))
+        fun create(context: Context, parent: ViewGroup?): SourceListItem {
+            return SourceListItem(LayoutInflater.from(context).inflate(R.layout.view_source, parent, false))
         }
     }
 

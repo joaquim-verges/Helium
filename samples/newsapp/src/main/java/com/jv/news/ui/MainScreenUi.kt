@@ -1,4 +1,4 @@
-package com.jv.news.view
+package com.jv.news.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -12,10 +12,10 @@ import com.jv.news.R
 /**
  * @author joaquim
  */
-class MainViewDelegate(
+class MainScreenUi(
     inflater: LayoutInflater,
     internal val articleView: ArticleListUi = ArticleListUi(inflater),
-    internal val drawerView: SourcesViewDelegate = SourcesViewDelegate(inflater),
+    internal val drawerView: SourcesUi = SourcesUi(inflater),
     private val navDrawer: NavDrawerUi = NavDrawerUi(
         articleView,
         drawerView

@@ -8,11 +8,11 @@ import androidx.core.content.ContextCompat
 import com.joaquimverges.helium.core.AppBlock
 import com.joaquimverges.helium.core.plus
 import com.joaquimverges.helium.core.retained.getRetainedLogicBlock
-import com.jv.news.presenter.ArticleListPresenter
-import com.jv.news.presenter.MainPresenter
+import com.jv.news.logic.ArticleListLogic
+import com.jv.news.logic.MainScreenLogic
 import com.jv.news.util.VersionUtil
-import com.jv.news.view.ArticleListUi
-import com.jv.news.view.MainViewDelegate
+import com.jv.news.ui.ArticleListUi
+import com.jv.news.ui.MainScreenUi
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,11 +20,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setLightStatusBar()
 
-        val logic = getRetainedLogicBlock<MainPresenter>()
-        val ui = MainViewDelegate(layoutInflater).also {
+        val logic = getRetainedLogicBlock<MainScreenLogic>()
+        val ui = MainScreenUi(layoutInflater).also {
             setContentView(it.view)
         }
-        MainBlock.create(logic, ui).assemble()
+        MainAppBlock.create(logic, ui).assemble()
     }
 
     private fun setLightStatusBar() {
@@ -34,18 +34,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    object MainBlock {
-        fun create(logic: MainPresenter, ui: MainViewDelegate) = AppBlock(
+    object MainAppBlock {
+        fun create(logic: MainScreenLogic, ui: MainScreenUi) = AppBlock(
             logic, ui,
             listOf(
-                ArticleListBlock.create(logic.articlePresenter, ui.articleView),
+                ArticleListAppBlock.create(logic.articlePresenter, ui.articleView),
                 logic.sourcesPresenter + ui.drawerView
             )
         )
     }
 
-    object ArticleListBlock {
-        fun create(logic: ArticleListPresenter, ui: ArticleListUi) = AppBlock(
+    object ArticleListAppBlock {
+        fun create(logic: ArticleListLogic, ui: ArticleListUi) = AppBlock(
             logic, ui,
             listOf(
                 logic.toolbarLogic + ui.toolbarViewDelegate,

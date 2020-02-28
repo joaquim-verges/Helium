@@ -1,4 +1,4 @@
-package com.jv.news.view.adapter
+package com.jv.news.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -12,11 +12,11 @@ import com.thoughtbot.expandablerecyclerview.viewholders.GroupViewHolder
 /**
  * @author joaquim
  */
-class SourcesCategoryGroupViewHolder(root: View) : GroupViewHolder(root) {
+class SourcesCategoryListItem(root: View) : GroupViewHolder(root) {
 
     companion object {
-        fun create(context: Context, parent: ViewGroup?): SourcesCategoryGroupViewHolder {
-            return SourcesCategoryGroupViewHolder(LayoutInflater.from(context).inflate(R.layout.view_category, parent, false))
+        fun create(context: Context, parent: ViewGroup?): SourcesCategoryListItem {
+            return SourcesCategoryListItem(LayoutInflater.from(context).inflate(R.layout.view_category, parent, false))
         }
     }
 

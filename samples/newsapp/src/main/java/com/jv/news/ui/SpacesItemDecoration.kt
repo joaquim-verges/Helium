@@ -1,4 +1,4 @@
-package com.jv.news.view
+package com.jv.news.ui
 
 import android.graphics.Rect
 import androidx.recyclerview.widget.GridLayoutManager

@@ -1,11 +1,11 @@
-package com.jv.news.presenter
+package com.jv.news.logic
 
 import com.joaquimverges.helium.ui.list.event.ListBlockEvent
 import com.joaquimverges.helium.ui.list.ListLogic
 import com.joaquimverges.helium.ui.util.RefreshPolicy
 import com.jv.news.data.SourcesRepository
 import com.jv.news.data.model.SourcesCategoryGroup
-import com.jv.news.view.event.SourceEvent
+import com.jv.news.ui.event.SourceEvent
 import java.util.concurrent.TimeUnit
 
 /**

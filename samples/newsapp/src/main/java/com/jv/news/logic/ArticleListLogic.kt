@@ -1,4 +1,4 @@
-package com.jv.news.presenter
+package com.jv.news.logic
 
 import android.app.Activity
 import android.content.Context
@@ -13,14 +13,14 @@ import com.joaquimverges.helium.ui.list.ListLogic
 import com.joaquimverges.helium.ui.util.RefreshPolicy
 import com.jv.news.data.ArticleRepository
 import com.jv.news.data.model.Article
-import com.jv.news.presenter.state.ArticleListState
-import com.jv.news.view.event.ArticleEvent
+import com.jv.news.logic.state.ArticleListState
+import com.jv.news.ui.event.ArticleEvent
 import java.util.concurrent.TimeUnit
 
 /**
  * @author: joaquim
  */
-class ArticleListPresenter(
+class ArticleListLogic(
     private val repository: ArticleRepository,
     refreshPolicy: RefreshPolicy = RefreshPolicy(10, TimeUnit.MINUTES),
     internal val listLogic: ListLogic<Article, ArticleEvent> = ListLogic(

@@ -1,4 +1,4 @@
-package com.jv.news.view.event
+package com.jv.news.ui.event
 
 import android.content.Context
 import com.joaquimverges.helium.core.event.BlockEvent

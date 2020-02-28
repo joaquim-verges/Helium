@@ -1,4 +1,4 @@
-package com.jv.news.presenter.state
+package com.jv.news.logic.state
 
 import com.joaquimverges.helium.core.state.BlockState
 

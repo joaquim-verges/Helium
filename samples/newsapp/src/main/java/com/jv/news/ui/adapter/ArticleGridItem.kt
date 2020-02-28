@@ -1,4 +1,4 @@
-package com.jv.news.view.adapter
+package com.jv.news.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -11,12 +11,12 @@ import com.bumptech.glide.Glide
 import com.joaquimverges.helium.ui.list.adapter.ListItem
 import com.jv.news.R
 import com.jv.news.data.model.Article
-import com.jv.news.view.event.ArticleEvent
+import com.jv.news.ui.event.ArticleEvent
 
 /**
  * @author jverges
  */
-class ArticleGridItemViewHolder(
+class ArticleGridItem(
     inflater: LayoutInflater,
     parent: ViewGroup,
     itemView: View = inflater.inflate(R.layout.view_article_item, parent, false)

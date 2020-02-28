@@ -1,4 +1,4 @@
-package com.jv.news.presenter
+package com.jv.news.logic
 
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.LogicBlock
@@ -6,18 +6,18 @@ import com.joaquimverges.helium.core.state.BlockState
 import com.joaquimverges.helium.navigation.drawer.NavDrawerState
 import com.jv.news.data.ArticleRepository
 import com.jv.news.data.SourcesRepository
-import com.jv.news.presenter.state.ArticleListState
+import com.jv.news.logic.state.ArticleListState
 
 /**
  * @author joaquim
  */
 
-class MainPresenter : LogicBlock<BlockState, BlockEvent>() {
+class MainScreenLogic : LogicBlock<BlockState, BlockEvent>() {
 
     private val sourcesRepo = SourcesRepository()
     private val articleRepo = ArticleRepository(sourcesRepo)
 
-    internal val articlePresenter = ArticleListPresenter(articleRepo)
+    internal val articlePresenter = ArticleListLogic(articleRepo)
     internal val sourcesPresenter = SourcesLogic(sourcesRepo)
 
     init {

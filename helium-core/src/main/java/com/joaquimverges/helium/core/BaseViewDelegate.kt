@@ -1,4 +1,4 @@
-package com.joaquimverges.helium.core.viewdelegate
+package com.joaquimverges.helium.core
 
 import android.content.Context
 import android.view.LayoutInflater

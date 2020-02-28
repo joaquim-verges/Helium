@@ -10,7 +10,7 @@ import com.joaquimverges.demoapp.presenter.MyListPresenter
 import com.joaquimverges.demoapp.view.GridSpacingDecorator
 import com.joaquimverges.demoapp.view.MyCardRecyclerItem
 import com.joaquimverges.helium.core.event.ViewEvent
-import com.joaquimverges.helium.core.retained.getRetainedPresenter
+import com.joaquimverges.helium.core.retained.getRetainedLogicBlock
 import com.joaquimverges.helium.core.state.ViewState
 import com.joaquimverges.helium.navigation.viewdelegate.CollapsingToolbarScreenViewDelegate
 import com.joaquimverges.helium.ui.viewdelegate.ListViewDelegate
@@ -45,7 +45,7 @@ class AdvancedListActivity : AppCompatActivity() {
                 it.addItemDecoration(GridSpacingDecorator(padding, orientation))
             })
 
-        getRetainedPresenter<MyListPresenter>().attach(listViewDelegate)
+        getRetainedLogicBlock<MyListPresenter>().attach(listViewDelegate)
         setContentView(
             CollapsingToolbarScreenViewDelegate<ViewState, ViewEvent>(
                 layoutInflater,

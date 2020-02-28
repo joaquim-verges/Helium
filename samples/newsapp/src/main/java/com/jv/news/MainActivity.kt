@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.joaquimverges.helium.core.attacher.AppBlock
-import com.joaquimverges.helium.core.attacher.plus
-import com.joaquimverges.helium.core.retained.getRetainedPresenter
+import com.joaquimverges.helium.core.AppBlock
+import com.joaquimverges.helium.core.plus
+import com.joaquimverges.helium.core.retained.getRetainedLogicBlock
 import com.jv.news.presenter.ArticleListPresenter
 import com.jv.news.presenter.MainPresenter
 import com.jv.news.util.VersionUtil
@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setLightStatusBar()
 
-        val logic = getRetainedPresenter<MainPresenter>()
+        val logic = getRetainedLogicBlock<MainPresenter>()
         val ui = MainViewDelegate(layoutInflater).also {
             setContentView(it.view)
         }

@@ -1,12 +1,11 @@
 package com.joaquimverges.helium.ui.viewdelegate
 
-import androidx.core.app.*
 import androidx.viewpager.widget.ViewPager
 import android.view.ViewGroup
 import androidx.fragment.app.*
 import com.joaquimverges.helium.core.event.ViewEvent
 import com.joaquimverges.helium.core.state.ViewState
-import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
+import com.joaquimverges.helium.core.BaseViewDelegate
 import com.joaquimverges.helium.ui.R
 
 /**

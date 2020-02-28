@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 /**
  * Kotlin-friendly Wrapper around ViewModelProvider.Factory
  */
-class PresenterFactory<T : ViewModel?>(
+class LogicBlockFactory<T : ViewModel?>(
     private val clazz: Class<T>,
     private val factory: (Class<T>) -> T
 ) : ViewModelProvider.Factory {

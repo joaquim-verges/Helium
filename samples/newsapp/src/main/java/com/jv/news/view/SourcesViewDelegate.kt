@@ -5,7 +5,7 @@ import android.view.View
 import android.widget.ProgressBar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
+import com.joaquimverges.helium.core.BaseViewDelegate
 import com.joaquimverges.helium.ui.event.ListViewEvent
 import com.joaquimverges.helium.ui.state.ListViewState
 import com.jv.news.R

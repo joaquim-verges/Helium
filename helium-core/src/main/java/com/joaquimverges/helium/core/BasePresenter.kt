@@ -1,12 +1,10 @@
-package com.joaquimverges.helium.core.presenter
+package com.joaquimverges.helium.core
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModel
-import com.joaquimverges.helium.core.attacher.AppBlock
 import com.joaquimverges.helium.core.event.ViewEvent
 import com.joaquimverges.helium.core.state.ViewState
-import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable

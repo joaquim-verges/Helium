@@ -1,6 +1,6 @@
 package com.joaquimverges.helium.navigation.presenter
 
-import com.joaquimverges.helium.core.presenter.BasePresenter
+import com.joaquimverges.helium.core.BasePresenter
 import com.joaquimverges.helium.core.state.ViewState
 import com.joaquimverges.helium.navigation.event.ToolbarEvent
 

@@ -1,11 +1,9 @@
-package com.joaquimverges.helium.core.attacher
+package com.joaquimverges.helium.core
 
 import androidx.lifecycle.Lifecycle
 import com.joaquimverges.helium.core.event.ViewEvent
-import com.joaquimverges.helium.core.presenter.BasePresenter
 import com.joaquimverges.helium.core.state.ViewState
 import com.joaquimverges.helium.core.util.autoDispose
-import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
 
 /**
  * Class responsible for connecting Presenters and ViewDelegates together.
@@ -28,4 +26,4 @@ class AppBlock<S : ViewState, E : ViewEvent>(
     }
 }
 
-operator fun <S : ViewState, E : ViewEvent> BasePresenter<S, E>.plus(vd: BaseViewDelegate<S,E>) = AppBlock(this, vd)
+operator fun <S : ViewState, E : ViewEvent> BasePresenter<S, E>.plus(vd: BaseViewDelegate<S, E>) = AppBlock(this, vd)

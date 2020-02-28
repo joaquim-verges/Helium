@@ -4,7 +4,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
+import com.joaquimverges.helium.core.BaseViewDelegate
 import com.joaquimverges.helium.navigation.R
 import com.joaquimverges.helium.navigation.event.NavDrawerEvent
 import com.joaquimverges.helium.navigation.state.NavDrawerState

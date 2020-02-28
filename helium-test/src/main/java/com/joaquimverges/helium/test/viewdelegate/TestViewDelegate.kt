@@ -4,9 +4,9 @@ import android.content.Context
 import android.view.View
 import androidx.lifecycle.Lifecycle
 import com.joaquimverges.helium.core.event.ViewEvent
-import com.joaquimverges.helium.core.presenter.BasePresenter
+import com.joaquimverges.helium.core.BasePresenter
 import com.joaquimverges.helium.core.state.ViewState
-import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
+import com.joaquimverges.helium.core.BaseViewDelegate
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever

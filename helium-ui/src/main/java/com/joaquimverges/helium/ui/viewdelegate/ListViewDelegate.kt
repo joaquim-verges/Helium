@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.joaquimverges.helium.core.event.ViewEvent
 import com.joaquimverges.helium.core.util.autoDispose
-import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
+import com.joaquimverges.helium.core.BaseViewDelegate
 import com.joaquimverges.helium.ui.R
 import com.joaquimverges.helium.ui.event.ListViewEvent
 import com.joaquimverges.helium.ui.state.ListViewState

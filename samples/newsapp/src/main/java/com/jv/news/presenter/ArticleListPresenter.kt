@@ -3,23 +3,18 @@ package com.jv.news.presenter
 import android.app.Activity
 import android.content.Context
 import android.net.Uri
-import android.util.Log
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.app.ShareCompat
-import com.joaquimverges.helium.core.presenter.BasePresenter
-import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
+import com.joaquimverges.helium.core.BasePresenter
 import com.joaquimverges.helium.navigation.event.ToolbarEvent
 import com.joaquimverges.helium.navigation.presenter.ToolbarPresenter
 import com.joaquimverges.helium.ui.event.ListViewEvent
 import com.joaquimverges.helium.ui.presenter.ListPresenter
-import com.joaquimverges.helium.ui.state.ListViewState
 import com.joaquimverges.helium.ui.util.RefreshPolicy
 import com.jv.news.data.ArticleRepository
 import com.jv.news.data.model.Article
 import com.jv.news.presenter.state.ArticleListState
-import com.jv.news.view.ArticleListViewDelegate
 import com.jv.news.view.event.ArticleEvent
-import io.reactivex.Observable
 import java.util.concurrent.TimeUnit
 
 /**

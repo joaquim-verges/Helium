@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.joaquimverges.demoapp.view.GridSpacingDecorator
-import com.joaquimverges.helium.core.attacher.plus
+import com.joaquimverges.helium.core.plus
 import com.joaquimverges.helium.core.event.ClickEvent
 import com.joaquimverges.helium.ui.event.ListViewEvent
 import com.joaquimverges.helium.ui.presenter.ListPresenter
@@ -79,12 +79,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val listBlock = ListViewDelegate(layoutInflater, { inflater, container ->
+        val uiBlock = ListViewDelegate(layoutInflater, { inflater, container ->
             MenuRecyclerItem(inflater, container)
         }, recyclerViewConfig = {
             it.addItemDecoration(GridSpacingDecorator(resources.getDimensionPixelSize(R.dimen.menu_padding)))
         })
-        (MenuLogicBlock() + listBlock).assemble()
-        setContentView(listBlock.view)
+        (MenuLogicBlock() + uiBlock).assemble()
+        setContentView(uiBlock.view)
     }
 }

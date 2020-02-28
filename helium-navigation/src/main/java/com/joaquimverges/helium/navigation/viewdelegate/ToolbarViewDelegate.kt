@@ -9,7 +9,7 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.joaquimverges.helium.core.state.ViewState
-import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
+import com.joaquimverges.helium.core.BaseViewDelegate
 import com.joaquimverges.helium.navigation.R
 import com.joaquimverges.helium.navigation.event.ToolbarEvent
 

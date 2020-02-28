@@ -4,15 +4,12 @@ import android.content.res.Configuration
 import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.appbar.AppBarLayout
 import com.joaquimverges.helium.core.event.ViewEvent
 import com.joaquimverges.helium.core.state.ViewState
-import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
+import com.joaquimverges.helium.core.BaseViewDelegate
 import com.joaquimverges.helium.navigation.viewdelegate.CollapsingToolbarScreenViewDelegate
-import com.joaquimverges.helium.navigation.viewdelegate.ScrollConfiguration
 import com.joaquimverges.helium.ui.viewdelegate.ListViewDelegate
 import com.jv.news.App.Companion.context
 import com.jv.news.R

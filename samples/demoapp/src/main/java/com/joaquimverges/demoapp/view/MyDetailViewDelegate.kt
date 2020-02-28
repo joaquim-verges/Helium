@@ -12,7 +12,7 @@ import com.joaquimverges.demoapp.data.Colors
 import com.joaquimverges.demoapp.data.MyItem
 import com.joaquimverges.helium.core.event.ClickEvent
 import com.joaquimverges.helium.ui.state.ListViewState
-import com.joaquimverges.helium.core.viewdelegate.BaseViewDelegate
+import com.joaquimverges.helium.core.BaseViewDelegate
 
 /**
  * @author joaquim

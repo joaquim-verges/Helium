@@ -3,7 +3,7 @@ package com.joaquimverges.helium.ui.presenter
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.OnLifecycleEvent
 import com.joaquimverges.helium.core.event.ViewEvent
-import com.joaquimverges.helium.core.presenter.BasePresenter
+import com.joaquimverges.helium.core.BasePresenter
 import com.joaquimverges.helium.core.util.async
 import com.joaquimverges.helium.ui.event.ListViewEvent
 import com.joaquimverges.helium.ui.repository.BaseRepository

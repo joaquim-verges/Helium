@@ -29,8 +29,8 @@ class TestUiBlock<S : BlockState, E : BlockEvent>(
 ) {
     private var lastRenderedState: BlockState? = null
 
-    override fun render(viewState: S) {
-        lastRenderedState = viewState
+    override fun render(state: S) {
+        lastRenderedState = state
     }
 
     override fun getLifecycle(): Lifecycle {

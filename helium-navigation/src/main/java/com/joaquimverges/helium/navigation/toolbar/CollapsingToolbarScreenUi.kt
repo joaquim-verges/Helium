@@ -64,7 +64,7 @@ open class CollapsingToolbarScreenUi<S: BlockState, E: BlockEvent>(
         (backdropContainer.layoutParams as CollapsingToolbarLayout.LayoutParams).collapseMode = scrollConfiguration.backdropCollapseMode.mode
     }
 
-    override fun render(viewState: S) {
+    override fun render(state: S) {
 
     }
 }

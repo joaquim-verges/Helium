@@ -42,7 +42,7 @@ class BottomNavUi(
         menuResId?.let { bottomNav.inflateMenu(it) }
     }
 
-    override fun render(viewState: BlockState) {
+    override fun render(state: BlockState) {
         // no-op
     }
 }

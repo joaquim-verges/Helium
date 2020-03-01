@@ -55,7 +55,7 @@ abstract class UiBlock<in S : BlockState, E : BlockEvent>(
     /**
      * Implement this method to render a layout according to the latest pushed ViewState
      */
-    abstract fun render(viewState: S)
+    abstract fun render(state: S)
 
     /**
      * Observe the events pushed from this UiBlock

@@ -31,8 +31,8 @@ class NavDrawerUi(
         drawerContainer.addView(drawerUi.view)
     }
 
-    override fun render(viewState: NavDrawerState) {
-        when (viewState) {
+    override fun render(state: NavDrawerState) {
+        when (state) {
             NavDrawerState.Opened -> drawerLayout.openDrawer(drawerContainer)
             NavDrawerState.Closed -> drawerLayout.closeDrawer(drawerContainer)
         }

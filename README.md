@@ -1,8 +1,10 @@
 # Helium
 
-Lightweight MVP framework for Android. 100% Kotlin.
+Lightweight & approachable framework for Android. 100% Kotlin.
 
-<img src="https://github.com/joaquim-verges/Helium/blob/master/docs/images/ic_launcher.png" width="140">
+<img src="docs/images/ic_launcher.png" width="300">
+
+*What if building an App was as simple as assembling Lego blocks?*
 
 ## Download
 
@@ -15,276 +17,115 @@ implementation 'com.joaquimverges.helium:helium-navigation:x.y.z'   // navigatio
 testImplementation 'com.joaquimverges.helium:helium-test:x.y.z'   // unit test helper classes
 ```
 
-## Benefits
+## An intuitive architecture pattern
 
-Helium follows the MVP pattern described below and helps you keep code clean and organized.
+Building an app should feel like assembling Lego blocks, that's the core principle of Helium. The framework proposes the following mental model to structure your code:
 
-It also provides some implementations that help you build common Android components like lists and viewpagers, saving you time and code.
+- `UiBlock`: a class that handles rendering UI.
+- `LogicBlock`: a class that handles logic.
+- `AppBlock = (LogicBlock + UiBlock)`: assembling logic with UI creates a fully functional piece of your App.  
 
-Here's a working app that displays a scrolling list of 100 words in 20 lines of code:
+Just like Lego blocks, or puzzle pieces, a `UiBlock` can only be assembled with a `LogicBlock` if they're compatible.
 
-```kotlin
-    class SimpleListActivity : AppCompatActivity() {
-        override fun onCreate(savedInstanceState: Bundle) {
-            super.onCreate(savedInstanceState)
-            ListViewDelegate(layoutInflater,
-                    { inflater, container -> MyListItem(R.layout.list_item_layout, inflater, container) })
-                    .apply { setContentView(view) }
-                    .also { ListPresenter<String, ViewEvent>(MyRepository()).attach(it) }
-        }
+In code, this is handled by two classes representing the connectors between blocks: `BlockState` and `BlockEvent`
 
-        class MyRepository : BaseRepository<List<String>> {
-            override fun getData() = Observable.range(0, 100).map { i -> "Word number $i" }.toList()
-        }
+- a `LogicBlock` exposes (emits) a `BlockState` and expects (handles) a `BlockEvent`
+- a `UiBlock` exposes (emits) a `BlockEvent` and expects (renders) a `BlockState`
 
-        class MyListItem(@LayoutRes layoutResId: Int, inflater: LayoutInflater, parent: ViewGroup)
-            : BaseRecyclerViewItem<String, ViewEvent>(layoutResId, inflater, parent) {
-            private val textView: TextView = view.findViewById(R.id.text_view)
-            override fun bind(data: String) {
-                textView.text = data
-            }
-        }
-    }
-```
+If both logic and ui expose and expect the same type of state and event, then they're compatible.
 
-You just need to write how to get the data and the list item view that displays it, the rest is handled for you.
- 
-These implementations come with a variety of customization options to use them directly, or include them as subcomponents of your own components.
+<img src="docs/images/helium_arch_diagram.png" width="600">
 
-## Apps
+## Show me the code
 
-Explore simple usages of the library in the [Demo App](/samples/demoapp).
-
-For a more full fledged App using Helium, check out [Helium News](/samples/newsapp). Also available on [Google Play](https://play.google.com/store/apps/details?id=com.jv.news).
-
-
-<img src="https://github.com/joaquim-verges/Helium/blob/master/docs/images/news_ss_1.png" width="240"> <img src="https://github.com/joaquim-verges/Helium/blob/master/docs/images/news_ss_2.png" width="240">
-
-## Philosphy
-
-This Framework aims to help you build Android apps fast and cleanly. 
-
-Think of it as a collection of base classes and implementations that you can use as building blocks for your Android app.
-
-The framework helps you organize your code in 3 main categories:
-
-- **ViewDelegate** - This is what holds and renders your Android Views
-- **Presenter** - This is where you decide what data to get, when to show it, and how to react to user events
-- **Repository** - This is the class that knows how to get the actual data (network, disk, cache, etc)
-
-It's a very classic MVP pattern that works for any component in your app. 
-
-![data flow diagram](/docs/images/data_flow_diagram.png)
-
-## Implementation
-
-The following bases classes are the building blocks for any components in your app:
-
-### BaseRepository
-
-- Simple interface that returns some data
-- Here is a good place to put your network calls, database queries/writes, preferences edits, etc...
-- Responsible for producing the model objects that the presenter will use
-
-### BasePresenter
-
-- can push state to a `ViewDelegate` via `pushState(state)`
-- receives `ViewEvent` from any attached `ViewDelegate` via `onViewEvent(event)`
-- receives lifecycle events (implements `LifecycleObserver`)
-- can be persisted accross orientation changes (implements `ViewModel`)
-- no view references here, only state pushing and reacting to view events
-
-### BaseViewDelegate
-
-- Can render Android views according to the `ViewState` passed in `render(state)`
-- Can push `ViewEvent` to any attached presenter via `pushEvent(event)`
-- This is the only place where you hold context or views
-- no business logic here, only enough to render views
-
-### Notes on the implementation
-
- - Uses [RxJava](https://github.com/ReactiveX/RxJava) to handle communication between Presenters and ViewDelegates
- - Uses [AutoDispose](https://github.com/uber/AutoDispose) to automatically dispose subscriptions, no need to worry about cleaning up or detaching anything
- - Uses `ViewModel` from the [Android Architecture Components](https://developer.android.com/topic/libraries/architecture/viewmodel.html) to retain presenters across configuration changes
- - Each of the three classes are independent from each other can be re-used for other components
-
-## Usage
-
-This is all you need to create a component and display it in an Activity:
+Let's build a simple counter app. Here's what a the Activity would look like using Helium:
 
 ```kotlin
-class MyActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle) {
+class CounterActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val presenter = MyPresenter()
-        val viewDelegate = MyViewDelegate(layoutInflater)
-        presenter.attach(viewDelegate)
-        setContentView(viewDelegate.view)
+        val logic = CounterLogic() // create a logic block
+        val ui = CounterUi(layoutInflater) // create a UI block
+        setContentView(ui.view)
+        (logic + ui).assemble() // assemble them
     }
 }
 ```
 
-You can also make your presenter retained upon configuration changes by accessing it via the `getRetainedPresenter()` extension method:
-
-This is an example of a retained presenter in a fragment:
+For a counter app, our state and event would be:
 
 ```kotlin
-class MyFragment : Fragment() {
-
-    private lateinit var presenter: MyDetailPresenter
-    private lateinit var viewDelegate: MyDetailViewDelegate
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        presenter = getRetainedPresenter()
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View {
-        viewDelegate = MyViewDelegate(inflater, container)
-        return viewDelegate.view
-    }
-
-    override fun onStart() {
-        super.onStart()
-        presenter.attach(viewDelegate)
-    }
-}
+data class CounterState(val count: Int): BlockState
+object TapEvent : BlockEvent
 ```
 
-A typical Presenter implementation looks like this:
+The logic block can be defined like this:
 
 ```kotlin
-class MyPresenter(repository: MyRepository) : BasePresenter<MyState, MyEvent>() {
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    private fun loadData() {
-        repository
-            .getData()
-            .doOnSubscribe { pushState(MyState.Loading) }
-            .async()
-            .subscribe(
-                { data -> pushState(MyState.DataReady(data)) },
-                { error -> pushState(MyState.Error(error)) }
-            )
-    }
-
-    override fun onViewEvent(event : MyEvent) {
-        when(event) {
-            is Click -> handleClick()
-            is LongPress -> handleLongPress()
-        }
-    }
-}
-```
-
-note that `loadData()` is annotated with a `@OnLifecycleEvent` annotation, which can be used to schedule method calls when a certain lifecycle event happens. This is not required but is very useful in the Android world.
-
-A typical ViewDelegate implementation looks like this:
-
-```kotlin
-class MyViewDelegate(inflater: LayoutInflater) 
-    : BaseViewDelegate<MyState, MyEvent>(inflater, R.layout.my_layout) {
-
-    val myButton : TextView = view.findViewById(R.id.my_button)
+class CounterLogic : LogicBlock<CounterState, TapEvent>() {
+    private var count = 0
 
     init {
-        myButton.setOnClickListener { view -> pushEvent(MyEvent.Click(view)) }
+        pushState(CounterState(0))
     }
 
-    override fun render(state: MyState) {
-        when(state) {
-            is Loading -> showLoading()
-            is Error -> showError(state.error)
-            is DataReady -> showData(state.data)
-        }
+    override fun onUiEvent(event: TapEvent) {
+        pushState(CounterState(++count))
     }
 }
-
 ```
 
-In this example, we're using `MyState` and `MyEvent` as the medium of communication between our Presenter and our ViewDelegate. These state and event classes can be anything you want. One option is to use sealed kotlin classes to define them:
+And the UI block would look like this:
 
 ```kotlin
-sealed class MyState : ViewState {
-    object Loading : MyState()
-    data class Error(val error: Throwable) : MyState()
-    data class DataReady(val data: MyData) : MyState()
-}
+class CounterUi(inflater: LayoutInflater) : UiBlock<CounterState, TapEvent>(R.layout.counter_view, inflater) {
+    private val counterButton = findView<TextView>(R.id.count_button)
 
-sealed class MyEvent : ViewEvent {
-    data class Click(val view: View) : MyEvent()
-    data class LongPress(val view: View)  : MyEvent()
+    init {
+        counterButton.setOnClickListener { pushEvent(TapEvent) }       
+    }    
+
+    override fun render(state: CounterState) {
+        counterButton.text = state.count
+    }
 }
 ```
 
-## Ready-to-use components
+and that's all you need! You know have a functional counter, with clean separation of concerns and no boilerplate.
 
-On top of providing the base classes to build any component you can think of, Helium has a set of handy presenters and view delegates ready to be used as building blocks for your own components.
+For detailed information and more advanced examples, head over to the [helium-core](/helium-core) documentation.
 
-Most Android apps have common patterns (loading data from network, displaying lists, viewpagers, etc), Helium can help you build those components with minimal amount of code.
+## Ready to use App Blocks
 
-Loading data from network, and display it in a `RecyclerView` is is by far the most common thing we Android developers have to implement, and Helium helps you cut down on a lot of boilerplate code, while keeping the structure clean:
+Helium provides the framework to build your own AppBlocks, but also provides a growing catalog of existing blocks ready to be used:
 
-### ListPresenter
+- [helium-ui](/helium-ui): List, Cards, ViewPager, etc.
+- [helium-navigation](/helium-navigation): Toolbar, Bottom Navigation, Drawer, etc.  
 
-The role of this class is to simply load some data asynchronously and push its current state.
+Here's a typical usage of `ListUi`, one of the most useful blocks provided.
 
-Configuration:
+```kotlin
+val listUi = ListUi(layoutInflater, { inflater, container ->
+    MyListItem(inflater, container)
+})
+(MyListLogic() + listUi).assemble()
+```
 
-- `BaseRepository` that provides the data
-- `RefreshPolicy` param to configure how often this data should be refreshed
+Follow the links above for documentation and examples on how to use those handy AppBlocks in your own apps.
 
-States :
+## Samples
 
-- `NetworkViewState` class to describe the network request status (loading, error, empty, data ready, etc.)
-- the data ready state comes with the list of loaded data
+- [newsapp](/samples/newsapp) - Fully functional News app downloadable on [Google Play](https://play.google.com/store/apps/details?id=com.jv.news)
+- [demoapp](/samples/demoapp) - A catalog of different AppBlocks usages
 
-This presenter can be used with any `ViewDelegate` that can render a `NetworkViewState`. Helium provides a ready-made list view delegate that can be used with this presenter:
+## Testing
 
-### ListViewDelegate
-
-This viewdelegate holds a recycler view, a loading spinner and a empty view container. It knows how to render any `NetworkViewState`.
-
-Configuration:
-
-- `BaseRecyclerViewItem` for the list items layout (extends `RecyclerView.ViewHolder`)
-
-There's also a handful of configuration options that you can use to customize your layout, list, empty view, etc.
-
-Events:
-
-- Relies on the passed `BaseRecyclerViewItem` implementation to relay any kind of view events up to the presenter layer (typically clicks, long press, etc)
-
-This list view delegate is all you'll need to display a list of models of any kind. All you need to focus on is the actual list item layout, the rest is handled for you.
-
-### BaseRecyclerItem
-
-This is a specialized `ViewDelegate` that is specific to recycler views. It holds the list item layout that can be bound to some data and recycled, and also provides the same mechanism to push events up to the presenter layer.
-
-This class is particularly useful when used with a `ListViewDelegate`, as Helium will handle all the adapter code and the wiring for you.
-
-Configuration:
-
-- Only needs the view or the layout resource id
-
-Events:
-
-- Can push any view event, typically clicks, long presses, etc.
-
-### PagerViewDelegate
-
-Another widely used UI pattern is the `ViewPager`, so Helium provides a `ViewDelegate` that you can use out of the box.
-
-Configuration:
-
-- `FragmentPageProvider`, that defines which Fragment goes in which page.
-
-There's also a handful of configuration options to customize your layout, view pager configuration, etc.
+Unit testing blocks is easy, and you should always write tests for your `LogicBlock` when possible. Helium provides helper classes to make testing your logic super simple. Head over to the [helium-test](https://github.com/joaquim-verges/Helium/blob/master/helium-test) documentation to learn more.
 
 ## License
 
 ```
-Copyright (C) 2018 Joaquim Verges
+Copyright (C) 2020 Joaquim Verges
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

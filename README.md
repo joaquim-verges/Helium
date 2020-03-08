@@ -32,7 +32,7 @@ In code, this is handled by two classes representing the connectors between bloc
 - a `LogicBlock` exposes (emits) a `BlockState` and expects (handles) a `BlockEvent`
 - a `UiBlock` exposes (emits) a `BlockEvent` and expects (renders) a `BlockState`
 
-If both logic and ui expose and expect the same type of state and event, then they're compatible.
+If both Logic and UI expose and expect the same type of state and event, then they're compatible.
 
 <img src="docs/images/helium_arch_diagram.png" width="600">
 
@@ -111,7 +111,7 @@ val listUi = ListUi(layoutInflater, { inflater, container ->
 (MyListLogic() + listUi).assemble()
 ```
 
-Follow the links above for documentation and examples on how to use those handy AppBlocks in your own apps.
+Follow the links above for documentation and examples on how to use those handy App Blocks in your own apps.
 
 ## Samples
 
@@ -120,7 +120,7 @@ Follow the links above for documentation and examples on how to use those handy 
 
 ## Testing
 
-Unit testing blocks is easy, and you should always write tests for your `LogicBlock` when possible. Helium provides helper classes to make testing your logic super simple. Head over to the [helium-test](https://github.com/joaquim-verges/Helium/blob/master/helium-test) documentation to learn more.
+Unit testing blocks is easy, and you should always write tests for your `LogicBlock` when possible. Helium provides helper classes to make testing your logic super simple. Head over to the [helium-test](/helium-test) documentation to learn more.
 
 ## License
 

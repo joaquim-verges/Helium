@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.joaquimverges.helium.core.UiBlock
 import com.joaquimverges.helium.ui.list.event.ListBlockEvent
-import com.joaquimverges.helium.ui.list.state.DataLoadState
+import com.joaquimverges.helium.core.state.DataLoadState
 import com.jv.news.R
 import com.jv.news.data.model.ArticleSource
 import com.jv.news.data.model.SourcesCategoryGroup

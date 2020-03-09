@@ -1,9 +1,7 @@
-package com.joaquimverges.helium.ui.list.state
-
-import com.joaquimverges.helium.core.state.BlockState
+package com.joaquimverges.helium.core.state
 
 /**
- * Describes the different ViewState while loading data asynchronously into a list.
+ * Describes the different BlockStates while loading data asynchronously
  */
 sealed class DataLoadState<T> : BlockState {
     class Init<T>: DataLoadState<T>()

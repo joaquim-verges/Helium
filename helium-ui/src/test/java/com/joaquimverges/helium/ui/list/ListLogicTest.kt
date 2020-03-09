@@ -1,11 +1,11 @@
 package com.joaquimverges.helium.ui.list
 
 import com.joaquimverges.helium.core.event.BlockEvent
+import com.joaquimverges.helium.core.state.DataLoadState
 import com.joaquimverges.helium.test.HeliumTestCase
 import com.joaquimverges.helium.test.TestUiBlock
 import com.joaquimverges.helium.ui.list.event.ListBlockEvent
 import com.joaquimverges.helium.ui.list.repository.ListRepository
-import com.joaquimverges.helium.ui.list.state.DataLoadState
 import com.joaquimverges.helium.ui.util.RefreshPolicy
 import com.nhaarman.mockito_kotlin.never
 import com.nhaarman.mockito_kotlin.verify
@@ -19,8 +19,10 @@ import io.reactivex.schedulers.TestScheduler
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.MockitoAnnotations
 
+/**
+ * Unit tests for [ListLogic]
+ */
 class ListLogicTest : HeliumTestCase() {
 
     class TestItem
@@ -35,7 +37,6 @@ class ListLogicTest : HeliumTestCase() {
 
     @Before
     fun setup() {
-        MockitoAnnotations.initMocks(this)
         RxJavaPlugins.setIoSchedulerHandler { testScheduler }
         RxAndroidPlugins.setMainThreadSchedulerHandler { testScheduler }
         whenever(repo.getFirstPage()).thenReturn(Single.just(testData))

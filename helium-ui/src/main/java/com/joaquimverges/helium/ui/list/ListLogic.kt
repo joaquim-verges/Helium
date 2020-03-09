@@ -7,14 +7,15 @@ import com.joaquimverges.helium.core.LogicBlock
 import com.joaquimverges.helium.core.util.async
 import com.joaquimverges.helium.ui.list.event.ListBlockEvent
 import com.joaquimverges.helium.ui.list.repository.ListRepository
-import com.joaquimverges.helium.ui.list.state.DataLoadState
+import com.joaquimverges.helium.core.state.DataLoadState
 import com.joaquimverges.helium.ui.util.RefreshPolicy
 import io.reactivex.subjects.PublishSubject
 
 /**
  * A Typical List logic implementation:
- * - loads data from a Repository asynchronously when the activity/fragment is resumed
+ * - loads data from a [ListRepository] asynchronously when the activity/fragment is resumed
  * - publishes loading states (loading, empty, error, success) to the attached UiBlock
+ * - handles optional pagination
  *
  * Optional: pass a RefreshPolicy to control how often the data should get reloaded.
  * default is to refresh on every resume. Consider passing your own refresh policy to meet your use case.

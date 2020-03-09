@@ -5,7 +5,7 @@ import com.joaquimverges.demoapp.data.MyItem
 import com.joaquimverges.helium.core.LogicBlock
 import com.joaquimverges.helium.core.event.ClickEvent
 import com.joaquimverges.helium.core.util.async
-import com.joaquimverges.helium.ui.list.state.DataLoadState
+import com.joaquimverges.helium.core.state.DataLoadState
 
 /**
  * @author joaquim

@@ -10,9 +10,14 @@ import com.joaquimverges.helium.core.util.autoDispose
  */
 class AppBlock<S : BlockState, E : BlockEvent>(
     private val logic: LogicBlock<S, E>,
-    private val ui: UiBlock<S, E>,
-    private val childBlocks: List<AppBlock<*, *>> = emptyList()
+    private val ui: UiBlock<S, E>
 ) {
+    private val childBlocks: MutableList<AppBlock<*, *>> = mutableListOf()
+
+    fun withChildBlocks(vararg list: AppBlock<*, *>): AppBlock<S, E> {
+        childBlocks.addAll(list)
+        return this
+    }
 
     fun assemble() {
         val lifecycle: Lifecycle = ui.lifecycle

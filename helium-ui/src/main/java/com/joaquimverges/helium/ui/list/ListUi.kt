@@ -9,20 +9,21 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.joaquimverges.helium.core.event.BlockEvent
-import com.joaquimverges.helium.core.util.autoDispose
 import com.joaquimverges.helium.core.UiBlock
+import com.joaquimverges.helium.core.event.BlockEvent
+import com.joaquimverges.helium.core.state.DataLoadState
+import com.joaquimverges.helium.core.util.autoDispose
 import com.joaquimverges.helium.ui.R
-import com.joaquimverges.helium.ui.list.event.ListBlockEvent
-import com.joaquimverges.helium.ui.list.state.DataLoadState
 import com.joaquimverges.helium.ui.list.adapter.ListAdapter
 import com.joaquimverges.helium.ui.list.adapter.ListItem
+import com.joaquimverges.helium.ui.list.event.ListBlockEvent
 import java.util.Collections.emptyList
 
 /**
  * A convenience UiBlock that displays a list of data.
  * Handles displaying the list in a RecyclerView, with a ProgressBar while loading.
- * Responds to ListBlockState changes emitted from a compatible LogicBlock.
+ * Responds to [DataLoadState] changes emitted from a compatible LogicBlock.
+ * Emits [ListBlockEvent] for user events like scrolling, refreshing, or item events.
  *
  * @param inflater LayoutInflater to inflate the view hierarchy
  * @param recyclerItemFactory Provides how to create ViewHolders for item views
@@ -32,9 +33,11 @@ import java.util.Collections.emptyList
  * @param layoutManager optional custom layoutManager. Default is LinearLayoutManager.
  * @param recyclerViewConfig optional hook to configure the recyclerView with custom item decorators, touch handlers, scroll listeners, etc.
  * @param emptyUiBlock optional ui block to show when the list adapter is empty
+ * @param emptyUiBlock optional ui block to show when the data fails to load
+ * @param swipeToRefreshEnabled whether to enable the swipe to refresh UI
  *
  * @see com.joaquimverges.helium.ui.list.ListLogic
- * @see com.joaquimverges.helium.ui.list.state.DataLoadState
+ * @see com.joaquimverges.helium.core.state.DataLoadState
  */
 open class ListUi<T, E : BlockEvent, VH : ListItem<T, E>>
 constructor(
@@ -48,6 +51,7 @@ constructor(
     layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(inflater.context),
     recyclerViewConfig: ((RecyclerView) -> Unit)? = null,
     emptyUiBlock: UiBlock<*, E>? = null,
+    errorUiBlock: UiBlock<*, E>? = null,
     swipeToRefreshEnabled: Boolean = false
 ) : UiBlock<DataLoadState<List<T>>, ListBlockEvent<E>>(layoutResId, inflater, container, addToContainer) {
 
@@ -55,6 +59,7 @@ constructor(
     private val swipeRefreshLayout: SwipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout)
     private val progressBar: ProgressBar = view.findViewById(R.id.loader)
     private val emptyViewContainer: ViewGroup = view.findViewById(R.id.empty_view_container)
+    private val errorViewContainer: ViewGroup = view.findViewById(R.id.error_view_container)
     private val adapter: ListAdapter<T, E, VH> = ListAdapter(inflater, recyclerItemFactory)
     private var lastItemCountHalfway = 0
     private var lastItemCountBottom = 0
@@ -89,22 +94,33 @@ constructor(
             it.observer().autoDispose(lifecycle).subscribe { event: E -> pushEvent(ListBlockEvent.EmptyBlockEvent(event)) }
             emptyViewContainer.addView(it.view)
         }
+        // error view
+        errorUiBlock?.let {
+            it.observer().autoDispose(lifecycle).subscribe { event: E -> pushEvent(ListBlockEvent.ErrorBlockEvent(event)) }
+            errorViewContainer.addView(it.view)
+        }
     }
 
-    override fun render(viewState: DataLoadState<List<T>>) {
+    override fun render(state: DataLoadState<List<T>>) {
         progressBar.setVisible(false)
         emptyViewContainer.setVisible(false)
+        errorViewContainer.setVisible(false)
         val emptyAdapter = adapter.itemCount == 0
-        swipeRefreshLayout.isRefreshing = (viewState is DataLoadState.Loading && !emptyAdapter)
-        when (viewState) {
+        swipeRefreshLayout.isRefreshing = (state is DataLoadState.Loading && !emptyAdapter)
+        when (state) {
             is DataLoadState.Loading -> progressBar.setVisible(emptyAdapter)
             is DataLoadState.Ready -> {
-                adapter.setItems(viewState.data)
+                adapter.setItems(state.data)
                 resetScrollCounts()
             }
             is DataLoadState.Empty -> {
                 adapter.setItems(emptyList())
                 emptyViewContainer.setVisible(true)
+            }
+            is DataLoadState.Error -> {
+                if (emptyAdapter) {
+                    errorViewContainer.setVisible(true)
+                }
             }
         }
     }

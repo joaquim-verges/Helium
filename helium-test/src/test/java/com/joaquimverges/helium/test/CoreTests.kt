@@ -19,7 +19,6 @@ class CoreTests : HeliumTestCase() {
 
     @Before
     fun setup() {
-        MockitoAnnotations.initMocks(this)
         uiBlock = TestUiBlock()
         logicBLock = TestLogicBLock()
     }

@@ -26,6 +26,14 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
     testOptions {
         unitTests {
             includeAndroidResources = true
@@ -34,7 +42,12 @@ android {
 }
 
 dependencies {
-    api "junit:junit:$junit_version"
+    api "androidx.test:core:$test_core_version"
+    api "androidx.test:runner:$test_core_version"
+    api "androidx.test:rules:$test_core_version"
+    api "androidx.test.ext:junit:$test_ext_version"
+    api "androidx.test.ext:junit-ktx:$test_ext_version"
+    api "androidx.test.espresso:espresso-core:$test_espresso_version"
     api "com.nhaarman:mockito-kotlin:$mockito_kotlin_version"
     api "org.robolectric:robolectric:$robolectric_version"
     implementation project(':helium-core')

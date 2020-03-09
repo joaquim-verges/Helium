@@ -1,2 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.joaquimverges.helium.test"/>
+          package="com.joaquimverges.helium.test">
+
+    <application>
+        <activity android:name=".TestActivity"/>
+    </application>
+
+</manifest>

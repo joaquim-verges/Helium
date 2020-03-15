@@ -19,10 +19,7 @@ import org.mockito.internal.matchers.apachecommons.ReflectionEquals
  */
 class TestUiBlock<S : BlockState, E : BlockEvent>(
     mockView: View = mock(),
-    mockContext: Context = mock(),
-    private val mockLifecycle: Lifecycle = mock<Lifecycle>().apply {
-        whenever(currentState).thenReturn(Lifecycle.State.CREATED)
-    }
+    mockContext: Context = mock()
 ) : UiBlock<S, E>(
     view = mockView,
     context = mockContext
@@ -31,10 +28,6 @@ class TestUiBlock<S : BlockState, E : BlockEvent>(
 
     override fun render(state: S) {
         lastRenderedState = state
-    }
-
-    override fun getLifecycle(): Lifecycle {
-        return mockLifecycle
     }
 
     fun assertLastRendered(state: BlockState) {
@@ -47,9 +40,5 @@ class TestUiBlock<S : BlockState, E : BlockEvent>(
         if (lastRenderedState != null) {
             fail("Expected no state rendered but actually rendered: $lastRenderedState")
         }
-    }
-
-    fun assertAttached(block: LogicBlock<S, E>) {
-        verify(mockLifecycle).addObserver(block)
     }
 }

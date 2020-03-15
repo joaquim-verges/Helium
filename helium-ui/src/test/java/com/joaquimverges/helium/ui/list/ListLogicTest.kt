@@ -1,12 +1,18 @@
 package com.joaquimverges.helium.ui.list
 
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import com.joaquimverges.helium.core.assemble
 import com.joaquimverges.helium.core.event.BlockEvent
+import com.joaquimverges.helium.core.plus
 import com.joaquimverges.helium.core.state.DataLoadState
 import com.joaquimverges.helium.test.HeliumTestCase
+import com.joaquimverges.helium.test.HeliumUiTestCase
 import com.joaquimverges.helium.test.TestUiBlock
 import com.joaquimverges.helium.ui.list.event.ListBlockEvent
 import com.joaquimverges.helium.ui.list.repository.ListRepository
 import com.joaquimverges.helium.ui.util.RefreshPolicy
+import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.never
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
@@ -41,7 +47,7 @@ class ListLogicTest : HeliumTestCase() {
         RxAndroidPlugins.setMainThreadSchedulerHandler { testScheduler }
         whenever(repo.getFirstPage()).thenReturn(Single.just(testData))
         logic = ListLogic(repo, refreshPolicy)
-        logic.attach(testUi)
+        assemble(logic + testUi)
     }
 
     @Test

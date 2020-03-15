@@ -1,6 +1,5 @@
 package com.joaquimverges.helium.core
 
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
@@ -33,7 +32,7 @@ class AppBlock<S : BlockState, E : BlockEvent>(
      * This also enables the LogicBlock to receive lifecycle events, by annotating functions with @OnLifecycleEvent.
      */
     fun assemble(lifecycle: Lifecycle) {
-        logic.observeState().doOnDispose { Log.w("JOEE", "disposed: ${logic.javaClass.simpleName}") }.autoDispose(lifecycle).subscribe { ui.render(it) }
+        logic.observeState().autoDispose(lifecycle).subscribe { ui.render(it) }
         ui.observer().autoDispose(lifecycle).subscribe { logic.processEvent(it) }
         lifecycle.addObserver(logic)
 

@@ -3,9 +3,11 @@ package com.joaquimverges.helium.ui.list
 import android.content.Context
 import android.view.LayoutInflater
 import android.widget.TextView
+import androidx.lifecycle.LifecycleOwner
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
+import com.joaquimverges.helium.core.assemble
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.plus
 import com.joaquimverges.helium.core.state.DataLoadState
@@ -35,7 +37,7 @@ class ListUiTest : HeliumUiTestCase() {
                 TestListItem(it)
             })
             it.setContentView(ui.view)
-            (logic + ui).assemble()
+            (it as LifecycleOwner).assemble(logic + ui)
         }
     }
 

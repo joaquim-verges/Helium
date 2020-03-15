@@ -1,6 +1,7 @@
 package com.joaquimverges.helium.test
 
 import com.joaquimverges.helium.core.event.BlockEvent
+import com.joaquimverges.helium.core.plus
 import com.joaquimverges.helium.core.state.BlockState
 import org.junit.Before
 import org.junit.Test
@@ -25,8 +26,7 @@ class CoreTests : HeliumTestCase() {
 
     @Test
     fun testAttach() {
-        logicBLock.attach(uiBlock)
-        uiBlock.assertAttached(logicBLock)
+        assemble(logicBLock + uiBlock)
     }
 
     @Test
@@ -62,7 +62,7 @@ class CoreTests : HeliumTestCase() {
     }
 
     private fun bootstrapAttach() {
-        logicBLock.attach(uiBlock)
+        assemble(logicBLock + uiBlock)
     }
 
 }

@@ -10,7 +10,7 @@ import androidx.test.ext.junit.rules.activityScenarioRule
 import org.junit.Rule
 
 /**
- * Convenience base class for testing UiBlocks
+ * Convenience base class for testing UiBlocks, provides a real Activity and can test espresso matchings.
  */
 open class HeliumUiTestCase : HeliumTestCase() {
 

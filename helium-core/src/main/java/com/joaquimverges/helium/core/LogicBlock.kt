@@ -35,13 +35,6 @@ abstract class LogicBlock<S : BlockState, E : BlockEvent> : ViewModel(), Lifecyc
     abstract fun onUiEvent(event: E)
 
     /**
-     * Convenience method to create an AppBlock by assembling this logic with the given uiBlock
-     */
-    fun attach(uiBlock: UiBlock<S, E>) {
-        AppBlock(this, uiBlock).assemble()
-    }
-
-    /**
      * Convenience method to Forward all [BlockEvent] received by this LogicBlock to another given LogicBlock
      * Must have compatible [BlockEvent] for both blocks.
      */

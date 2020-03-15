@@ -1,13 +1,13 @@
 package com.joaquimverges.demoapp.logic
 
-import androidx.core.content.ContextCompat
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.joaquimverges.demoapp.data.Colors
-import com.joaquimverges.demoapp.data.MyListRepository
 import com.joaquimverges.demoapp.data.MyItem
+import com.joaquimverges.demoapp.data.MyListRepository
 import com.joaquimverges.helium.core.event.ClickEvent
-import com.joaquimverges.helium.ui.list.event.ListBlockEvent
 import com.joaquimverges.helium.ui.list.ListLogic
+import com.joaquimverges.helium.ui.list.event.ListBlockEvent
 import com.joaquimverges.helium.ui.util.RefreshPolicy
 import java.util.concurrent.TimeUnit
 

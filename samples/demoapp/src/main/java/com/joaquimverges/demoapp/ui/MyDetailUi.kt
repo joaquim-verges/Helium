@@ -23,9 +23,9 @@ class MyDetailUi(inflater: LayoutInflater, container: ViewGroup?)
         inflater,
         container) {
 
-    private val detailColorView: View = view.findViewById(R.id.detail_color_view)
-    private val colorNameView: TextView = view.findViewById(R.id.color_name)
-    private val loader: ProgressBar = view.findViewById(R.id.loader)
+    private val detailColorView: View = findView(R.id.detail_color_view)
+    private val colorNameView: TextView = findView(R.id.color_name)
+    private val loader: ProgressBar = findView(R.id.loader)
 
     override fun render(viewState: DataLoadState<MyItem>) {
         TransitionManager.beginDelayedTransition(detailColorView as ViewGroup)

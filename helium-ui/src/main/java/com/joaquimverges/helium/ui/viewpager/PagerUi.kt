@@ -1,11 +1,11 @@
 package com.joaquimverges.helium.ui.viewpager
 
-import androidx.viewpager.widget.ViewPager
 import android.view.ViewGroup
 import androidx.fragment.app.*
+import androidx.viewpager.widget.ViewPager
+import com.joaquimverges.helium.core.UiBlock
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.state.BlockState
-import com.joaquimverges.helium.core.UiBlock
 import com.joaquimverges.helium.ui.R
 
 /**
@@ -41,12 +41,13 @@ open class PagerUi(
         fun getCount(): Int
     }
 
-    class BasePagerAdapter(fm: FragmentManager, private val fragmentPageProvider: FragmentPageProvider) : FragmentPagerAdapter(fm) {
+    class BasePagerAdapter(fm: FragmentManager, private val fragmentPageProvider: FragmentPageProvider) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
         override fun getItem(position: Int) = fragmentPageProvider.getFragmentAt(position)
         override fun getCount() = fragmentPageProvider.getCount()
     }
 
-    class BaseStatePagerAdapter(fm: FragmentManager, private val fragmentPageProvider: FragmentPageProvider) : FragmentStatePagerAdapter(fm) {
+    class BaseStatePagerAdapter(fm: FragmentManager, private val fragmentPageProvider: FragmentPageProvider) :
+        FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
         override fun getItem(position: Int) = fragmentPageProvider.getFragmentAt(position)
         override fun getCount() = fragmentPageProvider.getCount()
     }

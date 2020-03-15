@@ -13,6 +13,7 @@ import com.joaquimverges.helium.core.UiBlock
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.state.DataLoadState
 import com.joaquimverges.helium.core.util.autoDispose
+import com.joaquimverges.helium.core.util.onAttached
 import com.joaquimverges.helium.ui.R
 import com.joaquimverges.helium.ui.list.adapter.ListAdapter
 import com.joaquimverges.helium.ui.list.adapter.ListItem
@@ -87,17 +88,25 @@ constructor(
                 }
             }
         })
-        // adapter items
-        adapter.observeItemEvents().autoDispose(lifecycle).subscribe { ev -> pushEvent(ListBlockEvent.ListItemEvent(ev)) }
-        // empty view
-        emptyUiBlock?.let {
-            it.observer().autoDispose(lifecycle).subscribe { event: E -> pushEvent(ListBlockEvent.EmptyBlockEvent(event)) }
-            emptyViewContainer.addView(it.view)
-        }
-        // error view
-        errorUiBlock?.let {
-            it.observer().autoDispose(lifecycle).subscribe { event: E -> pushEvent(ListBlockEvent.ErrorBlockEvent(event)) }
-            errorViewContainer.addView(it.view)
+        view.onAttached {
+            // adapter items events
+            adapter.observeItemEvents()
+                .autoDispose(view)
+                .subscribe { ev -> pushEvent(ListBlockEvent.ListItemEvent(ev)) }
+            // empty view events
+            emptyUiBlock?.let {
+                it.observer()
+                    .autoDispose(view)
+                    .subscribe { event: E -> pushEvent(ListBlockEvent.EmptyBlockEvent(event)) }
+                emptyViewContainer.addView(it.view)
+            }
+            // error view events
+            errorUiBlock?.let {
+                it.observer()
+                    .autoDispose(view)
+                    .subscribe { event: E -> pushEvent(ListBlockEvent.ErrorBlockEvent(event)) }
+                errorViewContainer.addView(it.view)
+            }
         }
     }
 

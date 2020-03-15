@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.state.BlockState
 import io.reactivex.Observable
@@ -29,7 +27,7 @@ abstract class UiBlock<in S : BlockState, E : BlockEvent>(
     val view: View,
     private val eventsObservable: PublishSubject<E> = PublishSubject.create(),
     protected val context: Context = view.context
-) : LifecycleOwner {
+) {
 
     /**
      * Convenience constructor that inflates the layout for you.
@@ -66,9 +64,4 @@ abstract class UiBlock<in S : BlockState, E : BlockEvent>(
      * Pushes a new BlockEvent, which will trigger active subscribers LogicBlocks
      */
     fun pushEvent(event: E) = eventsObservable.onNext(event)
-
-    override fun getLifecycle(): Lifecycle {
-        return (context as? LifecycleOwner)?.lifecycle
-            ?: throw IllegalArgumentException("${this::class.java} does not have a Lifecycle aware context")
-    }
 }

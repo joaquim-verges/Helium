@@ -1,11 +1,13 @@
 package com.joaquimverges.demoapp.logic
 
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.OnLifecycleEvent
 import com.joaquimverges.demoapp.data.MyDetailRepository
 import com.joaquimverges.demoapp.data.MyItem
 import com.joaquimverges.helium.core.LogicBlock
 import com.joaquimverges.helium.core.event.ClickEvent
-import com.joaquimverges.helium.core.util.async
 import com.joaquimverges.helium.core.state.DataLoadState
+import com.joaquimverges.helium.core.util.async
 
 /**
  * @author joaquim
@@ -14,13 +16,10 @@ class MyDetailLogic(
     private val repository: MyDetailRepository = MyDetailRepository()
 ) : LogicBlock<DataLoadState<MyItem>, ClickEvent<MyItem>>() {
 
-    init {
-        loadDetailModel()
-    }
-
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     private fun loadDetailModel() {
         repository
-            .getFirstPage()
+            .getData()
             .async()
             .doOnSubscribe { pushState(DataLoadState.Loading()) }
             .subscribe(

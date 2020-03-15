@@ -1,8 +1,10 @@
 package com.joaquimverges.helium.core.util
 
+import android.view.View
 import androidx.lifecycle.Lifecycle
 import com.uber.autodispose.AutoDispose
 import com.uber.autodispose.ObservableSubscribeProxy
+import com.uber.autodispose.android.ViewScopeProvider
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
 import io.reactivex.*
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -34,5 +36,10 @@ fun <T> Completable.async(): Completable {
 
 fun <T> Observable<T>.autoDispose(lifecycle: Lifecycle): ObservableSubscribeProxy<T> {
     val scope = AndroidLifecycleScopeProvider.from(lifecycle)
+    return `as`(AutoDispose.autoDisposable<T>(scope))
+}
+
+fun <T> Observable<T>.autoDispose(view: View): ObservableSubscribeProxy<T> {
+    val scope = ViewScopeProvider.from(view)
     return `as`(AutoDispose.autoDisposable<T>(scope))
 }

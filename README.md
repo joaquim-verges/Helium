@@ -47,7 +47,7 @@ class CounterActivity : AppCompatActivity() {
         val logic = CounterLogic() // create a logic block
         val ui = CounterUi(layoutInflater) // create a UI block
         setContentView(ui.view)
-        (logic + ui).assemble() // assemble them
+        assemble(logic + ui) // assemble them
     }
 }
 ```
@@ -108,7 +108,7 @@ Here's a typical usage of `ListUi`, one of the most useful blocks provided.
 val listUi = ListUi(layoutInflater, { inflater, container ->
     MyListItem(inflater, container)
 })
-(MyListLogic() + listUi).assemble()
+assemble(MyListLogic() + listUi)
 ```
 
 Follow the links above for documentation and examples on how to use those handy App Blocks in your own apps.

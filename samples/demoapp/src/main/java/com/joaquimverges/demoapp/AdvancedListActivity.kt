@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.joaquimverges.demoapp.logic.MyListLogic
 import com.joaquimverges.demoapp.ui.GridSpacingDecorator
 import com.joaquimverges.demoapp.ui.MyCardListItem
+import com.joaquimverges.helium.core.assemble
 import com.joaquimverges.helium.core.event.BlockEvent
+import com.joaquimverges.helium.core.plus
 import com.joaquimverges.helium.core.retained.getRetainedLogicBlock
 import com.joaquimverges.helium.core.state.BlockState
 import com.joaquimverges.helium.navigation.toolbar.CollapsingToolbarScreenUi
@@ -35,6 +37,7 @@ class AdvancedListActivity : AppCompatActivity() {
             }
         }
 
+        val logic = getRetainedLogicBlock<MyListLogic>()
         val listUi = ListUi(layoutInflater,
             recyclerItemFactory = { inflater, container ->
                 MyCardListItem(inflater, container)
@@ -45,7 +48,7 @@ class AdvancedListActivity : AppCompatActivity() {
                 it.addItemDecoration(GridSpacingDecorator(padding, orientation))
             })
 
-        getRetainedLogicBlock<MyListLogic>().attach(listUi)
+        assemble(logic + listUi)
         setContentView(
             CollapsingToolbarScreenUi<BlockState, BlockEvent>(
                 layoutInflater,

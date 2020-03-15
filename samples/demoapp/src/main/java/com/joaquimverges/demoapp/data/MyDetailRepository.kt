@@ -9,9 +9,9 @@ import java.util.concurrent.TimeUnit
 /**
  * @author joaquim
  */
-class MyDetailRepository : ListRepository<MyItem> {
+class MyDetailRepository {
 
-    override fun getFirstPage(): Single<MyItem> {
+    fun getData(): Single<MyItem> {
         return Single
             .just(randomColor(Random().nextInt()).run { MyItem(color, name.toLowerCase().replace("_", " ")) })
             .delay(1, TimeUnit.SECONDS)

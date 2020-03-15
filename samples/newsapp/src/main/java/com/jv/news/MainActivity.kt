@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.joaquimverges.helium.core.assemble
 import com.joaquimverges.helium.core.plus
 import com.joaquimverges.helium.core.retained.getRetainedLogicBlock
 import com.jv.news.logic.ArticleListLogic
@@ -18,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setLightStatusBar()
-        MainAppBlock.build(this).assemble()
+        assemble(MainAppBlock.build(this))
     }
 
     private fun setLightStatusBar() {

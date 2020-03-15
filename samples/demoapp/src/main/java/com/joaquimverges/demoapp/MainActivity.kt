@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.joaquimverges.demoapp.ui.GridSpacingDecorator
+import com.joaquimverges.helium.core.assemble
 import com.joaquimverges.helium.core.plus
 import com.joaquimverges.helium.core.event.ClickEvent
 import com.joaquimverges.helium.ui.list.event.ListBlockEvent
@@ -84,7 +85,7 @@ class MainActivity : AppCompatActivity() {
         }, recyclerViewConfig = {
             it.addItemDecoration(GridSpacingDecorator(resources.getDimensionPixelSize(R.dimen.menu_padding)))
         })
-        (MenuLogicBlock() + listUi).assemble()
+        assemble(MenuLogicBlock() + listUi)
         setContentView(listUi.view)
     }
 }

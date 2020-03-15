@@ -59,3 +59,10 @@ fun <S : BlockState, E : BlockEvent> LifecycleOwner.assemble(appBlock: AppBlock<
     appBlock.assemble(lifecycle)
 }
 
+/**
+ * Convenience method for assembling a logic and ui block, with no children blocks, from any LifecycleOwner (Activity, Fragment, etc)
+ */
+fun <S : BlockState, E : BlockEvent> LifecycleOwner.assemble(logic: LogicBlock<S, E>, ui: UiBlock<S, E>) {
+    assemble(logic + ui)
+}
+

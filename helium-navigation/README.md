@@ -3,6 +3,7 @@
 Collection of AppBlocks powering Android navigation:
 
 - Toolbar
+- Collapsing Toolbar
 - Bottom Navigation
 - Navigation Drawer
 

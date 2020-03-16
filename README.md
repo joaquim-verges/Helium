@@ -17,7 +17,16 @@ implementation 'com.joaquimverges.helium:helium-navigation:x.y.z'   // navigatio
 testImplementation 'com.joaquimverges.helium:helium-test:x.y.z'   // unit test helper classes
 ```
 
-## An intuitive architecture pattern
+## Documentation
+
+- [Core framework](/helium-core)
+- [UI Blocks](/helium-ui)
+- [Navigation Blocks](/helium-navigation)
+- [Testing](/helium-test)
+
+## Overview
+
+#### An intuitive architecture pattern
 
 Building an app should feel like assembling Lego blocks, that's the core principle of Helium. The framework proposes the following mental model to structure your code:
 
@@ -36,7 +45,7 @@ If both Logic and UI expose and expect the same type of state and event, then th
 
 <img src="docs/images/helium_arch_diagram.png" width="600">
 
-## Show me the code
+#### Show me the code
 
 Let's build a simple counter app. Here's what a the Activity would look like using Helium:
 
@@ -95,7 +104,7 @@ and that's all you need! You know have a functional counter, with clean separati
 
 For detailed information and more advanced examples, head over to the [helium-core](/helium-core) documentation.
 
-## Ready to use App Blocks
+#### Ready to use App Blocks
 
 Helium provides the framework to build your own AppBlocks, but also provides a growing catalog of existing blocks ready to be used:
 
@@ -113,12 +122,12 @@ assemble(MyListLogic() + listUi)
 
 Follow the links above for documentation and examples on how to use those handy App Blocks in your own apps.
 
-## Samples
+#### Samples
 
 - [newsapp](/samples/newsapp) - Fully functional News app downloadable on [Google Play](https://play.google.com/store/apps/details?id=com.jv.news)
 - [demoapp](/samples/demoapp) - A catalog of different AppBlocks usages
 
-## Testing
+#### Testing
 
 Unit testing blocks is easy, and you should always write tests for your `LogicBlock` when possible. Helium provides helper classes to make testing your logic super simple. Head over to the [helium-test](/helium-test) documentation to learn more.
 

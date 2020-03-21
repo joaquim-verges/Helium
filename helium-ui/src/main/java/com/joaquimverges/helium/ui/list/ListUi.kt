@@ -88,6 +88,10 @@ constructor(
                 }
             }
         })
+        // empty, error view
+        emptyUiBlock?.let { emptyViewContainer.addView(it.view) }
+        errorUiBlock?.let { errorViewContainer.addView(it.view) }
+
         view.onAttached {
             // adapter items events
             adapter.observeItemEvents()
@@ -98,14 +102,13 @@ constructor(
                 it.observer()
                     .autoDispose(view)
                     .subscribe { event: E -> pushEvent(ListBlockEvent.EmptyBlockEvent(event)) }
-                emptyViewContainer.addView(it.view)
+
             }
             // error view events
             errorUiBlock?.let {
                 it.observer()
                     .autoDispose(view)
                     .subscribe { event: E -> pushEvent(ListBlockEvent.ErrorBlockEvent(event)) }
-                errorViewContainer.addView(it.view)
             }
         }
     }

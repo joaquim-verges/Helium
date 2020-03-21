@@ -8,7 +8,6 @@ import android.view.View
 fun View.onAttached(block: () -> Unit) {
     addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
         override fun onViewAttachedToWindow(p0: View?) {
-            removeOnAttachStateChangeListener(this)
             block()
         }
 

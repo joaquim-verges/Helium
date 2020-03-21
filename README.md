@@ -1,6 +1,6 @@
 # Helium
 
-Lightweight & approachable framework for Android. 100% Kotlin.
+Lightweight & intuitive framework for Android. 100% Kotlin.
 
 <img src="docs/images/ic_launcher.png" width="300">
 
@@ -47,7 +47,7 @@ If both Logic and UI expose and expect the same type of state and event, then th
 
 #### Show me the code
 
-Let's build a simple counter app. Here's what a the Activity would look like using Helium:
+Let's build a simple counter app. Here's what the Activity would look like using Helium:
 
 ```kotlin
 class CounterActivity : AppCompatActivity() {
@@ -75,7 +75,7 @@ class CounterLogic : LogicBlock<CounterState, TapEvent>() {
     private var count = 0
 
     init {
-        pushState(CounterState(0))
+        pushState(CounterState(count))
     }
 
     override fun onUiEvent(event: TapEvent) {

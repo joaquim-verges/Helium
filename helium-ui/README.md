@@ -10,6 +10,8 @@ Collection of AppBlocks powering common Android UI patterns:
 
 Being the most common UI pattern for mobile apps, Helium provides a powerful and easy to use List Block that is ready to be assembled with your own Blocks.
 
+<img src="/docs/images/list2.png" width=300> <img src="/docs/images/list.png" width=300>
+
 ### Features
 
 ##### ListLogic

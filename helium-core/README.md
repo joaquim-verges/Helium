@@ -68,7 +68,7 @@ class MyFragment : Fragment() {
 
 That is all the wiring code you need. From there, you can write your logic and UI independently, with clear responsibilities for each and nice separation of concerns.
 
-##### Retained logic
+#### Retained logic
 
 If you want your logic and latest state to be retained across configurations changes, simply replace `MyLogic()` with `getRetainedLogicBlock<MyLogic>()`. This will ensure your latest state is automatically restored after a configuration change.
 
@@ -80,7 +80,7 @@ val logic = getRetainedLogicBlock<MyLogic>() { MyLogic(id) }
 ```
 
 
-##### Implementing a Logic Block
+#### Implementing a Logic Block
 
 The most common logic for Android apps is to load some data from the network or a database, usually through a repository class.
 
@@ -114,7 +114,7 @@ Note that `loadData()` is annotated with a `@OnLifecycleEvent` annotation, which
 
 Note also that there is no UI references in this class, Logic Blocks should only care about pushing state, and handling events.
 
-##### Implementing a UI Block
+#### Implementing a UI Block
 
 Now that your logic is defined with clear states, it's trivial to write a compatible UiBlock that renders the UI for each possible state, and pushes events when certain views get clicked.
 
@@ -142,7 +142,7 @@ UI Blocks can inflate layouts for you, or you can pass a pre-inflated view hiera
 
 Note that there is no business logic in this class, UI Blocks should only care about rendering state, and pushing events.
 
-##### State and events
+#### State and events
 
 In this example, we're using `MyState` and `MyEvent` as the medium of communication between our Logic and our UI. These state and event classes can be anything you want. One option is to use sealed Kotlin classes to define them:
 

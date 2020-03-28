@@ -7,6 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="@dimen/default_card_radius"
+        app:cardElevation="@dimen/default_card_elevation"
         android:elevation="@dimen/default_card_elevation"
         android:translationZ="@dimen/default_card_translation_z">
 

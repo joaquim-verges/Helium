@@ -58,3 +58,39 @@ class MyListItem(inflater: LayoutInflater, container: ViewGroup) :
     }
 }
 ```
+
+## Cards
+
+To complement the ListUI block, Helium comes with a simple Card style list item to quickly build card lists with minimal effort.
+
+IMPORTANT: In order to use these, your theme must extend one of the `Theme.MaterialComponents`.
+
+<img src="/docs/images/cards.png" width=300>
+
+
+#### CardListItem
+
+- Only requires a body layout resource id or view that you implement
+- Wraps your layout with a `MaterialCardView`
+- Polished styling and elevation out of the box
+- Allows for full customization of the card properties or the card layout
+- Integrates seamlessly with a `ListUi` block
+
+#### ContentCardListItem
+
+- Convenience list item to display a simple card with thumbnail, title, subtitle
+- Only requires extending it and implementing 3 methods to bind image, title, subtitle
+- See screenshot above for a preview, and [CardListActivity](/samples/demoapp/src/main/java/com/joaquimverges/demoapp/CardListActivity.kt) for a code example.
+
+## View Pagers
+
+Another common Android UI pattern is swipeable screens, using a ViewPager of Fragments. Helium provides a handy block to simplify this process.
+
+#### PagerUi
+
+- Only requires passing a `FragmentPageProvider` interface that you implement
+- Sets up and maintains a pager adapter
+- Handles choosing between `FragmentPagerAdapter` and `FragmentStatePagerAdapter` depending on the number of fragments to displays
+- Handles propagating the right lifecycle events to each fragment when on screen
+- Allows for full customization of the ViewPager or its layout
+- See [ViewPagerActivity](/samples/demoapp/src/main/java/com/joaquimverges/demoapp/ViewPagerActivity) for a code example.

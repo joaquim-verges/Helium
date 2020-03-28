@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.state.BlockState
 import com.joaquimverges.helium.core.UiBlock
-import com.joaquimverges.helium.navigation.toolbar.CollapsingToolbarScreenUi
+import com.joaquimverges.helium.navigation.toolbar.CollapsingToolbarUi
 import com.joaquimverges.helium.ui.list.ListUi
 import com.jv.news.App.Companion.context
 import com.jv.news.R
@@ -24,7 +24,7 @@ import com.jv.news.ui.event.ArticleEvent
 class ArticleListUi(
     inflater: LayoutInflater,
     val listUi: ListUi<Article, ArticleEvent, ArticleGridItem> = inflateListView(inflater)
-) : CollapsingToolbarScreenUi<ArticleListState, ArticleEvent>(
+) : CollapsingToolbarUi<ArticleListState, ArticleEvent>(
     inflater,
     listUi,
     HeaderUi(inflater),

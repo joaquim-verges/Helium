@@ -14,23 +14,23 @@ import com.jv.news.R
  */
 class MainScreenUi(
     inflater: LayoutInflater,
-    internal val articleView: ArticleListUi = ArticleListUi(inflater),
-    internal val drawerView: SourcesUi = SourcesUi(inflater),
-    private val navDrawer: NavDrawerUi = NavDrawerUi(
-        articleView,
-        drawerView
+    internal val articleListUi: ArticleListUi = ArticleListUi(inflater),
+    internal val drawerUi: SourcesUi = SourcesUi(inflater),
+    private val navDrawerUi: NavDrawerUi = NavDrawerUi(
+        articleListUi,
+        drawerUi
     )
 ) : UiBlock<BlockState, BlockEvent>(R.layout.activity_main, inflater) {
 
     private val mainContainer = findView<ViewGroup>(R.id.main_container)
 
     init {
-        mainContainer.addView(navDrawer.view)
+        mainContainer.addView(navDrawerUi.view)
     }
 
-    override fun render(blockState: BlockState) {
-        when (blockState) {
-            is NavDrawerState -> navDrawer.render(blockState)
+    override fun render(state: BlockState) {
+        when (state) {
+            is NavDrawerState -> navDrawerUi.render(state)
         }
     }
 }

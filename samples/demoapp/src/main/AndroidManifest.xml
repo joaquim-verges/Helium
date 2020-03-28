@@ -23,6 +23,7 @@
         <activity android:name="com.joaquimverges.demoapp.SimpleListFragmentActivityRetained"/>
         <activity android:name="com.joaquimverges.demoapp.AdvancedListActivity"/>
         <activity android:name="com.joaquimverges.demoapp.CardListActivity"/>
+        <activity android:name="com.joaquimverges.demoapp.BottomNavActivity"/>
     </application>
 
 </manifest>

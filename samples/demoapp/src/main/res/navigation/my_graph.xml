@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/my_graph"
+        app:startDestination="@id/list">
+
+    <fragment android:id="@+id/list"
+            android:name="com.joaquimverges.demoapp.ListFragment"/>
+
+    <fragment android:id="@+id/grid"
+            android:name="com.joaquimverges.demoapp.AdvancedListFragment"/>
+
+    <fragment android:id="@+id/pager"
+            android:name="com.joaquimverges.demoapp.ViewPagerFragment"/>
+</navigation>

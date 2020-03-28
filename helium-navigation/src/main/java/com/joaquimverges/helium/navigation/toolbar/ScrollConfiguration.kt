@@ -4,7 +4,7 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
 
 /**
- * Configures the scrolling behavior for a [CollapsingToolbarScreenUi]
+ * Configures the scrolling behavior for a [CollapsingToolbarUi]
  *
  * @param scrollMode: The scrolling more (see [ScrollMode])
  * @param toolbarCollapseMode: How the toolbar should behave on scroll (see [CollapseMode])

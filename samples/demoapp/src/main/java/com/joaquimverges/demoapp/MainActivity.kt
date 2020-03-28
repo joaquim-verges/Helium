@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         ADVANCED_LIST("Advanced List"),
         CARD_LIST("Card List"),
         VIEW_PAGER("ViewPager"),
+        BOTTOM_NAV("Bottom Navigation")
     }
 
     class MenuRepository : ListRepository<List<MenuItem>> {
@@ -53,6 +54,7 @@ class MainActivity : AppCompatActivity() {
                         MenuItem.ADVANCED_LIST -> AdvancedListActivity::class.java
                         MenuItem.CARD_LIST -> CardListActivity::class.java
                         MenuItem.VIEW_PAGER -> ViewPagerActivity::class.java
+                        MenuItem.BOTTOM_NAV -> BottomNavActivity::class.java
                     }
                     context.startActivity(Intent(context, activityClass))
                 }

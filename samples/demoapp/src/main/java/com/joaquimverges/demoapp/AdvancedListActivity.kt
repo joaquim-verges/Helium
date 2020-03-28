@@ -14,7 +14,7 @@ import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.plus
 import com.joaquimverges.helium.core.retained.getRetainedLogicBlock
 import com.joaquimverges.helium.core.state.BlockState
-import com.joaquimverges.helium.navigation.toolbar.CollapsingToolbarScreenUi
+import com.joaquimverges.helium.navigation.toolbar.CollapsingToolbarUi
 import com.joaquimverges.helium.ui.list.ListUi
 
 class AdvancedListActivity : AppCompatActivity() {
@@ -50,7 +50,7 @@ class AdvancedListActivity : AppCompatActivity() {
 
         assemble(logic + listUi)
         setContentView(
-            CollapsingToolbarScreenUi<BlockState, BlockEvent>(
+            CollapsingToolbarUi<BlockState, BlockEvent>(
                 layoutInflater,
                 listUi,
                 collapsingLayoutCustomization = {

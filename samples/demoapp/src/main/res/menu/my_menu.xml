@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+            android:id="@+id/list"
+            android:icon="@drawable/ic_filter_list_black_24dp"
+            android:title="List" />
+
+    <item
+            android:id="@+id/grid"
+            android:icon="@drawable/ic_view_grid_on_black_24dp"
+            android:title="Grid" />
+
+    <item
+            android:id="@+id/pager"
+            android:icon="@drawable/ic_view_carousel_black_24dp"
+            android:title="Pager" />
+</menu>

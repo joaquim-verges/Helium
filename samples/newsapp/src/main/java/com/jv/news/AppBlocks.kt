@@ -20,8 +20,8 @@ object MainAppBlock {
         val ui = MainScreenUi(activity.layoutInflater)
         activity.setContentView(ui.view)
         return (logic + ui).withChildBlocks(
-            ArticleListAppBlock.build(logic.articleListLogic, ui.articleView),
-            logic.sourcesLogic + ui.drawerView
+            ArticleListAppBlock.build(logic.articleListLogic, ui.articleListUi),
+            logic.sourcesLogic + ui.drawerUi
         )
     }
 }

@@ -19,10 +19,10 @@ testImplementation 'com.joaquimverges.helium:helium-test:x.y.z'   // unit test h
 
 ## Documentation
 
-- [Core framework](/helium-core)
-- [UI Blocks](/helium-ui)
-- [Navigation Blocks](/helium-navigation)
-- [Testing](/helium-test)
+- ##### [Core framework](/helium-core)
+- ##### [UI Blocks](/helium-ui)
+- ##### [Navigation Blocks](/helium-navigation)
+- ##### [Testing](/helium-test)
 
 ## Overview
 
@@ -30,9 +30,9 @@ testImplementation 'com.joaquimverges.helium:helium-test:x.y.z'   // unit test h
 
 Building an app should feel like assembling Lego blocks, that's the core principle of Helium. The framework proposes the following mental model to structure your code:
 
-- `UiBlock`: a class that handles rendering UI.
-- `LogicBlock`: a class that handles logic.
-- `AppBlock = (LogicBlock + UiBlock)`: assembling logic with UI creates a fully functional piece of your App.  
+- `UiBlock` - a class that handles rendering UI.
+- `LogicBlock` - a class that handles logic.
+- `AppBlock = (LogicBlock + UiBlock)` - assembling logic with UI creates a fully functional piece of your App.  
 
 Just like Lego blocks, or puzzle pieces, a `UiBlock` can only be assembled with a `LogicBlock` if they're compatible.
 
@@ -45,71 +45,22 @@ If both Logic and UI expose and expect the same type of state and event, then th
 
 <img src="docs/images/helium_arch_diagram.png" width="600">
 
-#### Show me the code
-
-Let's build a simple counter app. Here's what the Activity would look like using Helium:
+With an intuitive, kotlin first API, assembling blocks in `Activity` or `Fragment` is as simple as this:
 
 ```kotlin
-class CounterActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val logic = CounterLogic() // create a logic block
-        val ui = CounterUi(layoutInflater) // create a UI block
-        setContentView(ui.view)
-        assemble(logic + ui) // assemble them
-    }
-}
+val logic = MyLogic() // create a logic block
+val ui = MyUi(layoutInflater) // create a UI block
+assemble(logic + ui) // assemble them
 ```
 
-For a counter app, our state and event would be:
-
-```kotlin
-data class CounterState(val count: Int): BlockState
-object TapEvent : BlockEvent
-```
-
-The logic block can be defined like this:
-
-```kotlin
-class CounterLogic : LogicBlock<CounterState, TapEvent>() {
-    private var count = 0
-
-    init {
-        pushState(CounterState(count))
-    }
-
-    override fun onUiEvent(event: TapEvent) {
-        pushState(CounterState(++count))
-    }
-}
-```
-
-And the UI block would look like this:
-
-```kotlin
-class CounterUi(inflater: LayoutInflater) : UiBlock<CounterState, TapEvent>(R.layout.counter_view, inflater) {
-    private val counterButton = findView<TextView>(R.id.count_button)
-
-    init {
-        counterButton.setOnClickListener { pushEvent(TapEvent) }       
-    }    
-
-    override fun render(state: CounterState) {
-        counterButton.text = state.count
-    }
-}
-```
-
-and that's all you need! You know have a functional counter, with clean separation of concerns and no boilerplate.
-
-For detailed information and more advanced examples, head over to the [helium-core](/helium-core) documentation.
+For detailed information and examples, head over to the [helium-core](/helium-core) documentation.
 
 #### Ready to use App Blocks
 
 Helium provides the framework to build your own AppBlocks, but also provides a growing catalog of existing blocks ready to be used:
 
 - [helium-ui](/helium-ui): List, Cards, ViewPager, etc.
-- [helium-navigation](/helium-navigation): Toolbar, Bottom Navigation, Drawer, etc.  
+- [helium-navigation](/helium-navigation): Collapsing Toolbar, Bottom Navigation, Drawer, etc.  
 
 Here's a typical usage of `ListUi`, one of the most useful blocks provided.
 

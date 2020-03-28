@@ -7,8 +7,6 @@ Collection of AppBlocks powering Android navigation:
 - Bottom Navigation
 - Navigation Drawer
 
-*Detailed documentation and examples coming soon...*
-
 ## Toolbars
 
 Most Android apps use a `Toolbar` in some way. Helium provides a few useful set of classes to integrate it easily into your apps, especially the more convoluted collapsing toolbars.

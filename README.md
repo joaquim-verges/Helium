@@ -20,9 +20,9 @@ testImplementation 'com.joaquimverges.helium:helium-test:x.y.z'   // unit test h
 ## Documentation
 
 - ##### [Core framework](/helium-core)
-- ##### [UI Blocks](/helium-ui)
-- ##### [Navigation Blocks](/helium-navigation)
-- ##### [Testing](/helium-test)
+- ##### [Helium UI](/helium-ui)
+- ##### [Helium Navigation](/helium-navigation)
+- ##### [Helium Testing](/helium-test)
 
 ## Overview
 

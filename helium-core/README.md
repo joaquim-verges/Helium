@@ -2,6 +2,8 @@
 
 This tiny module is all you need to start building your own App Blocks.
 
+Helium requires [java 8 support](https://developer.android.com/studio/write/java8-support) in your app's `build.gradle`.
+
 ## Understanding the pattern
 
 <img src="/docs/images/helium_arch_diagram.png" width="600">

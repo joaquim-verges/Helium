@@ -13,6 +13,7 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 /**
  * A LogicBlock holds and publishes BlockState changes to a UiBlock for rendering.
@@ -77,4 +78,6 @@ abstract class LogicBlock<S : BlockState, E : BlockEvent> : ViewModel(), Lifecyc
     }
 
     fun <T> Flow<T>.launchInBlock() = launchIn(viewModelScope)
+
+    inline fun launchInBlock(crossinline codeBlock: suspend () -> Unit) = viewModelScope.launch { codeBlock() }
 }

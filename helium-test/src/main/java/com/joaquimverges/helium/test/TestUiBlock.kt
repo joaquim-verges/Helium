@@ -2,14 +2,10 @@ package com.joaquimverges.helium.test
 
 import android.content.Context
 import android.view.View
-import androidx.lifecycle.Lifecycle
-import com.joaquimverges.helium.core.event.BlockEvent
-import com.joaquimverges.helium.core.LogicBlock
-import com.joaquimverges.helium.core.state.BlockState
 import com.joaquimverges.helium.core.UiBlock
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
+import com.joaquimverges.helium.core.event.BlockEvent
+import com.joaquimverges.helium.core.state.BlockState
+import com.nhaarman.mockitokotlin2.mock
 import org.junit.Assert.fail
 import org.mockito.internal.matchers.apachecommons.ReflectionEquals
 

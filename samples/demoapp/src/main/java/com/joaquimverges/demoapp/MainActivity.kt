@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 
     class MenuRepository : ListRepository<List<MenuItem>> {
         private fun getMenuItems() = MenuItem.values().toList()
-        override fun getFirstPage(): Single<List<MenuItem>> = Observable.fromIterable(getMenuItems()).toList()
+        override suspend fun getFirstPage(): List<MenuItem> = getMenuItems()
     }
 
     // Logic

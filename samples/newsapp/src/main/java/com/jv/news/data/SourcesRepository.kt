@@ -7,7 +7,6 @@ import com.jv.news.App
 import com.jv.news.data.model.ArticleSource
 import com.jv.news.data.model.SourcesCategoryGroup
 import io.reactivex.Observable
-import io.reactivex.Single
 import io.reactivex.subjects.PublishSubject
 
 /**
@@ -25,10 +24,10 @@ class SourcesRepository(
     private val sources = mutableSetOf<String>().apply { addAll(preferences.getStringSet(SELECTED_SOURCES, mutableSetOf())?.toList() ?: listOf()) }
     private val sourcesSubject = PublishSubject.create<Set<String>>()
 
-    override fun getFirstPage(): Single<List<SourcesCategoryGroup>> {
-        return api.getSources()
-            .map { it.sources.groupBy { source -> source.category } }
-            .map { it.mapNotNull { mapEntry -> mapEntry.key?.let { name -> SourcesCategoryGroup(name, mapEntry.value) { source -> isSelected(source) } } } }
+    override suspend fun getFirstPage(): List<SourcesCategoryGroup> {
+        return api.getSources().sources
+            .groupBy { source -> source.category }
+            .mapNotNull { mapEntry -> mapEntry.key?.let { name -> SourcesCategoryGroup(name, mapEntry.value) { source -> isSelected(source) } } }
     }
 
     fun getSelectedSourceIds(): MutableSet<String> {

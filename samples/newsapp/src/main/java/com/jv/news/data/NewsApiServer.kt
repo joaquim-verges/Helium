@@ -28,13 +28,13 @@ object NewsApiServer {
     init {
         val client = OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY })
-            .addInterceptor {
+            .addNetworkInterceptor {
                 val original = it.request()
                 it.proceed(
                     original
                         .newBuilder()
                         .header("X-Api-Key", API_KEY)
-                        .method(original.method(), original.body())
+                        .method(original.method, original.body)
                         .build()
                 )
             }
@@ -51,12 +51,12 @@ object NewsApiServer {
 
     interface NewsApiService {
         @GET(ENDPOINT_ARTICLES)
-        fun getArticles(@Query("sources") source: String, @Query("page") page: Int): Single<ArticleResponse>
+        suspend fun getArticles(@Query("sources") source: String, @Query("page") page: Int): ArticleResponse
 
         @GET(ENDPOINT_ARTICLES)
         fun getArticlesByInterest(@Query("q") query: String, @Query("page") page: Int, @Query("sortBy") sort: String = "relevancy"): Single<ArticleResponse>
 
         @GET(ENDPOINT_SOURCES)
-        fun getSources(): Single<SourcesResponse>
+        suspend fun getSources(): SourcesResponse
     }
 }

@@ -2,14 +2,16 @@ package com.joaquimverges.helium.ui.list
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.OnLifecycleEvent
-import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.LogicBlock
-import com.joaquimverges.helium.core.util.async
+import com.joaquimverges.helium.core.event.BlockEvent
+import com.joaquimverges.helium.core.state.DataLoadState
 import com.joaquimverges.helium.ui.list.event.ListBlockEvent
 import com.joaquimverges.helium.ui.list.repository.ListRepository
-import com.joaquimverges.helium.core.state.DataLoadState
 import com.joaquimverges.helium.ui.util.RefreshPolicy
 import io.reactivex.subjects.PublishSubject
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
 
 /**
  * A Typical List logic implementation:
@@ -22,7 +24,8 @@ import io.reactivex.subjects.PublishSubject
  */
 open class ListLogic<T, E : BlockEvent>(
     private val repository: ListRepository<List<T>>,
-    private val refreshPolicy: RefreshPolicy = RefreshPolicy()
+    private val refreshPolicy: RefreshPolicy = RefreshPolicy(),
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : LogicBlock<DataLoadState<List<T>>, ListBlockEvent<E>>() {
 
     sealed class PaginationEvent<T> {
@@ -63,33 +66,34 @@ open class ListLogic<T, E : BlockEvent>(
     }
 
     fun loadFirstPage() {
-        repository.getFirstPage()
-            .async()
-            .doOnSubscribe { pushState(DataLoadState.Loading()) }
-            .doOnSuccess { refreshPolicy.updateLastRefreshedTime() }
-            .subscribe(
-                { data ->
-                    if (data.isNotEmpty()) {
-                        paginationEvents.onNext(PaginationEvent.FirstPageLoaded(data))
-                    } else {
-                        pushState(DataLoadState.Empty())
-                    }
-                },
-                { error -> pushState(DataLoadState.Error(error)) }
-            ).autoDispose()
+        flow { emit(repository.getFirstPage()) }
+            .flowOn(dispatcher)
+            .onStart { pushState(DataLoadState.Loading()) }
+            .onCompletion { cause ->
+                if (cause == null) {
+                    refreshPolicy.updateLastRefreshedTime()
+                }
+            }
+            .catch { error -> pushState(DataLoadState.Error(error)) }
+            .onEach { data ->
+                if (data.isNotEmpty()) {
+                    paginationEvents.onNext(PaginationEvent.FirstPageLoaded(data))
+                } else {
+                    pushState(DataLoadState.Empty())
+                }
+            }.launchInBlock()
     }
 
     fun paginate() {
-        repository.paginate()
-            .async()
-            .subscribe(
-                { paginatedData ->
-                    if (paginatedData.isNotEmpty()) {
-                        paginationEvents.onNext(PaginationEvent.AdditionalPageLoaded(paginatedData))
-                    }
-                },
-                { error -> pushState(DataLoadState.Error(error)) }
-            ).autoDispose()
+        flow { emit(repository.paginate()) }
+            .filterNotNull()
+            .flowOn(dispatcher)
+            .catch { error -> pushState(DataLoadState.Error(error)) }
+            .onEach { paginatedData ->
+                if (paginatedData.isNotEmpty()) {
+                    paginationEvents.onNext(PaginationEvent.AdditionalPageLoaded(paginatedData))
+                }
+            }.launchInBlock()
     }
 
     override fun onUiEvent(event: ListBlockEvent<E>) {

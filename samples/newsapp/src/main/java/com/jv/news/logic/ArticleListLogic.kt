@@ -8,13 +8,16 @@ import androidx.core.app.ShareCompat
 import com.joaquimverges.helium.core.LogicBlock
 import com.joaquimverges.helium.navigation.toolbar.ToolbarEvent
 import com.joaquimverges.helium.navigation.toolbar.ToolbarLogic
-import com.joaquimverges.helium.ui.list.event.ListBlockEvent
 import com.joaquimverges.helium.ui.list.ListLogic
+import com.joaquimverges.helium.ui.list.event.ListBlockEvent
 import com.joaquimverges.helium.ui.util.RefreshPolicy
 import com.jv.news.data.ArticleRepository
 import com.jv.news.data.model.Article
 import com.jv.news.logic.state.ArticleListState
 import com.jv.news.ui.event.ArticleEvent
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.onEach
 import java.util.concurrent.TimeUnit
 
 /**
@@ -37,26 +40,26 @@ class ArticleListLogic(
             .autoDispose()
 
         // receive all list item view events in this block
-        listLogic.observeEvents().subscribe {
+        listLogic.observeEvents().onEach {
             when (it) {
                 is ListBlockEvent.ListItemEvent -> onUiEvent(it.itemEvent)
                 is ListBlockEvent.EmptyBlockEvent -> onUiEvent(it.emptyViewEvent)
                 is ListBlockEvent.UserScrolledBottom -> listLogic.paginate()
                 is ListBlockEvent.SwipedToRefresh -> listLogic.loadFirstPage()
             }
-        }.autoDispose()
+        }.launchInBlock()
         // when the list changes state, propagate the state up to the MainScreen
         // so it can close the nav drawer after 2s
         listLogic.observeState()
-            .debounce(2, TimeUnit.SECONDS)
-            .subscribe { pushState(ArticleListState.ArticlesLoaded) }
-            .autoDispose()
+            .debounce(2000)
+            .onEach { pushState(ArticleListState.ArticlesLoaded) }
+            .launchInBlock()
 
-        toolbarLogic.observeEvents().subscribe {
+        toolbarLogic.observeEvents().onEach {
             when (it) {
                 is ToolbarEvent.HomeClicked -> pushState(ArticleListState.MoreSourcesRequested)
             }
-        }.autoDispose()
+        }.launchInBlock()
     }
 
     override fun onUiEvent(event: ArticleEvent) {

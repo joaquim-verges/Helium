@@ -3,13 +3,16 @@ package com.joaquimverges.helium.core
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.state.BlockState
-import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
-import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.PublishSubject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.channels.BroadcastChannel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.*
 
 /**
  * A LogicBlock holds and publishes BlockState changes to a UiBlock for rendering.
@@ -25,8 +28,8 @@ import io.reactivex.subjects.PublishSubject
 abstract class LogicBlock<S : BlockState, E : BlockEvent> : ViewModel(), LifecycleObserver {
 
     private val disposables: CompositeDisposable = CompositeDisposable()
-    private val state: BehaviorSubject<S> = BehaviorSubject.create()
-    private val eventDispatcher: PublishSubject<E> = PublishSubject.create()
+    private val state: MutableStateFlow<S?> = MutableStateFlow(null)
+    private val eventDispatcher: BroadcastChannel<E> = BroadcastChannel(Channel.BUFFERED)
 
     /**
      * Implement this method to react to any BlockEvent emissions from the attached UiBlock.
@@ -39,23 +42,25 @@ abstract class LogicBlock<S : BlockState, E : BlockEvent> : ViewModel(), Lifecyc
      * Must have compatible [BlockEvent] for both blocks.
      */
     fun propagateEventsTo(otherBlock: LogicBlock<*, E>) {
-        eventDispatcher.subscribe { otherBlock.processEvent(it) }.autoDispose()
+        eventDispatcher.asFlow().onEach { otherBlock.processEvent(it) }.launchInBlock()
     }
 
     /**
      * Observe state changes from this LogicBlock
      */
-    fun observeState(): Observable<S> = state
+    fun observeState(): Flow<S> = state.filterNotNull()
 
     /**
      * Observe events received by this LogicBlock, useful for propagating events to parent LogicBlocks
      */
-    fun observeEvents(): Observable<E> = eventDispatcher
+    fun observeEvents(): Flow<E> = eventDispatcher.asFlow()
 
     /**
      * Pushes a new state, which will trigger any active subscribers
      */
-    fun pushState(state: S) = this.state.onNext(state)
+    fun pushState(state: S) {
+        this.state.value = state
+    }
 
     /**
      * Will automatically dispose this subscription when the block gets cleared
@@ -68,6 +73,8 @@ abstract class LogicBlock<S : BlockState, E : BlockEvent> : ViewModel(), Lifecyc
 
     internal fun processEvent(event: E) {
         onUiEvent(event)
-        eventDispatcher.onNext(event)
+        eventDispatcher.offer(event)
     }
+
+    fun <T> Flow<T>.launchInBlock() = launchIn(viewModelScope)
 }

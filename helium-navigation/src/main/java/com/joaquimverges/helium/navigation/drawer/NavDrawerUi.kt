@@ -3,6 +3,7 @@ package com.joaquimverges.helium.navigation.drawer
 import androidx.drawerlayout.widget.DrawerLayout
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import com.joaquimverges.helium.core.UiBlock
 import com.joaquimverges.helium.navigation.R
@@ -29,6 +30,22 @@ class NavDrawerUi(
         (drawerContainer.layoutParams as DrawerLayout.LayoutParams).gravity = gravity
         mainContainer.addView(mainContentUi.view)
         drawerContainer.addView(drawerUi.view)
+        drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
+            override fun onDrawerStateChanged(newState: Int) {
+            }
+
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
+            }
+
+            override fun onDrawerClosed(drawerView: View) {
+                pushEvent(NavDrawerEvent.DrawerClosed)
+            }
+
+            override fun onDrawerOpened(drawerView: View) {
+                pushEvent(NavDrawerEvent.DrawerOpened)
+            }
+
+        })
     }
 
     override fun render(state: NavDrawerState) {

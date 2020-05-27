@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import androidx.annotation.IdRes
 import com.joaquimverges.helium.core.event.BlockEvent
 import io.reactivex.subjects.PublishSubject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.BroadcastChannel
 
 /**
  * Base class for RecyclerView items.
@@ -18,6 +20,7 @@ import io.reactivex.subjects.PublishSubject
  *
  * @param view The root of the layout for this list item
  */
+@ExperimentalCoroutinesApi
 abstract class ListItem<in T, V : BlockEvent>(val view: View) : RecyclerView.ViewHolder(view) {
 
     /**
@@ -34,12 +37,12 @@ abstract class ListItem<in T, V : BlockEvent>(val view: View) : RecyclerView.Vie
         view: View = inflater.inflate(layoutResId, container, false)
     ) : this(view)
 
-    internal var viewEvents: PublishSubject<V>? = null
+    internal var viewEvents: BroadcastChannel<V>? = null
     protected var context: Context = itemView.context
 
     abstract fun bind(data: T)
 
-    fun pushEvent(event: V) = viewEvents?.onNext(event)
+    fun pushEvent(event: V) = viewEvents?.offer(event)
 
     /**
      * Convenience method to find a view by id within this recyclerViewItem

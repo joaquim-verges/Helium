@@ -50,6 +50,7 @@ dependencies {
     api "androidx.test.espresso:espresso-core:$test_espresso_version"
     api "com.nhaarman:mockito-kotlin:$mockito_kotlin_version"
     api "org.robolectric:robolectric:$robolectric_version"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
     implementation project(':helium-core')
 }
 

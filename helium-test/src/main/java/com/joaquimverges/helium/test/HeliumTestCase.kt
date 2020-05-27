@@ -8,6 +8,8 @@ import com.joaquimverges.helium.core.state.BlockState
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
 import junit.framework.TestCase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.test.TestCoroutineScope
 import org.junit.Rule
 import org.junit.runner.RunWith
 
@@ -19,12 +21,15 @@ import org.junit.runner.RunWith
 open class HeliumTestCase : TestCase() {
     @get:Rule var mockRule = MockitoInitializationRule(this)
     @get:Rule var rxRule = RxSchedulerRule()
+    @get:Rule var coroutinesTestRule = CoroutinesTestRule()
+
+    val testCoroutineScope : CoroutineScope = TestCoroutineScope(coroutinesTestRule.testDispatcher)
 
     /**
      * Assemble blocks with a mocked lifecycle
      */
     fun <S: BlockState, E: BlockEvent> assemble(appBlock: AppBlock<S, E>) {
-        appBlock.assemble(getMockLifecycle())
+        appBlock.assemble(getMockLifecycle(), testCoroutineScope)
     }
 
     /**
@@ -35,4 +40,5 @@ open class HeliumTestCase : TestCase() {
             whenever(currentState).thenReturn(state)
         }
     }
+
 }

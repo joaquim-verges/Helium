@@ -3,6 +3,7 @@ package com.joaquimverges.helium.test
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.LogicBlock
 import com.joaquimverges.helium.core.state.BlockState
+import kotlinx.coroutines.flow.onEach
 import org.mockito.internal.matchers.apachecommons.ReflectionEquals
 
 /**
@@ -14,9 +15,9 @@ class TestLogicBLock<S : BlockState, E : BlockEvent> : LogicBlock<S, E>() {
     private var lastBlockState: BlockState? = null
 
     init {
-        observeState().subscribe {
+        observeState().onEach {
             lastBlockState = it
-        }.autoDispose()
+        }.launchInBlock()
     }
 
     override fun onUiEvent(event: E) {

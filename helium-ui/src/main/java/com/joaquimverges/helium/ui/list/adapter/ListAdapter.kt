@@ -7,8 +7,10 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.joaquimverges.helium.core.event.BlockEvent
-import io.reactivex.Observable
-import io.reactivex.subjects.PublishSubject
+import kotlinx.coroutines.channels.BroadcastChannel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
 
 /**
  * Convenience Adapter that renders list items in a BaseRecyclerViewItem.
@@ -19,7 +21,7 @@ import io.reactivex.subjects.PublishSubject
 class ListAdapter<in T, E : BlockEvent, VH : ListItem<T, E>>(
     private val inflater: LayoutInflater,
     private val viewHolderFactory: (LayoutInflater, ViewGroup) -> VH,
-    private val viewEvents: PublishSubject<E> = PublishSubject.create()
+    private val viewEvents: BroadcastChannel<E> = BroadcastChannel(Channel.BUFFERED)
 ) : RecyclerView.Adapter<VH>() {
 
     private val diff = AsyncListDiffer<T>(this, object : DiffUtil.ItemCallback<T>() {
@@ -43,8 +45,8 @@ class ListAdapter<in T, E : BlockEvent, VH : ListItem<T, E>>(
         holder.bind(getItem(position))
     }
 
-    fun observeItemEvents(): Observable<E> {
-        return viewEvents.hide()
+    fun observeItemEvents(): Flow<E> {
+        return viewEvents.asFlow()
     }
 
     private fun getItem(position: Int): T {

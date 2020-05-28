@@ -1,7 +1,6 @@
 package com.joaquimverges.demoapp
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ import com.joaquimverges.helium.core.assemble
 import com.joaquimverges.helium.core.plus
 import com.joaquimverges.helium.core.retained.getRetainedLogicBlock
 import com.joaquimverges.helium.ui.list.ListUi
-import kotlin.math.log
 
 class ListFragment : Fragment() {
 

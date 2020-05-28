@@ -1,27 +1,15 @@
 package com.joaquimverges.helium.ui.list
 
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import com.joaquimverges.helium.core.assemble
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.plus
 import com.joaquimverges.helium.core.state.DataLoadState
 import com.joaquimverges.helium.test.HeliumTestCase
-import com.joaquimverges.helium.test.HeliumUiTestCase
 import com.joaquimverges.helium.test.TestUiBlock
 import com.joaquimverges.helium.ui.list.event.ListBlockEvent
 import com.joaquimverges.helium.ui.list.repository.ListRepository
 import com.joaquimverges.helium.ui.util.RefreshPolicy
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.never
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
-import io.reactivex.Maybe
-import io.reactivex.Observable
-import io.reactivex.Single
-import io.reactivex.android.plugins.RxAndroidPlugins
-import io.reactivex.plugins.RxJavaPlugins
-import io.reactivex.schedulers.TestScheduler
+import com.nhaarman.mockitokotlin2.*
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
@@ -37,84 +25,72 @@ class ListLogicTest : HeliumTestCase() {
     @Mock lateinit var repo: ListRepository<List<TestItem>>
 
     private lateinit var logic: ListLogic<TestItem, BlockEvent>
-    private val testScheduler = TestScheduler()
     private val testUi = TestUiBlock<DataLoadState<List<TestItem>>, ListBlockEvent<BlockEvent>>()
-    private val testData = Observable.range(0, 20).map { TestItem() }.toList().blockingGet()
+    private val testData = (0..20).map { TestItem() }.toList()
 
     @Before
     fun setup() {
-        RxJavaPlugins.setIoSchedulerHandler { testScheduler }
-        RxAndroidPlugins.setMainThreadSchedulerHandler { testScheduler }
-        whenever(repo.getFirstPage()).thenReturn(Single.just(testData))
-        logic = ListLogic(repo, refreshPolicy)
+        logic = ListLogic(repo, refreshPolicy, coroutinesTestRule.testDispatcher)
         assemble(logic + testUi)
     }
 
     @Test
-    fun testRefreshPolicy() {
+    fun testRefreshPolicy() = runBlockingTest {
+        repo.stub { onBlocking { getFirstPage() }.doReturn(testData) }
         whenever(refreshPolicy.shouldRefresh()).thenReturn(false)
         logic.refreshIfNeeded()
         testUi.assertLastRendered(DataLoadState.Init<TestItem>())
         whenever(refreshPolicy.shouldRefresh()).thenReturn(true)
         logic.refreshIfNeeded()
-        testUi.assertLastRendered(DataLoadState.Loading<TestItem>())
+        testUi.assertLastRendered(DataLoadState.Ready(testData))
     }
 
     @Test
-    fun testRefreshWithData() {
+    fun testRefreshWithData() = runBlockingTest {
+        repo.stub { onBlocking { getFirstPage() }.doReturn(testData) }
         logic.loadFirstPage()
-        testUi.assertLastRendered(DataLoadState.Loading<List<TestItem>>())
-        testScheduler.triggerActions()
-        testUi.assertLastRendered(DataLoadState.Ready<List<TestItem>>(testData))
+        testUi.assertLastRendered(DataLoadState.Ready(testData))
         verify(refreshPolicy).updateLastRefreshedTime()
     }
 
     @Test
-    fun testRefreshWithNoData() {
-        whenever(repo.getFirstPage()).thenReturn(Single.just(emptyList()))
+    fun testRefreshWithNoData() = runBlockingTest {
+        repo.stub { onBlocking { getFirstPage() }.doReturn(emptyList()) }
         logic.loadFirstPage()
-        testUi.assertLastRendered(DataLoadState.Loading<List<TestItem>>())
-        testScheduler.triggerActions()
         testUi.assertLastRendered(DataLoadState.Empty<List<TestItem>>())
         verify(refreshPolicy).updateLastRefreshedTime()
     }
 
     @Test
-    fun testRefreshError() {
+    fun testRefreshError() = runBlockingTest {
         val error = RuntimeException("error")
-        whenever(repo.getFirstPage()).thenReturn(Single.error<List<TestItem>>(error))
+        repo.stub { onBlocking { getFirstPage() }.doThrow(error) }
         logic.loadFirstPage()
-        testUi.assertLastRendered(DataLoadState.Loading<List<TestItem>>())
-        testScheduler.triggerActions()
         testUi.assertLastRendered(DataLoadState.Error<List<TestItem>>(error))
         verify(refreshPolicy, never()).updateLastRefreshedTime()
     }
 
     @Test
-    fun testPagination() {
+    fun testPagination() = runBlockingTest {
+        repo.stub { onBlocking { getFirstPage() }.doReturn(testData) }
         logic.loadFirstPage()
-        testUi.assertLastRendered(DataLoadState.Loading<List<TestItem>>())
-        testScheduler.triggerActions()
-        testUi.assertLastRendered(DataLoadState.Ready<List<TestItem>>(testData))
+        testUi.assertLastRendered(DataLoadState.Ready(testData))
         verify(refreshPolicy).updateLastRefreshedTime()
 
         // paginate once
         val page1 = listOf(TestItem())
-        whenever(repo.paginate()).thenReturn(Maybe.just(page1))
+        repo.stub { onBlocking { paginate() }.doReturn(page1) }
         logic.paginate()
-        testScheduler.triggerActions()
-        testUi.assertLastRendered(DataLoadState.Ready<List<TestItem>>(testData + page1))
+        testUi.assertLastRendered(DataLoadState.Ready(testData + page1))
 
         // paginate twice
         val page2 = listOf(TestItem())
-        whenever(repo.paginate()).thenReturn(Maybe.just(page2))
+        repo.stub { onBlocking { paginate() }.doReturn(page2) }
         logic.paginate()
-        testScheduler.triggerActions()
-        testUi.assertLastRendered(DataLoadState.Ready<List<TestItem>>(testData + page1 + page2))
+        testUi.assertLastRendered(DataLoadState.Ready(testData + page1 + page2))
 
         // refresh initial
         logic.loadFirstPage()
-        testScheduler.triggerActions()
-        testUi.assertLastRendered(DataLoadState.Ready<List<TestItem>>(testData))
+        testUi.assertLastRendered(DataLoadState.Ready(testData))
     }
 }

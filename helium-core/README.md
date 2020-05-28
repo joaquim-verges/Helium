@@ -31,8 +31,8 @@ Helium requires [java 8 support](https://developer.android.com/studio/write/java
 
 #### Notes on the implementation
 
- - Uses [RxJava](https://github.com/ReactiveX/RxJava) to handle communication between Logic and UI blocks.
- - Uses [AutoDispose](https://github.com/uber/AutoDispose) to automatically dispose subscriptions, no need to worry about cleaning up or detaching anything.
+ - Uses [Flow](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/index.html) and [Coroutines](https://github.com/Kotlin/kotlinx.coroutines) to handle communication between Logic and UI blocks
+ - Uses [LifecycleScope](https://developer.android.com/topic/libraries/architecture/coroutines#lifecyclescope) and [ViewModelScope](https://developer.android.com/topic/libraries/architecture/coroutines#viewmodelscope) to automatically release resources, no need to worry about cleaning up or detaching anything
  - Uses `ViewModel` from the [Android Architecture Components](https://developer.android.com/topic/libraries/architecture/viewmodel.html) to retain logic blocks and their states across configuration changes
 
 ## A typical, real world example
@@ -78,7 +78,7 @@ You can also call your own constructor if you have dynamic data to pass to your 
 
 ```kotlin
 val id = intent.extras.getLong(DATA_ID)
-val logic = getRetainedLogicBlock<MyLogic>() { MyLogic(id) }
+val logic = getRetainedLogicBlock<MyLogic> { MyLogic(id) }
 ```
 
 
@@ -93,14 +93,17 @@ class MyLogic(private val repository: MyRepository) : LogicBlock<MyState, MyEven
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     private fun loadData() {
-        repository
-            .getData()
-            .doOnSubscribe { pushState(MyState.Loading) }
-            .async()
-            .subscribe(
-                { data -> pushState(MyState.DataReady(data)) },
-                { error -> pushState(MyState.Error(error)) }
-            )
+        launchInBlock { // launches a coroutine scoped to this LogicBlock
+            try {
+                pushState(MyState.Loading)
+                val data = withContext(Dispatchers.IO) {
+                    repository.getData()
+                }
+                pushState(MyState.DataReady(data))
+            } catch(error: Exception) {
+                pushState(MyState.Error(error))
+            }
+        }
     }
 
     override fun onUiEvent(event : MyEvent) {

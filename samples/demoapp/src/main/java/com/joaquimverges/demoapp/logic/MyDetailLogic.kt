@@ -7,7 +7,8 @@ import com.joaquimverges.demoapp.data.MyItem
 import com.joaquimverges.helium.core.LogicBlock
 import com.joaquimverges.helium.core.event.ClickEvent
 import com.joaquimverges.helium.core.state.DataLoadState
-import com.joaquimverges.helium.core.util.async
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 /**
  * @author joaquim
@@ -18,14 +19,17 @@ class MyDetailLogic(
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     private fun loadDetailModel() {
-        repository
-            .getData()
-            .async()
-            .doOnSubscribe { pushState(DataLoadState.Loading()) }
-            .subscribe(
-                { item -> pushState(DataLoadState.Ready(item)) },
-                { error -> pushState(DataLoadState.Error(error)) }
-            ).autoDispose()
+        launchInBlock {
+            try {
+                pushState(DataLoadState.Loading())
+                val data = withContext(Dispatchers.IO) {
+                    repository.getData()
+                }
+                pushState(DataLoadState.Ready(data))
+            } catch (error: Exception) {
+                pushState(DataLoadState.Error(error))
+            }
+        }
     }
 
     override fun onUiEvent(event: ClickEvent<MyItem>) {

@@ -2,14 +2,20 @@ package com.joaquimverges.helium.ui.list
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.OnLifecycleEvent
-import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.LogicBlock
-import com.joaquimverges.helium.core.util.async
+import com.joaquimverges.helium.core.event.BlockEvent
+import com.joaquimverges.helium.core.state.DataLoadState
 import com.joaquimverges.helium.ui.list.event.ListBlockEvent
 import com.joaquimverges.helium.ui.list.repository.ListRepository
-import com.joaquimverges.helium.core.state.DataLoadState
 import com.joaquimverges.helium.ui.util.RefreshPolicy
-import io.reactivex.subjects.PublishSubject
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.BroadcastChannel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.scan
+import kotlinx.coroutines.withContext
 
 /**
  * A Typical List logic implementation:
@@ -22,7 +28,8 @@ import io.reactivex.subjects.PublishSubject
  */
 open class ListLogic<T, E : BlockEvent>(
     private val repository: ListRepository<List<T>>,
-    private val refreshPolicy: RefreshPolicy = RefreshPolicy()
+    private val refreshPolicy: RefreshPolicy = RefreshPolicy(),
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : LogicBlock<DataLoadState<List<T>>, ListBlockEvent<E>>() {
 
     sealed class PaginationEvent<T> {
@@ -30,10 +37,10 @@ open class ListLogic<T, E : BlockEvent>(
         data class AdditionalPageLoaded<T>(val data: List<T>) : PaginationEvent<T>()
     }
 
-    private val paginationEvents = PublishSubject.create<PaginationEvent<T>>()
+    private val paginationEvents = BroadcastChannel<PaginationEvent<T>>(Channel.BUFFERED)
 
     init {
-        paginationEvents.scan<DataLoadState<List<T>>>(
+        paginationEvents.asFlow().scan<PaginationEvent<T>, DataLoadState<List<T>>>(
             DataLoadState.Init(),
             { prevState, paginationEvent ->
                 when (paginationEvent) {
@@ -50,9 +57,9 @@ open class ListLogic<T, E : BlockEvent>(
                     }
                 }
             })
-            .subscribe { state ->
+            .onEach { state ->
                 pushState(state)
-            }.autoDispose()
+            }.launchInBlock()
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
@@ -63,33 +70,37 @@ open class ListLogic<T, E : BlockEvent>(
     }
 
     fun loadFirstPage() {
-        repository.getFirstPage()
-            .async()
-            .doOnSubscribe { pushState(DataLoadState.Loading()) }
-            .doOnSuccess { refreshPolicy.updateLastRefreshedTime() }
-            .subscribe(
-                { data ->
-                    if (data.isNotEmpty()) {
-                        paginationEvents.onNext(PaginationEvent.FirstPageLoaded(data))
-                    } else {
-                        pushState(DataLoadState.Empty())
-                    }
-                },
-                { error -> pushState(DataLoadState.Error(error)) }
-            ).autoDispose()
+        launchInBlock {
+            try {
+                pushState(DataLoadState.Loading())
+                val data = withContext(dispatcher) {
+                    repository.getFirstPage()
+                }
+                if (data.isNotEmpty()) {
+                    paginationEvents.offer(PaginationEvent.FirstPageLoaded(data))
+                } else {
+                    pushState(DataLoadState.Empty())
+                }
+                refreshPolicy.updateLastRefreshedTime()
+            } catch (error: Exception) {
+                pushState(DataLoadState.Error(error))
+            }
+        }
     }
 
     fun paginate() {
-        repository.paginate()
-            .async()
-            .subscribe(
-                { paginatedData ->
-                    if (paginatedData.isNotEmpty()) {
-                        paginationEvents.onNext(PaginationEvent.AdditionalPageLoaded(paginatedData))
-                    }
-                },
-                { error -> pushState(DataLoadState.Error(error)) }
-            ).autoDispose()
+        launchInBlock {
+            try {
+                val data = withContext(dispatcher) {
+                    repository.paginate()
+                }
+                if (data?.isNotEmpty() == true) {
+                    paginationEvents.offer(PaginationEvent.AdditionalPageLoaded(data))
+                }
+            } catch (error: Exception) {
+                pushState(DataLoadState.Error(error))
+            }
+        }
     }
 
     override fun onUiEvent(event: ListBlockEvent<E>) {

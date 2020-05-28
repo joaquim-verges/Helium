@@ -6,9 +6,10 @@ import com.joaquimverges.helium.ui.list.repository.ListRepository
 import com.jv.news.App
 import com.jv.news.data.model.ArticleSource
 import com.jv.news.data.model.SourcesCategoryGroup
-import io.reactivex.Observable
-import io.reactivex.Single
-import io.reactivex.subjects.PublishSubject
+import kotlinx.coroutines.channels.BroadcastChannel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
 
 /**
  * @author joaquim
@@ -23,12 +24,12 @@ class SourcesRepository(
     }
 
     private val sources = mutableSetOf<String>().apply { addAll(preferences.getStringSet(SELECTED_SOURCES, mutableSetOf())?.toList() ?: listOf()) }
-    private val sourcesSubject = PublishSubject.create<Set<String>>()
+    private val sourcesSubject = BroadcastChannel<Set<String>>(Channel.BUFFERED)
 
-    override fun getFirstPage(): Single<List<SourcesCategoryGroup>> {
-        return api.getSources()
-            .map { it.sources.groupBy { source -> source.category } }
-            .map { it.mapNotNull { mapEntry -> mapEntry.key?.let { name -> SourcesCategoryGroup(name, mapEntry.value) { source -> isSelected(source) } } } }
+    override suspend fun getFirstPage(): List<SourcesCategoryGroup> {
+        return api.getSources().sources
+            .groupBy { source -> source.category }
+            .mapNotNull { mapEntry -> mapEntry.key?.let { name -> SourcesCategoryGroup(name, mapEntry.value) { source -> isSelected(source) } } }
     }
 
     fun getSelectedSourceIds(): MutableSet<String> {
@@ -38,7 +39,7 @@ class SourcesRepository(
     fun markUnselected(source: ArticleSource) {
         sources.apply {
             remove(source.id)
-            sourcesSubject.onNext(this)
+            sourcesSubject.offer(this)
         }
         persistToDisk()
     }
@@ -46,7 +47,7 @@ class SourcesRepository(
     fun markSelected(source: ArticleSource) {
         sources.apply {
             source.id?.let { add(it) }
-            sourcesSubject.onNext(this)
+            sourcesSubject.offer(this)
         }
         persistToDisk()
     }
@@ -59,5 +60,5 @@ class SourcesRepository(
         return getSelectedSourceIds().contains(articleSource.id)
     }
 
-    fun observer(): Observable<Set<String>> = sourcesSubject
+    fun observer(): Flow<Set<String>> = sourcesSubject.asFlow()
 }

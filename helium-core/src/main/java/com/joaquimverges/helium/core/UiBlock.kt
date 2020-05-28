@@ -8,8 +8,10 @@ import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.state.BlockState
-import io.reactivex.Observable
-import io.reactivex.subjects.PublishSubject
+import kotlinx.coroutines.channels.BroadcastChannel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
 
 /**
  * Base class for UiBlocks.
@@ -23,9 +25,9 @@ import io.reactivex.subjects.PublishSubject
  * @see com.joaquimverges.helium.core.event.BlockEvent
  * @see com.joaquimverges.helium.core.LogicBlock
  */
-abstract class UiBlock<in S : BlockState, E : BlockEvent>(
+abstract class UiBlock<in S : BlockState, E : BlockEvent> constructor(
     val view: View,
-    private val eventsObservable: PublishSubject<E> = PublishSubject.create(),
+    private val eventFlow : BroadcastChannel<E> = BroadcastChannel(Channel.BUFFERED),
     protected val context: Context = view.context
 ) {
 
@@ -58,10 +60,10 @@ abstract class UiBlock<in S : BlockState, E : BlockEvent>(
     /**
      * Observe the events pushed from this UiBlock
      */
-    fun observer(): Observable<E> = eventsObservable
+    open fun observer(): Flow<E> = eventFlow.asFlow()
 
     /**
      * Pushes a new BlockEvent, which will trigger active subscribers LogicBlocks
      */
-    fun pushEvent(event: E) = eventsObservable.onNext(event)
+    fun pushEvent(event: E) = eventFlow.offer(event)
 }

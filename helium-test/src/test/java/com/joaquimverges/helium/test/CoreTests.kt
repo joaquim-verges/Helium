@@ -5,7 +5,6 @@ import com.joaquimverges.helium.core.plus
 import com.joaquimverges.helium.core.state.BlockState
 import org.junit.Before
 import org.junit.Test
-import org.mockito.MockitoAnnotations
 
 class CoreTests : HeliumTestCase() {
 

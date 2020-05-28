@@ -2,9 +2,6 @@ package com.jv.news.data
 
 import com.joaquimverges.helium.ui.list.repository.ListRepository
 import com.jv.news.data.model.Article
-import com.jv.news.data.model.ArticleResponse
-import io.reactivex.Maybe
-import io.reactivex.Single
 import java.net.URL
 
 /**
@@ -17,32 +14,28 @@ class ArticleRepository(
 
     private var page = 1
 
-    override fun getFirstPage(): Single<List<Article>> {
+    override suspend fun getFirstPage(): List<Article> {
         page = 1
         return fetch()
     }
 
-    override fun paginate(): Maybe<List<Article>> {
+    override suspend fun paginate(): List<Article>? {
         page++
         if (page >= 6) {
-            return Maybe.empty()
+            return null
         }
-        return fetch().toMaybe()
+        return fetch()
     }
 
-    private fun fetch(): Single<List<Article>> {
+    private suspend fun fetch(): List<Article> {
         val ids = sourcesRepository.getSelectedSourceIds()
         if (ids.isEmpty()) {
-            return Single.just(listOf())
+            return listOf()
         }
-        return api
-            .getArticles(ids.joinToString(separator = ","), page = page)
-            .map { response: ArticleResponse ->
-                response.articles
-                    .filter { it.url != null && it.urlToImage != null }
-                    .distinctBy { it.title }
-                    .distinctBy { URL(it.url).path }
-            }
+        return api.getArticles(ids.joinToString(separator = ","), page = page).articles
+            .filter { it.url != null && it.urlToImage != null }
+            .distinctBy { it.title }
+            .distinctBy { URL(it.url).path }
     }
 
     fun sourcesUpdatedObserver() = sourcesRepository.observer()

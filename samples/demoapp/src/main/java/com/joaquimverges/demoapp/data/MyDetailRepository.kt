@@ -1,19 +1,16 @@
 package com.joaquimverges.demoapp.data
 
 import com.joaquimverges.demoapp.data.Colors.randomColor
-import com.joaquimverges.helium.ui.list.repository.ListRepository
-import io.reactivex.Single
+import kotlinx.coroutines.delay
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 /**
  * @author joaquim
  */
 class MyDetailRepository {
 
-    fun getData(): Single<MyItem> {
-        return Single
-            .just(randomColor(Random().nextInt()).run { MyItem(color, name.toLowerCase().replace("_", " ")) })
-            .delay(1, TimeUnit.SECONDS)
+    suspend fun getData(): MyItem {
+        delay(1000)
+        return randomColor(Random().nextInt()).run { MyItem(color, name.toLowerCase().replace("_", " ")) }
     }
 }

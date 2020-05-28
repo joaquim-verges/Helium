@@ -1,14 +1,15 @@
 package com.joaquimverges.helium.ui.list.adapter
 
 import android.content.Context
-import androidx.annotation.LayoutRes
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.IdRes
+import androidx.annotation.LayoutRes
+import androidx.recyclerview.widget.RecyclerView
 import com.joaquimverges.helium.core.event.BlockEvent
-import io.reactivex.subjects.PublishSubject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.BroadcastChannel
 
 /**
  * Base class for RecyclerView items.
@@ -34,12 +35,12 @@ abstract class ListItem<in T, V : BlockEvent>(val view: View) : RecyclerView.Vie
         view: View = inflater.inflate(layoutResId, container, false)
     ) : this(view)
 
-    internal var viewEvents: PublishSubject<V>? = null
+    internal var viewEvents: BroadcastChannel<V>? = null
     protected var context: Context = itemView.context
 
     abstract fun bind(data: T)
 
-    fun pushEvent(event: V) = viewEvents?.onNext(event)
+    fun pushEvent(event: V) = viewEvents?.offer(event)
 
     /**
      * Convenience method to find a view by id within this recyclerViewItem

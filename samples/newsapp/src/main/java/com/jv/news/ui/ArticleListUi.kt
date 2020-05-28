@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.joaquimverges.helium.core.UiBlock
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.state.BlockState
-import com.joaquimverges.helium.core.UiBlock
 import com.joaquimverges.helium.navigation.toolbar.CollapsingToolbarUi
 import com.joaquimverges.helium.ui.list.ListUi
 import com.jv.news.App.Companion.context

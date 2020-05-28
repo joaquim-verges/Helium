@@ -2,22 +2,20 @@ package com.joaquimverges.demoapp
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.joaquimverges.demoapp.ui.GridSpacingDecorator
 import com.joaquimverges.helium.core.assemble
-import com.joaquimverges.helium.core.plus
 import com.joaquimverges.helium.core.event.ClickEvent
-import com.joaquimverges.helium.ui.list.event.ListBlockEvent
+import com.joaquimverges.helium.core.plus
 import com.joaquimverges.helium.ui.list.ListLogic
-import com.joaquimverges.helium.ui.list.repository.ListRepository
-import com.joaquimverges.helium.ui.list.card.CardListItem
 import com.joaquimverges.helium.ui.list.ListUi
-import io.reactivex.Observable
-import io.reactivex.Single
+import com.joaquimverges.helium.ui.list.card.CardListItem
+import com.joaquimverges.helium.ui.list.event.ListBlockEvent
+import com.joaquimverges.helium.ui.list.repository.ListRepository
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
     class MenuRepository : ListRepository<List<MenuItem>> {
         private fun getMenuItems() = MenuItem.values().toList()
-        override fun getFirstPage(): Single<List<MenuItem>> = Observable.fromIterable(getMenuItems()).toList()
+        override suspend fun getFirstPage(): List<MenuItem> = getMenuItems()
     }
 
     // Logic

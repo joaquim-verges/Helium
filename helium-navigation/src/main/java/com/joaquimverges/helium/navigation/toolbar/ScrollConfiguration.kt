@@ -2,6 +2,8 @@ package com.joaquimverges.helium.navigation.toolbar
 
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
+import com.joaquimverges.helium.navigation.toolbar.ScrollConfiguration.CollapseMode
+import com.joaquimverges.helium.navigation.toolbar.ScrollConfiguration.ScrollMode
 
 /**
  * Configures the scrolling behavior for a [CollapsingToolbarUi]

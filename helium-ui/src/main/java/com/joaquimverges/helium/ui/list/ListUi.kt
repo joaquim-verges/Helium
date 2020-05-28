@@ -12,12 +12,14 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.joaquimverges.helium.core.UiBlock
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.state.DataLoadState
-import com.joaquimverges.helium.core.util.autoDispose
-import com.joaquimverges.helium.core.util.onAttached
 import com.joaquimverges.helium.ui.R
 import com.joaquimverges.helium.ui.list.adapter.ListAdapter
 import com.joaquimverges.helium.ui.list.adapter.ListItem
 import com.joaquimverges.helium.ui.list.event.ListBlockEvent
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.flattenMerge
+import kotlinx.coroutines.flow.map
 import java.util.Collections.emptyList
 
 /**
@@ -51,8 +53,8 @@ constructor(
     // optional list config
     layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(inflater.context),
     recyclerViewConfig: ((RecyclerView) -> Unit)? = null,
-    emptyUiBlock: UiBlock<*, E>? = null,
-    errorUiBlock: UiBlock<*, E>? = null,
+    private val emptyUiBlock: UiBlock<*, E>? = null,
+    private val errorUiBlock: UiBlock<*, E>? = null,
     swipeToRefreshEnabled: Boolean = false
 ) : UiBlock<DataLoadState<List<T>>, ListBlockEvent<E>>(layoutResId, inflater, container, addToContainer) {
 
@@ -91,26 +93,15 @@ constructor(
         // empty, error view
         emptyUiBlock?.let { emptyViewContainer.addView(it.view) }
         errorUiBlock?.let { errorViewContainer.addView(it.view) }
+    }
 
-        view.onAttached {
-            // adapter items events
-            adapter.observeItemEvents()
-                .autoDispose(view)
-                .subscribe { ev -> pushEvent(ListBlockEvent.ListItemEvent(ev)) }
-            // empty view events
-            emptyUiBlock?.let {
-                it.observer()
-                    .autoDispose(view)
-                    .subscribe { event: E -> pushEvent(ListBlockEvent.EmptyBlockEvent(event)) }
-
-            }
-            // error view events
-            errorUiBlock?.let {
-                it.observer()
-                    .autoDispose(view)
-                    .subscribe { event: E -> pushEvent(ListBlockEvent.ErrorBlockEvent(event)) }
-            }
-        }
+    override fun observer(): Flow<ListBlockEvent<E>> {
+        val mergedFlows = mutableListOf<Flow<ListBlockEvent<E>>>()
+        mergedFlows.add(super.observer())
+        mergedFlows.add(adapter.observeItemEvents().map { event -> ListBlockEvent.ListItemEvent(event) })
+        emptyUiBlock?.let { mergedFlows.add(it.observer().map { event -> ListBlockEvent.EmptyBlockEvent(event) }) }
+        errorUiBlock?.let { mergedFlows.add(it.observer().map { event -> ListBlockEvent.ErrorBlockEvent(event) }) }
+        return mergedFlows.asFlow().flattenMerge()
     }
 
     override fun render(state: DataLoadState<List<T>>) {

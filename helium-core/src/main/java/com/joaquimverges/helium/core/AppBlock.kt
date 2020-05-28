@@ -3,9 +3,12 @@ package com.joaquimverges.helium.core
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.coroutineScope
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.state.BlockState
-import com.joaquimverges.helium.core.util.autoDispose
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 /**
  * Class responsible for assembling LogicBlocks and UiBlocks together.
@@ -31,9 +34,9 @@ class AppBlock<S : BlockState, E : BlockEvent>(
      * Once this is called, LogicBlock will receive events from the UIBlock, and UIBlock will receive state updates from the LogicBlock.
      * This also enables the LogicBlock to receive lifecycle events, by annotating functions with @OnLifecycleEvent.
      */
-    fun assemble(lifecycle: Lifecycle) {
-        logic.observeState().autoDispose(lifecycle).subscribe { ui.render(it) }
-        ui.observer().autoDispose(lifecycle).subscribe { logic.processEvent(it) }
+    fun assemble(lifecycle: Lifecycle, coroutineScope: CoroutineScope = lifecycle.coroutineScope) {
+        logic.observeState().onEach { ui.render(it) }.launchIn(coroutineScope)
+        ui.observer().onEach { logic.processEvent(it) }.launchIn(coroutineScope)
         lifecycle.addObserver(logic)
 
         childBlocks.forEach {

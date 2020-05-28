@@ -6,12 +6,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.joaquimverges.helium.core.assemble
-import com.joaquimverges.helium.core.plus
-import com.joaquimverges.helium.core.retained.getRetainedLogicBlock
-import com.jv.news.logic.ArticleListLogic
-import com.jv.news.logic.MainScreenLogic
-import com.jv.news.ui.ArticleListUi
-import com.jv.news.ui.MainScreenUi
 import com.jv.news.util.VersionUtil
 
 class MainActivity : AppCompatActivity() {

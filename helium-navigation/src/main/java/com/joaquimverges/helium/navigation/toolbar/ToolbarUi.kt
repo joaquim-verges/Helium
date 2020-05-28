@@ -8,8 +8,8 @@ import androidx.annotation.MenuRes
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import com.joaquimverges.helium.core.state.BlockState
 import com.joaquimverges.helium.core.UiBlock
+import com.joaquimverges.helium.core.state.BlockState
 import com.joaquimverges.helium.navigation.R
 
 /**

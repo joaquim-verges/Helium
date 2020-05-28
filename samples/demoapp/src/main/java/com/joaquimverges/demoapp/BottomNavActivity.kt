@@ -1,6 +1,5 @@
 package com.joaquimverges.demoapp
 
-import android.content.res.ColorStateList
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat

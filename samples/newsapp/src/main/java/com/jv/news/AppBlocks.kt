@@ -2,10 +2,8 @@ package com.jv.news
 
 import androidx.fragment.app.FragmentActivity
 import com.joaquimverges.helium.core.AppBlock
-import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.plus
 import com.joaquimverges.helium.core.retained.getRetainedLogicBlock
-import com.joaquimverges.helium.core.state.BlockState
 import com.joaquimverges.helium.navigation.drawer.NavDrawerEvent
 import com.joaquimverges.helium.navigation.drawer.NavDrawerState
 import com.jv.news.logic.ArticleListLogic

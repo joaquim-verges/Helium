@@ -6,10 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.state.BlockState
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
@@ -28,7 +24,6 @@ import kotlinx.coroutines.launch
  */
 abstract class LogicBlock<S : BlockState, E : BlockEvent> : ViewModel(), LifecycleObserver {
 
-    private val disposables: CompositeDisposable = CompositeDisposable()
     private val state: MutableStateFlow<S?> = MutableStateFlow(null)
     private val eventDispatcher: BroadcastChannel<E> = BroadcastChannel(Channel.BUFFERED)
 
@@ -62,13 +57,6 @@ abstract class LogicBlock<S : BlockState, E : BlockEvent> : ViewModel(), Lifecyc
     fun pushState(state: S) {
         this.state.value = state
     }
-
-    /**
-     * Will automatically dispose this subscription when the block gets cleared
-     */
-    fun Disposable.autoDispose() = disposables.add(this)
-
-    override fun onCleared() = disposables.clear()
 
     // internal functions
 

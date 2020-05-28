@@ -1,7 +1,7 @@
 package com.joaquimverges.helium.test
 
-import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.LogicBlock
+import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.state.BlockState
 import kotlinx.coroutines.flow.onEach
 import org.mockito.internal.matchers.apachecommons.ReflectionEquals

@@ -1,14 +1,13 @@
 package com.joaquimverges.helium.ui.list.adapter
 
 import android.content.Context
-import androidx.annotation.LayoutRes
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.IdRes
+import androidx.annotation.LayoutRes
+import androidx.recyclerview.widget.RecyclerView
 import com.joaquimverges.helium.core.event.BlockEvent
-import io.reactivex.subjects.PublishSubject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.BroadcastChannel
 
@@ -20,7 +19,6 @@ import kotlinx.coroutines.channels.BroadcastChannel
  *
  * @param view The root of the layout for this list item
  */
-@ExperimentalCoroutinesApi
 abstract class ListItem<in T, V : BlockEvent>(val view: View) : RecyclerView.ViewHolder(view) {
 
     /**

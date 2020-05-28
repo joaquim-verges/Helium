@@ -8,7 +8,6 @@ import com.joaquimverges.helium.navigation.drawer.NavDrawerState
 import com.joaquimverges.helium.navigation.drawer.NavDrawerUi
 import com.jv.news.R
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.flattenMerge
 import kotlinx.coroutines.flow.flowOf
 

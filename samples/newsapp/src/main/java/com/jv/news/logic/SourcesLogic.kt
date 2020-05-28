@@ -1,7 +1,7 @@
 package com.jv.news.logic
 
-import com.joaquimverges.helium.ui.list.event.ListBlockEvent
 import com.joaquimverges.helium.ui.list.ListLogic
+import com.joaquimverges.helium.ui.list.event.ListBlockEvent
 import com.joaquimverges.helium.ui.util.RefreshPolicy
 import com.jv.news.data.SourcesRepository
 import com.jv.news.data.model.SourcesCategoryGroup

@@ -1,18 +1,18 @@
 package com.joaquimverges.demoapp.ui
 
-import androidx.core.content.ContextCompat
 import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.joaquimverges.demoapp.R
 import com.joaquimverges.demoapp.data.Colors
 import com.joaquimverges.demoapp.data.MyItem
+import com.joaquimverges.helium.core.UiBlock
 import com.joaquimverges.helium.core.event.ClickEvent
 import com.joaquimverges.helium.core.state.DataLoadState
-import com.joaquimverges.helium.core.UiBlock
 
 /**
  * @author joaquim

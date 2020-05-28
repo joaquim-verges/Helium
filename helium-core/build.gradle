@@ -39,13 +39,10 @@ dependencies {
 
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+
     api "androidx.lifecycle:lifecycle-viewmodel-ktx:$arch_lifecycle_viewmodel_version"
     api "androidx.lifecycle:lifecycle-runtime-ktx:$arch_lifecycle_runtime_version"
     api "androidx.lifecycle:lifecycle-extensions:$arch_lifecycle_version"
-
-    api "io.reactivex.rxjava2:rxjava:$rxjava_version"
-    api "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
-    api "com.uber.autodispose:autodispose-android-archcomponents-ktx:$autodispose_version"
 }
 
 apply from: '../maven-push.gradle'

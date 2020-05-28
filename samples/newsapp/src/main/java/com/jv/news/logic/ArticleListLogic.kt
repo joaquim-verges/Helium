@@ -15,7 +15,6 @@ import com.jv.news.data.ArticleRepository
 import com.jv.news.data.model.Article
 import com.jv.news.logic.state.ArticleListState
 import com.jv.news.ui.event.ArticleEvent
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.onEach
 import java.util.concurrent.TimeUnit
@@ -36,8 +35,8 @@ class ArticleListLogic(
     init {
         repository
             .sourcesUpdatedObserver()
-            .subscribe { listLogic.loadFirstPage() }
-            .autoDispose()
+            .onEach { listLogic.loadFirstPage() }
+            .launchInBlock()
 
         // receive all list item view events in this block
         listLogic.observeEvents().onEach {

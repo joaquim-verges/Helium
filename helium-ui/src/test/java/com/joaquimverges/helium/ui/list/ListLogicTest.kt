@@ -9,10 +9,6 @@ import com.joaquimverges.helium.ui.list.event.ListBlockEvent
 import com.joaquimverges.helium.ui.list.repository.ListRepository
 import com.joaquimverges.helium.ui.util.RefreshPolicy
 import com.nhaarman.mockitokotlin2.*
-import io.reactivex.Observable
-import io.reactivex.android.plugins.RxAndroidPlugins
-import io.reactivex.plugins.RxJavaPlugins
-import io.reactivex.schedulers.TestScheduler
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Test
@@ -29,14 +25,11 @@ class ListLogicTest : HeliumTestCase() {
     @Mock lateinit var repo: ListRepository<List<TestItem>>
 
     private lateinit var logic: ListLogic<TestItem, BlockEvent>
-    private val testScheduler = TestScheduler()
     private val testUi = TestUiBlock<DataLoadState<List<TestItem>>, ListBlockEvent<BlockEvent>>()
-    private val testData = Observable.range(0, 20).map { TestItem() }.toList().blockingGet()
+    private val testData = (0..20).map { TestItem() }.toList()
 
     @Before
     fun setup() {
-        RxJavaPlugins.setIoSchedulerHandler { testScheduler }
-        RxAndroidPlugins.setMainThreadSchedulerHandler { testScheduler }
         logic = ListLogic(repo, refreshPolicy, coroutinesTestRule.testDispatcher)
         assemble(logic + testUi)
     }
@@ -49,14 +42,14 @@ class ListLogicTest : HeliumTestCase() {
         testUi.assertLastRendered(DataLoadState.Init<TestItem>())
         whenever(refreshPolicy.shouldRefresh()).thenReturn(true)
         logic.refreshIfNeeded()
-        testUi.assertLastRendered(DataLoadState.Ready<List<TestItem>>(testData))
+        testUi.assertLastRendered(DataLoadState.Ready(testData))
     }
 
     @Test
     fun testRefreshWithData() = runBlockingTest {
         repo.stub { onBlocking { getFirstPage() }.doReturn(testData) }
         logic.loadFirstPage()
-        testUi.assertLastRendered(DataLoadState.Ready<List<TestItem>>(testData))
+        testUi.assertLastRendered(DataLoadState.Ready(testData))
         verify(refreshPolicy).updateLastRefreshedTime()
     }
 
@@ -81,26 +74,23 @@ class ListLogicTest : HeliumTestCase() {
     fun testPagination() = runBlockingTest {
         repo.stub { onBlocking { getFirstPage() }.doReturn(testData) }
         logic.loadFirstPage()
-        testUi.assertLastRendered(DataLoadState.Ready<List<TestItem>>(testData))
+        testUi.assertLastRendered(DataLoadState.Ready(testData))
         verify(refreshPolicy).updateLastRefreshedTime()
 
         // paginate once
         val page1 = listOf(TestItem())
         repo.stub { onBlocking { paginate() }.doReturn(page1) }
         logic.paginate()
-        testScheduler.triggerActions()
-        testUi.assertLastRendered(DataLoadState.Ready<List<TestItem>>(testData + page1))
+        testUi.assertLastRendered(DataLoadState.Ready(testData + page1))
 
         // paginate twice
         val page2 = listOf(TestItem())
         repo.stub { onBlocking { paginate() }.doReturn(page2) }
         logic.paginate()
-        testScheduler.triggerActions()
-        testUi.assertLastRendered(DataLoadState.Ready<List<TestItem>>(testData + page1 + page2))
+        testUi.assertLastRendered(DataLoadState.Ready(testData + page1 + page2))
 
         // refresh initial
         logic.loadFirstPage()
-        testScheduler.triggerActions()
-        testUi.assertLastRendered(DataLoadState.Ready<List<TestItem>>(testData))
+        testUi.assertLastRendered(DataLoadState.Ready(testData))
     }
 }

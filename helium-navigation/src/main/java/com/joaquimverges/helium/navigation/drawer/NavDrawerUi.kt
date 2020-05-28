@@ -1,10 +1,10 @@
 package com.joaquimverges.helium.navigation.drawer
 
-import androidx.drawerlayout.widget.DrawerLayout
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.drawerlayout.widget.DrawerLayout
 import com.joaquimverges.helium.core.UiBlock
 import com.joaquimverges.helium.navigation.R
 

@@ -12,14 +12,14 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.joaquimverges.helium.core.UiBlock
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.state.DataLoadState
-import com.joaquimverges.helium.core.util.onAttached
 import com.joaquimverges.helium.ui.R
 import com.joaquimverges.helium.ui.list.adapter.ListAdapter
 import com.joaquimverges.helium.ui.list.adapter.ListItem
 import com.joaquimverges.helium.ui.list.event.ListBlockEvent
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.flattenMerge
+import kotlinx.coroutines.flow.map
 import java.util.Collections.emptyList
 
 /**

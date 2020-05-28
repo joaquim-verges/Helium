@@ -8,7 +8,7 @@ import com.joaquimverges.helium.core.LogicBlock
 import com.joaquimverges.helium.core.event.ClickEvent
 import com.joaquimverges.helium.core.state.DataLoadState
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.withContext
 
 /**
  * @author joaquim
@@ -19,12 +19,17 @@ class MyDetailLogic(
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     private fun loadDetailModel() {
-        flow { emit(repository.getData()) }
-            .flowOn(Dispatchers.IO)
-            .onStart { pushState(DataLoadState.Loading()) }
-            .catch { error -> pushState(DataLoadState.Error(error)) }
-            .onEach { item -> pushState(DataLoadState.Ready(item)) }
-            .launchInBlock()
+        launchInBlock {
+            try {
+                pushState(DataLoadState.Loading())
+                val data = withContext(Dispatchers.IO) {
+                    repository.getData()
+                }
+                pushState(DataLoadState.Ready(data))
+            } catch (error: Exception) {
+                pushState(DataLoadState.Error(error))
+            }
+        }
     }
 
     override fun onUiEvent(event: ClickEvent<MyItem>) {

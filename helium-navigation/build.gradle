@@ -33,8 +33,8 @@ dependencies {
 
     implementation project(':helium-core')
     implementation project(':helium-ui')
-    api "android.arch.navigation:navigation-fragment-ktx:2.2.1"
-    api "android.arch.navigation:navigation-ui-ktx:2.2.1"
+    api "android.arch.navigation:navigation-fragment-ktx:$navigation_version"
+    api "android.arch.navigation:navigation-ui-ktx:$navigation_version"
 }
 
 apply from: '../maven-push.gradle'

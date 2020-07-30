@@ -1,9 +1,5 @@
 package com.joaquimverges.helium.core
 
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.state.BlockState
 import kotlinx.coroutines.channels.BroadcastChannel
@@ -22,7 +18,7 @@ import kotlinx.coroutines.launch
  * @see [com.joaquimverges.helium.core.state.BlockState]
  * @see [com.joaquimverges.helium.core.event.BlockEvent]
  */
-abstract class LogicBlock<S : BlockState, E : BlockEvent> : ViewModel(), LifecycleObserver {
+abstract class LogicBlock<S : BlockState, E : BlockEvent> : HeliumViewModel() {
 
     private val state: MutableStateFlow<S?> = MutableStateFlow(null)
     private val eventDispatcher: BroadcastChannel<E> = BroadcastChannel(Channel.BUFFERED)
@@ -65,7 +61,7 @@ abstract class LogicBlock<S : BlockState, E : BlockEvent> : ViewModel(), Lifecyc
         eventDispatcher.offer(event)
     }
 
-    fun <T> Flow<T>.launchInBlock() = launchIn(viewModelScope)
+    fun <T> Flow<T>.launchInBlock() = launchIn(coroutineScope)
 
-    inline fun launchInBlock(crossinline codeBlock: suspend () -> Unit) = viewModelScope.launch { codeBlock() }
+    inline fun launchInBlock(crossinline codeBlock: suspend () -> Unit) = coroutineScope.launch { codeBlock() }
 }

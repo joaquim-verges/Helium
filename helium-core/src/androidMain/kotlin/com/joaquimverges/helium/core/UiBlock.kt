@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.asFlow
  * @see com.joaquimverges.helium.core.event.BlockEvent
  * @see com.joaquimverges.helium.core.LogicBlock
  */
-abstract class UiBlock<in S : BlockState, E : BlockEvent> constructor(
+actual abstract class UiBlock<in S : BlockState, E : BlockEvent> constructor(
     val view: View,
     private val eventFlow : BroadcastChannel<E> = BroadcastChannel(Channel.BUFFERED),
     protected val context: Context = view.context
@@ -55,15 +55,15 @@ abstract class UiBlock<in S : BlockState, E : BlockEvent> constructor(
     /**
      * Implement this method to render a layout according to the latest pushed ViewState
      */
-    abstract fun render(state: S)
+    actual abstract fun render(state: S)
 
     /**
      * Observe the events pushed from this UiBlock
      */
-    open fun observer(): Flow<E> = eventFlow.asFlow()
+    actual open fun observer(): Flow<E> = eventFlow.asFlow()
 
     /**
      * Pushes a new BlockEvent, which will trigger active subscribers LogicBlocks
      */
-    fun pushEvent(event: E) = eventFlow.offer(event)
+    actual fun pushEvent(event: E) { eventFlow.offer(event) }
 }

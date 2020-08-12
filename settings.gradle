@@ -1,1 +1,3 @@
 include ':helium-core', ':samples:newsapp', ':samples:demoapp', ':helium-ui', ':helium-navigation', ':helium-test'
+
+enableFeaturePreview('GRADLE_METADATA')

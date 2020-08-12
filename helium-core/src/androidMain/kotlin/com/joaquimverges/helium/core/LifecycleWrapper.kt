@@ -11,8 +11,11 @@ import kotlinx.coroutines.CoroutineScope
 /**
  * @author joaqu
  */
-actual class LifecycleWrapper(private val lifecycle: Lifecycle) {
-    actual val coroutineScope: CoroutineScope = lifecycle.coroutineScope
+actual class LifecycleWrapper(
+        private val lifecycle: Lifecycle,
+        private val scope: CoroutineScope = lifecycle.coroutineScope
+) {
+    actual val coroutineScope: CoroutineScope = scope
 
     actual fun registerLogicBlockForLifecycleEvents(block: LogicBlock<*, *>) {
         lifecycle.addObserver(block)

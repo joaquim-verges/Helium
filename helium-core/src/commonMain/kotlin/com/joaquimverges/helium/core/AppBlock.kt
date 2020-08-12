@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.onEach
  */
 class AppBlock<S : BlockState, E : BlockEvent>(
     private val logic: LogicBlock<S, E>,
-    private val ui: UiBlock<S, E>
+    private val ui: IUiBlock<S, E>
 ) {
     private val childBlocks: MutableList<AppBlock<*, *>> = mutableListOf()
 
@@ -45,4 +45,4 @@ class AppBlock<S : BlockState, E : BlockEvent>(
  * Convenience operator to create an AppBlock.
  * Usage : (LogicBlock + UIBlock)
  */
-operator fun <S : BlockState, E : BlockEvent> LogicBlock<S, E>.plus(vd: UiBlock<S, E>) = AppBlock(this, vd)
+operator fun <S : BlockState, E : BlockEvent> LogicBlock<S, E>.plus(vd: IUiBlock<S, E>) = AppBlock(this, vd)

@@ -3,6 +3,7 @@ package com.joaquimverges.helium.test
 import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.joaquimverges.helium.core.AppBlock
+import com.joaquimverges.helium.core.LifecycleWrapper
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.state.BlockState
 import com.nhaarman.mockitokotlin2.mock
@@ -28,7 +29,7 @@ open class HeliumTestCase : TestCase() {
      * Assemble blocks with a mocked lifecycle
      */
     fun <S: BlockState, E: BlockEvent> assemble(appBlock: AppBlock<S, E>) {
-        appBlock.assemble(getMockLifecycle(), testCoroutineScope)
+        appBlock.assemble(LifecycleWrapper(getMockLifecycle(), testCoroutineScope))
     }
 
     /**

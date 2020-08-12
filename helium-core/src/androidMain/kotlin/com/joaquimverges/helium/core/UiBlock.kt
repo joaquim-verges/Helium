@@ -8,10 +8,7 @@ import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.state.BlockState
-import kotlinx.coroutines.channels.BroadcastChannel
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
 
 /**
  * Base class for UiBlocks.
@@ -25,11 +22,11 @@ import kotlinx.coroutines.flow.asFlow
  * @see com.joaquimverges.helium.core.event.BlockEvent
  * @see com.joaquimverges.helium.core.LogicBlock
  */
-actual abstract class UiBlock<in S : BlockState, E : BlockEvent> constructor(
-    val view: View,
-    private val eventFlow : BroadcastChannel<E> = BroadcastChannel(Channel.BUFFERED),
-    protected val context: Context = view.context
-) {
+abstract class UiBlock<in S : BlockState, E : BlockEvent> constructor(
+        val view: View,
+        private val eventDispatcher: EventDispatcher<E> = EventDispatcher(),
+        protected val context: Context = view.context
+) : IUiBlock<S, E> {
 
     /**
      * Convenience constructor that inflates the layout for you.
@@ -40,11 +37,11 @@ actual abstract class UiBlock<in S : BlockState, E : BlockEvent> constructor(
      * @param addToContainer optional flag to also add the inflated layout to the passed container
      */
     constructor(
-        @LayoutRes layoutResId: Int,
-        inflater: LayoutInflater,
-        container: ViewGroup? = null,
-        addToContainer: Boolean = false,
-        view: View = inflater.inflate(layoutResId, container, addToContainer)
+            @LayoutRes layoutResId: Int,
+            inflater: LayoutInflater,
+            container: ViewGroup? = null,
+            addToContainer: Boolean = false,
+            view: View = inflater.inflate(layoutResId, container, addToContainer)
     ) : this(view)
 
     /**
@@ -55,15 +52,17 @@ actual abstract class UiBlock<in S : BlockState, E : BlockEvent> constructor(
     /**
      * Implement this method to render a layout according to the latest pushed ViewState
      */
-    actual abstract fun render(state: S)
+    abstract override fun render(state: S)
 
     /**
      * Observe the events pushed from this UiBlock
      */
-    actual open fun observer(): Flow<E> = eventFlow.asFlow()
+    override fun observer(): Flow<E> = eventDispatcher.observer()
 
     /**
      * Pushes a new BlockEvent, which will trigger active subscribers LogicBlocks
      */
-    actual fun pushEvent(event: E) { eventFlow.offer(event) }
+    override fun pushEvent(event: E) {
+        eventDispatcher.pushEvent(event)
+    }
 }

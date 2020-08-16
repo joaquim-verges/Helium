@@ -1,0 +1,16 @@
+PODS:
+  - common (1.0)
+
+DEPENDENCIES:
+  - common (from `/Users/jverges/Perso/Helium/samples/multiplatform_app/common`)
+
+EXTERNAL SOURCES:
+  common:
+    :path: "/Users/jverges/Perso/Helium/samples/multiplatform_app/common"
+
+SPEC CHECKSUMS:
+  common: ede5f6e969c14bc3beaa0f113aef0b51f51e50f9
+
+PODFILE CHECKSUM: fed5d354aaa8d3858cd560527f0f50fdf7670b16
+
+COCOAPODS: 1.8.4

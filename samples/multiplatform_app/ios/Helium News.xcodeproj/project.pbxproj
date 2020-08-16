@@ -1,0 +1,399 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DF245EBB24E64BB000E8746B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF245EBA24E64BB000E8746B /* AppDelegate.swift */; };
+		DF245EBD24E64BB000E8746B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF245EBC24E64BB000E8746B /* SceneDelegate.swift */; };
+		DF245EBF24E64BB000E8746B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF245EBE24E64BB000E8746B /* ContentView.swift */; };
+		DF245EC124E64BB300E8746B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF245EC024E64BB300E8746B /* Assets.xcassets */; };
+		DF245EC424E64BB300E8746B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF245EC324E64BB300E8746B /* Preview Assets.xcassets */; };
+		DF245EC724E64BB300E8746B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF245EC524E64BB300E8746B /* LaunchScreen.storyboard */; };
+		FB800E5B45A5CFAE67386530 /* Pods_Helium_News.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3456DD617CB873348CA72FA8 /* Pods_Helium_News.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		3456DD617CB873348CA72FA8 /* Pods_Helium_News.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Helium_News.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD51E201E1D0A983FF3DB917 /* Pods-Helium News.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Helium News.debug.xcconfig"; path = "Target Support Files/Pods-Helium News/Pods-Helium News.debug.xcconfig"; sourceTree = "<group>"; };
+		DF245EB724E64BB000E8746B /* Helium News.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Helium News.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DF245EBA24E64BB000E8746B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DF245EBC24E64BB000E8746B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		DF245EBE24E64BB000E8746B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		DF245EC024E64BB300E8746B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DF245EC324E64BB300E8746B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		DF245EC624E64BB300E8746B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		DF245EC824E64BB300E8746B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F68A5AD8D9FB2A3952A68211 /* Pods-Helium News.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Helium News.release.xcconfig"; path = "Target Support Files/Pods-Helium News/Pods-Helium News.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DF245EB424E64BB000E8746B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FB800E5B45A5CFAE67386530 /* Pods_Helium_News.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		78633BB3D5900C3431AB4BD5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3456DD617CB873348CA72FA8 /* Pods_Helium_News.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DF245EAE24E64BB000E8746B = {
+			isa = PBXGroup;
+			children = (
+				DF245EB924E64BB000E8746B /* Helium News */,
+				DF245EB824E64BB000E8746B /* Products */,
+				EE309AB92D6D6469C8B6702B /* Pods */,
+				78633BB3D5900C3431AB4BD5 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		DF245EB824E64BB000E8746B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DF245EB724E64BB000E8746B /* Helium News.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DF245EB924E64BB000E8746B /* Helium News */ = {
+			isa = PBXGroup;
+			children = (
+				DF245EBA24E64BB000E8746B /* AppDelegate.swift */,
+				DF245EBC24E64BB000E8746B /* SceneDelegate.swift */,
+				DF245EBE24E64BB000E8746B /* ContentView.swift */,
+				DF245EC024E64BB300E8746B /* Assets.xcassets */,
+				DF245EC524E64BB300E8746B /* LaunchScreen.storyboard */,
+				DF245EC824E64BB300E8746B /* Info.plist */,
+				DF245EC224E64BB300E8746B /* Preview Content */,
+			);
+			path = "Helium News";
+			sourceTree = "<group>";
+		};
+		DF245EC224E64BB300E8746B /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				DF245EC324E64BB300E8746B /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		EE309AB92D6D6469C8B6702B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				AD51E201E1D0A983FF3DB917 /* Pods-Helium News.debug.xcconfig */,
+				F68A5AD8D9FB2A3952A68211 /* Pods-Helium News.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DF245EB624E64BB000E8746B /* Helium News */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DF245ECB24E64BB300E8746B /* Build configuration list for PBXNativeTarget "Helium News" */;
+			buildPhases = (
+				F0B993CE8D66BE716AA1BB52 /* [CP] Check Pods Manifest.lock */,
+				DF245EB324E64BB000E8746B /* Sources */,
+				DF245EB424E64BB000E8746B /* Frameworks */,
+				DF245EB524E64BB000E8746B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Helium News";
+			productName = "Helium News";
+			productReference = DF245EB724E64BB000E8746B /* Helium News.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DF245EAF24E64BB000E8746B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1160;
+				LastUpgradeCheck = 1160;
+				ORGANIZATIONNAME = "Verges, Joaquim";
+				TargetAttributes = {
+					DF245EB624E64BB000E8746B = {
+						CreatedOnToolsVersion = 11.6;
+					};
+				};
+			};
+			buildConfigurationList = DF245EB224E64BB000E8746B /* Build configuration list for PBXProject "Helium News" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = DF245EAE24E64BB000E8746B;
+			productRefGroup = DF245EB824E64BB000E8746B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DF245EB624E64BB000E8746B /* Helium News */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DF245EB524E64BB000E8746B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DF245EC724E64BB300E8746B /* LaunchScreen.storyboard in Resources */,
+				DF245EC424E64BB300E8746B /* Preview Assets.xcassets in Resources */,
+				DF245EC124E64BB300E8746B /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		F0B993CE8D66BE716AA1BB52 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Helium News-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DF245EB324E64BB000E8746B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DF245EBB24E64BB000E8746B /* AppDelegate.swift in Sources */,
+				DF245EBD24E64BB000E8746B /* SceneDelegate.swift in Sources */,
+				DF245EBF24E64BB000E8746B /* ContentView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		DF245EC524E64BB300E8746B /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DF245EC624E64BB300E8746B /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		DF245EC924E64BB300E8746B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		DF245ECA24E64BB300E8746B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DF245ECC24E64BB300E8746B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AD51E201E1D0A983FF3DB917 /* Pods-Helium News.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"Helium News/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "Helium News/Info.plist";
+				JAVA_HOME = "/Applications/Android Studio.app/Contents/jre/jdk/Contents/Home";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.joaquimverges.Helium-News";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DF245ECD24E64BB300E8746B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F68A5AD8D9FB2A3952A68211 /* Pods-Helium News.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"Helium News/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "Helium News/Info.plist";
+				JAVA_HOME = "/Applications/Android Studio.app/Contents/jre/jdk/Contents/Home";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.joaquimverges.Helium-News";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DF245EB224E64BB000E8746B /* Build configuration list for PBXProject "Helium News" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DF245EC924E64BB300E8746B /* Debug */,
+				DF245ECA24E64BB300E8746B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DF245ECB24E64BB300E8746B /* Build configuration list for PBXNativeTarget "Helium News" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DF245ECC24E64BB300E8746B /* Debug */,
+				DF245ECD24E64BB300E8746B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DF245EAF24E64BB000E8746B /* Project object */;
+}

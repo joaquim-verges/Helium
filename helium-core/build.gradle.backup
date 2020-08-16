@@ -1,0 +1,135 @@
+plugins {
+    id("org.jetbrains.kotlin.multiplatform")
+    id("org.jetbrains.kotlin.native.cocoapods")
+}
+apply plugin: 'com.android.library'
+
+def ios_framework_name = "HeliumCore"
+
+kotlin {
+    targets {
+        final def iOSTarget = System.getenv('SDK_NAME')?.startsWith("iphoneos")   \
+                            ? presets.iosArm64 : presets.iosX64
+
+        fromPreset(iOSTarget, 'ios') {
+            compilations {
+                main.kotlinOptions.freeCompilerArgs = ["-Xobjc-generics"]
+            }
+            binaries {
+                framework("$ios_framework_name") {
+                    isStatic = false
+                    freeCompilerArgs += "-Xobjc-generics"
+                }
+            }
+        }
+
+        fromPreset(presets.android, 'android')
+    }
+
+    sourceSets {
+        // Common
+        commonMain {
+            dependencies {
+                implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+                api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+                api "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$coroutines_version"
+            }
+        }
+
+        // Android
+        androidMain {
+            dependencies {
+//                api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+                api "androidx.lifecycle:lifecycle-viewmodel-ktx:$arch_lifecycle_viewmodel_version"
+                api "androidx.lifecycle:lifecycle-runtime-ktx:$arch_lifecycle_runtime_version"
+                api "androidx.lifecycle:lifecycle-extensions:$arch_lifecycle_version"
+            }
+        }
+
+        // iOS
+        iosMain {
+            dependencies {
+                implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+                api "org.jetbrains.kotlinx:kotlinx-coroutines-core-native:$coroutines_version"
+            }
+        }
+    }
+
+    cocoapods {
+        // Configure fields required by CocoaPods.
+        summary = "CocoaPod for Helium Core on iOS"
+        homepage = "https://github.com/joaquimverges/Helium"
+
+        // The name of the produced framework can be changed.
+        // The name of the Gradle project is used here by default.
+        frameworkName = "$ios_framework_name"
+    }
+}
+
+android {
+    compileSdkVersion compile_sdk
+    publishNonDefault true
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        minSdkVersion min_sdk
+        targetSdkVersion target_sdk
+        versionCode project.properties[VERSION_CODE]
+        versionName project.properties[VERSION_NAME]
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'src/androidMain/AndroidManifest.xml'
+            java.srcDirs = ['src/androidMain/kotlin']
+            res.srcDirs = ['src/androidMain/res']
+        }
+        androidTest {
+            java.srcDirs = ['src/androidTest/kotlin']
+            res.srcDirs = ['src/androidTest/res']
+        }
+    }
+
+}
+
+task packForXcode(type: Sync) {
+    final File frameworkDir = new File(buildDir, "xcode-frameworks")
+    final String mode = project.findProperty("XCODE_CONFIGURATION")?.toUpperCase() ?: 'DEBUG'
+    final def framework = kotlin.targets.ios.binaries.getFramework("$ios_framework_name", mode)
+
+    inputs.property "mode", mode
+    dependsOn framework.linkTask
+
+    from { framework.outputFile.parentFile }
+    into frameworkDir
+
+    doLast {
+        new File(frameworkDir, 'gradlew').with {
+            text = "#!/bin/bash\nexport 'JAVA_HOME=${System.getProperty("java.home")}'\ncd '${rootProject.rootDir}'\n./gradlew \$@\n"
+            setExecutable(true)
+        }
+    }
+}
+
+tasks.build.dependsOn packForXcode
+
+apply from: '../maven-push.gradle'

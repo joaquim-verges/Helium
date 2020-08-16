@@ -1,0 +1,6 @@
+platform :ios, '13.0'
+target 'Helium News' do
+     use_frameworks!
+     #pod 'helium_core', :path => '/Users/jverges/Perso/Helium/helium-core'
+     pod 'common', :path => '/Users/jverges/Perso/Helium/samples/multiplatform_app/common'
+ end

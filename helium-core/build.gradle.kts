@@ -20,16 +20,8 @@ val arch_lifecycle_viewmodel_version = "2.3.0-alpha05"
 val ios_framework_name = "HeliumCore"
 
 kotlin {
-//    val iOSTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget =
-//            if (System.getenv("SDK_NAME")?.startsWith("iphoneos") == true)
-//                ::iosArm64
-//            else
-//                ::iosX64
 
     ios {
-        compilations.forEach {
-            it.kotlinOptions.freeCompilerArgs = listOf("-Xobjc-generics")
-        }
         binaries {
             framework(ios_framework_name) {
                 freeCompilerArgs = freeCompilerArgs + "-Xobjc-generics"
@@ -51,9 +43,10 @@ kotlin {
         api("androidx.lifecycle:lifecycle-extensions:$arch_lifecycle_version")
     }
 
-//    sourceSets["iosMain"].dependencies {
+    sourceSets["iosMain"].apply {
+        dependsOn(sourceSets["commonMain"])
 //        api("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:$coroutines_version")
-//    }
+    }
 
     cocoapods {
         // Configure fields required by CocoaPods.
@@ -104,27 +97,6 @@ android {
         }
     }
 }
-
-//task packForXcode(type: Sync) {
-//    final File frameworkDir = new File(buildDir, "xcode-frameworks")
-//    final String mode = project.findProperty("XCODE_CONFIGURATION")?.toUpperCase() ?: 'DEBUG'
-//    final def framework = kotlin.targets.ios.binaries.getFramework("$ios_framework_name", mode)
-//
-//    inputs.property "mode", mode
-//    dependsOn framework.linkTask
-//
-//    from { framework.outputFile.parentFile }
-//    into frameworkDir
-//
-//    doLast {
-//        new File(frameworkDir, 'gradlew').with {
-//            text = "#!/bin/bash\nexport 'JAVA_HOME=${System.getProperty("java.home")}'\ncd '${rootProject.rootDir}'\n./gradlew \$@\n"
-//            setExecutable(true)
-//        }
-//    }
-//}
-
-//tasks.build.dependsOn packForXcode
 
 // TODO
 //apply("../maven-push.gradle")

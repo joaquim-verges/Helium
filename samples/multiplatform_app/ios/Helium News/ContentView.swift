@@ -11,13 +11,19 @@ import NewsCommon
 
 struct ContentView: View {
     
-    var state: CommonListLogic.State?
+    var state: DataLoadState<NSString>?
     var eventDispatcher: EventDispatcher<BlockEvent>
     
     
     var body: some View {
-//        let s = self.state as? CommonListLogic.State
-        return Text(state?.data ?? "")
+        switch self.state {
+        case is DataLoadStateLoading<NSString>:
+            return Text("Loading...")
+        case let loaded as DataLoadStateReady<NSString>:
+            return Text(loaded.data as? String ?? "")
+        default:
+            return Text("Error")
+        }
     }
 }
 

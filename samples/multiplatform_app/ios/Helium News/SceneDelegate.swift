@@ -41,6 +41,13 @@ public struct SwiftUiBlock<S : BlockState, E: BlockEvent, V: View>: View {
     }
 }
 
+public extension UIWindowSceneDelegate {
+    func assemble<S:BlockState, E:BlockEvent, V: View>(logic: LogicBlock<S,E>, ui: SwiftUiBlock<S,E,V>) {
+        AppBlock<S, E>(logic: logic, ui: ui.block()).assemble(lifecycleWrapper: LifecycleWrapper())
+        // TODO scene coroutine scope
+    }
+}
+
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -55,14 +62,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Create the SwiftUI view that provides the window contents.
         
         let logic = CommonListLogic(repo: NewsRepository(api: NewsApi()))
-        logic.pushState(state: CommonListLogic.State(data: "salut"))
-        
         let ui = SwiftUiBlock { state, eventDispatcher in
             ContentView(state: state, eventDispatcher: eventDispatcher)
         }
 
-        AppBlock(logic: logic, ui: ui.block()).assemble(lifecycleWrapper: LifecycleWrapper())
-        //assemble(logic, ui)
+        assemble(logic: logic, ui: ui)
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {

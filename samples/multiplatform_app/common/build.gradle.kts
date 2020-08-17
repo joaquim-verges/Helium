@@ -25,10 +25,6 @@ kotlin {
     android()
 
     ios {
-        // FIXME these below  show a warning, but i feel like they're needed
-        compilations.forEach {
-            it.kotlinOptions.freeCompilerArgs = listOf("-Xobjc-generics")
-        }
         binaries {
 
             framework(ios_framework_name) {

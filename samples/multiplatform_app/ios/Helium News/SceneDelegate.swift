@@ -60,7 +60,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
         // Create the SwiftUI view that provides the window contents.
-        
+        UITableView.appearance().separatorStyle = .none
         let logic = CommonListLogic(repo: NewsRepository(api: NewsApi()))
         let ui = SwiftUiBlock { state, eventDispatcher in
             ContentView(state: state, eventDispatcher: eventDispatcher)

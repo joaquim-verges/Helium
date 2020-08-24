@@ -1,6 +1,10 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+
+def compose_version = '0.1.0-dev17'
 
 android {
     compileSdkVersion compile_sdk
@@ -30,6 +34,30 @@ android {
     packagingOptions {
         exclude 'META-INF/*.kotlin_module'
     }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerVersion "1.4.0"
+        kotlinCompilerExtensionVersion "$compose_version"
+    }
+}
+
+tasks.withType(KotlinCompile).configureEach {
+    kotlinOptions {
+        jvmTarget = "1.8"
+        freeCompilerArgs += ["-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check"]
+    }
+}
+
+repositories {
+    maven {
+        url "https://jitpack.io"
+    }
 }
 
 dependencies {
@@ -44,4 +72,14 @@ dependencies {
     api "androidx.swiperefreshlayout:swiperefreshlayout:$swiperefresh_version"
     api "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
     api "com.google.android.material:material:$material_lib_version"
+
+    implementation("androidx.compose.runtime:runtime:$compose_version")
+    implementation("androidx.compose.ui:ui:$compose_version")
+    implementation("androidx.compose.foundation:foundation-layout:$compose_version")
+    implementation("androidx.compose.material:material:$compose_version")
+    implementation("androidx.compose.foundation:foundation:$compose_version")
+    implementation("androidx.compose.animation:animation:$compose_version")
+    implementation "androidx.ui:ui-tooling:$compose_version"
+
+    implementation 'com.github.mvarnagiris:compose-glide-image:0.3.8'
 }

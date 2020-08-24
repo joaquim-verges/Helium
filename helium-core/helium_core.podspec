@@ -36,7 +36,6 @@ Pod::Spec.new do |spec|
             :shell_path => '/bin/sh',
             :script => <<-SCRIPT
                 set -ev
-                export JAVA_HOME="/Applications/Android Studio.app/Contents/jre/jdk/Contents/Home"
                 REPO_ROOT="$PODS_TARGET_SRCROOT"
                 "$REPO_ROOT/../gradlew" -p "$REPO_ROOT" :helium-core:syncFramework \
                     -Pkotlin.native.cocoapods.target=$KOTLIN_TARGET \

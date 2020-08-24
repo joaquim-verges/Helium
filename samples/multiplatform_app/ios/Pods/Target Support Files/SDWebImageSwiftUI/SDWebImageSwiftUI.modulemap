@@ -1,0 +1,6 @@
+framework module SDWebImageSwiftUI {
+  umbrella header "SDWebImageSwiftUI-umbrella.h"
+
+  export *
+  module * { export * }
+}

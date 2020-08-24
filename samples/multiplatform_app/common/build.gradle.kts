@@ -1,8 +1,10 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import org.jetbrains.kotlin.gradle.plugin.mpp.Framework
 
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
+    kotlin("plugin.serialization")
     id("com.android.library")
 }
 
@@ -46,6 +48,7 @@ kotlin {
         dependencies {
             api(project(":helium-core"))
             implementation("io.ktor:ktor-client-core:$ktor_version")
+            implementation("io.ktor:ktor-client-serialization:$ktor_version")
         }
     }
 
@@ -75,7 +78,7 @@ kotlin {
     }
 
     targets.withType<KotlinNativeTarget> {
-        binaries.withType<org.jetbrains.kotlin.gradle.plugin.mpp.Framework> {
+        binaries.withType<Framework> {
             // isStatic = false FIXME this break things
             // !! These 2 lines below are what makes transitive deps wor
             transitiveExport = true

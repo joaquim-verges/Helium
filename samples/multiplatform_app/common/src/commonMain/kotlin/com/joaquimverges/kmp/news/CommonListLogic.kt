@@ -8,16 +8,20 @@ import kotlinx.coroutines.launch
 
 class CommonListLogic(
         private val repo: NewsRepository = NewsRepository()
-) : LogicBlock<DataLoadState<String>, BlockEvent>() {
+) : LogicBlock<DataLoadState<ArticleResponse>, BlockEvent>() {
 
     init {
         pushState(DataLoadState.Loading())
         // TODO use Main in base LogicBLock
         coroutineScope.launch(Main) {
-            val news = withContext(Background) {
-                repo.getNews()
+            try {
+                val news = withContext(Background) {
+                    repo.getNews()
+                }
+                pushState(DataLoadState.Ready(news))
+            } catch (e: Exception) {
+                pushState(DataLoadState.Error(e))
             }
-            pushState(DataLoadState.Ready(news))
         }
     }
 

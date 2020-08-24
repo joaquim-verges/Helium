@@ -1,19 +1,30 @@
 package com.joaquimverges.kmp.news
 
 import io.ktor.client.HttpClient
-import io.ktor.client.request.get
+import io.ktor.client.features.json.*
+import io.ktor.client.features.json.serializer.*
+import io.ktor.client.request.*
 import io.ktor.http.Url
 
 class NewsApi {
     companion object {
-        private const val baseUrl = "https://samples.openweathermap.org"
+        private const val baseUrl = "https://newsapi.org/v2/"
     }
 
-    private val client = HttpClient()
+    private val client = HttpClient() {
+        install(JsonFeature) {
+            serializer = KotlinxSerializer(json = kotlinx.serialization.json.Json {
+                ignoreUnknownKeys = true
+            })
+        }
+    }
 
-    private var address = Url("$baseUrl/data/2.5/weather?q=London,uk&appid=b6907d289e10d714a6e88b30761fae22")
+    private var articlesEndpoint = Url("$baseUrl/everything?language=en&pageSize=20")
 
-    suspend fun getNews(): String {
-        return client.get(address.toString())
+    suspend fun getNews(): ArticleResponse {
+        return client.get("$articlesEndpoint&sources=engadget") {
+            header("X-Api-Key", API_KEY)
+        }
     }
 }
+

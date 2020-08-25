@@ -8,7 +8,6 @@
 
 import SwiftUI
 import NewsCommon
-import URLImage
 import SDWebImage
 import SDWebImageSwiftUI
 

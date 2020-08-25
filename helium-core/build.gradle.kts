@@ -32,20 +32,16 @@ kotlin {
     android()
 
     sourceSets["commonMain"].dependencies {
-        implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
-        api("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version")
+        implementation(Deps.stdlib)
+        api(Deps.coroutines)
     }
 
     sourceSets["androidMain"].dependencies {
-        implementation("org.jetbrains.kotlin:kotlin-stdlib")
-        api("androidx.lifecycle:lifecycle-viewmodel-ktx:$arch_lifecycle_viewmodel_version")
-        api("androidx.lifecycle:lifecycle-runtime-ktx:$arch_lifecycle_runtime_version")
-        api("androidx.lifecycle:lifecycle-extensions:$arch_lifecycle_version")
+        Deps.lifecycleDeps.forEach(::api)
     }
 
-    sourceSets["iosMain"].apply {
-        dependsOn(sourceSets["commonMain"])
-//        api("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:$coroutines_version")
+    sourceSets["iosMain"].dependencies {
+        // none for now
     }
 
     cocoapods {
@@ -55,7 +51,8 @@ kotlin {
 
         // The name of the produced framework can be changed.
         // The name of the Gradle project is used here by default.
-        frameworkName = "$ios_framework_name"
+        frameworkName = ios_framework_name
+        noPodspec() // avoid overriding the existing podspec
     }
 }
 

@@ -31,3 +31,10 @@ public struct SwiftUiBlock<S : BlockState, E: BlockEvent, V: View>: View {
         return ob.block
     }
 }
+
+public extension UIWindowSceneDelegate {
+    func assemble<S:BlockState, E:BlockEvent, V: View>(logic: LogicBlock<S,E>, ui: SwiftUiBlock<S,E,V>) {
+        AppBlock<S, E>(logic: logic, ui: ui.block()).assemble(lifecycleWrapper: LifecycleWrapper())
+        // TODO scene coroutine scope
+    }
+}

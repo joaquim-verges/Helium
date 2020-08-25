@@ -10,7 +10,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val ui = Ui(layoutInflater)
+        val ui = Ui(this)
         assemble(CommonListLogic() + ui)
         setContentView(ui.view)
     }

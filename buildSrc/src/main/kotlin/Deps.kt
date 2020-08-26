@@ -1,31 +1,48 @@
-object Versions {
-    const val kotlin = "4.0"
-    const val coroutines = "1.3.9"
-    const val robolectric = "4.2.1"
-    const val mockito_kotlin = "2.1.0"
-    const val test_core = "1.2.0"
-    const val test_ext = "1.1.1"
-    const val test_espresso = "3.2.0"
-
-    const val arch_lifecycle = "2.2.0"
-    const val arch_lifecycle_runtime = "2.3.0-alpha05"
-    const val arch_lifecycle_viewmodel = "2.3.0-alpha05"
-    const val appcompat = "1.1.0"
-    const val recyclerview = "1.1.0"
-    const val swiperefresh = "0.0"
-    const val constraint_layout = "1.1.3"
-    const val material_lib = "1.2.0-alpha05"
-    const val navigation = "2.2.1"
-}
-
 object Deps {
+
     // Kotlin
     const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib-common"
     const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
-    const val coroutineNative= "org.jetbrains.kotlinx:kotlinx-coroutines-core-native:${Versions.coroutines}"
+    const val coroutineNative = "org.jetbrains.kotlinx:kotlinx-coroutines-core-native:${Versions.coroutines}"
 
     // AndroidX
-    val lifecycleDeps = listOf("androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.arch_lifecycle_viewmodel}",
+    val lifecycleDeps = listOf(
+            "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.arch_lifecycle_viewmodel}",
             "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.arch_lifecycle_runtime}",
-            "androidx.lifecycle:lifecycle-extensions:${Versions.arch_lifecycle}")
+            "androidx.lifecycle:lifecycle-extensions:${Versions.arch_lifecycle}"
+    )
+
+    val androidXUiDeps = listOf(
+            "androidx.appcompat:appcompat:${Versions.appcompat}",
+            "androidx.recyclerview:recyclerview:${Versions.recyclerview}",
+            "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.swiperefresh}",
+            "androidx.constraintlayout:constraintlayout:${Versions.constraint_layout}",
+            "com.google.android.material:material:${Versions.material_lib}"
+    )
+
+    val androidXNavigationDeps = listOf(
+            "android.arch.navigation:navigation-fragment-ktx:${Versions.navigation}",
+            "android.arch.navigation:navigation-ui-ktx:${Versions.navigation}"
+    )
+
+    val androidXTestDeps = listOf(
+            "androidx.test:core:${Versions.test_core}",
+            "androidx.test:runner:${Versions.test_core}",
+            "androidx.test:rules:${Versions.test_core}",
+            "androidx.test.ext:junit:${Versions.test_ext}",
+            "androidx.test.ext:junit-ktx:${Versions.test_ext}",
+            "androidx.test.espresso:espresso-core:${Versions.test_espresso}",
+            "com.nhaarman.mockitokotlin2:mockito-kotlin:${Versions.mockito_kotlin}",
+            "org.robolectric:robolectric:${Versions.robolectric}",
+            "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutines}"
+    )
+
+    // MPP
+    val ktorCommonDeps = listOf(
+            "io.ktor:ktor-client-core:${Versions.ktor}",
+            "io.ktor:ktor-client-serialization:${Versions.ktor}"
+    )
+    const val ktorAndroid = "io.ktor:ktor-client-android:${Versions.ktor}"
+    const val ktorIOS = "io.ktor:ktor-client-ios:${Versions.ktor}"
 }
+

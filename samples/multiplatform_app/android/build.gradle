@@ -4,10 +4,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
-def compose_version = '0.1.0-dev17'
-
 android {
-    compileSdkVersion compile_sdk
+    compileSdkVersion Versions.compileSdk
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -17,7 +15,7 @@ android {
     defaultConfig {
         applicationId "com.joaquimverges.demoapp"
         minSdkVersion 23
-        targetSdkVersion target_sdk
+        targetSdkVersion Versions.targetSdk
         versionCode 1
         versionName "1.0"
 
@@ -42,8 +40,8 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerVersion "1.4.0"
-        kotlinCompilerExtensionVersion "$compose_version"
+        kotlinCompilerVersion Versions.kotlin
+        kotlinCompilerExtensionVersion Versions.compose
     }
 }
 
@@ -61,25 +59,25 @@ repositories {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
+    implementation "androidx.constraintlayout:constraintlayout:${Versions.constraint_layout}"
     implementation project(':helium-core')
     implementation project(':samples:multiplatform_app:common')
 
 
-    api "androidx.appcompat:appcompat:$appcompat_version"
-    api "androidx.recyclerview:recyclerview:$recyclerview_version"
-    api "androidx.swiperefreshlayout:swiperefreshlayout:$swiperefresh_version"
-    api "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
-    api "com.google.android.material:material:$material_lib_version"
+    api "androidx.appcompat:appcompat:${Versions.appcompat}"
+    api "androidx.recyclerview:recyclerview:${Versions.recyclerview}"
+    api "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.swiperefresh}"
+    api "androidx.constraintlayout:constraintlayout:${Versions.constraint_layout}"
+    api "com.google.android.material:material:${Versions.material_lib}"
 
-    implementation("androidx.compose.runtime:runtime:$compose_version")
-    implementation("androidx.compose.ui:ui:$compose_version")
-    implementation("androidx.compose.foundation:foundation-layout:$compose_version")
-    implementation("androidx.compose.material:material:$compose_version")
-    implementation("androidx.compose.foundation:foundation:$compose_version")
-    implementation("androidx.compose.animation:animation:$compose_version")
-    implementation "androidx.ui:ui-tooling:$compose_version"
+    implementation("androidx.compose.runtime:runtime:${Versions.compose}")
+    implementation("androidx.compose.ui:ui:${Versions.compose}")
+    implementation("androidx.compose.foundation:foundation-layout:${Versions.compose}")
+    implementation("androidx.compose.material:material:${Versions.compose}")
+    implementation("androidx.compose.foundation:foundation:${Versions.compose}")
+    implementation("androidx.compose.animation:animation:${Versions.compose}")
+    implementation "androidx.ui:ui-tooling:${Versions.compose}"
 
     implementation 'com.github.mvarnagiris:compose-glide-image:0.3.8'
 }

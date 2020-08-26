@@ -10,17 +10,6 @@ plugins {
 
 version = "1.0"
 val ios_framework_name = "NewsCommon"
-val ktor_version = "1.3.2-1.4.0-rc"
-
-// TODO extract
-val compile_sdk = 28
-val min_sdk = 14
-val target_sdk = 28
-
-val kotlin_version = "1.4.0"
-val arch_lifecycle_version = "2.2.0"
-val arch_lifecycle_runtime_version = "2.3.0-alpha05"
-val arch_lifecycle_viewmodel_version = "2.3.0-alpha05"
 
 kotlin {
 
@@ -47,20 +36,16 @@ kotlin {
     sourceSets["commonMain"].apply {
         dependencies {
             api(project(":helium-core"))
-            implementation("io.ktor:ktor-client-core:$ktor_version")
-            implementation("io.ktor:ktor-client-serialization:$ktor_version")
+            Deps.ktorCommonDeps.forEach(::implementation)
         }
     }
 
     sourceSets["androidMain"].dependencies {
-        implementation("io.ktor:ktor-client-android:$ktor_version")
+        implementation(Deps.ktorAndroid)
     }
 
-    sourceSets["iosMain"].apply {
-        dependsOn(sourceSets["commonMain"])
-        dependencies {
-            implementation("io.ktor:ktor-client-ios:$ktor_version")
-        }
+    sourceSets["iosMain"].dependencies {
+        implementation(Deps.ktorIOS)
     }
 
     cocoapods {
@@ -87,42 +72,4 @@ kotlin {
     }
 }
 
-android {
-    compileSdkVersion(compile_sdk)
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
-    defaultConfig {
-        minSdkVersion(min_sdk)
-        targetSdkVersion(target_sdk)
-        versionCode = (project.properties["VERSION_CODE"] as String).toInt()
-        versionName = project.properties["VERSION_NAME"] as String
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
-        }
-    }
-
-    testOptions.unitTests.isIncludeAndroidResources = true
-
-    sourceSets {
-        getByName("main") {
-            manifest.srcFile("src/androidMain/AndroidManifest.xml")
-            java.srcDirs("src/androidMain/kotlin")
-            res.srcDirs("src/androidMain/res")
-        }
-        getByName("androidTest") {
-            java.srcDirs("src/androidTest/kotlin")
-            res.srcDirs("src/androidTest/res")
-        }
-    }
-
-}
+androidForMultiplatformLib()

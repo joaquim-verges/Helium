@@ -30,7 +30,6 @@ android {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
     implementation "androidx.constraintlayout:constraintlayout:${Versions.constraint_layout}"
     implementation project(':helium-core')
     implementation project(':helium-ui')

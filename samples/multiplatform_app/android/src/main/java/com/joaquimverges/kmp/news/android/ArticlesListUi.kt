@@ -1,7 +1,6 @@
 package com.joaquimverges.kmp.news.android
 
 import android.content.Context
-import androidx.compose.foundation.Box
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumnFor
@@ -13,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -21,9 +21,9 @@ import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.state.DataLoadState
 import com.joaquimverges.kmp.news.Article
 import com.joaquimverges.kmp.news.ArticleResponse
-import com.koduok.compose.glideimage.GlideImage
+import dev.chrisbanes.accompanist.coil.CoilImageWithCrossfade
 
-class Ui(context: Context) : ComposeUiBlock<DataLoadState<ArticleResponse>, BlockEvent>(context) {
+class ArticlesListUi(context: Context) : ComposeUiBlock<DataLoadState<ArticleResponse>, BlockEvent>(context) {
 
     @Composable
     override fun Content(model: DataLoadState<ArticleResponse>?) {
@@ -51,7 +51,6 @@ class Ui(context: Context) : ComposeUiBlock<DataLoadState<ArticleResponse>, Bloc
 
     @Composable
     fun list(model: DataLoadState.Ready<ArticleResponse>) {
-
         Scaffold(topBar = {
             TopAppBar(title = {
                 Text("Helium News", style = TextStyle(fontSize = 28.sp, fontWeight = FontWeight.Black))
@@ -66,11 +65,11 @@ class Ui(context: Context) : ComposeUiBlock<DataLoadState<ArticleResponse>, Bloc
     @Composable
     fun item(article: Article) {
         Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 10.dp), verticalGravity = Alignment.CenterVertically) {
-            Box(modifier = Modifier.size(100.dp).clip(RoundedCornerShape(5.dp))) {
-                GlideImage(model = article.urlToImage ?: "") {
-                    centerCrop()
-                }
-            }
+            CoilImageWithCrossfade(
+                    modifier = Modifier.size(100.dp).clip(RoundedCornerShape(5.dp)),
+                    data = article.urlToImage ?: "",
+                    contentScale = ContentScale.Crop
+            )
             Spacer(modifier = Modifier.width(20.dp))
             Column(modifier = Modifier.weight(1f)) {
                 Text(article.source?.name

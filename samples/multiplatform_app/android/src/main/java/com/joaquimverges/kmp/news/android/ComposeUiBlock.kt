@@ -6,18 +6,19 @@ import android.widget.FrameLayout
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Recomposer
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.setContent
 import com.joaquimverges.helium.core.UiBlock
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.state.BlockState
 
 abstract class ComposeUiBlock<S : BlockState, E : BlockEvent>(context: Context) :
-    UiBlock<S, E>(FrameLayout(context)) {
+    UiBlock<S, E>(ComposeView(context)) {
 
     private val stateModel = mutableStateOf<S?>(null)
 
     init {
-        (view as ViewGroup).setContent(Recomposer.current()) {
+        (view as ComposeView).setContent {
             Content(stateModel.value)
         }
     }

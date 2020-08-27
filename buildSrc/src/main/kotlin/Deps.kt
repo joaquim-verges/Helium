@@ -37,6 +37,16 @@ object Deps {
             "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutines}"
     )
 
+    val composeDeps = listOf(
+            "androidx.compose.runtime:runtime:${Versions.compose}",
+            "androidx.compose.ui:ui:${Versions.compose}",
+            "androidx.compose.foundation:foundation-layout:${Versions.compose}",
+            "androidx.compose.material:material:${Versions.compose}",
+            "androidx.compose.foundation:foundation:${Versions.compose}",
+            "androidx.compose.animation:animation:${Versions.compose}",
+            "androidx.ui:ui-tooling:${Versions.compose}"
+    )
+
     // MPP
     val ktorCommonDeps = listOf(
             "io.ktor:ktor-client-core:${Versions.ktor}",

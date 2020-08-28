@@ -1,4 +1,4 @@
-package com.joaquimverges.kmp.news
+package com.joaquimverges.kmp.news.data
 
 import kotlinx.serialization.Serializable
 

@@ -1,10 +1,11 @@
 package com.joaquimverges.kmp.news.android
 
-import android.content.Context
 import androidx.compose.foundation.Text
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
@@ -17,67 +18,88 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.joaquimverges.helium.core.event.BlockEvent
+import com.joaquimverges.helium.core.EventDispatcher
 import com.joaquimverges.helium.core.state.DataLoadState
-import com.joaquimverges.kmp.news.Article
-import com.joaquimverges.kmp.news.ArticleResponse
-import dev.chrisbanes.accompanist.coil.CoilImageWithCrossfade
+import com.joaquimverges.kmp.news.data.Article
+import com.joaquimverges.kmp.news.data.ArticleResponse
+import com.joaquimverges.kmp.news.logic.CommonListLogic
+import dev.chrisbanes.accompanist.coil.CoilImage
 
-class ArticlesListUi(context: Context) : ComposeUiBlock<DataLoadState<ArticleResponse>, BlockEvent>(context) {
-
-    @Composable
-    override fun Content(model: DataLoadState<ArticleResponse>?) {
-        when (model) {
-            is DataLoadState.Init -> {
-
-            }
-            is DataLoadState.Loading -> {
-
+@Composable
+fun ArticleListUI(
+        state: DataLoadState<ArticleResponse>?,
+        eventDispatcher: EventDispatcher<CommonListLogic.Event>
+) {
+    Scaffold(topBar = {
+        TopAppBar(title = {
+            Text(
+                    "Helium News",
+                    style = TextStyle(fontSize = 28.sp, fontWeight = FontWeight.Black)
+            )
+        }, backgroundColor = Color.White, modifier = Modifier.height(72.dp))
+    }) {
+        when (state) {
+            is DataLoadState.Init, is DataLoadState.Loading, null -> {
+                centered {
+                    CircularProgressIndicator(Modifier.size(48.dp))
+                }
             }
             is DataLoadState.Empty -> {
+                centered {
+                    Text("No Articles Found")
+                }
 
             }
             is DataLoadState.Error -> {
-
+                centered {
+                    Text("Network Error")
+                }
             }
             is DataLoadState.Ready -> {
-                list(model)
-            }
-            null -> {
-
+                list(state, eventDispatcher)
             }
         }
     }
+}
 
-    @Composable
-    fun list(model: DataLoadState.Ready<ArticleResponse>) {
-        Scaffold(topBar = {
-            TopAppBar(title = {
-                Text("Helium News", style = TextStyle(fontSize = 28.sp, fontWeight = FontWeight.Black))
-            }, backgroundColor = Color.White, modifier = Modifier.height(72.dp))
-        }) {
-            LazyColumnFor(items = model.data.articles) {
-                item(article = it)
-            }
-        }
+@Composable
+fun centered(children: @Composable () -> Unit) {
+    Column(
+            Modifier.fillMaxWidth().fillMaxHeight(),
+            horizontalGravity = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+    ) {
+        children()
     }
+}
 
-    @Composable
-    fun item(article: Article) {
-        Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 10.dp), verticalGravity = Alignment.CenterVertically) {
-            CoilImageWithCrossfade(
-                    modifier = Modifier.size(100.dp).clip(RoundedCornerShape(5.dp)),
-                    data = article.urlToImage ?: "",
-                    contentScale = ContentScale.Crop
-            )
-            Spacer(modifier = Modifier.width(20.dp))
-            Column(modifier = Modifier.weight(1f)) {
-                Text(article.source?.name
-                        ?: "", style = TextStyle(fontSize = 16.sp, color = Color.DarkGray))
-                Spacer(modifier = Modifier.height(5.dp))
-                Text(article.title
-                        ?: "", style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Medium))
-            }
+@Composable
+fun list(model: DataLoadState.Ready<ArticleResponse>, eventDispatcher: EventDispatcher<CommonListLogic.Event>) {
+    LazyColumnFor(items = model.data.articles) {
+        item(article = it, eventDispatcher)
+    }
+}
+
+@Composable
+fun item(article: Article, eventDispatcher: EventDispatcher<CommonListLogic.Event>) {
+    Row(modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = { eventDispatcher.pushEvent(CommonListLogic.Event.ArticleClicked(article)) })
+            .padding(horizontal = 24.dp, vertical = 12.dp),
+            verticalGravity = Alignment.CenterVertically
+    ) {
+        CoilImage(
+                modifier = Modifier.size(100.dp).clip(RoundedCornerShape(5.dp)),
+                data = article.urlToImage ?: "",
+                contentScale = ContentScale.Crop
+        )
+        Spacer(modifier = Modifier.width(24.dp))
+        Column(modifier = Modifier.weight(1f)) {
+            Text(article.source?.name
+                    ?: "", style = TextStyle(fontSize = 16.sp, color = Color.DarkGray))
+            Spacer(modifier = Modifier.height(5.dp))
+            Text(article.title
+                    ?: "", style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Medium))
         }
     }
 }

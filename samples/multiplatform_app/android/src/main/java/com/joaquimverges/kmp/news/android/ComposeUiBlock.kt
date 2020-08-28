@@ -1,32 +1,22 @@
 package com.joaquimverges.kmp.news.android
 
-import android.content.Context
-import android.view.ViewGroup
-import android.widget.FrameLayout
+import android.util.Log
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Recomposer
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.platform.setContent
-import com.joaquimverges.helium.core.UiBlock
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import com.joaquimverges.helium.core.EventDispatcher
+import com.joaquimverges.helium.core.LogicBlock
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.state.BlockState
+import kotlinx.coroutines.flow.onEach
 
-abstract class ComposeUiBlock<S : BlockState, E : BlockEvent>(context: Context) :
-    UiBlock<S, E>(ComposeView(context)) {
-
-    private val stateModel = mutableStateOf<S?>(null)
-
-    init {
-        (view as ComposeView).setContent {
-            Content(stateModel.value)
-        }
-    }
-
-    override fun render(state: S) {
-        stateModel.value = state
-    }
-
-    @Composable
-    abstract fun Content(model: S?)
+@Composable
+fun <S : BlockState, E : BlockEvent> AppBlock(
+        logic: LogicBlock<S, E>,
+        ui: @Composable (
+                stateFlow: S?,
+                eventDispatcher: EventDispatcher<E>
+        ) -> Unit) {
+    val state by logic.observeState().collectAsState(initial = logic.currentState())
+    ui(state, logic.eventDispatcher)
 }

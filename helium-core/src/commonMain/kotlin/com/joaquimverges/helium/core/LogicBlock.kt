@@ -20,8 +20,9 @@ import kotlinx.coroutines.launch
  */
 abstract class LogicBlock<S : BlockState, E : BlockEvent> : HeliumViewModel() {
 
-    private val state: MutableStateFlow<S?> = MutableStateFlow(null)
-    private val eventDispatcher: BroadcastChannel<E> = BroadcastChannel(Channel.BUFFERED)
+    private val state: StateObserver<S> = StateObserver()
+    // TODO only made public for the compose use case - need to revisit the eventDispatcher ownership
+    val eventDispatcher: EventDispatcher<E> = EventDispatcher()
 
     /**
      * Implement this method to react to any BlockEvent emissions from the attached UiBlock.
@@ -30,35 +31,32 @@ abstract class LogicBlock<S : BlockState, E : BlockEvent> : HeliumViewModel() {
     abstract fun onUiEvent(event: E)
 
     /**
-     * Convenience method to Forward all [BlockEvent] received by this LogicBlock to another given LogicBlock
-     * Must have compatible [BlockEvent] for both blocks.
-     */
-    fun propagateEventsTo(otherBlock: LogicBlock<*, E>) {
-        eventDispatcher.asFlow().onEach { otherBlock.processEvent(it) }.launchInBlock()
-    }
-
-    /**
      * Observe state changes from this LogicBlock
      */
-    fun observeState(): Flow<S> = state.filterNotNull()
+    fun observeState(): Flow<S> = state.observer
+
+    /**
+     * Get the current state of this block
+     */
+    fun currentState(): S? = state.currentState
 
     /**
      * Observe events received by this LogicBlock, useful for propagating events to parent LogicBlocks
      */
-    fun observeEvents(): Flow<E> = eventDispatcher.asFlow()
+    fun observeEvents(): Flow<E> = eventDispatcher.observer()
 
     /**
      * Pushes a new state, which will trigger any active subscribers
      */
     fun pushState(state: S) {
-        this.state.value = state
+        this.state.pushState(state)
     }
 
     // internal functions
 
     internal fun processEvent(event: E) {
         onUiEvent(event)
-        eventDispatcher.offer(event)
+        eventDispatcher.pushEvent(event)
     }
 
     fun <T> Flow<T>.launchInBlock() = launchIn(coroutineScope)

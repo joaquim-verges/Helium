@@ -1,4 +1,4 @@
-package com.joaquimverges.kmp.news
+package com.joaquimverges.kmp.news.data
 
 import io.ktor.client.HttpClient
 import io.ktor.client.features.json.*

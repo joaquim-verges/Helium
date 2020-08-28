@@ -1,9 +1,9 @@
 package com.joaquimverges.helium.core
 
 import com.joaquimverges.helium.core.event.BlockEvent
+import com.joaquimverges.helium.core.event.EventDispatcher
 import com.joaquimverges.helium.core.state.BlockState
-import kotlinx.coroutines.channels.BroadcastChannel
-import kotlinx.coroutines.channels.Channel
+import com.joaquimverges.helium.core.state.StateObserver
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -21,8 +21,7 @@ import kotlinx.coroutines.launch
 abstract class LogicBlock<S : BlockState, E : BlockEvent> : HeliumViewModel() {
 
     private val state: StateObserver<S> = StateObserver()
-    // TODO only made public for the compose use case - need to revisit the eventDispatcher ownership
-    val eventDispatcher: EventDispatcher<E> = EventDispatcher()
+    private val eventDispatcher: EventDispatcher<E> = EventDispatcher()
 
     /**
      * Implement this method to react to any BlockEvent emissions from the attached UiBlock.
@@ -54,7 +53,7 @@ abstract class LogicBlock<S : BlockState, E : BlockEvent> : HeliumViewModel() {
 
     // internal functions
 
-    internal fun processEvent(event: E) {
+    fun processEvent(event: E) {
         onUiEvent(event)
         eventDispatcher.pushEvent(event)
     }

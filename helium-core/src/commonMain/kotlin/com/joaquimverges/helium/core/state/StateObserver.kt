@@ -1,4 +1,4 @@
-package com.joaquimverges.helium.core
+package com.joaquimverges.helium.core.state
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow

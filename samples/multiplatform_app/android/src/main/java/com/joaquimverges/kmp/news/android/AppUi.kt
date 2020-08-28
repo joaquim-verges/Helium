@@ -1,6 +1,5 @@
 package com.joaquimverges.kmp.news.android
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.viewinterop.viewModel

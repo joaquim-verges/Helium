@@ -18,7 +18,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.joaquimverges.helium.core.EventDispatcher
+import com.joaquimverges.helium.core.event.EventDispatcher
 import com.joaquimverges.helium.core.state.DataLoadState
 import com.joaquimverges.kmp.news.data.Article
 import com.joaquimverges.kmp.news.data.ArticleResponse

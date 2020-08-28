@@ -35,14 +35,6 @@ class CommonListLogic(
                 pushState(DataLoadState.Error(e))
             }
         }
-
-        // TODO figure out how to make the dispatcher ownership work in both compose and Views
-        coroutineScope.launch(Main) {
-            eventDispatcher
-                    .observer()
-                    .onEach { onUiEvent(it) }
-                    .collect()
-        }
     }
 
     override fun onUiEvent(event: Event) {

@@ -8,6 +8,7 @@ import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import com.joaquimverges.helium.core.event.BlockEvent
+import com.joaquimverges.helium.core.event.EventDispatcher
 import kotlinx.coroutines.channels.BroadcastChannel
 
 /**
@@ -34,12 +35,12 @@ abstract class ListItem<in T, V : BlockEvent>(val view: View) : RecyclerView.Vie
         view: View = inflater.inflate(layoutResId, container, false)
     ) : this(view)
 
-    internal var viewEvents: BroadcastChannel<V>? = null
+    internal var viewEvents: EventDispatcher<V>? = null
     protected var context: Context = itemView.context
 
     abstract fun bind(data: T)
 
-    fun pushEvent(event: V) = viewEvents?.offer(event)
+    fun pushEvent(event: V) = viewEvents?.pushEvent(event)
 
     /**
      * Convenience method to find a view by id within this recyclerViewItem

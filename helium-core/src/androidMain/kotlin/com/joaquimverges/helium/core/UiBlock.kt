@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import com.joaquimverges.helium.core.event.BlockEvent
+import com.joaquimverges.helium.core.event.EventDispatcher
 import com.joaquimverges.helium.core.state.BlockState
 import kotlinx.coroutines.flow.Flow
 

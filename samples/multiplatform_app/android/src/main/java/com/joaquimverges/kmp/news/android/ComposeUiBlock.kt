@@ -1,15 +1,14 @@
 package com.joaquimverges.kmp.news.android
 
-import android.util.Log
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import com.joaquimverges.helium.core.EventDispatcher
+import androidx.compose.runtime.*
+import com.joaquimverges.helium.core.event.EventDispatcher
 import com.joaquimverges.helium.core.LogicBlock
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.state.BlockState
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
+// TODO in core
 @Composable
 fun <S : BlockState, E : BlockEvent> AppBlock(
         logic: LogicBlock<S, E>,
@@ -18,5 +17,11 @@ fun <S : BlockState, E : BlockEvent> AppBlock(
                 eventDispatcher: EventDispatcher<E>
         ) -> Unit) {
     val state by logic.observeState().collectAsState(initial = logic.currentState())
-    ui(state, logic.eventDispatcher)
+    val dispatcher = remember(ui) { EventDispatcher<E>() }
+    launchInComposition {
+        dispatcher.observer()
+                .onEach { logic.processEvent(it) }
+                .launchIn(this)
+    }
+    ui(state, dispatcher)
 }

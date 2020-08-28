@@ -1,4 +1,4 @@
-package com.joaquimverges.helium.core
+package com.joaquimverges.helium.core.event
 
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel

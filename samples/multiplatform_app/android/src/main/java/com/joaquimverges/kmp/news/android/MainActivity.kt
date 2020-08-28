@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            AppBlock(logic = appLogic) { state, dispatcher ->
+            AppBlock(appLogic) { state, _ ->
                 AppUi(state = state)
             }
         }
@@ -23,5 +23,4 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
         }
     }
-
 }

@@ -6,7 +6,7 @@ import androidx.compose.ui.viewinterop.viewModel
 import com.joaquimverges.kmp.news.data.Article
 import com.joaquimverges.kmp.news.logic.AppRouter
 import com.joaquimverges.kmp.news.logic.ArticleDetailLogic
-import com.joaquimverges.kmp.news.logic.CommonListLogic
+import com.joaquimverges.kmp.news.logic.ArticleListLogic
 
 @Composable
 fun AppUi(state: AppRouter.Screen?) {
@@ -18,7 +18,7 @@ fun AppUi(state: AppRouter.Screen?) {
 
 @Composable
 fun ArticleList() {
-    val logic: CommonListLogic = viewModel()
+    val logic: ArticleListLogic = viewModel()
     AppBlock(logic) { state, dispatcher ->
         ArticleListUI(state, dispatcher)
     }

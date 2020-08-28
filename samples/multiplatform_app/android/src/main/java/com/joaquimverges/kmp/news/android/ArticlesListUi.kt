@@ -22,13 +22,13 @@ import com.joaquimverges.helium.core.event.EventDispatcher
 import com.joaquimverges.helium.core.state.DataLoadState
 import com.joaquimverges.kmp.news.data.Article
 import com.joaquimverges.kmp.news.data.ArticleResponse
-import com.joaquimverges.kmp.news.logic.CommonListLogic
+import com.joaquimverges.kmp.news.logic.ArticleListLogic
 import dev.chrisbanes.accompanist.coil.CoilImage
 
 @Composable
 fun ArticleListUI(
         state: DataLoadState<ArticleResponse>?,
-        eventDispatcher: EventDispatcher<CommonListLogic.Event>
+        eventDispatcher: EventDispatcher<ArticleListLogic.Event>
 ) {
     Scaffold(topBar = {
         TopAppBar(title = {
@@ -74,17 +74,17 @@ fun centered(children: @Composable () -> Unit) {
 }
 
 @Composable
-fun list(model: DataLoadState.Ready<ArticleResponse>, eventDispatcher: EventDispatcher<CommonListLogic.Event>) {
+fun list(model: DataLoadState.Ready<ArticleResponse>, eventDispatcher: EventDispatcher<ArticleListLogic.Event>) {
     LazyColumnFor(items = model.data.articles) {
         item(article = it, eventDispatcher)
     }
 }
 
 @Composable
-fun item(article: Article, eventDispatcher: EventDispatcher<CommonListLogic.Event>) {
+fun item(article: Article, eventDispatcher: EventDispatcher<ArticleListLogic.Event>) {
     Row(modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = { eventDispatcher.pushEvent(CommonListLogic.Event.ArticleClicked(article)) })
+            .clickable(onClick = { eventDispatcher.pushEvent(ArticleListLogic.Event.ArticleClicked(article)) })
             .padding(horizontal = 24.dp, vertical = 12.dp),
             verticalGravity = Alignment.CenterVertically
     ) {

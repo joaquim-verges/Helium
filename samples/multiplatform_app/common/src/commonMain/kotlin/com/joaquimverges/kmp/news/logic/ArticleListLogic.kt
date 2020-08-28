@@ -1,22 +1,18 @@
 package com.joaquimverges.kmp.news.logic
 
+import com.joaquimverges.helium.core.Background
 import com.joaquimverges.helium.core.LogicBlock
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.state.DataLoadState
-import com.joaquimverges.kmp.news.Background
-import com.joaquimverges.kmp.news.Main
 import com.joaquimverges.kmp.news.data.Article
 import com.joaquimverges.kmp.news.data.ArticleResponse
 import com.joaquimverges.kmp.news.data.NewsRepository
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.withContext
-import kotlinx.coroutines.launch
 
-class CommonListLogic(
+class ArticleListLogic(
         private val appRouter: AppRouter = AppRouter.get(),
         private val repo: NewsRepository = NewsRepository()
-) : LogicBlock<DataLoadState<ArticleResponse>, CommonListLogic.Event>() {
+) : LogicBlock<DataLoadState<ArticleResponse>, ArticleListLogic.Event>() {
 
     sealed class Event : BlockEvent {
         data class ArticleClicked(val article: Article) : Event()
@@ -24,8 +20,7 @@ class CommonListLogic(
 
     init {
         pushState(DataLoadState.Loading())
-        // TODO use Main in base LogicBLock
-        coroutineScope.launch(Main) {
+        launchInBlock {
             try {
                 val news = withContext(Background) {
                     repo.getNews()

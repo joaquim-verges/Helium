@@ -24,30 +24,21 @@ class ObservableUiBlock<S, E> : ObservableObject where S: BlockState, E: BlockEv
 }
 
 @available(iOS 13.0, *)
-public struct SwiftUiBlock<S : BlockState, E: BlockEvent, V: View>: View {
+public struct AppBlockSwiftUi<S : BlockState, E: BlockEvent, V: View> : View {
+    var logic: LogicBlock<S,E>
     var viewFactory: (S?, EventDispatcher<E>) -> V
     @ObservedObject var ob = ObservableUiBlock<S, E>()
-
-    public init(view: @escaping (S?, EventDispatcher<E>) -> V) {
+    
+    init(logic: LogicBlock<S,E>, view: @escaping (S?, EventDispatcher<E>) -> V) {
+        self.logic = logic
         self.viewFactory = view
+        AppBlock<S, E>(logic: logic, ui: ob.block).assemble(lifecycleWrapper: LifecycleWrapper())
     }
-
+    
     public var body: some View {
         return self.viewFactory(self.ob.state, self.ob.eventDispatcher)
     }
-
-    public func block() -> UiBlock<S,E> {
-        return ob.block
-    }
 }
-
-public extension UIWindowSceneDelegate {
-    func assemble<S:BlockState, E:BlockEvent, V: View>(logic: LogicBlock<S,E>, ui: SwiftUiBlock<S,E,V>) {
-        AppBlock<S, E>(logic: logic, ui: ui.block()).assemble(lifecycleWrapper: LifecycleWrapper())
-        // TODO scene coroutine scope
-    }
-}
-
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -61,12 +52,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // Create the SwiftUI view that provides the window contents.
         UITableView.appearance().separatorStyle = .none
-        let logic = CommonListLogic(repo: NewsRepository(api: NewsApi()))
-        let ui = SwiftUiBlock { state, eventDispatcher in
-            ContentView(state: state, eventDispatcher: eventDispatcher)
+        let appRouter = AppRouter()
+        let ui = AppBlockSwiftUi(logic: appRouter) { state, dispatcher in
+            AppUi(state: state, eventDispatcher: dispatcher, appRouter: appRouter)
         }
-
-        assemble(logic: logic, ui: ui)
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {

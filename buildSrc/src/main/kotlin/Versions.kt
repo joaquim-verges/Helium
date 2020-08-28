@@ -31,6 +31,6 @@ object Versions {
     const val accompanist = "0.2.0"
 
     // kotlin mpp
-    const val ktor = "1.4.0"
+    const val ktor = "1.3.2-1.4.0-rc"
 
 }

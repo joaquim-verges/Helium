@@ -11,11 +11,10 @@ import NewsCommon
 import SDWebImage
 import SDWebImageSwiftUI
 
-struct ContentView: View {
+struct ArticleListUi: View {
 
     var state: DataLoadState<ArticleResponse>?
-    var eventDispatcher: EventDispatcher<BlockEvent>
-    
+    var eventDispatcher: EventDispatcher<ArticleListLogic.Event>
     
     var body: some View {
         NavigationView {
@@ -29,14 +28,16 @@ struct ContentView: View {
             case is DataLoadStateLoading<ArticleResponse>: return AnyView(Text("Loading..."))
             case let loaded as DataLoadStateReady<ArticleResponse>: return AnyView(
                 List(loaded.data!.articles, id: \.title) { item in
-                    ArticleItemView(article: item as Article)
+                    ArticleItemView(article: item as Article, eventDispatcher: self.self.eventDispatcher)
                 })
-            default: return AnyView(Text("Error"))
+            case let error as DataLoadStateError<ArticleResponse>: return AnyView(Text(error.description()))
+            default: return AnyView(Text("No state"))
         }
     }
     
     struct ArticleItemView: View {
         var article: Article
+        var eventDispatcher: EventDispatcher<ArticleListLogic.Event>
         
         var body: some View {
             VStack(alignment: HorizontalAlignment.leading) {
@@ -49,6 +50,9 @@ struct ContentView: View {
                 }
                 
             }.padding([.vertical], 5)
+            .onTapGesture {
+                self.eventDispatcher.pushEvent(event: ArticleListLogic.EventArticleClicked(article: self.article))
+            }
         }
     }
     

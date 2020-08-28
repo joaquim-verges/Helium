@@ -1,6 +1,7 @@
 import com.android.build.gradle.LibraryExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 // Android
 
@@ -11,6 +12,7 @@ fun Project.androidLib() {
                 libVersionName = project.properties["VERSION_NAME"] as String
         )
     }
+    kotlinCompile()
 }
 
 fun Project.androidForMultiplatformLib() {
@@ -32,6 +34,14 @@ fun Project.androidForMultiplatformLib() {
                     }
                 }
         )
+    }
+}
+
+fun Project.kotlinCompile() {
+    tasks.withType(KotlinCompile::class.java) {
+        kotlinOptions {
+            jvmTarget = "1.8"
+        }
     }
 }
 

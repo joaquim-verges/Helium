@@ -32,6 +32,6 @@ fun ArticleList() {
 fun ArticleDetail(article: Article) {
     val logic = remember(article) { ArticleDetailLogic(article) }
     AppBlock(logic) { state, dispatcher ->
-        ArticleDetailUi(state)
+        ArticleDetailUi(state, dispatcher)
     }
 }

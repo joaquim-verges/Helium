@@ -22,7 +22,7 @@ struct ArticleDetailUi: View {
                 self.eventDispatcher.pushEvent(event: ArticleDetailLogic.DetailEventArticleClosed())
             }
             VStack(alignment: HorizontalAlignment.leading, spacing: 20.0) {
-                Text(self.state?.article.title ?? "")
+                Text(self.state?.article.title ?? "").fontWeight(Font.Weight.bold).font(.title)
                 Text(self.state?.article.description ?? "")
             }.padding(20.0)
         }.frame(maxHeight: .infinity, alignment: .top)

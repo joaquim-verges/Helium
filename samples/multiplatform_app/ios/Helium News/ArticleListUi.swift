@@ -73,7 +73,9 @@ struct ArticleListUi: View {
                         .clipShape(RoundedRectangle(cornerRadius: 8.0))
                 )
             } else {
-                return AnyView(Rectangle().frame(minWidth: 100.0, maxWidth: 100.0, minHeight: 100.0, maxHeight: 100.0).foregroundColor(Color.gray))
+                return AnyView(Rectangle()
+                    .frame(minWidth: 100.0, maxWidth: 100.0, minHeight: 100.0, maxHeight: 100.0)
+                    .foregroundColor(Color.gray))
             }
         }
     }

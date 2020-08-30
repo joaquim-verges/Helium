@@ -10,8 +10,8 @@ import com.joaquimverges.kmp.news.data.NewsRepository
 import kotlinx.coroutines.withContext
 
 class ArticleListLogic(
-        private val appRouter: AppRouter = AppRouter.get(),
-        private val repo: NewsRepository = NewsRepository()
+    private val appRouter: AppRouter = AppRouter.get(),
+    private val repo: NewsRepository = NewsRepository()
 ) : LogicBlock<DataLoadState<ArticleResponse>, ArticleListLogic.Event>() {
 
     sealed class Event : BlockEvent {

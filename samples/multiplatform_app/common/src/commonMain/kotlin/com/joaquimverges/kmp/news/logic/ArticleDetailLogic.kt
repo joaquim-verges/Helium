@@ -6,12 +6,12 @@ import com.joaquimverges.helium.core.state.BlockState
 import com.joaquimverges.kmp.news.data.Article
 
 class ArticleDetailLogic(
-        private val article: Article,
-        private val appRouter: AppRouter = AppRouter.get()
+    private val article: Article,
+    private val appRouter: AppRouter = AppRouter.get()
 ) : LogicBlock<ArticleDetailLogic.DetailState, ArticleDetailLogic.DetailEvent>() {
 
     data class DetailState(
-            val article: Article
+        val article: Article
     ) : BlockState
 
     sealed class DetailEvent : BlockEvent {
@@ -27,5 +27,4 @@ class ArticleDetailLogic(
             DetailEvent.ArticleClosed -> appRouter.pushState(AppRouter.Screen.ArticleList)
         }
     }
-
 }

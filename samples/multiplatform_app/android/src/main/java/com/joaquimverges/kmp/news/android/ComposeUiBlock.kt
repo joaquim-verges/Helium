@@ -8,7 +8,7 @@ import com.joaquimverges.helium.core.state.BlockState
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-// TODO in core
+// TODO in core-compose
 @Composable
 fun <S : BlockState, E : BlockEvent> AppBlock(
         logic: LogicBlock<S, E>,

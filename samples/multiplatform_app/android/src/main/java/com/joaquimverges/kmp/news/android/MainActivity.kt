@@ -7,19 +7,19 @@ import com.joaquimverges.kmp.news.logic.AppRouter
 
 class MainActivity : AppCompatActivity() {
 
-    private val appLogic = AppRouter.get()
+    private val appRouter = AppRouter.get()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            AppBlock(appLogic) { state, _ ->
-                AppUi(state = state)
+            AppBlock(appRouter) { state, _ ->
+                AppUi(state)
             }
         }
     }
 
     override fun onBackPressed() {
-        if (!appLogic.onBackPressed()) {
+        if (!appRouter.onBackPressed()) {
             super.onBackPressed()
         }
     }

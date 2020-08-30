@@ -8,6 +8,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.material.TopAppBar
+import androidx.compose.material.ripple.RippleIndication
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -84,7 +85,9 @@ fun list(model: DataLoadState.Ready<ArticleResponse>, eventDispatcher: EventDisp
 fun item(article: Article, eventDispatcher: EventDispatcher<ArticleListLogic.Event>) {
     Row(modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = { eventDispatcher.pushEvent(ArticleListLogic.Event.ArticleClicked(article)) })
+            .clickable(onClick = {
+                eventDispatcher.pushEvent(ArticleListLogic.Event.ArticleClicked(article))
+            }, indication = RippleIndication())
             .padding(horizontal = 24.dp, vertical = 12.dp),
             verticalGravity = Alignment.CenterVertically
     ) {

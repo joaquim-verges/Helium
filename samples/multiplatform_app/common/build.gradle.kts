@@ -14,24 +14,7 @@ val ios_framework_name = "NewsCommon"
 kotlin {
 
     android()
-
-    ios {
-        binaries {
-
-            framework(ios_framework_name) {
-                // FIXME these below get ignored by the cocoapod sync
-                isStatic = false
-                transitiveExport = true
-                export(project(":helium-core"))
-                freeCompilerArgs = freeCompilerArgs + "-Xobjc-generics"
-            }
-            // FIXME these below is probably useless
-            sharedLib {
-                // It's possible to export different sets of dependencies to different binaries.
-                export(project(":helium-core"))
-            }
-        }
-    }
+    ios()
 
     sourceSets["commonMain"].apply {
         dependencies {
@@ -64,8 +47,6 @@ kotlin {
 
     targets.withType<KotlinNativeTarget> {
         binaries.withType<Framework> {
-            // isStatic = false FIXME this break things
-            // !! These 2 lines below are what makes transitive deps wor
             transitiveExport = true
             export(project(":helium-core"))
         }

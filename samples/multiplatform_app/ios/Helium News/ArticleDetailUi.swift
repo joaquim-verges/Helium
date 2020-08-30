@@ -38,11 +38,11 @@ struct ArticleDetailUi: View {
         func loadImage(url: String?) -> some View {
             if let wrapper = URL(string: url ?? "") {
                 return AnyView(
-                        WebImage(url: wrapper)
+                    WebImage(url: wrapper)
                         .resizable()
                         .scaledToFit()
                         .frame(maxHeight: 300)
-                        
+                    
                 )
             } else {
                 return AnyView(Rectangle()

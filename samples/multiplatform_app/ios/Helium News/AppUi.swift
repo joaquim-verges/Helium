@@ -31,7 +31,7 @@ struct AppUi: View {
     private func ListScreen() -> some View {
         let logic = ArticleListLogic(appRouter: appRouter, repo: NewsRepository(api: NewsApi()))
         return AppBlockSwiftUi(logic: logic) { state, eventDispatcher in
-                ArticleListUi(state: state, eventDispatcher: eventDispatcher)
+            ArticleListUi(state: state, eventDispatcher: eventDispatcher)
         }
     }
     
@@ -41,5 +41,4 @@ struct AppUi: View {
             ArticleDetailUi(state: state, eventDispatcher: eventDispatcher)
         }
     }
-    
 }

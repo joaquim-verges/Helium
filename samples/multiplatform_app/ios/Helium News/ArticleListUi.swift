@@ -12,7 +12,7 @@ import SDWebImage
 import SDWebImageSwiftUI
 
 struct ArticleListUi: View {
-
+    
     var state: DataLoadState<ArticleResponse>?
     var eventDispatcher: EventDispatcher<ArticleListLogic.Event>
     
@@ -22,16 +22,16 @@ struct ArticleListUi: View {
         }
     }
     
-    // cannot have a switch statement inside the body var direclty :|
+    // cannot have a switch statement inside the body var direclty
     private var generateView: some View {
         switch self.state {
-            case is DataLoadStateLoading<ArticleResponse>: return AnyView(Text("Loading..."))
-            case let loaded as DataLoadStateReady<ArticleResponse>: return AnyView(
-                List(loaded.data!.articles, id: \.title) { item in
-                    ArticleItemView(article: item as Article, eventDispatcher: self.self.eventDispatcher)
-                })
-            case let error as DataLoadStateError<ArticleResponse>: return AnyView(Text(error.description()))
-            default: return AnyView(Text("No state"))
+        case is DataLoadStateLoading<ArticleResponse>: return AnyView(Text("Loading..."))
+        case let loaded as DataLoadStateReady<ArticleResponse>: return AnyView(
+            List(loaded.data!.articles, id: \.title) { item in
+                ArticleItemView(article: item as Article, eventDispatcher: self.self.eventDispatcher)
+        })
+        case let error as DataLoadStateError<ArticleResponse>: return AnyView(Text(error.description()))
+        default: return AnyView(Text("No state"))
         }
     }
     
@@ -50,8 +50,8 @@ struct ArticleListUi: View {
                 }
                 
             }.padding([.vertical], 5)
-            .onTapGesture {
-                self.eventDispatcher.pushEvent(event: ArticleListLogic.EventArticleClicked(article: self.article))
+                .onTapGesture {
+                    self.eventDispatcher.pushEvent(event: ArticleListLogic.EventArticleClicked(article: self.article))
             }
         }
     }
@@ -66,7 +66,7 @@ struct ArticleListUi: View {
         func loadImage(url: String?) -> some View {
             if let wrapper = URL(string: url ?? "") {
                 return AnyView(
-                        WebImage(url: wrapper)
+                    WebImage(url: wrapper)
                         .resizable()
                         .scaledToFill()
                         .frame(minWidth: 100.0, maxWidth: 100.0, minHeight: 100.0, maxHeight: 100.0)

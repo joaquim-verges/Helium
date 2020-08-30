@@ -13,6 +13,7 @@
 		DF245EC124E64BB300E8746B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF245EC024E64BB300E8746B /* Assets.xcassets */; };
 		DF245EC424E64BB300E8746B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF245EC324E64BB300E8746B /* Preview Assets.xcassets */; };
 		DF245EC724E64BB300E8746B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF245EC524E64BB300E8746B /* LaunchScreen.storyboard */; };
+		DF6F313E24FC62600030CAD6 /* AppBlockSwiftUi.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF6F313D24FC62600030CAD6 /* AppBlockSwiftUi.swift */; };
 		DFE08FBC24F8C6790062ACDB /* AppUi.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE08FBB24F8C6790062ACDB /* AppUi.swift */; };
 		DFE08FBE24F8F2BB0062ACDB /* ArticleDetailUi.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE08FBD24F8F2BB0062ACDB /* ArticleDetailUi.swift */; };
 		FB800E5B45A5CFAE67386530 /* Pods_Helium_News.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3456DD617CB873348CA72FA8 /* Pods_Helium_News.framework */; };
@@ -29,6 +30,7 @@
 		DF245EC324E64BB300E8746B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DF245EC624E64BB300E8746B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DF245EC824E64BB300E8746B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DF6F313D24FC62600030CAD6 /* AppBlockSwiftUi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBlockSwiftUi.swift; sourceTree = "<group>"; };
 		DFE08FBB24F8C6790062ACDB /* AppUi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUi.swift; sourceTree = "<group>"; };
 		DFE08FBD24F8F2BB0062ACDB /* ArticleDetailUi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDetailUi.swift; sourceTree = "<group>"; };
 		F68A5AD8D9FB2A3952A68211 /* Pods-Helium News.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Helium News.release.xcconfig"; path = "Target Support Files/Pods-Helium News/Pods-Helium News.release.xcconfig"; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 				DFE08FBD24F8F2BB0062ACDB /* ArticleDetailUi.swift */,
 				DF245EBC24E64BB000E8746B /* SceneDelegate.swift */,
 				DF245EBA24E64BB000E8746B /* AppDelegate.swift */,
+				DF6F313D24FC62600030CAD6 /* AppBlockSwiftUi.swift */,
 				DF245EC024E64BB300E8746B /* Assets.xcassets */,
 				DF245EC524E64BB300E8746B /* LaunchScreen.storyboard */,
 				DF245EC824E64BB300E8746B /* Info.plist */,
@@ -221,6 +224,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DFE08FBE24F8F2BB0062ACDB /* ArticleDetailUi.swift in Sources */,
+				DF6F313E24FC62600030CAD6 /* AppBlockSwiftUi.swift in Sources */,
 				DF245EBB24E64BB000E8746B /* AppDelegate.swift in Sources */,
 				DFE08FBC24F8C6790062ACDB /* AppUi.swift in Sources */,
 				DF245EBD24E64BB000E8746B /* SceneDelegate.swift in Sources */,

@@ -17,13 +17,12 @@ import java.util.concurrent.TimeUnit
 class MyListLogic : ListLogic<MyItem, ClickEvent<MyItem>>(MyListRepository(), RefreshPolicy(5, TimeUnit.MINUTES)) {
 
     override fun onUiEvent(event: ListBlockEvent<ClickEvent<MyItem>>) {
-        when(event) {
-           is ListBlockEvent.ListItemEvent -> {
-               val context = event.itemEvent.view.context
-               val clickedColor = ContextCompat.getColor(context, event.itemEvent.data.color)
-               Toast.makeText(context, "Clicked color ${Colors.toHexString(clickedColor)}", Toast.LENGTH_SHORT).show()
-           }
+        when (event) {
+            is ListBlockEvent.ListItemEvent -> {
+                val context = event.itemEvent.view.context
+                val clickedColor = ContextCompat.getColor(context, event.itemEvent.data.color)
+                Toast.makeText(context, "Clicked color ${Colors.toHexString(clickedColor)}", Toast.LENGTH_SHORT).show()
+            }
         }
-
     }
 }

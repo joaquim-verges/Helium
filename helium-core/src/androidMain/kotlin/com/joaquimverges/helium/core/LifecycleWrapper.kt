@@ -12,8 +12,8 @@ import kotlinx.coroutines.CoroutineScope
  * @author joaqu
  */
 actual class LifecycleWrapper(
-        private val lifecycle: Lifecycle,
-        private val scope: CoroutineScope = lifecycle.coroutineScope
+    private val lifecycle: Lifecycle,
+    private val scope: CoroutineScope = lifecycle.coroutineScope
 ) {
     actual val coroutineScope: CoroutineScope = scope
 
@@ -39,4 +39,3 @@ fun <S : BlockState, E : BlockEvent> LifecycleOwner.assemble(appBlock: AppBlock<
 fun <S : BlockState, E : BlockEvent> LifecycleOwner.assemble(logic: LogicBlock<S, E>, ui: UiBlock<S, E>) {
     assemble(logic + ui)
 }
-

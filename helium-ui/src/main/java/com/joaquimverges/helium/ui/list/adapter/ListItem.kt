@@ -9,7 +9,6 @@ import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.event.EventDispatcher
-import kotlinx.coroutines.channels.BroadcastChannel
 
 /**
  * Base class for RecyclerView items.

@@ -22,16 +22,19 @@ class ListAdapter<in T, E : BlockEvent, VH : ListItem<T, E>>(
     private val viewEvents: EventDispatcher<E> = EventDispatcher()
 ) : RecyclerView.Adapter<VH>() {
 
-    private val diff = AsyncListDiffer<T>(this, object : DiffUtil.ItemCallback<T>() {
-        override fun areItemsTheSame(oldItem: T, newItem: T): Boolean {
-            return oldItem == newItem
-        }
+    private val diff = AsyncListDiffer<T>(
+        this,
+        object : DiffUtil.ItemCallback<T>() {
+            override fun areItemsTheSame(oldItem: T, newItem: T): Boolean {
+                return oldItem == newItem
+            }
 
-        @SuppressLint("DiffUtilEquals")
-        override fun areContentsTheSame(oldItem: T, newItem: T): Boolean {
-            return oldItem == newItem
+            @SuppressLint("DiffUtilEquals")
+            override fun areContentsTheSame(oldItem: T, newItem: T): Boolean {
+                return oldItem == newItem
+            }
         }
-    })
+    )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         val holder = viewHolderFactory.invoke(inflater, parent)

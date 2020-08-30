@@ -12,8 +12,11 @@ import com.joaquimverges.helium.ui.viewpager.PagerUi
  */
 class ViewPagerFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return PagerUi(requireActivity(), ViewPagerActivity.MyPageProvider(), viewPagerConfig = {
-            it.pageMargin = resources.getDimensionPixelSize(R.dimen.menu_padding)
-        }).view
+        return PagerUi(
+            requireActivity(), ViewPagerActivity.MyPageProvider(),
+            viewPagerConfig = {
+                it.pageMargin = resources.getDimensionPixelSize(R.dimen.menu_padding)
+            }
+        ).view
     }
 }

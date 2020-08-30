@@ -23,12 +23,12 @@ open class HeliumTestCase : TestCase() {
     @get:Rule var mockRule = MockitoInitializationRule(this)
     @get:Rule var coroutinesTestRule = CoroutinesTestRule()
 
-    val testCoroutineScope : CoroutineScope = TestCoroutineScope(coroutinesTestRule.testDispatcher)
+    val testCoroutineScope: CoroutineScope = TestCoroutineScope(coroutinesTestRule.testDispatcher)
 
     /**
      * Assemble blocks with a mocked lifecycle
      */
-    fun <S: BlockState, E: BlockEvent> assemble(appBlock: AppBlock<S, E>) {
+    fun <S : BlockState, E : BlockEvent> assemble(appBlock: AppBlock<S, E>) {
         appBlock.assemble(LifecycleWrapper(getMockLifecycle(), testCoroutineScope))
     }
 
@@ -40,5 +40,4 @@ open class HeliumTestCase : TestCase() {
             whenever(currentState).thenReturn(state)
         }
     }
-
 }

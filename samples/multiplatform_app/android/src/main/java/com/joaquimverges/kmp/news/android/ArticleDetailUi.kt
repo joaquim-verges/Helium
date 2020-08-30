@@ -18,27 +18,34 @@ import dev.chrisbanes.accompanist.coil.CoilImage
 
 @Composable
 fun ArticleDetailUi(
-        state: ArticleDetailLogic.DetailState?,
-        dispatcher: EventDispatcher<ArticleDetailLogic.DetailEvent>
+    state: ArticleDetailLogic.DetailState?,
+    dispatcher: EventDispatcher<ArticleDetailLogic.DetailEvent>
 ) {
     Surface {
         state?.article?.let { article ->
             ScrollableColumn(Modifier.fillMaxSize()) {
                 CoilImage(
-                        modifier = Modifier.fillMaxWidth()
-                                .aspectRatio(16 / 9f)
-                                .clickable(onClick = {
-                                    dispatcher.pushEvent(ArticleDetailLogic.DetailEvent.ArticleClosed)
-                                }),
-                        data = article.urlToImage ?: "",
-                        contentScale = ContentScale.Crop
+                    modifier = Modifier.fillMaxWidth()
+                        .aspectRatio(16 / 9f)
+                        .clickable(
+                            onClick = {
+                                dispatcher.pushEvent(ArticleDetailLogic.DetailEvent.ArticleClosed)
+                            }
+                        ),
+                    data = article.urlToImage ?: "",
+                    contentScale = ContentScale.Crop
                 )
                 Column(Modifier.fillMaxWidth().padding(24.dp)) {
-                    Text(text = article.title ?: "",
-                            style = TextStyle(fontSize = 22.sp, fontWeight = FontWeight.Medium))
+                    Text(
+                        text = article.title ?: "",
+                        style = TextStyle(fontSize = 22.sp, fontWeight = FontWeight.Medium)
+                    )
                     Spacer(modifier = Modifier.height(24.dp))
-                    Text(article.description
-                            ?: "", style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal))
+                    Text(
+                        article.description
+                            ?: "",
+                        style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal)
+                    )
                 }
             }
         }

@@ -23,7 +23,7 @@ import com.joaquimverges.helium.navigation.R
  * @param actionBarCustomization: Extra customization for the ActionBar (likely up navigation controls)
  * @param toolbarCustomization: Extra customization for the Toolbar (any other styling)
  */
-open class CollapsingToolbarUi<S: BlockState, E: BlockEvent>(
+open class CollapsingToolbarUi<S : BlockState, E : BlockEvent>(
     inflater: LayoutInflater,
     contentUi: UiBlock<*, *>,
     backdropUi: UiBlock<*, *>? = null,
@@ -65,6 +65,5 @@ open class CollapsingToolbarUi<S: BlockState, E: BlockEvent>(
     }
 
     override fun render(state: S) {
-
     }
 }

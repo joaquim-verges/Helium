@@ -24,9 +24,9 @@ import kotlinx.coroutines.flow.Flow
  * @see com.joaquimverges.helium.core.LogicBlock
  */
 abstract class UiBlock<in S : BlockState, E : BlockEvent> constructor(
-        val view: View,
-        private val eventDispatcher: EventDispatcher<E> = EventDispatcher(),
-        protected val context: Context = view.context
+    val view: View,
+    private val eventDispatcher: EventDispatcher<E> = EventDispatcher(),
+    protected val context: Context = view.context
 ) : IUiBlock<S, E> {
 
     /**
@@ -38,11 +38,11 @@ abstract class UiBlock<in S : BlockState, E : BlockEvent> constructor(
      * @param addToContainer optional flag to also add the inflated layout to the passed container
      */
     constructor(
-            @LayoutRes layoutResId: Int,
-            inflater: LayoutInflater,
-            container: ViewGroup? = null,
-            addToContainer: Boolean = false,
-            view: View = inflater.inflate(layoutResId, container, addToContainer)
+        @LayoutRes layoutResId: Int,
+        inflater: LayoutInflater,
+        container: ViewGroup? = null,
+        addToContainer: Boolean = false,
+        view: View = inflater.inflate(layoutResId, container, addToContainer)
     ) : this(view)
 
     /**

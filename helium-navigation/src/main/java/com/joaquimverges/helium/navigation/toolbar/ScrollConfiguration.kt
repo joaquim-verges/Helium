@@ -43,25 +43,25 @@ data class ScrollConfiguration(
         SCROLL_OFF(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL),
         SCROLL_OFF_UNTIL_COLLAPSED(
             AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
-                    or AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP
-                    or AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED
+                or AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP
+                or AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED
         ),
         SCROLL_OFF_AND_SCROLL_BACK_IN(
             AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
-                    or AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP
-                    or AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS
+                or AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP
+                or AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS
         ),
         SCROLL_OFF_UNTIL_COLLAPSED_AND_SCROLL_BACK_IN(
             AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
-                    or AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP
-                    or AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED
-                    or AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS
+                or AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP
+                or AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED
+                or AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS
         ),
         SCROLL_OFF_AND_SCROLL_BACK_IN_COLLAPSED(
             AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
-                    or AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP
-                    or AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS
-                    or AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS_COLLAPSED
+                or AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP
+                or AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS
+                or AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS_COLLAPSED
         )
     }
 

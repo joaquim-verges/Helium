@@ -62,10 +62,12 @@ class MainActivity : AppCompatActivity() {
 
     // VIEW
 
-    class MenuListItem(inflater: LayoutInflater,
-                       parent: ViewGroup,
-                       root: View = inflater.inflate(R.layout.menu_item_layout, parent, false))
-        : CardListItem<MenuItem, ClickEvent<MenuItem>>(root, inflater, parent) {
+    class MenuListItem(
+        inflater: LayoutInflater,
+        parent: ViewGroup,
+        root: View = inflater.inflate(R.layout.menu_item_layout, parent, false)
+    ) :
+        CardListItem<MenuItem, ClickEvent<MenuItem>>(root, inflater, parent) {
 
         private val title = root.findViewById<TextView>(R.id.menu_title)
 
@@ -80,11 +82,15 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val listUi = ListUi(layoutInflater, { inflater, container ->
-            MenuListItem(inflater, container)
-        }, recyclerViewConfig = {
-            it.addItemDecoration(GridSpacingDecorator(resources.getDimensionPixelSize(R.dimen.menu_padding)))
-        })
+        val listUi = ListUi(
+            layoutInflater,
+            { inflater, container ->
+                MenuListItem(inflater, container)
+            },
+            recyclerViewConfig = {
+                it.addItemDecoration(GridSpacingDecorator(resources.getDimensionPixelSize(R.dimen.menu_padding)))
+            }
+        )
         assemble(MenuLogicBlock() + listUi)
         setContentView(listUi.view)
     }

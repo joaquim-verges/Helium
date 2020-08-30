@@ -8,6 +8,6 @@ import kotlinx.coroutines.CoroutineScope
 /**
  * @author joaqu
  */
-actual abstract class HeliumViewModel: ViewModel(), LifecycleObserver {
+actual abstract class HeliumViewModel : ViewModel(), LifecycleObserver {
     actual val coroutineScope: CoroutineScope = viewModelScope
 }

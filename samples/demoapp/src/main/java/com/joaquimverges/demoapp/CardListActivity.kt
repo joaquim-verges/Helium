@@ -27,7 +27,8 @@ class CardListActivity : AppCompatActivity() {
             recyclerViewConfig = {
                 val padding = resources.getDimensionPixelSize(R.dimen.grid_spacing_double)
                 it.addItemDecoration(GridSpacingDecorator(padding))
-            })
+            }
+        )
 
         assemble(logic + listUi)
         setContentView(

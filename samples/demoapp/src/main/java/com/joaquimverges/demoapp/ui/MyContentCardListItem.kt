@@ -11,8 +11,8 @@ import com.joaquimverges.demoapp.data.MyItem
 import com.joaquimverges.helium.core.event.ClickEvent
 import com.joaquimverges.helium.ui.list.card.ContentCardListItem
 
-class MyContentCardListItem(inflater: LayoutInflater, container: ViewGroup)
-    : ContentCardListItem<MyItem, ClickEvent<MyItem>>(inflater, container) {
+class MyContentCardListItem(inflater: LayoutInflater, container: ViewGroup) :
+    ContentCardListItem<MyItem, ClickEvent<MyItem>>(inflater, container) {
 
     override fun bindTitle(data: MyItem, view: TextView) {
         view.text = data.name

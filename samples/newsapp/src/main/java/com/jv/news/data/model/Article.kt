@@ -1,6 +1,6 @@
 package com.jv.news.data.model
 
-import java.util.*
+import java.util.Date
 
 /**
  * @author jverges

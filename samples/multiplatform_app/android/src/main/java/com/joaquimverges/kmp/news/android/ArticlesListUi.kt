@@ -28,17 +28,22 @@ import dev.chrisbanes.accompanist.coil.CoilImage
 
 @Composable
 fun ArticleListUI(
-        state: DataLoadState<ArticleResponse>?,
-        eventDispatcher: EventDispatcher<ArticleListLogic.Event>
+    state: DataLoadState<ArticleResponse>?,
+    eventDispatcher: EventDispatcher<ArticleListLogic.Event>
 ) {
-    Scaffold(topBar = {
-        TopAppBar(title = {
-            Text(
-                    "Helium News",
-                    style = TextStyle(fontSize = 28.sp, fontWeight = FontWeight.Black)
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        "Helium News",
+                        style = TextStyle(fontSize = 28.sp, fontWeight = FontWeight.Black)
+                    )
+                },
+                backgroundColor = Color.White, modifier = Modifier.height(72.dp)
             )
-        }, backgroundColor = Color.White, modifier = Modifier.height(72.dp))
-    }) {
+        }
+    ) {
         when (state) {
             is DataLoadState.Init, is DataLoadState.Loading, null -> {
                 centered {
@@ -49,7 +54,6 @@ fun ArticleListUI(
                 centered {
                     Text("No Articles Found")
                 }
-
             }
             is DataLoadState.Error -> {
                 centered {
@@ -66,16 +70,19 @@ fun ArticleListUI(
 @Composable
 fun centered(children: @Composable () -> Unit) {
     Column(
-            Modifier.fillMaxWidth().fillMaxHeight(),
-            horizontalGravity = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+        Modifier.fillMaxWidth().fillMaxHeight(),
+        horizontalGravity = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
         children()
     }
 }
 
 @Composable
-fun list(model: DataLoadState.Ready<ArticleResponse>, eventDispatcher: EventDispatcher<ArticleListLogic.Event>) {
+fun list(
+    model: DataLoadState.Ready<ArticleResponse>,
+    eventDispatcher: EventDispatcher<ArticleListLogic.Event>
+) {
     LazyColumnFor(items = model.data.articles) {
         item(article = it, eventDispatcher)
     }
@@ -83,26 +90,36 @@ fun list(model: DataLoadState.Ready<ArticleResponse>, eventDispatcher: EventDisp
 
 @Composable
 fun item(article: Article, eventDispatcher: EventDispatcher<ArticleListLogic.Event>) {
-    Row(modifier = Modifier
+    Row(
+        modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = {
-                eventDispatcher.pushEvent(ArticleListLogic.Event.ArticleClicked(article))
-            }, indication = RippleIndication())
+            .clickable(
+                onClick = {
+                    eventDispatcher.pushEvent(ArticleListLogic.Event.ArticleClicked(article))
+                },
+                indication = RippleIndication()
+            )
             .padding(horizontal = 24.dp, vertical = 12.dp),
-            verticalGravity = Alignment.CenterVertically
+        verticalGravity = Alignment.CenterVertically
     ) {
         CoilImage(
-                modifier = Modifier.size(100.dp).clip(RoundedCornerShape(5.dp)),
-                data = article.urlToImage ?: "",
-                contentScale = ContentScale.Crop
+            modifier = Modifier.size(100.dp).clip(RoundedCornerShape(5.dp)),
+            data = article.urlToImage ?: "",
+            contentScale = ContentScale.Crop
         )
         Spacer(modifier = Modifier.width(24.dp))
         Column(modifier = Modifier.weight(1f)) {
-            Text(article.source?.name
-                    ?: "", style = TextStyle(fontSize = 16.sp, color = Color.DarkGray))
+            Text(
+                article.source?.name
+                    ?: "",
+                style = TextStyle(fontSize = 16.sp, color = Color.DarkGray)
+            )
             Spacer(modifier = Modifier.height(5.dp))
-            Text(article.title
-                    ?: "", style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Medium))
+            Text(
+                article.title
+                    ?: "",
+                style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Medium)
+            )
         }
     }
 }

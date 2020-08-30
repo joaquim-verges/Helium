@@ -17,11 +17,12 @@ import com.joaquimverges.helium.core.state.DataLoadState
 /**
  * @author joaquim
  */
-class MyDetailUi(inflater: LayoutInflater, container: ViewGroup?)
-    : UiBlock<DataLoadState<MyItem>, ClickEvent<MyItem>>(
+class MyDetailUi(inflater: LayoutInflater, container: ViewGroup?) :
+    UiBlock<DataLoadState<MyItem>, ClickEvent<MyItem>>(
         R.layout.detail_layout,
         inflater,
-        container) {
+        container
+    ) {
 
     private val detailColorView: View = findView(R.id.detail_color_view)
     private val colorNameView: TextView = findView(R.id.color_name)

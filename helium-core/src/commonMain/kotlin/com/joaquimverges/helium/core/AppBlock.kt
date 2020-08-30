@@ -40,7 +40,6 @@ class AppBlock<S : BlockState, E : BlockEvent>(
     }
 }
 
-
 /**
  * Convenience operator to create an AppBlock.
  * Usage : (LogicBlock + UIBlock)

@@ -62,5 +62,6 @@ abstract class LogicBlock<S : BlockState, E : BlockEvent> : HeliumViewModel() {
 
     fun <T> Flow<T>.launchInBlock() = launchIn(coroutineScope)
 
-    inline fun launchInBlock(crossinline codeBlock: suspend () -> Unit) = coroutineScope.launch(Main) { codeBlock() }
+    inline fun launchInBlock(crossinline codeBlock: suspend () -> Unit) =
+        coroutineScope.launch(Main) { codeBlock() }
 }

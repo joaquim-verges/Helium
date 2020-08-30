@@ -9,8 +9,8 @@ import kotlinx.coroutines.flow.Flow
  * @author joaqu
  */
 class UiBlock<in S : BlockState, E : BlockEvent>(
-        private val eventDispatcher: EventDispatcher<E> = EventDispatcher(),
-        private val renderer : (S) -> Unit
+    private val eventDispatcher: EventDispatcher<E> = EventDispatcher(),
+    private val renderer: (S) -> Unit
 ) : IUiBlock<S, E> {
 
     /**

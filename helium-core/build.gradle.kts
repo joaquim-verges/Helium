@@ -1,4 +1,3 @@
-
 plugins {
     id("com.android.library")
     kotlin("multiplatform")
@@ -7,7 +6,6 @@ plugins {
 
 version = (project.properties["VERSION_NAME"] as String)
 val ios_framework_name = "HeliumCore"
-
 
 kotlin {
 
@@ -48,4 +46,4 @@ kotlin {
 
 androidForMultiplatformLib()
 // TODO
-//apply("../maven-push.gradle")
+// apply("../maven-push.gradle")

@@ -33,9 +33,10 @@ class ListUiTest : HeliumUiTestCase() {
     @Before
     fun setup() {
         onActivity {
-            ui = ListUi(LayoutInflater.from(it), { _, _ ->
-                TestListItem(it)
-            })
+            ui = ListUi(
+                LayoutInflater.from(it),
+                { _, _ -> TestListItem(it) }
+            )
             it.setContentView(ui.view)
             (it as LifecycleOwner).assemble(logic + ui)
         }

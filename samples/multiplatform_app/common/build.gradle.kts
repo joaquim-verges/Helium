@@ -1,5 +1,5 @@
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import org.jetbrains.kotlin.gradle.plugin.mpp.Framework
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
     kotlin("multiplatform")
@@ -58,7 +58,7 @@ kotlin {
         frameworkName = ios_framework_name
 
         // TODO experiment with having core as a pod dependency to get the swift files
-        //pod("helium_core", podspec = project.file("../../../helium-core/helium_core.podspec"))
+        // pod("helium_core", podspec = project.file("../../../helium-core/helium_core.podspec"))
         podfile = project.file("../ios/Podfile")
     }
 

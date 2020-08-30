@@ -1,4 +1,4 @@
-package com.joaquimverges.kmp.news.android
+package com.joaquimvergse.helium.compose
 
 import androidx.compose.runtime.*
 import com.joaquimverges.helium.core.event.EventDispatcher
@@ -8,7 +8,6 @@ import com.joaquimverges.helium.core.state.BlockState
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-// TODO in core-compose
 @Composable
 fun <S : BlockState, E : BlockEvent> AppBlock(
         logic: LogicBlock<S, E>,

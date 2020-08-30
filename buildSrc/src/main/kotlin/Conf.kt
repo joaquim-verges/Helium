@@ -5,12 +5,13 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 // Android
 
-fun Project.androidLib() {
+fun Project.androidLib(extraConf: (LibraryExtension.() -> Unit)? = null) {
     extensions.getByType(LibraryExtension::class.java).apply {
         configureAndroid(
                 libVersionCode = (project.properties["VERSION_CODE"] as String).toInt(),
                 libVersionName = project.properties["VERSION_NAME"] as String
         )
+        extraConf?.invoke(this)
     }
     kotlinCompile()
 }

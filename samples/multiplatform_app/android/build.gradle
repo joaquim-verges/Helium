@@ -54,10 +54,10 @@ tasks.withType(KotlinCompile).configureEach {
 
 dependencies {
     implementation project(':helium-core')
+    implementation project(':helium-compose')
     implementation project(':samples:multiplatform_app:common')
 
     Deps.androidXUiDeps.forEach { implementation(it) }
-    Deps.composeDeps.forEach { implementation(it) }
 
     implementation "dev.chrisbanes.accompanist:accompanist-coil:${Versions.accompanist}"
 }

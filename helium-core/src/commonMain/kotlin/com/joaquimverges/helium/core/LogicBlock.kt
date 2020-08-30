@@ -4,7 +4,8 @@ import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.event.EventDispatcher
 import com.joaquimverges.helium.core.state.BlockState
 import com.joaquimverges.helium.core.state.StateObserver
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.launch
 
 /**
@@ -51,8 +52,9 @@ abstract class LogicBlock<S : BlockState, E : BlockEvent> : HeliumViewModel() {
         this.state.pushState(state)
     }
 
-    // internal functions
-
+    /**
+     * Processes a new block event
+     */
     fun processEvent(event: E) {
         onUiEvent(event)
         eventDispatcher.pushEvent(event)

@@ -1,0 +1,44 @@
+{
+  "name": "helium_core",
+  "version": "0.6.0",
+  "homepage": "https://github.com/joaquimverges/Helium",
+  "source": {
+    "git": "Not Published",
+    "tag": "Cocoapods/helium_core/0.6.0"
+  },
+  "authors": "",
+  "license": "",
+  "summary": "CocoaPod for Helium Core on iOS",
+  "static_framework": true,
+  "vendored_frameworks": "build/cocoapods/framework/HeliumCore.framework",
+  "libraries": "c++",
+  "module_name": "helium_core",
+  "platforms": {
+    "ios": "9.0"
+  },
+  "swift_versions": "4.2",
+  "pod_target_xcconfig": {
+    "KOTLIN_TARGET[sdk=iphonesimulator*]": "ios_x64",
+    "KOTLIN_TARGET[sdk=iphoneos*]": "ios_arm",
+    "KOTLIN_TARGET[sdk=watchsimulator*]": "watchos_x86",
+    "KOTLIN_TARGET[sdk=watchos*]": "watchos_arm",
+    "KOTLIN_TARGET[sdk=appletvsimulator*]": "tvos_x64",
+    "KOTLIN_TARGET[sdk=appletvos*]": "tvos_arm64",
+    "KOTLIN_TARGET[sdk=macosx*]": "macos_x64"
+  },
+  "script_phases": [
+    {
+      "name": "Build helium_core",
+      "execution_position": "before_compile",
+      "shell_path": "/bin/sh",
+      "script": "                set -ev\n                export JAVA_HOME=\"/Applications/Android Studio.app/Contents/jre/jdk/Contents/Home\"\n                REPO_ROOT=\"$PODS_TARGET_SRCROOT\"\n                \"$REPO_ROOT/../gradlew\" -p \"$REPO_ROOT\" :helium-core:syncFramework                     -Pkotlin.native.cocoapods.target=$KOTLIN_TARGET                     -Pkotlin.native.cocoapods.configuration=$CONFIGURATION                     -Pkotlin.native.cocoapods.cflags=\"$OTHER_CFLAGS\"                     -Pkotlin.native.cocoapods.paths.headers=\"$HEADER_SEARCH_PATHS\"                     -Pkotlin.native.cocoapods.paths.frameworks=\"$FRAMEWORK_SEARCH_PATHS\"\n"
+    }
+  ],
+  "subspecs": [
+    {
+      "name": "HeliumSwiftUI",
+      "source_files": "src/iosMain/swift/**/*.{h,m,swift}"
+    }
+  ],
+  "swift_version": "4.2"
+}

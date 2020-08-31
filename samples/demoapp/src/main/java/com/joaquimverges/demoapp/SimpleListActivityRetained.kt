@@ -14,11 +14,13 @@ class SimpleListActivityRetained : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val logic = getRetainedLogicBlock<MyListLogic>()
-        val ui = ListUi(layoutInflater, { inflater, container ->
-            MyListItem(inflater, container)
-        })
+        val ui = ListUi(
+            layoutInflater,
+            { inflater, container ->
+                MyListItem(inflater, container)
+            }
+        )
         assemble(logic + ui)
         setContentView(ui.view)
     }
 }
-

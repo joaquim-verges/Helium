@@ -44,7 +44,6 @@ class NavDrawerUi(
             override fun onDrawerOpened(drawerView: View) {
                 pushEvent(NavDrawerEvent.DrawerOpened)
             }
-
         })
     }
 

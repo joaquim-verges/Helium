@@ -12,5 +12,5 @@ import com.joaquimverges.helium.core.event.BlockEvent
  */
 sealed class BottomNavEvent : BlockEvent {
     data class NavigationChanged(val context: Context, val controller: NavController, val destination: NavDestination, val arguments: Bundle?) : BottomNavEvent()
-    data class NavItemReselected(val context: Context, @IdRes val menuId: Int): BottomNavEvent()
+    data class NavItemReselected(val context: Context, @IdRes val menuId: Int) : BottomNavEvent()
 }

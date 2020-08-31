@@ -63,5 +63,4 @@ class CoreTests : HeliumTestCase() {
     private fun bootstrapAttach() {
         assemble(logicBLock + uiBlock)
     }
-
 }

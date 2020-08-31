@@ -38,7 +38,8 @@ class AdvancedListActivity : AppCompatActivity() {
         }
 
         val logic = getRetainedLogicBlock<MyListLogic>()
-        val listUi = ListUi(layoutInflater,
+        val listUi = ListUi(
+            layoutInflater,
             recyclerItemFactory = { inflater, container ->
                 MyCardListItem(inflater, container)
             },
@@ -46,7 +47,8 @@ class AdvancedListActivity : AppCompatActivity() {
             recyclerViewConfig = {
                 val padding = resources.getDimensionPixelSize(R.dimen.grid_spacing)
                 it.addItemDecoration(GridSpacingDecorator(padding, orientation))
-            })
+            }
+        )
 
         assemble(logic + listUi)
         setContentView(

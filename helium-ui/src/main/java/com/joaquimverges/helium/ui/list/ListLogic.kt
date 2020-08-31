@@ -56,7 +56,8 @@ open class ListLogic<T, E : BlockEvent>(
                         }
                     }
                 }
-            })
+            }
+        )
             .onEach { state ->
                 pushState(state)
             }.launchInBlock()

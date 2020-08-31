@@ -16,9 +16,12 @@ class ListFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val logic = getRetainedLogicBlock<MyListLogic>()
-        val listUi = ListUi(inflater, { layoutInflater, parentContainer ->
-            MyListItem(layoutInflater, parentContainer)
-        })
+        val listUi = ListUi(
+            inflater,
+            { layoutInflater, parentContainer ->
+                MyListItem(layoutInflater, parentContainer)
+            }
+        )
         assemble(logic + listUi)
         return listUi.view
     }

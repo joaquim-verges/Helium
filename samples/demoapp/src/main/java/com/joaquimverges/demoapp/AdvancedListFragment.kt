@@ -16,7 +16,7 @@ import com.joaquimverges.helium.core.retained.getRetainedLogicBlock
 import com.joaquimverges.helium.ui.list.ListUi
 
 /**
- * @author joaqu
+ * @author joaquim
  */
 class AdvancedListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -31,7 +31,8 @@ class AdvancedListFragment : Fragment() {
         }
 
         val logic = getRetainedLogicBlock<MyListLogic>()
-        val listUi = ListUi(layoutInflater,
+        val listUi = ListUi(
+            layoutInflater,
             recyclerItemFactory = { inflater, container ->
                 MyCardListItem(inflater, container)
             },
@@ -39,7 +40,8 @@ class AdvancedListFragment : Fragment() {
             recyclerViewConfig = {
                 val padding = resources.getDimensionPixelSize(R.dimen.grid_spacing)
                 it.addItemDecoration(GridSpacingDecorator(padding))
-            })
+            }
+        )
 
         assemble(logic + listUi)
         return listUi.view

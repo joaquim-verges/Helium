@@ -54,3 +54,4 @@ samples/newsapp/src/main/res/values/private_strings.xml
 
 samples/demoapp/release/*
 samples/newsapp/release/*
+samples/multiplatform_app/common/src/commonMain/kotlin/com/joaquimverges/kmp/news/data/APIKey.kt

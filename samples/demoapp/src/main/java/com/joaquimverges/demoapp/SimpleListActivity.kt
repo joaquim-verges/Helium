@@ -11,11 +11,13 @@ import com.joaquimverges.helium.ui.list.ListUi
 class SimpleListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val listUi = ListUi(layoutInflater, { inflater, container ->
-            MyListItem(inflater, container)
-        })
+        val listUi = ListUi(
+            layoutInflater,
+            { inflater, container ->
+                MyListItem(inflater, container)
+            }
+        )
         assemble(MyListLogic() + listUi)
         setContentView(listUi.view)
     }
 }
-

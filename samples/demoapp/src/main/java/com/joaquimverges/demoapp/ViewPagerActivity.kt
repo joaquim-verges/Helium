@@ -10,9 +10,12 @@ class ViewPagerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        PagerUi(this, MyPageProvider(), viewPagerConfig = {
-            it.pageMargin = resources.getDimensionPixelSize(R.dimen.menu_padding)
-        }).apply { setContentView(view) }
+        PagerUi(
+            this, MyPageProvider(),
+            viewPagerConfig = {
+                it.pageMargin = resources.getDimensionPixelSize(R.dimen.menu_padding)
+            }
+        ).apply { setContentView(view) }
     }
 
     class MyPageProvider : PagerUi.FragmentPageProvider {
@@ -25,4 +28,3 @@ class ViewPagerActivity : AppCompatActivity() {
         }
     }
 }
-

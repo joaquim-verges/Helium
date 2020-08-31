@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion compile_sdk
+    compileSdkVersion Versions.compileSdk
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -17,7 +17,7 @@ android {
     defaultConfig {
         applicationId "com.jv.news"
         minSdkVersion 23
-        targetSdkVersion target_sdk
+        targetSdkVersion Versions.targetSdk
         multiDexEnabled true
         versionCode 2
         versionName "1.1"
@@ -32,15 +32,14 @@ android {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.legacy:legacy-support-v13:1.0.0"
-    implementation "androidx.palette:palette:1.0.0"
+    implementation "androidx.palette:palette-ktx:1.0.0"
     implementation "androidx.browser:browser:1.2.0"
     implementation "com.squareup.retrofit2:retrofit:2.7.1"
     implementation "com.squareup.retrofit2:converter-gson:2.4.0"
     implementation "com.squareup.okhttp3:logging-interceptor:4.5.0"
     implementation "com.github.bumptech.glide:glide:4.11.0"
-    kapt "com.github.bumptech.glide:compiler:4.7.1"
+    kapt "com.github.bumptech.glide:compiler:4.9.0"
     implementation "com.thoughtbot:expandablecheckrecyclerview:1.4"
     debugImplementation "com.squareup.leakcanary:leakcanary-android:1.5.4"
     releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:1.5.4"

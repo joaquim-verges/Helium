@@ -2,7 +2,7 @@ package com.joaquimverges.demoapp.data
 
 import com.joaquimverges.demoapp.data.Colors.randomColor
 import kotlinx.coroutines.delay
-import java.util.*
+import java.util.Random
 
 /**
  * @author joaquim

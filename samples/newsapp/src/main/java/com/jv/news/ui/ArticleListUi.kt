@@ -78,7 +78,6 @@ class ArticleListUi(
                 swipeToRefreshEnabled = true
             )
         }
-
     }
 
     override fun render(viewState: ArticleListState) {

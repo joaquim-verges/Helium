@@ -1,0 +1,29 @@
+PODS:
+  - common (1.0)
+  - SDWebImage (5.8.4):
+    - SDWebImage/Core (= 5.8.4)
+  - SDWebImage/Core (5.8.4)
+  - SDWebImageSwiftUI (1.5.0):
+    - SDWebImage (~> 5.7)
+
+DEPENDENCIES:
+  - common (from `/Users/jverges/Perso/Helium/samples/multiplatform_app/common`)
+  - SDWebImageSwiftUI
+
+SPEC REPOS:
+  trunk:
+    - SDWebImage
+    - SDWebImageSwiftUI
+
+EXTERNAL SOURCES:
+  common:
+    :path: "/Users/jverges/Perso/Helium/samples/multiplatform_app/common"
+
+SPEC CHECKSUMS:
+  common: ede5f6e969c14bc3beaa0f113aef0b51f51e50f9
+  SDWebImage: cf6922231e95550934da2ada0f20f2becf2ceba9
+  SDWebImageSwiftUI: 43687ffe232ddd33fe0659498b7ca9884fdd6b35
+
+PODFILE CHECKSUM: df7be16ead2cb78a9cf4489cb2fab0ae487fa7f8
+
+COCOAPODS: 1.8.4

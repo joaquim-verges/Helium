@@ -5,7 +5,7 @@ import com.joaquimverges.helium.core.state.BlockState
 import kotlinx.coroutines.flow.Flow
 
 /**
- * @author joaqu
+ * @author joaquim
  */
 interface IUiBlock<in S : BlockState, E : BlockEvent> {
     /**

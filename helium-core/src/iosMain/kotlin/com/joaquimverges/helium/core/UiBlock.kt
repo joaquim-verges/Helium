@@ -6,7 +6,7 @@ import com.joaquimverges.helium.core.state.BlockState
 import kotlinx.coroutines.flow.Flow
 
 /**
- * @author joaqu
+ * @author joaquim
  */
 class UiBlock<in S : BlockState, E : BlockEvent>(
     private val eventDispatcher: EventDispatcher<E> = EventDispatcher(),

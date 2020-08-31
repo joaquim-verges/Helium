@@ -16,7 +16,7 @@ import com.joaquimverges.helium.core.retained.getRetainedLogicBlock
 import com.joaquimverges.helium.ui.list.ListUi
 
 /**
- * @author joaqu
+ * @author joaquim
  */
 class AdvancedListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

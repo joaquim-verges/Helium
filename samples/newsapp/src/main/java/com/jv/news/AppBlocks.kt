@@ -12,7 +12,7 @@ import com.jv.news.ui.ArticleListUi
 import com.jv.news.ui.MainScreenUi
 
 /**
- * @author joaqu
+ * @author joaquim
  */
 object MainAppBlock {
     fun build(activity: FragmentActivity): AppBlock<NavDrawerState, NavDrawerEvent> {

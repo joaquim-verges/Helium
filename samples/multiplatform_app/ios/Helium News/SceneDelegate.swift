@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let ui = AppBlockSwiftUi(logic: appRouter) { state, dispatcher in
             AppUi(state: state, eventDispatcher: dispatcher)
         }.environmentObject(toEnvObject(value: appRouter))
-        .environmentObject(toEnvObject(value: articleListLogic))
+            .environmentObject(toEnvObject(value: articleListLogic))
         
         // Use a UIHostingController as window root view controller, hosting the ui
         if let windowScene = scene as? UIWindowScene {

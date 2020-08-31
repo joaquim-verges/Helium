@@ -19,8 +19,7 @@ class ObservableUiBlock<S, E> : ObservableObject where S: BlockState, E: BlockEv
         eventDispatcher: eventDispatcher,
         renderer: { state in
             self.state = state
-    }
-    )
+    })
 }
 
 // TODO move to shared lib
@@ -38,5 +37,17 @@ public struct AppBlockSwiftUi<S : BlockState, E: BlockEvent, V: View> : View {
     
     public var body: some View {
         return self.viewFactory(self.ob.state, self.ob.eventDispatcher)
+    }
+}
+
+public func toEnvObject<T>(value: T) -> ObservableHolder<T> {
+    return ObservableHolder(value: value)
+}
+
+public class ObservableHolder<T>: ObservableObject {
+    var value : T
+    
+    init(value: T) {
+        self.value = value
     }
 }

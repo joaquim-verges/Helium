@@ -14,7 +14,8 @@ struct AppUi: View {
     
     var state: AppRouter.Screen?
     var eventDispatcher: EventDispatcher<BlockEvent>
-    var appRouter: AppRouter
+    @EnvironmentObject var appRouter: ObservableHolder<AppRouter>
+    @EnvironmentObject var articleListLogic: ObservableHolder<ArticleListLogic>
     
     var body: some View {
         generateScreen
@@ -29,14 +30,13 @@ struct AppUi: View {
     }
     
     private func ListScreen() -> some View {
-        let logic = ArticleListLogic(appRouter: appRouter, repo: NewsRepository(api: NewsApi()))
-        return AppBlockSwiftUi(logic: logic) { state, eventDispatcher in
+        return AppBlockSwiftUi(logic: self.articleListLogic.value) { state, eventDispatcher in
             ArticleListUi(state: state, eventDispatcher: eventDispatcher)
         }
     }
     
     private func DetailScreen(article: Article) -> some View {
-        let logic = ArticleDetailLogic(article: article, appRouter: appRouter)
+        let logic = ArticleDetailLogic(article: article, appRouter: self.appRouter.value)
         return AppBlockSwiftUi(logic: logic) { state, eventDispatcher in
             ArticleDetailUi(state: state, eventDispatcher: eventDispatcher)
         }

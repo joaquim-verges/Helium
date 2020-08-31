@@ -19,11 +19,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // create main logic + ui
         let appRouter = AppRouter()
+        let articleListLogic = ArticleListLogic(appRouter: appRouter, repo: NewsRepository(api: NewsApi()))
         let ui = AppBlockSwiftUi(logic: appRouter) { state, dispatcher in
-            AppUi(state: state, eventDispatcher: dispatcher, appRouter: appRouter)
-        }
+            AppUi(state: state, eventDispatcher: dispatcher)
+        }.environmentObject(toEnvObject(value: appRouter))
+        .environmentObject(toEnvObject(value: articleListLogic))
         
-        // Use a UIHostingController as window root view controller, passing the ui to it
+        // Use a UIHostingController as window root view controller, hosting the ui
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
             window.rootViewController = UIHostingController(rootView: ui)

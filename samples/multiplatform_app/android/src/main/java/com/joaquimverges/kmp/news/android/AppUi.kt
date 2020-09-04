@@ -1,9 +1,9 @@
 package com.joaquimverges.kmp.news.android
 
-import androidx.compose.animation.Crossfade
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.viewinterop.viewModel
+import com.joaquimverges.kmp.news.android.utils.StackTransition
 import com.joaquimverges.kmp.news.data.Article
 import com.joaquimverges.kmp.news.logic.AppRouter
 import com.joaquimverges.kmp.news.logic.ArticleDetailLogic
@@ -12,7 +12,10 @@ import com.joaquimvergse.helium.compose.AppBlock
 
 @Composable
 fun AppUi(state: AppRouter.Screen?) {
-    Crossfade(state) { current ->
+    StackTransition(
+        state,
+        shouldReverseAnimation = state == AppRouter.Screen.ArticleList
+    ) { current ->
         when (current) {
             is AppRouter.Screen.ArticleList -> ArticleList()
             is AppRouter.Screen.ArticleDetail -> ArticleDetail(current.article)

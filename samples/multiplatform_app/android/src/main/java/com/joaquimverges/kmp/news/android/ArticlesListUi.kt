@@ -2,7 +2,16 @@ package com.joaquimverges.kmp.news.android
 
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
@@ -83,7 +92,9 @@ fun list(
     model: DataLoadState.Ready<ArticleResponse>,
     eventDispatcher: EventDispatcher<ArticleListLogic.Event>
 ) {
-    LazyColumnFor(items = model.data.articles) {
+    LazyColumnFor(
+        items = model.data.articles
+    ) {
         item(article = it, eventDispatcher)
     }
 }

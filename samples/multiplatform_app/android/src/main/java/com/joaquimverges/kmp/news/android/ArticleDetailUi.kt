@@ -1,15 +1,22 @@
 package com.joaquimverges.kmp.news.android
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.IndicationAmbient
 import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.InnerPadding
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ripple.RippleIndication
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -43,11 +50,12 @@ fun ArticleDetailContent(
         ScrollableColumn(Modifier.fillMaxSize()) {
             CoilImage(
                 modifier = Modifier.fillMaxWidth()
-                    .aspectRatio(16 / 9f)
+                    .aspectRatio(4 / 3f)
                     .clickable(
                         onClick = {
                             dispatcher.pushEvent(ArticleDetailLogic.DetailEvent.ArticleClosed)
-                        }
+                        },
+                        indication = RippleIndication()
                     ),
                 data = article.urlToImage ?: "",
                 contentScale = ContentScale.Crop
@@ -55,13 +63,31 @@ fun ArticleDetailContent(
             Column(Modifier.fillMaxWidth().padding(24.dp)) {
                 Text(
                     text = article.title ?: "",
-                    style = TextStyle(fontSize = 22.sp, fontWeight = FontWeight.Medium)
+                    style = TextStyle(fontSize = 22.sp, fontWeight = FontWeight.Bold)
                 )
                 Spacer(modifier = Modifier.height(24.dp))
                 Text(
                     article.description
                         ?: "",
                     style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal)
+                )
+                Spacer(modifier = Modifier.height(32.dp))
+                Button(
+                    modifier = Modifier.fillMaxWidth(),
+                    backgroundColor = MaterialTheme.colors.surface,
+                    contentColor = MaterialTheme.colors.primary,
+                    contentPadding = InnerPadding(16.dp),
+                    shape = RoundedCornerShape(50),
+                    border = BorderStroke(2.dp, MaterialTheme.colors.primary),
+                    onClick = {
+                        // TODO push event
+                    },
+                    content = {
+                        Text(
+                            "Read More",
+                            style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal)
+                        )
+                    }
                 )
             }
         }

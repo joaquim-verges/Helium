@@ -12,6 +12,7 @@ buildscript {
         classpath("com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4")
         classpath("org.jetbrains.kotlin:kotlin-serialization:${Versions.kotlin}")
         classpath("org.jlleitschuh.gradle:ktlint-gradle:9.3.0")
+        classpath("org.jetbrains.dokka:dokka-gradle-plugin:1.4.0")
     }
 }
 
@@ -22,4 +23,5 @@ allprojects {
         mavenCentral()
     }
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
+    apply(plugin="org.jetbrains.dokka")
 }

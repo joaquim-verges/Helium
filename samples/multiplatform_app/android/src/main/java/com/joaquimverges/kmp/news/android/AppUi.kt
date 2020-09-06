@@ -11,29 +11,31 @@ import com.joaquimverges.kmp.news.logic.ArticleListLogic
 import com.joaquimvergse.helium.compose.AppBlock
 
 @Composable
-fun AppUi(state: AppRouter.Screen?) {
-    StackTransition(
-        state,
-        shouldReverseAnimation = state == AppRouter.Screen.ArticleList
-    ) { current ->
-        when (current) {
-            is AppRouter.Screen.ArticleList -> ArticleList()
-            is AppRouter.Screen.ArticleDetail -> ArticleDetail(current.article)
+fun AppUi(appRouter: AppRouter) {
+    AppBlock(appRouter) { state, _ ->
+        StackTransition(
+            state,
+            shouldReverseAnimation = state == AppRouter.Screen.ArticleList
+        ) { current ->
+            when (current) {
+                is AppRouter.Screen.ArticleList -> ArticleList(appRouter)
+                is AppRouter.Screen.ArticleDetail -> ArticleDetail(appRouter, current.article)
+            }
         }
     }
 }
 
 @Composable
-fun ArticleList() {
-    val logic: ArticleListLogic = viewModel()
+fun ArticleList(appRouter: AppRouter) {
+    val logic = remember { ArticleListLogic(appRouter) }
     AppBlock(logic) { state, dispatcher ->
         ArticleListUI(state, dispatcher)
     }
 }
 
 @Composable
-fun ArticleDetail(article: Article) {
-    val logic = remember(article) { ArticleDetailLogic(article) }
+fun ArticleDetail(appRouter: AppRouter, article: Article) {
+    val logic = remember(article) { ArticleDetailLogic(article, appRouter) }
     AppBlock(logic) { state, dispatcher ->
         ArticleDetailUi(state, dispatcher)
     }

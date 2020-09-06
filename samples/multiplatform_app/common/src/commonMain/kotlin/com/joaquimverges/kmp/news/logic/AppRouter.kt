@@ -3,14 +3,12 @@ package com.joaquimverges.kmp.news.logic
 import com.joaquimverges.helium.core.LogicBlock
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.state.BlockState
+import com.joaquimverges.kmp.news.BrowserWrapper
 import com.joaquimverges.kmp.news.data.Article
 
-class AppRouter : LogicBlock<AppRouter.Screen, BlockEvent>() {
-
-    companion object {
-        private val instance by lazy { AppRouter() }
-        fun get() = instance
-    }
+class AppRouter(
+    private val browserWrapper: BrowserWrapper
+) : LogicBlock<AppRouter.Screen, BlockEvent>() {
 
     sealed class Screen : BlockState {
         object ArticleList : Screen()
@@ -32,5 +30,17 @@ class AppRouter : LogicBlock<AppRouter.Screen, BlockEvent>() {
             return true
         }
         return false
+    }
+
+    fun goToList() {
+        pushState(Screen.ArticleList)
+    }
+
+    fun goToDetail(article: Article) {
+        pushState(Screen.ArticleDetail(article))
+    }
+
+    fun goToBrowser(url: String) {
+        browserWrapper.openBrowser(url)
     }
 }

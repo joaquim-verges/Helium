@@ -7,7 +7,7 @@ import com.joaquimverges.kmp.news.data.Article
 
 class ArticleDetailLogic(
     private val article: Article,
-    private val appRouter: AppRouter = AppRouter.get()
+    private val appRouter: AppRouter
 ) : LogicBlock<ArticleDetailLogic.DetailState, ArticleDetailLogic.DetailEvent>() {
 
     data class DetailState(
@@ -16,6 +16,7 @@ class ArticleDetailLogic(
 
     sealed class DetailEvent : BlockEvent {
         object ArticleClosed : DetailEvent()
+        data class ReadMoreClicked(val url: String) : DetailEvent()
     }
 
     init {
@@ -24,7 +25,8 @@ class ArticleDetailLogic(
 
     override fun onUiEvent(event: DetailEvent) {
         when (event) {
-            DetailEvent.ArticleClosed -> appRouter.pushState(AppRouter.Screen.ArticleList)
+            DetailEvent.ArticleClosed -> appRouter.goToList()
+            is DetailEvent.ReadMoreClicked -> appRouter.goToBrowser(event.url)
         }
     }
 }

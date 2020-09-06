@@ -10,7 +10,7 @@ import com.joaquimverges.kmp.news.data.NewsRepository
 import kotlinx.coroutines.withContext
 
 class ArticleListLogic(
-    private val appRouter: AppRouter = AppRouter.get(),
+    private val appRouter: AppRouter,
     private val repo: NewsRepository = NewsRepository()
 ) : LogicBlock<DataLoadState<ArticleResponse>, ArticleListLogic.Event>() {
 
@@ -34,11 +34,7 @@ class ArticleListLogic(
 
     override fun onUiEvent(event: Event) {
         when (event) {
-            is Event.ArticleClicked -> navigateToDetail(event.article)
+            is Event.ArticleClicked -> appRouter.goToDetail(event.article)
         }
-    }
-
-    private fun navigateToDetail(article: Article) {
-        appRouter.pushState(AppRouter.Screen.ArticleDetail(article))
     }
 }

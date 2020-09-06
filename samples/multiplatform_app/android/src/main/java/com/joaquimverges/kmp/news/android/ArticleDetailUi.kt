@@ -1,7 +1,6 @@
 package com.joaquimverges.kmp.news.android
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.IndicationAmbient
 import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.clickable
@@ -72,23 +71,25 @@ fun ArticleDetailContent(
                     style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal)
                 )
                 Spacer(modifier = Modifier.height(32.dp))
-                Button(
-                    modifier = Modifier.fillMaxWidth(),
-                    backgroundColor = MaterialTheme.colors.surface,
-                    contentColor = MaterialTheme.colors.primary,
-                    contentPadding = InnerPadding(16.dp),
-                    shape = RoundedCornerShape(50),
-                    border = BorderStroke(2.dp, MaterialTheme.colors.primary),
-                    onClick = {
-                        // TODO push event
-                    },
-                    content = {
-                        Text(
-                            "Read More",
-                            style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal)
-                        )
-                    }
-                )
+                article.url?.let { url ->
+                    Button(
+                        modifier = Modifier.fillMaxWidth(),
+                        backgroundColor = MaterialTheme.colors.surface,
+                        contentColor = MaterialTheme.colors.primary,
+                        contentPadding = InnerPadding(16.dp),
+                        shape = RoundedCornerShape(50),
+                        border = BorderStroke(2.dp, MaterialTheme.colors.primary),
+                        onClick = {
+                            dispatcher.pushEvent(ArticleDetailLogic.DetailEvent.ReadMoreClicked(url))
+                        },
+                        content = {
+                            Text(
+                                "Read More",
+                                style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal)
+                            )
+                        }
+                    )
+                }
             }
         }
     }

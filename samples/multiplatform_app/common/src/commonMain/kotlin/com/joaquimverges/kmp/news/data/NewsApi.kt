@@ -23,10 +23,10 @@ class NewsApi {
         }
     }
 
-    private var articlesEndpoint = Url("$baseUrl/everything?language=en&pageSize=20")
+    private var articlesEndpoint = Url("$baseUrl/everything?language=en&pageSize=50")
 
     suspend fun getNews(): ArticleResponse {
-        return client.get("$articlesEndpoint&sources=engadget") {
+        return client.get("$articlesEndpoint&sources=engadget,techcrunch,polygon,the-verge") {
             header("X-Api-Key", API_KEY)
         }
     }

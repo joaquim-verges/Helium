@@ -1,9 +1,12 @@
 package com.joaquimverges.kmp.news
 
-import platform.Foundation
+import platform.Foundation.NSURL
+import platform.UIKit.UIApplication
 
 actual class BrowserWrapper {
     actual fun openBrowser(url: String) {
-        // TODO
+        NSURL.URLWithString(url)?.let {
+            UIApplication.sharedApplication.openURL(it)
+        }
     }
 }

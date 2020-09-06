@@ -24,6 +24,13 @@ struct ArticleDetailUi: View {
             VStack(alignment: HorizontalAlignment.leading, spacing: 20.0) {
                 Text(self.state?.article.title ?? "").fontWeight(Font.Weight.bold).font(.title)
                 Text(self.state?.article.description ?? "")
+                Button(action: {
+                    self.eventDispatcher.pushEvent(
+                        event: ArticleDetailLogic.DetailEventReadMoreClicked(url: self.state?.article.url ?? "")
+                    )
+                }, label: {
+                    Text("Read More")
+                })
             }.padding(20.0)
         }.frame(maxHeight: .infinity, alignment: .top)
     }

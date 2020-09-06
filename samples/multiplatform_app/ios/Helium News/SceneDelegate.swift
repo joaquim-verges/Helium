@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         UITableView.appearance().separatorStyle = .none // disable list dividers
         
         // create main logic + ui
-        let appRouter = AppRouter()
+        let appRouter = AppRouter(browserWrapper: BrowserWrapper())
         let articleListLogic = ArticleListLogic(appRouter: appRouter, repo: NewsRepository(api: NewsApi()))
         let ui = AppBlockSwiftUi(logic: appRouter) { state, dispatcher in
             AppUi(state: state, eventDispatcher: dispatcher)

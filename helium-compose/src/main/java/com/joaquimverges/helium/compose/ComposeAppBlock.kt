@@ -1,4 +1,4 @@
-package com.joaquimvergse.helium.compose
+package com.joaquimverges.helium.compose
 
 import androidx.compose.runtime.*
 import com.joaquimverges.helium.core.LogicBlock

@@ -11,7 +11,7 @@ import com.joaquimverges.kmp.news.data.Article
 import com.joaquimverges.kmp.news.logic.AppRouter
 import com.joaquimverges.kmp.news.logic.ArticleDetailLogic
 import com.joaquimverges.kmp.news.logic.ArticleListLogic
-import com.joaquimvergse.helium.compose.AppBlock
+import com.joaquimverges.helium.compose.AppBlock
 
 val AppRouterAmbient = ambientOf<AppRouter> { error("No AppRouter set!") }
 

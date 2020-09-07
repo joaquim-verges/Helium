@@ -70,24 +70,15 @@ fun ArticleDetailContent(
                         ?: "",
                     style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal)
                 )
-                Spacer(modifier = Modifier.height(32.dp))
+                Spacer(modifier = Modifier.height(24.dp))
                 article.url?.let { url ->
-                    Button(
-                        modifier = Modifier.fillMaxWidth(),
-                        backgroundColor = MaterialTheme.colors.surface,
-                        contentColor = MaterialTheme.colors.primary,
-                        contentPadding = InnerPadding(16.dp),
-                        shape = RoundedCornerShape(50),
-                        border = BorderStroke(2.dp, MaterialTheme.colors.primary),
-                        onClick = {
+                    Text(
+                        "Read More",
+                        style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal),
+                        color = MaterialTheme.colors.primary,
+                        modifier = Modifier.clickable(onClick = {
                             dispatcher.pushEvent(ArticleDetailLogic.DetailEvent.ReadMoreClicked(url))
-                        },
-                        content = {
-                            Text(
-                                "Read More",
-                                style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal)
-                            )
-                        }
+                        }, indication = RippleIndication(bounded = false))
                     )
                 }
             }

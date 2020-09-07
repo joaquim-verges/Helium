@@ -55,29 +55,29 @@ fun ArticleListUI(
     ) {
         when (state) {
             is DataLoadState.Init, is DataLoadState.Loading, null -> {
-                centered {
+                Centered {
                     CircularProgressIndicator(Modifier.size(48.dp))
                 }
             }
             is DataLoadState.Empty -> {
-                centered {
+                Centered {
                     Text("No Articles Found")
                 }
             }
             is DataLoadState.Error -> {
-                centered {
+                Centered {
                     Text("Network Error")
                 }
             }
             is DataLoadState.Ready -> {
-                list(state, eventDispatcher)
+                List(state, eventDispatcher)
             }
         }
     }
 }
 
 @Composable
-fun centered(children: @Composable () -> Unit) {
+fun Centered(children: @Composable () -> Unit) {
     Column(
         Modifier.fillMaxWidth().fillMaxHeight(),
         horizontalGravity = Alignment.CenterHorizontally,
@@ -88,19 +88,19 @@ fun centered(children: @Composable () -> Unit) {
 }
 
 @Composable
-fun list(
+fun List(
     model: DataLoadState.Ready<ArticleResponse>,
     eventDispatcher: EventDispatcher<ArticleListLogic.Event>
 ) {
     LazyColumnFor(
         items = model.data.articles
     ) {
-        item(article = it, eventDispatcher)
+        Item(article = it, eventDispatcher)
     }
 }
 
 @Composable
-fun item(article: Article, eventDispatcher: EventDispatcher<ArticleListLogic.Event>) {
+fun Item(article: Article, eventDispatcher: EventDispatcher<ArticleListLogic.Event>) {
     Row(
         modifier = Modifier
             .fillMaxWidth()

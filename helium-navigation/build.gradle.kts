@@ -11,5 +11,4 @@ dependencies {
     Deps.androidXNavigationDeps.forEach(::api)
 }
 
-// TODO
-// apply from: '../maven-push.gradle'
+apply("../maven-push.gradle")

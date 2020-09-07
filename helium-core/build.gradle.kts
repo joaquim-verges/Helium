@@ -45,5 +45,5 @@ kotlin {
 }
 
 androidForMultiplatformLib()
-// TODO
-// apply("../maven-push.gradle")
+
+apply("../maven-push.gradle")

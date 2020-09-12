@@ -1,6 +1,6 @@
 # Helium
 
-Lightweight & intuitive framework for Android. 100% Kotlin.
+Lightweight & intuitive framework for Android & iOS powered by Kotlin Multiplatform.
 
 <img src="docs/images/ic_launcher.png" width="300">
 
@@ -10,16 +10,19 @@ Lightweight & intuitive framework for Android. 100% Kotlin.
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.joaquimverges.helium/helium-core.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:com.joaquimverges.helium) [![Build Status](https://app.bitrise.io/app/9b5a174b9921d71f/status.svg?token=OXeY3aZX53ttCYvqZjEjqw&branch=master)](https://app.bitrise.io/app/9b5a174b9921d71f)
 ```groovy
-implementation 'com.joaquimverges.helium:helium-core:x.y.z' // core classes
-implementation 'com.joaquimverges.helium:helium-ui:x.y.z'   // ui components
-implementation 'com.joaquimverges.helium:helium-navigation:x.y.z'   // navigation components
+implementation 'com.joaquimverges.helium:helium-core:x.y.z' // core classes (multi platform)
 
-testImplementation 'com.joaquimverges.helium:helium-test:x.y.z'   // unit test helper classes
+implementation 'com.joaquimverges.helium:helium-compose:x.y.z'   // Jetpack Compose integration (Android)
+implementation 'com.joaquimverges.helium:helium-ui:x.y.z'   // ui components (Android)
+implementation 'com.joaquimverges.helium:helium-navigation:x.y.z'   // navigation components (Android)
+
+testImplementation 'com.joaquimverges.helium:helium-test:x.y.z'   // unit test helper classes (Android)
 ```
 
 ## Documentation
 
 - ##### [Core framework](/helium-core)
+- ##### [Helium Compose](/helium-compose)
 - ##### [Helium UI](/helium-ui)
 - ##### [Helium Navigation](/helium-navigation)
 - ##### [Helium Testing](/helium-test)
@@ -53,6 +56,10 @@ val ui = MyUi(layoutInflater) // create a UI block
 assemble(logic + ui) // assemble them
 ```
 
+Helium core is a Kotlin Multiplatform library, which means it can be used on both Android and iOS.
+
+Helium works great with declarative UI frameworks like Jetpack Compose and SwiftUI.
+
 For detailed information and examples, head over to the [helium-core](/helium-core) documentation.
 
 #### Ready to use App Blocks
@@ -75,7 +82,8 @@ Follow the links above for documentation and examples on how to use those handy 
 
 #### Samples
 
-- [newsapp](/samples/newsapp) - Fully functional News app downloadable on [Google Play](https://play.google.com/store/apps/details?id=com.jv.news)
+- [multiplaform_app](/samples/multiplaform_app) - Simple Multiplatform News App (Android & iOS), using Jetpack Compose and SwiftUI
+- [newsapp](/samples/newsapp) - Fully functional Android News app downloadable on [Google Play](https://play.google.com/store/apps/details?id=com.jv.news)
 - [demoapp](/samples/demoapp) - A catalog of different AppBlocks usages
 
 #### Testing

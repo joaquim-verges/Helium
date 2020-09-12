@@ -4,6 +4,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.OnLifecycleEvent
 import com.joaquimverges.helium.core.LogicBlock
 import com.joaquimverges.helium.core.event.BlockEvent
+import com.joaquimverges.helium.core.event.EventDispatcher
 import com.joaquimverges.helium.core.state.DataLoadState
 import com.joaquimverges.helium.ui.list.event.ListBlockEvent
 import com.joaquimverges.helium.ui.list.repository.ListRepository
@@ -37,10 +38,10 @@ open class ListLogic<T, E : BlockEvent>(
         data class AdditionalPageLoaded<T>(val data: List<T>) : PaginationEvent<T>()
     }
 
-    private val paginationEvents = BroadcastChannel<PaginationEvent<T>>(Channel.BUFFERED)
+    private val paginationEvents = EventDispatcher<PaginationEvent<T>>()
 
     init {
-        paginationEvents.asFlow().scan<PaginationEvent<T>, DataLoadState<List<T>>>(
+        paginationEvents.observer().scan<PaginationEvent<T>, DataLoadState<List<T>>>(
             DataLoadState.Init(),
             { prevState, paginationEvent ->
                 when (paginationEvent) {
@@ -78,7 +79,7 @@ open class ListLogic<T, E : BlockEvent>(
                     repository.getFirstPage()
                 }
                 if (data.isNotEmpty()) {
-                    paginationEvents.offer(PaginationEvent.FirstPageLoaded(data))
+                    paginationEvents.pushEvent(PaginationEvent.FirstPageLoaded(data))
                 } else {
                     pushState(DataLoadState.Empty())
                 }
@@ -96,7 +97,7 @@ open class ListLogic<T, E : BlockEvent>(
                     repository.paginate()
                 }
                 if (data?.isNotEmpty() == true) {
-                    paginationEvents.offer(PaginationEvent.AdditionalPageLoaded(data))
+                    paginationEvents.pushEvent(PaginationEvent.AdditionalPageLoaded(data))
                 }
             } catch (error: Exception) {
                 pushState(DataLoadState.Error(error))

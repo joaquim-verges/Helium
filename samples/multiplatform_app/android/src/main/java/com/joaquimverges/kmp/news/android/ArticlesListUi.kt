@@ -12,13 +12,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumnFor
+import androidx.compose.foundation.lazy.LazyColumnForIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.ripple.RippleIndication
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.onActive
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -66,7 +69,7 @@ fun ArticleListUI(
             }
             is DataLoadState.Error -> {
                 Centered {
-                    Text("Network Error")
+                    Text("Network Error: ${state.error.message}")
                 }
             }
             is DataLoadState.Ready -> {
@@ -92,10 +95,18 @@ fun List(
     model: DataLoadState.Ready<ArticleResponse>,
     eventDispatcher: EventDispatcher<ArticleListLogic.Event>
 ) {
-    LazyColumnFor(
+    val prevListSize = remember { mutableStateOf(0) }
+    val fetchMorePosition = remember(model.data.articles) { (model.data.articles.size * .75f).toInt() }
+    LazyColumnForIndexed(
         items = model.data.articles
-    ) {
-        Item(article = it, eventDispatcher)
+    ) { index, item ->
+        onActive {
+            if (index >= fetchMorePosition && prevListSize.value != model.data.articles.size) {
+                prevListSize.value = model.data.articles.size
+                eventDispatcher.pushEvent(ArticleListLogic.Event.FetchMore)
+            }
+        }
+        Item(article = item, eventDispatcher)
     }
 }
 

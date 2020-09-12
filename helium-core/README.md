@@ -1,6 +1,6 @@
 # Helium Core
 
-This tiny module is all you need to start building your own App Blocks.
+This Kotlin Multiplatform module is all you need to start building your own App Blocks on Android and iOS.
 
 Helium requires [java 8 support](https://developer.android.com/studio/write/java8-support) in your app's `build.gradle`.
 
@@ -84,7 +84,7 @@ val logic = getRetainedLogicBlock<MyLogic> { MyLogic(id) }
 
 #### Implementing a Logic Block
 
-The most common logic for Android apps is to load some data from the network or a database, usually through a repository class.
+The most common logic for mobile apps is to load some data from the network or a database, usually through a repository class.
 
 Here's a example of LogicBlock that fetches some data, pushing the relevant states along the way, and reacts to user events coming from the UI.
 

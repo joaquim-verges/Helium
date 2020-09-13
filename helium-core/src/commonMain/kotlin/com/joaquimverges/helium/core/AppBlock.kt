@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 /**
- * @author joaquim
+ * AppBlock - responsible for assembling a LogicBlock and a UIBlock together
  */
 class AppBlock<S : BlockState, E : BlockEvent>(
     private val logic: LogicBlock<S, E>,

@@ -6,6 +6,6 @@ package com.joaquimverges.helium.core.event
  * These events are emitted by UiBlock classes.
  *
  * @see com.joaquimverges.helium.core.LogicBlock
- * @see com.joaquimverges.helium.core.UiBlock
+ * @see com.joaquimverges.helium.core.IUiBlock
  */
 interface BlockEvent

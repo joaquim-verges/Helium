@@ -9,7 +9,7 @@ import com.joaquimverges.helium.core.state.BlockState
 import kotlinx.coroutines.CoroutineScope
 
 /**
- * @author joaquim
+ * Lifecycle wrapper for Android
  */
 actual class LifecycleWrapper(
     private val lifecycle: Lifecycle,

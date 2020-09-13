@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
 
 /**
- * @author joaquim
+ * Android ViewModel implementation
  */
 actual abstract class HeliumViewModel : ViewModel(), LifecycleObserver {
     actual val coroutineScope: CoroutineScope = viewModelScope

@@ -6,7 +6,7 @@ import com.joaquimverges.helium.core.state.BlockState
 import kotlinx.coroutines.flow.Flow
 
 /**
- * @author joaquim
+ * UiBlock implementation for iOS
  */
 class UiBlock<in S : BlockState, E : BlockEvent>(
     private val eventDispatcher: EventDispatcher<E> = EventDispatcher(),
@@ -14,7 +14,7 @@ class UiBlock<in S : BlockState, E : BlockEvent>(
 ) : IUiBlock<S, E> {
 
     /**
-     * Implement this method to render a layout according to the latest pushed ViewState
+     * Delegates render calls to the passed [renderer] lambda
      */
     override fun render(state: S) {
         renderer(state)

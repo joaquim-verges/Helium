@@ -5,6 +5,6 @@ package com.joaquimverges.helium.core.state
  * A LogicBlock emits BlockState objects to a UiBlock for rendering.
  *
  * @see com.joaquimverges.helium.core.LogicBlock
- * @see com.joaquimverges.helium.core.UiBlock
+ * @see com.joaquimverges.helium.core.IUiBlock
  */
 interface BlockState

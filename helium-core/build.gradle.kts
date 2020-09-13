@@ -19,17 +19,29 @@ kotlin {
 
     android()
 
-    sourceSets["commonMain"].dependencies {
-        implementation(Deps.stdlib)
-        api(Deps.coroutines)
-    }
+    sourceSets {
 
-    sourceSets["androidMain"].dependencies {
-        Deps.lifecycleDeps.forEach(::api)
-    }
+        all {
+            languageSettings.useExperimentalAnnotation("kotlinx.coroutines.ExperimentalCoroutinesApi")
+            languageSettings.useExperimentalAnnotation("kotlinx.coroutines.FlowPreview")
+        }
 
-    sourceSets["iosMain"].dependencies {
-        // none for now
+        val commonMain by getting {
+            dependencies {
+                implementation(Deps.stdlib)
+                api(Deps.coroutines)
+            }
+        }
+
+        val androidMain by getting {
+            dependencies {
+                Deps.lifecycleDeps.forEach(::api)
+            }
+        }
+
+        val androidTest by getting
+        val iosMain by getting
+        val iosTest by getting
     }
 
     cocoapods {

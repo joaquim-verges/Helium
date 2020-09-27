@@ -36,7 +36,7 @@ fun Draggable(onSwiped: () -> Unit, children: @Composable () -> Unit) {
             Modifier.width(with(DensityAmbient.current) { max.toDp() })
                 .fillMaxHeight(),
             verticalArrangement = Arrangement.Center,
-            horizontalGravity = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
                 asset = Icons.Filled.KeyboardArrowLeft,

@@ -83,7 +83,7 @@ fun ArticleListUI(
 fun Centered(children: @Composable () -> Unit) {
     Column(
         Modifier.fillMaxWidth().fillMaxHeight(),
-        horizontalGravity = Alignment.CenterHorizontally,
+        horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         children()
@@ -122,7 +122,7 @@ fun Item(article: Article, eventDispatcher: EventDispatcher<ArticleListLogic.Eve
                 indication = RippleIndication()
             )
             .padding(horizontal = 24.dp, vertical = 12.dp),
-        verticalGravity = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically
     ) {
         CoilImage(
             modifier = Modifier.size(100.dp).clip(RoundedCornerShape(5.dp)),

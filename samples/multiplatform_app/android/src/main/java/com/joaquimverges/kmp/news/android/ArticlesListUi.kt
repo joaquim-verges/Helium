@@ -1,5 +1,6 @@
 package com.joaquimverges.kmp.news.android
 
+import androidx.compose.foundation.Box
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -16,6 +17,7 @@ import androidx.compose.foundation.lazy.LazyColumnForIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.ripple.RippleIndication
 import androidx.compose.runtime.Composable
@@ -31,10 +33,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.ui.tooling.preview.Preview
 import com.joaquimverges.helium.core.event.EventDispatcher
 import com.joaquimverges.helium.core.state.DataLoadState
 import com.joaquimverges.kmp.news.data.Article
 import com.joaquimverges.kmp.news.data.ArticleResponse
+import com.joaquimverges.kmp.news.data.ArticleSource
 import com.joaquimverges.kmp.news.logic.ArticleListLogic
 import dev.chrisbanes.accompanist.coil.CoilImage
 
@@ -96,7 +100,8 @@ fun List(
     eventDispatcher: EventDispatcher<ArticleListLogic.Event>
 ) {
     val prevListSize = remember { mutableStateOf(0) }
-    val fetchMorePosition = remember(model.data.articles) { (model.data.articles.size * .75f).toInt() }
+    val fetchMorePosition =
+        remember(model.data.articles) { (model.data.articles.size * .75f).toInt() }
     LazyColumnForIndexed(
         items = model.data.articles
     ) { index, item ->
@@ -124,10 +129,10 @@ fun Item(article: Article, eventDispatcher: EventDispatcher<ArticleListLogic.Eve
             .padding(horizontal = 24.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        CoilImage(
-            modifier = Modifier.size(100.dp).clip(RoundedCornerShape(5.dp)),
-            data = article.urlToImage ?: "",
-            contentScale = ContentScale.Crop
+        NetworkImage(
+            article.urlToImage,
+            modifier = Modifier.size(100.dp)
+                .clip(RoundedCornerShape(5.dp)),
         )
         Spacer(modifier = Modifier.width(24.dp))
         Column(modifier = Modifier.weight(1f)) {
@@ -143,5 +148,40 @@ fun Item(article: Article, eventDispatcher: EventDispatcher<ArticleListLogic.Eve
                 style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Medium)
             )
         }
+    }
+}
+
+@Composable
+fun NetworkImage(urlToImage: String?, modifier: Modifier) {
+    urlToImage?.takeIf { it.isNotBlank() }?.let {
+        CoilImage(
+            modifier = modifier,
+            data = urlToImage,
+            contentScale = ContentScale.Crop
+        )
+    } ?: run {
+        Box(
+            modifier = modifier,
+            backgroundColor = Color.LightGray
+        )
+    }
+}
+
+@Preview
+@Composable
+fun ItemPreview() {
+    Surface {
+        Item(
+            article = Article(
+                ArticleSource("", "Engadget", ""),
+                "",
+                "Article title with striking headline",
+                "Article description",
+                "Article content",
+                "http://google.com",
+                "",
+                ""
+            ), eventDispatcher = EventDispatcher()
+        )
     }
 }

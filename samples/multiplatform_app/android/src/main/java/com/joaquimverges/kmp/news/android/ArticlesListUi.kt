@@ -2,24 +2,26 @@ package com.joaquimverges.kmp.news.android
 
 import androidx.compose.foundation.Box
 import androidx.compose.foundation.Text
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ConstraintLayout
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumnForIndexed
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.TopAppBar
-import androidx.compose.material.ripple.RippleIndication
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.onActive
@@ -33,6 +35,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import androidx.ui.tooling.preview.Preview
 import com.joaquimverges.helium.core.event.EventDispatcher
 import com.joaquimverges.helium.core.state.DataLoadState
@@ -94,16 +97,29 @@ fun Centered(children: @Composable () -> Unit) {
     }
 }
 
+data class MainListPosition(var scrollPosition: Int = 0, var scrollOffset: Int = 0)
+val scrollPosition = MainListPosition()
+
+fun resetScrollPosition() {
+    scrollPosition.scrollPosition = 0
+    scrollPosition.scrollOffset = 0
+}
+
 @Composable
 fun List(
     model: DataLoadState.Ready<ArticleResponse>,
     eventDispatcher: EventDispatcher<ArticleListLogic.Event>
 ) {
     val prevListSize = remember { mutableStateOf(0) }
-    val fetchMorePosition =
-        remember(model.data.articles) { (model.data.articles.size * .75f).toInt() }
+    val map = remember(model.data.articles) { computeItemMap(model.data.articles) }
+    val fetchMorePosition = remember(map) { (map.size * .75f).toInt() }
+    val scrollState: LazyListState = rememberLazyListState(
+        initialFirstVisibleItemIndex = scrollPosition.scrollPosition,
+        initialFirstVisibleItemScrollOffset = scrollPosition.scrollOffset
+    )
     LazyColumnForIndexed(
-        items = model.data.articles
+        items = map.entries.toList(),
+        state = scrollState
     ) { index, item ->
         onActive {
             if (index >= fetchMorePosition && prevListSize.value != model.data.articles.size) {
@@ -111,43 +127,89 @@ fun List(
                 eventDispatcher.pushEvent(ArticleListLogic.Event.FetchMore)
             }
         }
-        Item(article = item, eventDispatcher)
+
+        Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 6.dp)) {
+            item.value.forEach {
+                Item(
+                    article = it,
+                    imgAspectRatio = if (item.value.size == 1) 16 / 9f else 4 / 3f,
+                    modifier = Modifier.weight(1f).padding(6.dp)
+                ) {
+                    scrollPosition.scrollPosition = scrollState.firstVisibleItemIndex
+                    scrollPosition.scrollOffset = scrollState.firstVisibleItemScrollOffset
+                    eventDispatcher.pushEvent(ArticleListLogic.Event.ArticleClicked(it))
+                }
+            }
+        }
     }
 }
 
+fun computeItemMap(articles: List<Article>): Map<Int, MutableList<Article>> {
+    val itemMap = mutableMapOf<Int, MutableList<Article>>()
+    var idx = 0
+    articles.forEachIndexed { index, article ->
+        if (index % 5 == 0) {
+            itemMap[idx] = mutableListOf(article)
+            idx += 1
+        } else {
+            val current = itemMap[idx]
+            if (current == null) {
+                itemMap[idx] = mutableListOf(article)
+            } else {
+                itemMap[idx]?.add(article)
+                idx += 1
+            }
+        }
+    }
+    return itemMap
+}
+
 @Composable
-fun Item(article: Article, eventDispatcher: EventDispatcher<ArticleListLogic.Event>) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(
-                onClick = {
-                    eventDispatcher.pushEvent(ArticleListLogic.Event.ArticleClicked(article))
-                },
-                indication = RippleIndication()
-            )
-            .padding(horizontal = 24.dp, vertical = 12.dp),
-        verticalAlignment = Alignment.CenterVertically
+fun Item(
+    article: Article,
+    imgAspectRatio: Float,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+) {
+    ConstraintLayout(
+        modifier = modifier
     ) {
+        val (image, source, title) = createRefs()
         NetworkImage(
             article.urlToImage,
-            modifier = Modifier.size(100.dp)
-                .clip(RoundedCornerShape(5.dp)),
+            modifier = Modifier
+                .aspectRatio(imgAspectRatio)
+                .clip(RoundedCornerShape(5.dp))
+                .constrainAs(image) {
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                }.clickable(onClick = onClick)
         )
-        Spacer(modifier = Modifier.width(24.dp))
-        Column(modifier = Modifier.weight(1f)) {
-            Text(
-                article.source?.name
-                    ?: "",
-                style = TextStyle(fontSize = 16.sp, color = Color.DarkGray)
-            )
-            Spacer(modifier = Modifier.height(5.dp))
-            Text(
-                article.title
-                    ?: "",
-                style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Medium)
-            )
-        }
+        Text(
+            article.source?.name
+                ?: "",
+            style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Medium),
+            modifier = Modifier.constrainAs(source) {
+                top.linkTo(image.bottom)
+                bottom.linkTo(image.bottom)
+                start.linkTo(image.start, margin = 8.dp)
+            }.background(
+                color = Color.White,
+                shape = RoundedCornerShape(4.dp)
+            ).padding(horizontal = 6.dp, vertical = 4.dp)
+                .zIndex(1f)
+        )
+        Text(
+            article.title
+                ?: "",
+            style = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.Medium),
+            modifier = Modifier.constrainAs(title) {
+                top.linkTo(source.bottom, margin = 4.dp)
+                start.linkTo(image.start)
+                bottom.linkTo(parent.bottom, margin = 8.dp)
+            }
+        )
     }
 }
 
@@ -157,7 +219,13 @@ fun NetworkImage(urlToImage: String?, modifier: Modifier) {
         CoilImage(
             modifier = modifier,
             data = urlToImage,
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Crop,
+            loading = {
+                Box(
+                    modifier = modifier,
+                    backgroundColor = Color.LightGray
+                )
+            }
         )
     } ?: run {
         Box(
@@ -181,7 +249,9 @@ fun ItemPreview() {
                 "http://google.com",
                 "",
                 ""
-            ), eventDispatcher = EventDispatcher()
+            ),
+            imgAspectRatio = 1f,
+            onClick = {}
         )
     }
 }

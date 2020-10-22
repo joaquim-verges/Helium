@@ -23,4 +23,9 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
         }
     }
+
+    override fun finish() {
+        resetScrollPosition()
+        super.finish()
+    }
 }

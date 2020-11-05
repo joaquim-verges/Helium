@@ -21,8 +21,8 @@ object Deps {
     )
 
     val androidXNavigationDeps = listOf(
-            "android.arch.navigation:navigation-fragment-ktx:${Versions.navigation}",
-            "android.arch.navigation:navigation-ui-ktx:${Versions.navigation}"
+            "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}",
+            "androidx.navigation:navigation-ui-ktx:${Versions.navigation}"
     )
 
     val androidXTestDeps = listOf(

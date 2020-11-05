@@ -1,7 +1,7 @@
 object Versions {
 
     // android
-    const val agp = "4.2.0-alpha14"
+    const val agp = "4.2.0-alpha15"
     const val compileSdk = 28
     const val minSdk = 21
     const val targetSdk = 28
@@ -27,8 +27,8 @@ object Versions {
     const val constraint_layout = "2.0.0"
     const val material_lib = "1.2.0-alpha05"
     const val navigation = "2.2.1"
-    const val compose = "1.0.0-alpha05"
-    const val accompanist = "0.2.2"
+    const val compose = "1.0.0-alpha06"
+    const val accompanist = "0.3.2"
 
     // kotlin mpp
     const val ktor = "1.3.2-1.4.0-rc"

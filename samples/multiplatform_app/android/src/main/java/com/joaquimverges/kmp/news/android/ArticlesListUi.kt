@@ -1,10 +1,10 @@
 package com.joaquimverges.kmp.news.android
 
-import androidx.compose.foundation.Box
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ConstraintLayout
 import androidx.compose.foundation.layout.Row
@@ -221,17 +221,11 @@ fun NetworkImage(urlToImage: String?, modifier: Modifier) {
             data = urlToImage,
             contentScale = ContentScale.Crop,
             loading = {
-                Box(
-                    modifier = modifier,
-                    backgroundColor = Color.LightGray
-                )
+                Box(modifier.background(Color.LightGray))
             }
         )
     } ?: run {
-        Box(
-            modifier = modifier,
-            backgroundColor = Color.LightGray
-        )
+        Box(modifier.background(Color.LightGray))
     }
 }
 

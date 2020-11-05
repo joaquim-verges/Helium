@@ -7,6 +7,7 @@ import com.joaquimverges.helium.core.event.EventDispatcher
 import com.joaquimverges.helium.core.state.BlockState
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 @Composable
 fun <S : BlockState, E : BlockEvent> AppBlock(
@@ -18,10 +19,9 @@ fun <S : BlockState, E : BlockEvent> AppBlock(
 ) {
     val state by logic.observeState().collectAsState(initial = logic.currentState())
     val dispatcher = remember(ui) { EventDispatcher<E>() }
-    launchInComposition {
-        dispatcher.observer()
-            .onEach { logic.processEvent(it) }
-            .launchIn(this)
-    }
+    val scope = rememberCoroutineScope()
+    dispatcher.observer()
+        .onEach { logic.processEvent(it) }
+        .launchIn(scope)
     ui(state, dispatcher)
 }

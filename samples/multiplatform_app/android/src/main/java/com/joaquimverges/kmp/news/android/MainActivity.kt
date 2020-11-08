@@ -8,11 +8,10 @@ import com.joaquimverges.kmp.news.logic.AppRouter
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var appRouter : AppRouter
+    private val appRouter = App.router
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        appRouter = AppRouter(BrowserWrapper(this))
         setContent {
             AppUi(appRouter)
         }

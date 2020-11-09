@@ -18,10 +18,7 @@ import androidx.compose.foundation.lazy.LazyColumnForIndexed
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.onActive
@@ -59,7 +56,9 @@ fun ArticleListUI(
                         style = TextStyle(fontSize = 28.sp, fontWeight = FontWeight.Black)
                     )
                 },
-                backgroundColor = Color.White, modifier = Modifier.height(72.dp)
+                backgroundColor = MaterialTheme.colors.surface,
+                elevation = 0.dp,
+                modifier = Modifier.height(72.dp)
             )
         }
     ) {
@@ -98,6 +97,7 @@ fun Centered(children: @Composable () -> Unit) {
 }
 
 data class MainListPosition(var scrollPosition: Int = 0, var scrollOffset: Int = 0)
+
 val scrollPosition = MainListPosition()
 
 fun resetScrollPosition() {
@@ -195,7 +195,7 @@ fun Item(
                 bottom.linkTo(image.bottom)
                 start.linkTo(image.start, margin = 8.dp)
             }.background(
-                color = Color.White,
+                color = MaterialTheme.colors.surface,
                 shape = RoundedCornerShape(4.dp)
             ).padding(horizontal = 6.dp, vertical = 4.dp)
                 .zIndex(1f)
@@ -221,31 +221,33 @@ fun NetworkImage(urlToImage: String?, modifier: Modifier) {
             data = urlToImage,
             contentScale = ContentScale.Crop,
             loading = {
-                Box(modifier.background(Color.LightGray))
+                Box(modifier.background(MaterialTheme.colors.secondary))
             }
         )
     } ?: run {
-        Box(modifier.background(Color.LightGray))
+        Box(modifier.background(MaterialTheme.colors.secondary))
     }
 }
 
 @Preview
 @Composable
 fun ItemPreview() {
-    Surface {
-        Item(
-            article = Article(
-                ArticleSource("", "Engadget", ""),
-                "",
-                "Article title with striking headline",
-                "Article description",
-                "Article content",
-                "http://google.com",
-                "",
-                ""
-            ),
-            imgAspectRatio = 1f,
-            onClick = {}
-        )
+    MaterialTheme(colors = darkColors()) {
+        Surface {
+            Item(
+                article = Article(
+                    ArticleSource("", "Engadget", ""),
+                    "",
+                    "Article title with striking headline",
+                    "Article description",
+                    "Article content",
+                    "http://google.com",
+                    "",
+                    ""
+                ),
+                imgAspectRatio = 1f,
+                onClick = {}
+            )
+        }
     }
 }

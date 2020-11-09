@@ -1,5 +1,8 @@
 package com.joaquimverges.kmp.news.android
 
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.darkColors
+import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Providers
 import androidx.compose.runtime.ambientOf
@@ -17,15 +20,19 @@ val AppRouterAmbient = ambientOf<AppRouter> { error("No AppRouter set!") }
 
 @Composable
 fun AppUi(appRouter: AppRouter) {
-    Providers(AppRouterAmbient provides appRouter) {
-        AppBlock(appRouter) { state, _ ->
-            StackTransition(
-                state,
-                shouldReverseAnimation = state == AppRouter.Screen.ArticleList
-            ) { current ->
-                when (current) {
-                    is AppRouter.Screen.ArticleList -> ArticleList()
-                    is AppRouter.Screen.ArticleDetail -> ArticleDetail(current.article)
+    MaterialTheme(
+        colors = Themes.dark
+    ) {
+        Providers(AppRouterAmbient provides appRouter) {
+            AppBlock(appRouter) { state, _ ->
+                StackTransition(
+                    state,
+                    shouldReverseAnimation = state == AppRouter.Screen.ArticleList
+                ) { current ->
+                    when (current) {
+                        is AppRouter.Screen.ArticleList -> ArticleList()
+                        is AppRouter.Screen.ArticleDetail -> ArticleDetail(current.article)
+                    }
                 }
             }
         }

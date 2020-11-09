@@ -3,8 +3,6 @@ package com.joaquimverges.kmp.news.android
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.platform.setContent
-import com.joaquimverges.kmp.news.BrowserWrapper
-import com.joaquimverges.kmp.news.logic.AppRouter
 
 class MainActivity : AppCompatActivity() {
 

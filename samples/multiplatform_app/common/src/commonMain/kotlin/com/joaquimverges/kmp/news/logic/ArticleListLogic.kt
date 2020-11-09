@@ -92,7 +92,6 @@ class ArticleListLogic(
         }
     }
 
-
     override fun onUiEvent(event: Event) {
         when (event) {
             is Event.ArticleClicked -> appRouter.goToDetail(event.article)

@@ -23,5 +23,5 @@ allprojects {
         mavenCentral()
     }
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
-    apply(plugin="org.jetbrains.dokka")
+    apply(plugin = "org.jetbrains.dokka")
 }

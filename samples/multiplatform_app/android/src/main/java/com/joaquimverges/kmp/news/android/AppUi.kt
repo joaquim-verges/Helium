@@ -5,13 +5,13 @@ import androidx.compose.runtime.Providers
 import androidx.compose.runtime.ambientOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.ContextAmbient
+import com.joaquimverges.helium.compose.AppBlock
 import com.joaquimverges.helium.core.retained.getRetainedLogicBlock
 import com.joaquimverges.kmp.news.android.utils.StackTransition
 import com.joaquimverges.kmp.news.data.Article
 import com.joaquimverges.kmp.news.logic.AppRouter
 import com.joaquimverges.kmp.news.logic.ArticleDetailLogic
 import com.joaquimverges.kmp.news.logic.ArticleListLogic
-import com.joaquimverges.helium.compose.AppBlock
 
 val AppRouterAmbient = ambientOf<AppRouter> { error("No AppRouter set!") }
 

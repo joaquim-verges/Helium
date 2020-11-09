@@ -2,8 +2,6 @@ package com.joaquimverges.kmp.news.android
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.ripple.RippleIndication
@@ -28,9 +26,11 @@ fun ArticleDetailUi(
     state: ArticleDetailLogic.DetailState?,
     dispatcher: EventDispatcher<ArticleDetailLogic.DetailEvent>
 ) {
-    Draggable(onSwiped = {
-        dispatcher.pushEvent(ArticleDetailLogic.DetailEvent.ArticleClosed)
-    }) {
+    Draggable(
+        onSwiped = {
+            dispatcher.pushEvent(ArticleDetailLogic.DetailEvent.ArticleClosed)
+        }
+    ) {
         ArticleDetailContent(state, dispatcher)
     }
 }
@@ -53,9 +53,11 @@ fun ArticleDetailContent(
                     ),
                 data = article.urlToImage ?: "",
                 loading = {
-                    Box(modifier = Modifier.fillMaxWidth()
-                        .aspectRatio(4 / 3f)
-                        .background(Color.LightGray))
+                    Box(
+                        modifier = Modifier.fillMaxWidth()
+                            .aspectRatio(4 / 3f)
+                            .background(Color.LightGray)
+                    )
                 },
                 contentScale = ContentScale.Crop
             )
@@ -76,9 +78,12 @@ fun ArticleDetailContent(
                         "Read More",
                         style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal),
                         color = MaterialTheme.colors.primary,
-                        modifier = Modifier.clickable(onClick = {
-                            dispatcher.pushEvent(ArticleDetailLogic.DetailEvent.ReadMoreClicked(url))
-                        }, indication = RippleIndication(bounded = false))
+                        modifier = Modifier.clickable(
+                            onClick = {
+                                dispatcher.pushEvent(ArticleDetailLogic.DetailEvent.ReadMoreClicked(url))
+                            },
+                            indication = RippleIndication(bounded = false)
+                        )
                     )
                 }
             }
@@ -102,6 +107,8 @@ fun preview() {
                     "https://www.tesla.com/sites/default/files/modelsx-new/social/model-x-social.jpg",
                     ""
                 )
-            ), dispatcher = EventDispatcher())
+            ),
+            dispatcher = EventDispatcher()
+        )
     }
 }

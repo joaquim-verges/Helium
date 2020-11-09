@@ -1,5 +1,6 @@
 package com.joaquimverges.helium.test
 
+import android.os.Build
 import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.joaquimverges.helium.core.AppBlock
@@ -13,12 +14,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.test.TestCoroutineScope
 import org.junit.Rule
 import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
 
 /**
  * Convenience base class for unit testing Helium blocks
  */
 @Suppress("LeakingThis")
 @RunWith(AndroidJUnit4::class)
+@Config(sdk = [Build.VERSION_CODES.Q])
 open class HeliumTestCase : TestCase() {
     @get:Rule var mockRule = MockitoInitializationRule(this)
     @get:Rule var coroutinesTestRule = CoroutinesTestRule()

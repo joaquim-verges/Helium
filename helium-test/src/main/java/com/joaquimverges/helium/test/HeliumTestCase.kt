@@ -21,7 +21,7 @@ import org.robolectric.annotation.Config
  */
 @Suppress("LeakingThis")
 @RunWith(AndroidJUnit4::class)
-@Config(sdk = [Build.VERSION_CODES.Q])
+@Config(sdk = [Build.VERSION_CODES.P])
 open class HeliumTestCase : TestCase() {
     @get:Rule var mockRule = MockitoInitializationRule(this)
     @get:Rule var coroutinesTestRule = CoroutinesTestRule()

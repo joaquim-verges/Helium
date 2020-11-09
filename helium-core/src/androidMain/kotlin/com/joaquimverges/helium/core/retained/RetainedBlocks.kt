@@ -21,7 +21,7 @@ inline fun <reified P : ViewModel> Fragment.getRetainedLogicBlock(): P {
 }
 
 inline fun <reified P : ViewModel> Context.getRetainedLogicBlock(): P {
-    return when(this) {
+    return when (this) {
         is FragmentActivity -> {
             ViewModelProvider(this)[P::class.java]
         }
@@ -44,7 +44,7 @@ inline fun <reified P : ViewModel> Fragment.getRetainedLogicBlock(noinline facto
 }
 
 inline fun <reified P : ViewModel> Context.getRetainedLogicBlock(noinline factory: (Class<P>) -> P): P {
-    return when(this) {
+    return when (this) {
         is FragmentActivity -> {
             ViewModelProvider(this, LogicBlockFactory(P::class.java, factory)).get(P::class.java)
         }

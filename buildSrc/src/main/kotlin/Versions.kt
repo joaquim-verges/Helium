@@ -1,18 +1,18 @@
 object Versions {
 
     // android
-    const val agp = "4.2.0-alpha15"
-    const val compileSdk = 28
+    const val agp = "4.2.0-alpha16"
+    const val compileSdk = 30
     const val minSdk = 21
-    const val targetSdk = 28
+    const val targetSdk = 30
 
     // kotlin std
     const val kotlin = "1.4.10"
     const val coroutines = "1.3.9"
 
     // test
-    const val robolectric = "4.2.1"
-    const val mockito_kotlin = "2.1.0"
+    const val robolectric = "4.3.1"
+    const val mockito_kotlin = "2.2.0"
     const val test_core = "1.3.0"
     const val test_ext = "1.1.2"
     const val test_espresso = "3.3.0"

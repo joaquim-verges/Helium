@@ -7,7 +7,6 @@ import com.joaquimverges.helium.core.event.EventDispatcher
 import com.joaquimverges.helium.core.state.BlockState
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 
 @Composable
 fun <S : BlockState, E : BlockEvent> AppBlock(

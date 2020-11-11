@@ -4,6 +4,7 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
+import androidx.compose.material.darkColors
 import androidx.compose.material.ripple.RippleIndication
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -42,26 +43,13 @@ fun ArticleDetailContent(
 ) {
     state?.article?.let { article ->
         ScrollableColumn(Modifier.fillMaxSize()) {
-            CoilImage(
-                modifier = Modifier.fillMaxWidth()
-                    .aspectRatio(4 / 3f)
-                    .clickable(
-                        onClick = {
-                            dispatcher.pushEvent(ArticleDetailLogic.DetailEvent.ArticleClosed)
-                        },
-                        indication = RippleIndication()
-                    ),
-                data = article.urlToImage ?: "",
-                loading = {
-                    Box(
-                        modifier = Modifier.fillMaxWidth()
-                            .aspectRatio(4 / 3f)
-                            .background(Color.LightGray)
-                    )
-                },
-                contentScale = ContentScale.Crop
-            )
+            HeroImage(article.urlToImage, dispatcher)
             Column(Modifier.fillMaxWidth().padding(24.dp)) {
+                Text(
+                    text = article.source?.name ?: "",
+                    style = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Normal)
+                )
+                Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = article.title ?: "",
                     style = TextStyle(fontSize = 22.sp, fontWeight = FontWeight.Bold)
@@ -91,24 +79,60 @@ fun ArticleDetailContent(
     }
 }
 
+@Composable
+fun HeroImage(
+    imageUrl: String?,
+    dispatcher: EventDispatcher<ArticleDetailLogic.DetailEvent>
+) {
+    imageUrl?.let {
+        CoilImage(
+            modifier = Modifier.fillMaxWidth()
+                .aspectRatio(4 / 3f)
+                .clickable(
+                    onClick = {
+                        dispatcher.pushEvent(ArticleDetailLogic.DetailEvent.ArticleClosed)
+                    },
+                    indication = RippleIndication()
+                ),
+            data = it,
+            loading = {
+                Box(
+                    modifier = Modifier.fillMaxWidth()
+                        .aspectRatio(4 / 3f)
+                        .background(Color.LightGray)
+                )
+            },
+            contentScale = ContentScale.Crop
+        )
+    } ?: run {
+        Box(
+            modifier = Modifier.fillMaxWidth()
+                .aspectRatio(4 / 3f)
+                .background(Color.LightGray)
+        )
+    }
+}
+
 @Preview
 @Composable
 fun preview() {
-    Surface {
-        ArticleDetailContent(
-            state = ArticleDetailLogic.DetailState(
-                article = Article(
-                    ArticleSource("", "Engadget", ""),
-                    "",
-                    "Article title with striking headline",
-                    "Article description",
-                    "Article content",
-                    "http://google.com",
-                    "https://www.tesla.com/sites/default/files/modelsx-new/social/model-x-social.jpg",
-                    ""
-                )
-            ),
-            dispatcher = EventDispatcher()
-        )
+    MaterialTheme(colors = Themes.light) {
+        Surface {
+            ArticleDetailContent(
+                state = ArticleDetailLogic.DetailState(
+                    article = Article(
+                        ArticleSource("", "Engadget", ""),
+                        "",
+                        "Article title with striking headline",
+                        "Article description",
+                        "Article content",
+                        "http://google.com",
+                        null,
+                        ""
+                    )
+                ),
+                dispatcher = EventDispatcher()
+            )
+        }
     }
 }

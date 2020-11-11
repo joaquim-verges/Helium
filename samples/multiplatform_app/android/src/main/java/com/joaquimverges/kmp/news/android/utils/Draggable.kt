@@ -2,13 +2,7 @@ package com.joaquimverges.kmp.news.android.utils
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.draggable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Stack
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.offsetPx
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
@@ -31,7 +25,7 @@ fun Draggable(onSwiped: () -> Unit, children: @Composable () -> Unit) {
     }
     val max = screenWidth.toFloat() * .2f
     val min = 0f
-    Stack {
+    Box {
         Column(
             Modifier.width(with(DensityAmbient.current) { max.toDp() })
                 .fillMaxHeight(),

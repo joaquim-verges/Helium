@@ -1,13 +1,13 @@
 <resources>
 
 <!-- Base application theme. -->
-<style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+<style name="AppTheme" parent="Theme.MaterialComponents.NoActionBar">
     <!-- Customize your theme here. -->
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="colorAccent">@color/colorAccent</item>
     <item name="android:windowLightStatusBar">false</item>
-    <item name="android:windowBackground">@color/colorBackground</item>
+    <item name="android:windowBackground">@android:color/black</item>
 </style>
 
 </resources>

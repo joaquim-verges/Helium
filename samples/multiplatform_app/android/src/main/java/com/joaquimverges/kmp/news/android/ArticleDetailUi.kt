@@ -42,7 +42,7 @@ fun ArticleDetailContent(
     dispatcher: EventDispatcher<ArticleDetailLogic.DetailEvent>
 ) {
     state?.article?.let { article ->
-        ScrollableColumn(Modifier.fillMaxSize()) {
+        ScrollableColumn(Modifier.fillMaxSize().background(MaterialTheme.colors.background)) {
             HeroImage(article.urlToImage, dispatcher)
             Column(Modifier.fillMaxWidth().padding(24.dp)) {
                 Text(

@@ -101,7 +101,7 @@ fun HeroImage(
                 Box(
                     modifier = Modifier.fillMaxWidth()
                         .aspectRatio(4 / 3f)
-                        .background(Color.LightGray)
+                        .background(MaterialTheme.colors.secondary)
                 )
             },
             contentScale = ContentScale.Crop
@@ -110,7 +110,7 @@ fun HeroImage(
         Box(
             modifier = Modifier.fillMaxWidth()
                 .aspectRatio(4 / 3f)
-                .background(Color.LightGray)
+                .background(MaterialTheme.colors.secondary)
         )
     }
 }

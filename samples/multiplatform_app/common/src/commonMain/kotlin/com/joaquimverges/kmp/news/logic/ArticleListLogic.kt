@@ -5,8 +5,8 @@ import com.joaquimverges.helium.core.LogicBlock
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.event.EventDispatcher
 import com.joaquimverges.helium.core.state.DataLoadState
-import com.joaquimverges.kmp.news.data.Article
-import com.joaquimverges.kmp.news.data.ArticleResponse
+import com.joaquimverges.kmp.news.data.models.Article
+import com.joaquimverges.kmp.news.data.models.ArticleResponse
 import com.joaquimverges.kmp.news.data.NewsRepository
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.scan

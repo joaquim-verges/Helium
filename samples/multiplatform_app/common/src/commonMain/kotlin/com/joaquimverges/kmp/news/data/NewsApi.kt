@@ -1,5 +1,7 @@
 package com.joaquimverges.kmp.news.data
 
+import com.joaquimverges.kmp.news.data.models.ArticleResponse
+import com.joaquimverges.kmp.news.data.models.SourcesResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
@@ -29,5 +31,9 @@ class NewsApi {
         return client.get("$articlesEndpoint&sources=engadget,polygon,the-verge&page=$page") {
             header("X-Api-Key", API_KEY)
         }
+    }
+
+    suspend fun getSources(): SourcesResponse {
+        return client.get("$articlesEndpoint/sources?language=en")
     }
 }

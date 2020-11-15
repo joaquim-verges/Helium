@@ -4,7 +4,7 @@ import com.joaquimverges.helium.core.LogicBlock
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.state.BlockState
 import com.joaquimverges.kmp.news.BrowserWrapper
-import com.joaquimverges.kmp.news.data.Article
+import com.joaquimverges.kmp.news.data.models.Article
 
 class AppRouter(
     private val browserWrapper: BrowserWrapper

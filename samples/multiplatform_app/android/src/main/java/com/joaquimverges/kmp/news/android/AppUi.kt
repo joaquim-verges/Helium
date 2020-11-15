@@ -9,7 +9,7 @@ import androidx.compose.ui.platform.ContextAmbient
 import com.joaquimverges.helium.compose.AppBlock
 import com.joaquimverges.helium.core.retained.getRetainedLogicBlock
 import com.joaquimverges.kmp.news.android.utils.StackTransition
-import com.joaquimverges.kmp.news.data.Article
+import com.joaquimverges.kmp.news.data.models.Article
 import com.joaquimverges.kmp.news.logic.AppRouter
 import com.joaquimverges.kmp.news.logic.ArticleDetailLogic
 import com.joaquimverges.kmp.news.logic.ArticleListLogic

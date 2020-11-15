@@ -1,5 +1,7 @@
 package com.joaquimverges.kmp.news.data
 
+import com.joaquimverges.kmp.news.data.models.ArticleResponse
+
 class NewsRepository(
     private val api: NewsApi = NewsApi()
 ) {

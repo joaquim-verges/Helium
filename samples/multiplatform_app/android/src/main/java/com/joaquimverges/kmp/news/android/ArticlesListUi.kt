@@ -24,9 +24,9 @@ import androidx.compose.ui.zIndex
 import androidx.ui.tooling.preview.Preview
 import com.joaquimverges.helium.core.event.EventDispatcher
 import com.joaquimverges.helium.core.state.DataLoadState
-import com.joaquimverges.kmp.news.data.Article
-import com.joaquimverges.kmp.news.data.ArticleResponse
-import com.joaquimverges.kmp.news.data.ArticleSource
+import com.joaquimverges.kmp.news.data.models.Article
+import com.joaquimverges.kmp.news.data.models.ArticleResponse
+import com.joaquimverges.kmp.news.data.models.ArticleSource
 import com.joaquimverges.kmp.news.logic.ArticleListLogic
 import dev.chrisbanes.accompanist.coil.CoilImage
 

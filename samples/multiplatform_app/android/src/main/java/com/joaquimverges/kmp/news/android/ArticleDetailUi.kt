@@ -10,7 +10,6 @@ import androidx.compose.material.Text
 import androidx.compose.material.ripple.RippleIndication
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -19,8 +18,8 @@ import androidx.compose.ui.unit.sp
 import androidx.ui.tooling.preview.Preview
 import com.joaquimverges.helium.core.event.EventDispatcher
 import com.joaquimverges.kmp.news.android.utils.Draggable
-import com.joaquimverges.kmp.news.data.Article
-import com.joaquimverges.kmp.news.data.ArticleSource
+import com.joaquimverges.kmp.news.data.models.Article
+import com.joaquimverges.kmp.news.data.models.ArticleSource
 import com.joaquimverges.kmp.news.logic.ArticleDetailLogic
 import dev.chrisbanes.accompanist.coil.CoilImage
 

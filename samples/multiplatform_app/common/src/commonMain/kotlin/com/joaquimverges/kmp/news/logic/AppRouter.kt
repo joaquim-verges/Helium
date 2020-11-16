@@ -11,6 +11,7 @@ class AppRouter(
 ) : LogicBlock<AppRouter.Screen, BlockEvent>() {
 
     sealed class Screen : BlockState {
+        object SourcesList : Screen()
         object ArticleList : Screen()
         data class ArticleDetail(val article: Article) : Screen()
     }
@@ -25,11 +26,16 @@ class AppRouter(
     }
 
     fun onBackPressed(): Boolean {
-        if (currentState() is Screen.ArticleDetail) {
-            pushState(Screen.ArticleList)
-            return true
+        return when (currentState()) {
+            is Screen.ArticleDetail, Screen.SourcesList -> {
+                pushState(Screen.ArticleList)
+                true
+            }
+            Screen.ArticleList -> {
+                false
+            }
+            null -> false
         }
-        return false
     }
 
     fun goToList() {
@@ -38,6 +44,10 @@ class AppRouter(
 
     fun goToDetail(article: Article) {
         pushState(Screen.ArticleDetail(article))
+    }
+
+    fun goToSources() {
+        pushState(Screen.SourcesList)
     }
 
     fun goToBrowser(url: String) {

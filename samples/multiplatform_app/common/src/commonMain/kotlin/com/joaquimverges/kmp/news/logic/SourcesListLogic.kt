@@ -9,11 +9,13 @@ import com.joaquimverges.kmp.news.data.models.ArticleSource
 import kotlinx.coroutines.withContext
 
 class SourcesListLogic(
+    private val appRouter: AppRouter,
     private val repo: SourcesRepository = SourcesRepository()
 ) : LogicBlock<DataLoadState<List<ArticleSource>>, SourcesListLogic.Event>() {
 
-    sealed class Event: BlockEvent {
-        data class SourceClicked(val source: ArticleSource)
+    sealed class Event : BlockEvent {
+        data class SourceClicked(val source: ArticleSource): Event()
+        object CloseClicked: Event()
     }
 
     init {
@@ -35,6 +37,11 @@ class SourcesListLogic(
     }
 
     override fun onUiEvent(event: Event) {
-
+        when(event) {
+            is Event.SourceClicked -> {
+                // TODO selection logic
+            }
+            Event.CloseClicked -> appRouter.goToList()
+        }
     }
 }

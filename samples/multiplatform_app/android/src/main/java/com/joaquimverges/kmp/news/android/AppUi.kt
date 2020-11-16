@@ -13,6 +13,7 @@ import com.joaquimverges.kmp.news.data.models.Article
 import com.joaquimverges.kmp.news.logic.AppRouter
 import com.joaquimverges.kmp.news.logic.ArticleDetailLogic
 import com.joaquimverges.kmp.news.logic.ArticleListLogic
+import com.joaquimverges.kmp.news.logic.SourcesListLogic
 
 val AppRouterAmbient = ambientOf<AppRouter> { error("No AppRouter set!") }
 
@@ -30,6 +31,7 @@ fun AppUi(appRouter: AppRouter) {
                     when (current) {
                         is AppRouter.Screen.ArticleList -> ArticleList()
                         is AppRouter.Screen.ArticleDetail -> ArticleDetail(current.article)
+                        is AppRouter.Screen.SourcesList -> SourcesList()
                     }
                 }
             }
@@ -54,5 +56,16 @@ fun ArticleDetail(article: Article) {
     val logic = remember(article) { ArticleDetailLogic(article, appRouter) }
     AppBlock(logic) { state, dispatcher ->
         ArticleDetailUi(state, dispatcher)
+    }
+}
+
+@Composable
+fun SourcesList() {
+    val appRouter = AppRouterAmbient.current
+    val logic: SourcesListLogic = ContextAmbient.current.getRetainedLogicBlock {
+        SourcesListLogic(appRouter)
+    }
+    AppBlock(logic) { state, dispatcher ->
+        SourcesListUi(state, dispatcher)
     }
 }

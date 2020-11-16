@@ -5,9 +5,9 @@ import com.joaquimverges.helium.core.LogicBlock
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.event.EventDispatcher
 import com.joaquimverges.helium.core.state.DataLoadState
+import com.joaquimverges.kmp.news.data.NewsRepository
 import com.joaquimverges.kmp.news.data.models.Article
 import com.joaquimverges.kmp.news.data.models.ArticleResponse
-import com.joaquimverges.kmp.news.data.NewsRepository
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.withContext
@@ -19,6 +19,7 @@ class ArticleListLogic(
 
     sealed class Event : BlockEvent {
         data class ArticleClicked(val article: Article) : Event()
+        object AddSourcesClicked : Event()
         object FetchMore : Event()
     }
 
@@ -95,7 +96,8 @@ class ArticleListLogic(
     override fun onUiEvent(event: Event) {
         when (event) {
             is Event.ArticleClicked -> appRouter.goToDetail(event.article)
-            Event.FetchMore -> paginate()
+            is Event.AddSourcesClicked -> appRouter.goToSources()
+            is Event.FetchMore -> paginate()
         }
     }
 }

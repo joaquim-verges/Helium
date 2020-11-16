@@ -1,5 +1,6 @@
 package com.joaquimverges.kmp.news.android
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -8,6 +9,8 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.onActive
@@ -15,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -46,7 +50,18 @@ fun ArticleListUI(
                 },
                 backgroundColor = MaterialTheme.colors.surface,
                 elevation = 0.dp,
-                modifier = Modifier.height(72.dp)
+                modifier = Modifier.height(72.dp),
+                actions = {
+                    IconButton(
+                        onClick = { eventDispatcher.pushEvent(ArticleListLogic.Event.AddSourcesClicked) },
+                        modifier = Modifier.align(Alignment.CenterVertically)
+                    ) {
+                        Image(
+                            asset = Icons.Filled.AddCircle,
+                            colorFilter = ColorFilter.tint(MaterialTheme.colors.onBackground)
+                        )
+                    }
+                }
             )
         }
     ) {
@@ -63,7 +78,10 @@ fun ArticleListUI(
             }
             is DataLoadState.Error -> {
                 Centered {
-                    Text("Network Error: ${state.error.message}")
+                    Text(
+                        "Network Error: ${state.error.message}",
+                        modifier = Modifier.padding(24.dp)
+                    )
                 }
             }
             is DataLoadState.Ready -> {

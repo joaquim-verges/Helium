@@ -1,6 +1,5 @@
 package com.joaquimverges.kmp.news.data.models
 
-import com.joaquimverges.kmp.news.data.models.ArticleSource
 import kotlinx.serialization.Serializable
 
 /**

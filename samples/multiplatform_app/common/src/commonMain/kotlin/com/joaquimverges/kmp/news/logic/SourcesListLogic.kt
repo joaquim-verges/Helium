@@ -4,6 +4,7 @@ import com.joaquimverges.helium.core.Background
 import com.joaquimverges.helium.core.LogicBlock
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.state.DataLoadState
+import com.joaquimverges.kmp.news.data.SourceWithSelection
 import com.joaquimverges.kmp.news.data.SourcesRepository
 import com.joaquimverges.kmp.news.data.models.ArticleSource
 import kotlinx.coroutines.withContext
@@ -11,22 +12,23 @@ import kotlinx.coroutines.withContext
 class SourcesListLogic(
     private val appRouter: AppRouter,
     private val repo: SourcesRepository = SourcesRepository()
-) : LogicBlock<DataLoadState<List<ArticleSource>>, SourcesListLogic.Event>() {
+) : LogicBlock<DataLoadState<SourceWithSelection>, SourcesListLogic.Event>() {
 
     sealed class Event : BlockEvent {
-        data class SourceClicked(val source: ArticleSource): Event()
-        object CloseClicked: Event()
+        data class SourceSelected(val source: ArticleSource) : Event()
+        data class SourceUnselected(val source: ArticleSource) : Event()
+        object CloseClicked : Event()
     }
 
     init {
         pushState(DataLoadState.Loading())
         launchInBlock {
             try {
-                val sources = withContext(Background) {
+                val data = withContext(Background) {
                     repo.getSources()
                 }
-                if (sources.isNotEmpty()) {
-                    pushState(DataLoadState.Ready(sources))
+                if (data.sources.isNotEmpty()) {
+                    pushState(DataLoadState.Ready(data))
                 } else {
                     pushState(DataLoadState.Empty())
                 }
@@ -37,11 +39,10 @@ class SourcesListLogic(
     }
 
     override fun onUiEvent(event: Event) {
-        when(event) {
-            is Event.SourceClicked -> {
-                // TODO selection logic
-            }
-            Event.CloseClicked -> appRouter.goToList()
+        when (event) {
+            is Event.SourceSelected -> repo.setSelectedSource(event.source, true)
+            is Event.SourceUnselected -> repo.setSelectedSource(event.source, false)
+            is Event.CloseClicked -> appRouter.goToList()
         }
     }
 }

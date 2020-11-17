@@ -8,7 +8,7 @@ object Versions {
 
     // kotlin std
     const val kotlin = "1.4.10"
-    const val coroutines = "1.3.9"
+    const val coroutines = "1.4.1"
 
     // test
     const val robolectric = "4.3.1"

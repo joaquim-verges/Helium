@@ -5,9 +5,13 @@ import com.joaquimverges.helium.core.LogicBlock
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.event.EventDispatcher
 import com.joaquimverges.helium.core.state.DataLoadState
+import com.joaquimverges.kmp.news.data.Database
 import com.joaquimverges.kmp.news.data.NewsRepository
+import com.joaquimverges.kmp.news.data.SourcesRepository
 import com.joaquimverges.kmp.news.data.models.Article
 import com.joaquimverges.kmp.news.data.models.ArticleResponse
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.withContext
@@ -57,7 +61,10 @@ class ArticleListLogic(
             pushState(state)
         }.launchInBlock()
 
-        fetchFirstPage()
+        repo.observeSources()
+            .onEach {
+                fetchFirstPage()
+            }.launchInBlock()
     }
 
     private fun fetchFirstPage() {

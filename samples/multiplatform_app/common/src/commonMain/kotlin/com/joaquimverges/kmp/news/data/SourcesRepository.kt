@@ -1,24 +1,43 @@
 package com.joaquimverges.kmp.news.data
 
+import com.joaquimverges.kmp.news.Sources
 import com.joaquimverges.kmp.news.data.models.ArticleSource
+import com.squareup.sqldelight.runtime.coroutines.asFlow
+import com.squareup.sqldelight.runtime.coroutines.mapToList
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
-data class SourceWithSelection(val sources: List<ArticleSource>, val selectedMap: Map<String, Boolean>)
+data class SourceWithSelection(
+    val sources: List<ArticleSource>,
+    val selectedMap: Map<String, Boolean>
+)
 
-class SourcesRepository(private val api: NewsApi = NewsApi()) {
+class SourcesRepository(private val api: NewsApi = NewsApi(), private val db: Database = Database) {
 
-    private val selectedSources = mutableMapOf<String, Boolean>() // TODO local storage
-
-    suspend fun getSources(): SourceWithSelection {
-        return SourceWithSelection(api.getSources().sources, getSelectedSourcesMap())
-    }
-
-    fun getSelectedSourcesMap(): Map<String, Boolean> {
-        return selectedSources
-    }
-
-    fun setSelectedSource(source: ArticleSource, selected: Boolean) {
-        source.id?.let {
-            selectedSources[source.id] = selected
+    suspend fun refreshSources() {
+        val sources = api.getSources().sources
+        sources.forEach {
+            val selected =
+                db.sources().getSourceById(it.id ?: "").executeAsOneOrNull()?.selected ?: false
+            db.sources().insertSource(
+                Sources(it.id ?: "", it.name ?: "", it.category ?: "", selected)
+            )
         }
+    }
+
+    fun observeSources() =
+        db.sources().getAllSources().asFlow().mapToList()
+
+    fun observeSelectedSources() =
+        db.sources().getSelectedSources().asFlow().mapToList()
+
+    fun getSelectedSourceIds(): List<String> {
+        return db.sources().getSelectedSources().executeAsList().map { it.id }
+    }
+
+    fun setSelectedSource(source: Sources, selected: Boolean) {
+        db.sources().setSourceSelected(selected, source.id ?: "")
     }
 }

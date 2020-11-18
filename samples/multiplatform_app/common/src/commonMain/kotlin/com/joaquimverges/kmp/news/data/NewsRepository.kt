@@ -1,9 +1,12 @@
 package com.joaquimverges.kmp.news.data
 
 import com.joaquimverges.kmp.news.data.models.ArticleResponse
+import kotlinx.coroutines.flow.debounce
+import kotlin.time.Duration
 
 class NewsRepository(
-    private val api: NewsApi = NewsApi()
+    private val api: NewsApi = NewsApi(),
+    private val sourcesRepository: SourcesRepository = SourcesRepository()
 ) {
     companion object {
         private const val MAX_PAGES = 10
@@ -13,7 +16,8 @@ class NewsRepository(
 
     suspend fun getNews(): ArticleResponse {
         page = 1
-        return api.getNews(page)
+        val selectedSources = sourcesRepository.getSelectedSourceIds()
+        return api.getNews(page, selectedSources)
     }
 
     suspend fun paginate(): ArticleResponse {
@@ -21,6 +25,9 @@ class NewsRepository(
         if (page > MAX_PAGES) {
             return ArticleResponse(null, emptyList())
         }
-        return api.getNews(page)
+        val selectedSources = sourcesRepository.getSelectedSourceIds()
+        return api.getNews(page, selectedSources)
     }
+
+    fun observeSources() = sourcesRepository.observeSelectedSources()
 }

@@ -6,6 +6,7 @@ plugins {
     kotlin("native.cocoapods")
     kotlin("plugin.serialization")
     id("com.android.library")
+    id("com.squareup.sqldelight")
 }
 
 version = "1.0"
@@ -14,21 +15,24 @@ val ios_framework_name = "NewsCommon"
 kotlin {
 
     android()
-    ios()
+    iosX64("ios")
 
     sourceSets["commonMain"].apply {
         dependencies {
             api(project(":helium-core"))
             Deps.ktorCommonDeps.forEach(::implementation)
+            Deps.sqlDelightCommonDeps.forEach(::implementation)
         }
     }
 
     sourceSets["androidMain"].dependencies {
         implementation(Deps.ktorAndroid)
+        implementation(Deps.sqlDelightAndroid)
     }
 
     sourceSets["iosMain"].dependencies {
         implementation(Deps.ktorIOS)
+        implementation(Deps.sqlDelightIos)
     }
 
     cocoapods {
@@ -54,3 +58,10 @@ kotlin {
 }
 
 androidForMultiplatformLib()
+
+sqldelight {
+    database("HeliumNewsDB") {
+        packageName = "com.joaquimverges.kmp.news"
+        sourceFolders = listOf("sqldelight")
+    }
+}

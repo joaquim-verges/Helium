@@ -18,13 +18,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.joaquimverges.helium.core.event.EventDispatcher
 import com.joaquimverges.helium.core.state.DataLoadState
+import com.joaquimverges.kmp.news.Sources
 import com.joaquimverges.kmp.news.data.SourceWithSelection
 import com.joaquimverges.kmp.news.data.models.ArticleSource
 import com.joaquimverges.kmp.news.logic.SourcesListLogic
 
 @Composable
 fun SourcesListUi(
-    state: DataLoadState<SourceWithSelection>?,
+    state: DataLoadState<List<Sources>>?,
     eventDispatcher: EventDispatcher<SourcesListLogic.Event>
 ) {
     Scaffold(
@@ -72,12 +73,12 @@ fun SourcesListUi(
                 }
             }
             is DataLoadState.Ready -> {
-                LazyColumnFor(state.data.sources, modifier = Modifier.fillMaxWidth()) { item ->
+                LazyColumnFor(state.data, modifier = Modifier.fillMaxWidth()) { item ->
                     Row(
                         modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        val selected = mutableStateOf(state.data.selectedMap[item.id] ?: false)
+                        val selected = mutableStateOf(item.selected)
                         Text(text = item.name ?: "", modifier = Modifier.weight(1f))
                         Checkbox(checked = selected.value, onCheckedChange = { checked ->
                             selected.value = checked

@@ -32,5 +32,6 @@ object Versions {
 
     // kotlin mpp
     const val ktor = "1.4.2"
+    const val sqlDelight = "1.4.3"
 
 }

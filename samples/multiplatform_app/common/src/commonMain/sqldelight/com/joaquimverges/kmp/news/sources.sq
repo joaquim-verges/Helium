@@ -1,0 +1,33 @@
+CREATE TABLE Sources(
+id TEXT NOT NULL PRIMARY KEY,
+name TEXT NOT NULL,
+category TEXT NOT NULL,
+selected INTEGER AS Boolean NOT NULL DEFAULT 0
+);
+
+insertSource:
+INSERT OR REPLACE INTO Sources(id, name, category, selected)
+VALUES ?;
+
+getSourceById:
+SELECT *
+FROM Sources
+WHERE id = ?;
+
+deleteSourceById:
+DELETE FROM Sources
+WHERE id = ?;
+
+getAllSources:
+SELECT *
+FROM Sources;
+
+setSourceSelected:
+UPDATE Sources
+SET selected = ?
+WHERE id = ?;
+
+getSelectedSources:
+SELECT *
+FROM Sources
+WHERE selected = 1;

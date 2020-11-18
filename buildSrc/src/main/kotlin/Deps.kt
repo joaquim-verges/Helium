@@ -54,5 +54,13 @@ object Deps {
     )
     const val ktorAndroid = "io.ktor:ktor-client-android:${Versions.ktor}"
     const val ktorIOS = "io.ktor:ktor-client-ios:${Versions.ktor}"
+
+    val sqlDelightCommonDeps = listOf(
+        "com.squareup.sqldelight:runtime:${Versions.sqlDelight}",
+        "com.squareup.sqldelight:coroutines-extensions:${Versions.sqlDelight}"
+    )
+    const val sqlDelightAndroid = "com.squareup.sqldelight:android-driver:${Versions.sqlDelight}"
+    const val sqlDelightIos = "com.squareup.sqldelight:native-driver:${Versions.sqlDelight}"
+
 }
 

@@ -36,11 +36,17 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 Deps.lifecycleDeps.forEach(::api)
+                api(Deps.coroutinesAndroid)
             }
         }
 
         val androidTest by getting
-        val iosMain by getting
+
+        val iosMain by getting {
+            dependencies {
+                api(Deps.coroutineNative)
+            }
+        }
         val iosTest by getting
     }
 

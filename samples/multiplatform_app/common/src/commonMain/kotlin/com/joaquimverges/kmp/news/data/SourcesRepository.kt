@@ -9,18 +9,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-data class SourceWithSelection(
-    val sources: List<ArticleSource>,
-    val selectedMap: Map<String, Boolean>
-)
-
 class SourcesRepository(private val api: NewsApi = NewsApi(), private val db: Database = Database) {
 
     suspend fun refreshSources() {
         val sources = api.getSources().sources
         sources.forEach {
-            val selected =
-                db.sources().getSourceById(it.id ?: "").executeAsOneOrNull()?.selected ?: false
+            val selected = db.sources()
+                .getSourceById(it.id ?: "")
+                .executeAsOneOrNull()?.selected ?: false
             db.sources().insertSource(
                 Sources(it.id ?: "", it.name ?: "", it.category ?: "", selected)
             )

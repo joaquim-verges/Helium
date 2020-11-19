@@ -1,6 +1,10 @@
 package com.joaquimverges.helium.compose
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import com.joaquimverges.helium.core.LogicBlock
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.event.EventDispatcher
@@ -17,10 +21,13 @@ fun <S : BlockState, E : BlockEvent> AppBlock(
     ) -> Unit
 ) {
     val state by logic.observeState().collectAsState(initial = logic.currentState())
-    val dispatcher = remember(ui) { EventDispatcher<E>() }
     val scope = rememberCoroutineScope()
-    dispatcher.observer()
-        .onEach { logic.processEvent(it) }
-        .launchIn(scope)
+    val dispatcher = remember(ui) {
+        EventDispatcher<E>().apply {
+            observer()
+                .onEach { logic.processEvent(it) }
+                .launchIn(scope)
+        }
+    }
     ui(state, dispatcher)
 }

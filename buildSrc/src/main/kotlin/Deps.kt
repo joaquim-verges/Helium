@@ -3,6 +3,7 @@ object Deps {
     // Kotlin
     const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib-common"
     const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
+    const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
     const val coroutineNative = "org.jetbrains.kotlinx:kotlinx-coroutines-core-native:${Versions.coroutines}"
 
     // AndroidX

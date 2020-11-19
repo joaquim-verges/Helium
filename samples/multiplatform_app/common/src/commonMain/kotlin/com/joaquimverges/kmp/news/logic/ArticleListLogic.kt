@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.scan
 import kotlinx.coroutines.withContext
+import kotlin.native.concurrent.ThreadLocal
 
 class ArticleListLogic(
     private val appRouter: AppRouter,
@@ -62,6 +63,7 @@ class ArticleListLogic(
         }.launchInBlock()
 
         repo.observeSources()
+            .debounce(1000)
             .onEach {
                 fetchFirstPage()
             }.launchInBlock()
@@ -95,7 +97,7 @@ class ArticleListLogic(
                     paginationEvents.pushEvent(PaginationEvent.AdditionalPageLoaded(data))
                 }
             } catch (error: Exception) {
-                pushState(DataLoadState.Error(error))
+                // no-op
             }
         }
     }

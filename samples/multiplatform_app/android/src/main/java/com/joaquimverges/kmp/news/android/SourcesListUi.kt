@@ -3,7 +3,6 @@ package com.joaquimverges.kmp.news.android
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumnFor
-import androidx.compose.foundation.lazy.LazyColumnForIndexed
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -19,8 +18,6 @@ import androidx.compose.ui.unit.sp
 import com.joaquimverges.helium.core.event.EventDispatcher
 import com.joaquimverges.helium.core.state.DataLoadState
 import com.joaquimverges.kmp.news.Sources
-import com.joaquimverges.kmp.news.data.SourceWithSelection
-import com.joaquimverges.kmp.news.data.models.ArticleSource
 import com.joaquimverges.kmp.news.logic.SourcesListLogic
 
 @Composable

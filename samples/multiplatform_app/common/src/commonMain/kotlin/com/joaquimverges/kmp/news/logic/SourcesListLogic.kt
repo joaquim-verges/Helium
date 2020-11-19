@@ -5,10 +5,7 @@ import com.joaquimverges.helium.core.LogicBlock
 import com.joaquimverges.helium.core.event.BlockEvent
 import com.joaquimverges.helium.core.state.DataLoadState
 import com.joaquimverges.kmp.news.Sources
-import com.joaquimverges.kmp.news.data.SourceWithSelection
 import com.joaquimverges.kmp.news.data.SourcesRepository
-import com.joaquimverges.kmp.news.data.models.ArticleSource
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.withContext
@@ -27,8 +24,12 @@ class SourcesListLogic(
     init {
         pushState(DataLoadState.Loading())
         launchInBlock {
-            withContext(Background) {
-                repo.refreshSources()
+            try {
+                withContext(Background) {
+                    repo.refreshSources()
+                }
+            } catch (e: Exception) {
+                pushState(DataLoadState.Error(e))
             }
         }
         repo.observeSources()

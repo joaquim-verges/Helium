@@ -28,6 +28,7 @@ kotlin {
     sourceSets["androidMain"].dependencies {
         implementation(Deps.ktorAndroid)
         implementation(Deps.sqlDelightAndroid)
+        implementation(Deps.coroutinesAndroid)
     }
 
     sourceSets["iosMain"].dependencies {

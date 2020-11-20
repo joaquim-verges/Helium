@@ -22,6 +22,18 @@ class SourcesListLogic(
     }
 
     init {
+        repo.observeSources()
+            .onEach {
+                if (it.isEmpty()) {
+                    refreshFromNetwork()
+                } else {
+                    pushState(DataLoadState.Ready(it))
+                }
+            }.catch { pushState(DataLoadState.Error(it)) }
+            .launchInBlock()
+    }
+
+    private fun refreshFromNetwork() {
         pushState(DataLoadState.Loading())
         launchInBlock {
             try {
@@ -32,11 +44,6 @@ class SourcesListLogic(
                 pushState(DataLoadState.Error(e))
             }
         }
-        repo.observeSources()
-            .onEach {
-                pushState(DataLoadState.Ready(it))
-            }.catch { pushState(DataLoadState.Error(it)) }
-            .launchInBlock()
     }
 
     override fun onUiEvent(event: Event) {

@@ -34,6 +34,6 @@ class SourcesRepository(private val api: NewsApi = NewsApi(), private val db: Da
     }
 
     fun setSelectedSource(source: Sources, selected: Boolean) {
-        db.sources().setSourceSelected(selected, source.id ?: "")
+        db.sources().setSourceSelected(selected, source.id)
     }
 }

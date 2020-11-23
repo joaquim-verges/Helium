@@ -10,7 +10,9 @@ Lightweight & intuitive framework for Android & iOS powered by Kotlin Multiplatf
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.joaquimverges.helium/helium-core.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:com.joaquimverges.helium) [![Build Status](https://app.bitrise.io/app/9b5a174b9921d71f/status.svg?token=OXeY3aZX53ttCYvqZjEjqw&branch=master)](https://app.bitrise.io/app/9b5a174b9921d71f)
 ```groovy
-implementation 'com.joaquimverges.helium:helium-core:x.y.z' // core classes (multi platform)
+implementation 'com.joaquimverges.helium:helium-core:x.y.z' // core classes (Kotlin Multiplatform project)
+// or
+implementation 'com.joaquimverges.helium:helium-core-android:x.y.z' // core classes (Android project)
 
 implementation 'com.joaquimverges.helium:helium-compose:x.y.z'   // Jetpack Compose integration (Android)
 implementation 'com.joaquimverges.helium:helium-ui:x.y.z'   // ui components (Android)

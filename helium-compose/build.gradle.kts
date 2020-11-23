@@ -26,3 +26,5 @@ tasks.withType<KotlinCompile>().configureEach {
         freeCompilerArgs = freeCompilerArgs + listOf("-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check")
     }
 }
+
+apply(plugin = "com.vanniktech.maven.publish")

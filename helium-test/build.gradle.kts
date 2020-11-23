@@ -10,4 +10,4 @@ dependencies {
     Deps.androidXTestDeps.forEach(::api)
 }
 
-apply("../maven-push.gradle")
+apply(plugin = "com.vanniktech.maven.publish")

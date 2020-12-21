@@ -22,10 +22,10 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
-import androidx.ui.tooling.preview.Preview
 import com.joaquimverges.helium.core.event.EventDispatcher
 import com.joaquimverges.helium.core.state.DataLoadState
 import com.joaquimverges.kmp.news.data.models.Article
@@ -57,7 +57,7 @@ fun ArticleListUI(
                         modifier = Modifier.align(Alignment.CenterVertically)
                     ) {
                         Image(
-                            asset = Icons.Filled.AddCircle,
+                            imageVector = Icons.Filled.AddCircle,
                             colorFilter = ColorFilter.tint(MaterialTheme.colors.onBackground)
                         )
                     }

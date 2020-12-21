@@ -42,7 +42,7 @@ fun SourcesListUi(
                         onClick = { eventDispatcher.pushEvent(SourcesListLogic.Event.CloseClicked) }
                     ) {
                         Image(
-                            asset = Icons.Filled.ArrowBack,
+                            imageVector = Icons.Filled.ArrowBack,
                             colorFilter = ColorFilter.tint(MaterialTheme.colors.onBackground)
                         )
                     }

@@ -33,7 +33,7 @@ fun Draggable(onSwiped: () -> Unit, children: @Composable () -> Unit) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
-                asset = Icons.Filled.KeyboardArrowLeft,
+                imageVector = Icons.Filled.KeyboardArrowLeft,
                 modifier = Modifier.size(64.dp)
                     .drawLayer(
                         scaleX = offsetPosition.value / max,

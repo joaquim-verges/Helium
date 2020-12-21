@@ -45,7 +45,7 @@ object Deps {
             "androidx.compose.material:material:${Versions.compose}",
             "androidx.compose.foundation:foundation:${Versions.compose}",
             "androidx.compose.animation:animation:${Versions.compose}",
-            "androidx.ui:ui-tooling:${Versions.compose}"
+            "androidx.compose.ui:ui-tooling:${Versions.compose}"
     )
 
     // MPP

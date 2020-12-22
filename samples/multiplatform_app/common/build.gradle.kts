@@ -20,8 +20,8 @@ kotlin {
     sourceSets["commonMain"].apply {
         dependencies {
             api(project(":helium-core"))
-            Deps.ktorCommonDeps.forEach(::implementation)
-            Deps.sqlDelightCommonDeps.forEach(::implementation)
+            Deps.ktorCommonDeps.forEach { implementation(it) }
+            Deps.sqlDelightCommonDeps.forEach { implementation(it) }
         }
     }
 

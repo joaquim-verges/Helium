@@ -45,7 +45,7 @@ kotlin {
 
         val androidMain by getting {
             dependencies {
-                Deps.lifecycleDeps.forEach(::api)
+                Deps.lifecycleDeps.forEach { api(it) }
             }
         }
 

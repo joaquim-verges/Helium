@@ -4,7 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumnForIndexed
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.AmbientContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -45,7 +46,10 @@ fun ArticleListUI(
                 title = {
                     Text(
                         "Helium News",
-                        style = TextStyle(fontSize = 28.sp, fontWeight = FontWeight.Black)
+                        style = TextStyle(
+                            fontSize = 28.sp,
+                            fontWeight = FontWeight.Black
+                        )
                     )
                 },
                 backgroundColor = MaterialTheme.colors.surface,
@@ -85,7 +89,10 @@ fun ArticleListUI(
                 }
             }
             is DataLoadState.Ready -> {
-                List(state, eventDispatcher)
+                List(
+                    state,
+                    eventDispatcher
+                )
             }
         }
     }
@@ -94,7 +101,8 @@ fun ArticleListUI(
 @Composable
 fun Centered(children: @Composable () -> Unit) {
     Column(
-        Modifier.fillMaxWidth().fillMaxHeight(),
+        Modifier.fillMaxWidth()
+            .fillMaxHeight(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -102,7 +110,10 @@ fun Centered(children: @Composable () -> Unit) {
     }
 }
 
-data class MainListPosition(var scrollPosition: Int = 0, var scrollOffset: Int = 0)
+data class MainListPosition(
+    var scrollPosition: Int = 0,
+    var scrollOffset: Int = 0
+)
 
 val scrollPosition = MainListPosition()
 
@@ -123,27 +134,32 @@ fun List(
         initialFirstVisibleItemIndex = scrollPosition.scrollPosition,
         initialFirstVisibleItemScrollOffset = scrollPosition.scrollOffset
     )
-    LazyColumnForIndexed(
-        items = map.entries.toList(),
+    val context = AmbientContext.current
+    LazyColumn(
         state = scrollState
-    ) { index, item ->
-        onActive {
-            if (index >= fetchMorePosition && prevListSize.value != model.data.articles.size) {
-                prevListSize.value = model.data.articles.size
-                eventDispatcher.pushEvent(ArticleListLogic.Event.FetchMore)
+    ) {
+        itemsIndexed(map.entries.toList()) { index, item ->
+            onActive {
+                if (index >= fetchMorePosition && prevListSize.value != model.data.articles.size) {
+                    prevListSize.value = model.data.articles.size
+                    eventDispatcher.pushEvent(ArticleListLogic.Event.FetchMore)
+                }
             }
-        }
-
-        Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 6.dp)) {
-            item.value.forEach {
-                Item(
-                    article = it,
-                    imgAspectRatio = if (item.value.size == 1) 16 / 9f else 4 / 3f,
-                    modifier = Modifier.weight(1f).padding(6.dp)
-                ) {
-                    scrollPosition.scrollPosition = scrollState.firstVisibleItemIndex
-                    scrollPosition.scrollOffset = scrollState.firstVisibleItemScrollOffset
-                    eventDispatcher.pushEvent(ArticleListLogic.Event.ArticleClicked(it))
+            Row(
+                modifier = Modifier.fillMaxWidth()
+                    .padding(horizontal = 6.dp)
+            ) {
+                item.value.forEach {
+                    Item(
+                        article = it,
+                        imgAspectRatio = if (item.value.size == 1) 16 / 9f else 4 / 3f,
+                        modifier = Modifier.weight(1f)
+                            .padding(6.dp)
+                    ) {
+                        scrollPosition.scrollPosition = scrollState.firstVisibleItemIndex
+                        scrollPosition.scrollOffset = scrollState.firstVisibleItemScrollOffset
+                        eventDispatcher.pushEvent(ArticleListLogic.Event.ArticleClicked(it))
+                    }
                 }
             }
         }
@@ -190,47 +206,72 @@ fun Item(
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
-                }.clickable(onClick = onClick)
+                }
+                .clickable(onClick = onClick)
         )
         Text(
             article.source?.name
                 ?: "",
-            style = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Medium),
+            style = TextStyle(
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Medium
+            ),
             modifier = Modifier.constrainAs(source) {
                 top.linkTo(image.bottom)
                 bottom.linkTo(image.bottom)
-                start.linkTo(image.start, margin = 8.dp)
-            }.background(
-                color = MaterialTheme.colors.surface,
-                shape = RoundedCornerShape(4.dp)
-            ).padding(horizontal = 6.dp, vertical = 4.dp)
+                start.linkTo(
+                    image.start,
+                    margin = 8.dp
+                )
+            }
+                .background(
+                    color = MaterialTheme.colors.surface,
+                    shape = RoundedCornerShape(4.dp)
+                )
+                .padding(
+                    horizontal = 6.dp,
+                    vertical = 4.dp
+                )
                 .zIndex(1f)
         )
         Text(
             article.title
                 ?: "",
-            style = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.Medium),
+            style = TextStyle(
+                fontSize = 15.sp,
+                fontWeight = FontWeight.Medium
+            ),
             modifier = Modifier.constrainAs(title) {
-                top.linkTo(source.bottom, margin = 4.dp)
+                top.linkTo(
+                    source.bottom,
+                    margin = 4.dp
+                )
                 start.linkTo(image.start)
-                bottom.linkTo(parent.bottom, margin = 8.dp)
+                bottom.linkTo(
+                    parent.bottom,
+                    margin = 8.dp
+                )
             }
         )
     }
 }
 
 @Composable
-fun NetworkImage(urlToImage: String?, modifier: Modifier) {
-    urlToImage?.takeIf { it.isNotBlank() }?.let {
-        CoilImage(
-            modifier = modifier,
-            data = urlToImage,
-            contentScale = ContentScale.Crop,
-            loading = {
-                Box(modifier.background(MaterialTheme.colors.secondary))
-            }
-        )
-    } ?: run {
+fun NetworkImage(
+    urlToImage: String?,
+    modifier: Modifier
+) {
+    urlToImage?.takeIf { it.isNotBlank() }
+        ?.let {
+            CoilImage(
+                modifier = modifier,
+                data = urlToImage,
+                contentScale = ContentScale.Crop,
+                loading = {
+                    Box(modifier.background(MaterialTheme.colors.secondary))
+                }
+            )
+        } ?: run {
         Box(modifier.background(MaterialTheme.colors.secondary))
     }
 }
@@ -242,7 +283,11 @@ fun ItemPreview() {
         Surface {
             Item(
                 article = Article(
-                    ArticleSource("", "Engadget", ""),
+                    ArticleSource(
+                        "",
+                        "Engadget",
+                        ""
+                    ),
                     "",
                     "Article title with striking headline",
                     "Article description",

@@ -2,6 +2,7 @@ package com.joaquimverges.kmp.news.android
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -31,7 +32,10 @@ fun SourcesListUi(
                 title = {
                     Text(
                         "Select News Sources",
-                        style = TextStyle(fontSize = 28.sp, fontWeight = FontWeight.Black)
+                        style = TextStyle(
+                            fontSize = 28.sp,
+                            fontWeight = FontWeight.Black
+                        )
                     )
                 },
                 backgroundColor = MaterialTheme.colors.surface,
@@ -70,27 +74,37 @@ fun SourcesListUi(
                 }
             }
             is DataLoadState.Ready -> {
-                LazyColumnFor(state.data, modifier = Modifier.fillMaxWidth()) { item ->
-                    Row(
-                        modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        val selected = mutableStateOf(item.selected)
-                        Text(text = item.name ?: "", modifier = Modifier.weight(1f))
-                        Checkbox(checked = selected.value, onCheckedChange = { checked ->
-                            selected.value = checked
-                            if (checked) {
-                                eventDispatcher.pushEvent(
-                                    SourcesListLogic.Event.SourceSelected(item)
-                                )
-                            } else {
-                                eventDispatcher.pushEvent(
-                                    SourcesListLogic.Event.SourceUnselected(
-                                        item
-                                    )
-                                )
-                            }
-                        })
+                LazyColumn(modifier = Modifier.fillMaxWidth()) {
+                    items(state.data) { item ->
+                        Row(
+                            modifier = Modifier.padding(
+                                horizontal = 24.dp,
+                                vertical = 12.dp
+                            ),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            val selected = mutableStateOf(item.selected)
+                            Text(
+                                text = item.name ?: "",
+                                modifier = Modifier.weight(1f)
+                            )
+                            Checkbox(
+                                checked = selected.value,
+                                onCheckedChange = { checked ->
+                                    selected.value = checked
+                                    if (checked) {
+                                        eventDispatcher.pushEvent(
+                                            SourcesListLogic.Event.SourceSelected(item)
+                                        )
+                                    } else {
+                                        eventDispatcher.pushEvent(
+                                            SourcesListLogic.Event.SourceUnselected(
+                                                item
+                                            )
+                                        )
+                                    }
+                                })
+                        }
                     }
                 }
             }

@@ -6,14 +6,15 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.onActive
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -62,6 +63,7 @@ fun ArticleListUI(
                     ) {
                         Image(
                             imageVector = Icons.Filled.AddCircle,
+                            contentDescription = "Add Sources",
                             colorFilter = ColorFilter.tint(MaterialTheme.colors.onBackground)
                         )
                     }
@@ -139,7 +141,7 @@ fun List(
         state = scrollState
     ) {
         itemsIndexed(map.entries.toList()) { index, item ->
-            onActive {
+            SideEffect {
                 if (index >= fetchMorePosition && prevListSize.value != model.data.articles.size) {
                     prevListSize.value = model.data.articles.size
                     eventDispatcher.pushEvent(ArticleListLogic.Event.FetchMore)
@@ -264,8 +266,9 @@ fun NetworkImage(
     urlToImage?.takeIf { it.isNotBlank() }
         ?.let {
             CoilImage(
-                modifier = modifier,
                 data = urlToImage,
+                contentDescription = "Article thumbnail",
+                modifier = modifier,
                 contentScale = ContentScale.Crop,
                 loading = {
                     Box(modifier.background(MaterialTheme.colors.secondary))

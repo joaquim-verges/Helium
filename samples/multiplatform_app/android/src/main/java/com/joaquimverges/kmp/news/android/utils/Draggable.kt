@@ -34,6 +34,7 @@ fun Draggable(onSwiped: () -> Unit, children: @Composable () -> Unit) {
         ) {
             Image(
                 imageVector = Icons.Filled.KeyboardArrowLeft,
+                contentDescription = null,
                 modifier = Modifier.size(64.dp)
                     .drawLayer(
                         scaleX = offsetPosition.value / max,

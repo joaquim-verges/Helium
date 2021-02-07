@@ -22,7 +22,7 @@ fun <S : BlockState, E : BlockEvent> AppBlock(
 ) {
     val state by logic.observeState().collectAsState(initial = logic.currentState())
     val scope = rememberCoroutineScope()
-    val dispatcher = remember(ui) {
+    val dispatcher = remember(ui.hashCode()) {
         EventDispatcher<E>().apply {
             observer()
                 .onEach { logic.processEvent(it) }

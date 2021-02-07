@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -33,7 +32,10 @@ fun ArticleDetailUi(
             dispatcher.pushEvent(ArticleDetailLogic.DetailEvent.ArticleClosed)
         }
     ) {
-        ArticleDetailContent(state, dispatcher)
+        ArticleDetailContent(
+            state,
+            dispatcher
+        )
     }
 }
 
@@ -43,35 +45,55 @@ fun ArticleDetailContent(
     dispatcher: EventDispatcher<ArticleDetailLogic.DetailEvent>
 ) {
     state?.article?.let { article ->
-        ScrollableColumn(Modifier.fillMaxSize().background(MaterialTheme.colors.background)) {
-            HeroImage(article.urlToImage, dispatcher)
-            Column(Modifier.fillMaxWidth().padding(24.dp)) {
+        ScrollableColumn(
+            Modifier.fillMaxSize()
+                .background(MaterialTheme.colors.background)
+        ) {
+            HeroImage(
+                article.urlToImage,
+                dispatcher
+            )
+            Column(
+                Modifier.fillMaxWidth()
+                    .padding(24.dp)
+            ) {
                 Text(
                     text = article.source?.name ?: "",
-                    style = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Normal)
+                    style = TextStyle(
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Normal
+                    )
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = article.title ?: "",
-                    style = TextStyle(fontSize = 22.sp, fontWeight = FontWeight.Bold)
+                    style = TextStyle(
+                        fontSize = 22.sp,
+                        fontWeight = FontWeight.Bold
+                    )
                 )
                 Spacer(modifier = Modifier.height(24.dp))
                 Text(
                     article.description
                         ?: "",
-                    style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal)
+                    style = TextStyle(
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Normal
+                    )
                 )
                 Spacer(modifier = Modifier.height(24.dp))
                 article.url?.let { url ->
                     Text(
                         "Read More",
-                        style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Normal),
+                        style = TextStyle(
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Normal
+                        ),
                         color = MaterialTheme.colors.primary,
                         modifier = Modifier.clickable(
                             onClick = {
                                 dispatcher.pushEvent(ArticleDetailLogic.DetailEvent.ReadMoreClicked(url))
-                            },
-                            indication = rememberRipple(bounded = false)
+                            }
                         )
                     )
                 }
@@ -87,15 +109,15 @@ fun HeroImage(
 ) {
     imageUrl?.let {
         CoilImage(
+            data = it,
+            contentDescription = "Article Image",
             modifier = Modifier.fillMaxWidth()
                 .aspectRatio(4 / 3f)
                 .clickable(
                     onClick = {
                         dispatcher.pushEvent(ArticleDetailLogic.DetailEvent.ArticleClosed)
-                    },
-                    indication = rememberRipple()
+                    }
                 ),
-            data = it,
             loading = {
                 Box(
                     modifier = Modifier.fillMaxWidth()
@@ -122,7 +144,11 @@ fun preview() {
             ArticleDetailContent(
                 state = ArticleDetailLogic.DetailState(
                     article = Article(
-                        ArticleSource("", "Engadget", ""),
+                        ArticleSource(
+                            "",
+                            "Engadget",
+                            ""
+                        ),
                         "",
                         "Article title with striking headline",
                         "Article description",

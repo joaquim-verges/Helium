@@ -12,6 +12,18 @@ plugins {
 version = "1.0"
 val ios_framework_name = "NewsCommon"
 
+// workaround for MPP - should be fixed in Kotlin 1.5
+android {
+    configurations {
+        create("androidTestApi")
+        create("androidTestDebugApi")
+        create("androidTestReleaseApi")
+        create("testApi")
+        create("testDebugApi")
+        create("testReleaseApi")
+    }
+}
+
 kotlin {
 
     android()

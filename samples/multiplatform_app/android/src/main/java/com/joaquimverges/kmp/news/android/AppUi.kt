@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Providers
 import androidx.compose.runtime.ambientOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.platform.ContextAmbient
+import androidx.compose.ui.platform.LocalContext
 import com.joaquimverges.helium.compose.AppBlock
 import com.joaquimverges.helium.core.retained.getRetainedLogicBlock
 import com.joaquimverges.kmp.news.android.utils.StackTransition
@@ -42,7 +42,7 @@ fun AppUi(appRouter: AppRouter) {
 @Composable
 fun ArticleList() {
     val appRouter = AppRouterAmbient.current
-    val logic: ArticleListLogic = ContextAmbient.current.getRetainedLogicBlock {
+    val logic: ArticleListLogic = LocalContext.current.getRetainedLogicBlock {
         ArticleListLogic(appRouter)
     }
     AppBlock(logic) { state, dispatcher ->
@@ -62,7 +62,7 @@ fun ArticleDetail(article: Article) {
 @Composable
 fun SourcesList() {
     val appRouter = AppRouterAmbient.current
-    val logic: SourcesListLogic = ContextAmbient.current.getRetainedLogicBlock {
+    val logic: SourcesListLogic = LocalContext.current.getRetainedLogicBlock {
         SourcesListLogic(appRouter)
     }
     AppBlock(logic) { state, dispatcher ->

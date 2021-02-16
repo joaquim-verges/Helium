@@ -1,28 +1,14 @@
 package com.joaquimverges.kmp.news.android.utils
 
-import androidx.compose.animation.core.FloatPropKey
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.LinearOutSlowInEasing
-import androidx.compose.animation.core.TransitionDefinition
-import androidx.compose.animation.core.transitionDefinition
-import androidx.compose.animation.core.tween
-import androidx.compose.material.Surface
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.drawLayer
-import androidx.compose.ui.platform.ContextAmbient
-import androidx.compose.ui.platform.DensityAmbient
-import com.joaquimverges.kmp.news.logic.AppRouter
-
+/**
 @Composable
 fun StackTransition(
     state: AppRouter.Screen?,
     shouldReverseAnimation: Boolean,
     children: @Composable (AppRouter.Screen?) -> Unit
 ) {
-    val transitionOffset = with(ContextAmbient.current) {
-        with(DensityAmbient.current) {
+    val transitionOffset = with(LocalContext.current) {
+        with(LocalDensity.current) {
             resources.configuration.screenWidthDp * density
         }
     }
@@ -121,3 +107,4 @@ private fun createTransitionDefinition(
         }
     }
 }
+**/

@@ -10,6 +10,18 @@ group = (project.properties["GROUP"] as String)
 version = (project.properties["VERSION_NAME"] as String)
 val ios_framework_name = "HeliumCore"
 
+// workaround for MPP - should be fixed in Kotlin 1.5
+android {
+    configurations {
+        create("androidTestApi")
+        create("androidTestDebugApi")
+        create("androidTestReleaseApi")
+        create("testApi")
+        create("testDebugApi")
+        create("testReleaseApi")
+    }
+}
+
 kotlin {
 
     iosX64("ios") {

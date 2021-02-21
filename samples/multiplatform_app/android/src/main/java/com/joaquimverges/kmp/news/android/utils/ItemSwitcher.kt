@@ -15,12 +15,111 @@ import kotlin.math.roundToInt
 
 @Composable
 fun <T> StackTransition(
-    targetState: T,
+    targetScreen: T,
     shouldReverseAnimation: Boolean,
     modifier: Modifier = Modifier,
-    animationSpec: FiniteAnimationSpec<Float> = tween(durationMillis = 5000),
     content: @Composable (T) -> Unit
 ) {
+    val state by remember {
+        mutableStateOf(
+            InnerState(
+                targetScreen,
+                mutableListOf()
+            )
+        )
+    }
+    val targetChanged = (targetScreen != state.current)
+    if (targetChanged || state.items.isEmpty()) {
+        state.current = targetScreen
+        // Only manipulate the list when the state is changed, or in the first run.
+        val screenInfos = state.items.map { it.screenAndTransitionState }
+            .run {
+                if (find { it.screen == targetScreen } == null) {
+                    // if target screen not already added, add it with a default transition state
+                    toMutableList().also {
+                        it.add(
+                            ScreenAndTransitionState(
+                                targetScreen,
+                                createTransitionState()
+                            )
+                        )
+                    }
+                } else {
+                    this
+                }
+            }
+        state.items.clear()
+        // map existing keys (previous screen + new screen) to new AnimationItems
+        // which has draw + transition info embedded
+        screenInfos.mapTo(state.items) { screenAndTransitionState ->
+            val screen = screenAndTransitionState.screen
+            val transitionState = screenAndTransitionState.transitionState
+            // determine new visibility (appearing or disappearing)
+            val visible = screen == targetScreen
+            val targetVisibilityVisibility = when {
+                visible -> ScreenVisibility.Visible
+                else -> ScreenVisibility.BecomingNotVisible
+            }
+            // set the new target visibility to the existing state
+            transitionState.targetState = targetVisibilityVisibility
+
+            // Create the Animation with updated transition state
+            AnimationItem(screenAndTransitionState) {
+
+                // this will actually create and update the animation values at every frame
+                val transition = updateTransition(transitionState)
+                val transitionInfo = updateTransitionInfo(
+                    transition = transition,
+                    shouldReverseAnimation = shouldReverseAnimation
+                )
+                // Defines how to draw the screen with an animated container
+                Box(
+                    Modifier
+                        .alpha(transitionInfo.alpha)
+                        .scale(transitionInfo.scale)
+                        .offset {
+                            IntOffset(
+                                transitionInfo.offsetX.roundToInt(),
+                                0
+                            )
+                        }
+                ) {
+                    content(screen)
+                }
+            }
+        }
+    }
+
+    // remove non-visible items with finished transition
+    state.items.removeAll {
+        it.screenAndTransitionState.transitionState.currentState == it.screenAndTransitionState.transitionState.targetState
+            && it.screenAndTransitionState.screen != state.current
+    }
+
+    Box(modifier) {
+        // iterate over all items to draw with the animated container
+        state.items.forEach {
+            key(it.screenAndTransitionState.screen) {
+                it.content()
+            }
+        }
+    }
+}
+
+@Composable
+private fun createTransitionState(): MutableTransitionState<ScreenVisibility> {
+    // create a default transition state to be re-used across compositions
+    return remember {
+        MutableTransitionState(ScreenVisibility.BecomingVisible)
+    }
+}
+
+@Composable
+private fun updateTransitionInfo(
+    transition: Transition<ScreenVisibility>,
+    shouldReverseAnimation: Boolean,
+    animationSpec: FiniteAnimationSpec<Float> = tween(durationMillis = 300),
+): TransitionInfo {
     val transitionOffset =
         with(LocalContext.current) {
             with(LocalDensity.current) {
@@ -28,164 +127,57 @@ fun <T> StackTransition(
             }
         }
 
-    val items = remember { mutableStateListOf<AnimationItem<T>>() }
-    val transitionState = remember { MutableTransitionState(targetState) }
-    val targetChanged = (targetState != transitionState.targetState)
-    transitionState.targetState = targetState
-    val transition = updateTransition(transitionState)
-    if (targetChanged || items.isEmpty()) {
-        // Only manipulate the list when the state is changed, or in the first run.
-        val keys = items.map { it.key }
-            .run {
-                if (!contains(targetState)) {
-                    toMutableList().also { it.add(targetState) }
-                } else {
-                    this
-                }
-            }
-        items.clear()
-        keys.mapTo(items) { key ->
-            AnimationItem(key) {
-                val alpha by transition.animateFloat(transitionSpec = { animationSpec }) {
-                    if (it == key) 1f else 0f
-                }
-                val offsetX by transition.animateFloat(transitionSpec = { animationSpec }) {
-                    if (it == key) 0f else transitionOffset
-                }
-                val scale by transition.animateFloat(transitionSpec = { animationSpec }) {
-                    if (it == key) 1f else 0.8f
-                }
-                Box(
-                    Modifier.alpha(alpha = alpha)
-                        .offset {
-                            IntOffset(
-                                offsetX.roundToInt(),
-                                0
-                            )
-                        }
-                        .scale(scale)
-                ) {
-                    content(key)
-                }
-            }
+    // the actual transition definition, just needs the target values for each state
+    val alpha by transition.animateFloat(transitionSpec = { animationSpec }) {
+        when (it) {
+            ScreenVisibility.Visible -> 1f
+            ScreenVisibility.BecomingNotVisible -> 0f
+            ScreenVisibility.BecomingVisible -> if (shouldReverseAnimation) 0f else 1f
         }
-    } else if (transitionState.currentState == transitionState.targetState) {
-        // Remove all the intermediate items from the list once the animation is finished.
-        items.removeAll { it.key != transitionState.targetState }
+    }
+    val offsetX by transition.animateFloat(transitionSpec = { animationSpec }) {
+        when (it) {
+            ScreenVisibility.Visible -> 0f
+            ScreenVisibility.BecomingNotVisible -> if (shouldReverseAnimation) transitionOffset else 0f
+            ScreenVisibility.BecomingVisible -> if (shouldReverseAnimation) 0f else transitionOffset
+        }
+    }
+    val scale by transition.animateFloat(transitionSpec = { animationSpec }) {
+        when (it) {
+            ScreenVisibility.Visible -> 1f
+            ScreenVisibility.BecomingNotVisible -> if (shouldReverseAnimation) 1f else .8f
+            ScreenVisibility.BecomingVisible -> if (shouldReverseAnimation) .8f else 1f
+        }
     }
 
-    Box(modifier) {
-        items.forEach {
-            key(it.key) {
-                it.content()
-            }
-        }
-    }
+    return TransitionInfo(
+        alpha,
+        offsetX,
+        scale
+    )
 }
 
-enum class ItemTransitionState {
+private data class InnerState<T>(
+    var current: T,
+    val items: MutableList<AnimationItem<T>>
+)
+
+private data class ScreenAndTransitionState<T>(
+    val screen: T,
+    val transitionState: MutableTransitionState<ScreenVisibility>
+)
+
+enum class ScreenVisibility {
     Visible, BecomingNotVisible, BecomingVisible,
 }
 
+private data class TransitionInfo(
+    val alpha: Float,
+    val offsetX: Float,
+    val scale: Float
+)
+
 private data class AnimationItem<T>(
-    val key: T,
+    val screenAndTransitionState: ScreenAndTransitionState<T>,
     val content: @Composable () -> Unit
 )
-/**
-/**
- * [ItemSwitcher] allows to switch between two layouts with a transition defined by
- * [transitionDefinition].
- *
- * @param current is a key representing your current layout state. Every time you change a key
- * the animation will be triggered. The [content] called with the old key will be animated out while
- * the [content] called with the new key will be animated in.
- * @param transitionDefinition is a [TransitionDefinition] using [ItemTransitionState] as
- * the state type.
- * @param modifier Modifier to be applied to the animation container.
-*/
-@Composable
-fun <T> ItemSwitcher(
-current: T,
-transitionDefinition: TransitionDefinition<ItemTransitionState>,
-modifier: Modifier = Modifier,
-content: @Composable (T, TransitionState) -> Unit
-) {
-val state = remember { ItemTransitionInnerState<T>() }
-
-if (current != state.current) {
-state.current = current
-val keys = state.items.map { it.key }
-.toMutableList()
-if (!keys.contains(current)) {
-keys.add(current)
-}
-state.items.clear()
-
-keys.mapTo(state.items) { key ->
-ItemTransitionItem(key) { children ->
-val clock = AmbientAnimationClock.current.asDisposableClock()
-val visible = key == current
-
-val anim = remember(
-clock,
-transitionDefinition
-) {
-
-transitionDefinition.createAnimation(
-clock = clock,
-initState = when {
-visible -> ItemTransitionState.BecomingVisible
-else -> ItemTransitionState.Visible
-}
-)
-}
-
-onCommit(visible) {
-anim.onStateChangeFinished = { _ ->
-if (key == state.current) {
-// leave only the current in the list
-state.items.removeAll { it.key != state.current }
-state.invalidate()
-}
-}
-anim.onUpdate = { state.invalidate() }
-
-val targetState = when {
-visible -> ItemTransitionState.Visible
-else -> ItemTransitionState.BecomingNotVisible
-}
-anim.toState(targetState)
-}
-
-children(anim)
-}
-}
-}
-Box(modifier) {
-state.invalidate = invalidate
-state.items.forEach { (item, transition) ->
-key(item) {
-transition { transitionState ->
-content(
-item,
-transitionState
-)
-}
-}
-}
-}
-}
-
-private class ItemTransitionInnerState<T> {
-var current: Any? = Any()
-var items = mutableListOf<ItemTransitionItem<T>>()
-var invalidate: () -> Unit = { }
-}
-
-private data class ItemTransitionItem<T>(
-val key: T,
-val content: ItemTransitionContent
-)
-
-private typealias ItemTransitionContent = @Composable (children: @Composable (TransitionState) -> Unit) -> Unit
- **/

@@ -1,9 +1,11 @@
 package com.joaquimverges.kmp.news.android
 
-import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -45,8 +47,9 @@ fun ArticleDetailContent(
     dispatcher: EventDispatcher<ArticleDetailLogic.DetailEvent>
 ) {
     state?.article?.let { article ->
-        ScrollableColumn(
+        Column(
             Modifier.fillMaxSize()
+                .verticalScroll(rememberScrollState())
                 .background(MaterialTheme.colors.background)
         ) {
             HeroImage(

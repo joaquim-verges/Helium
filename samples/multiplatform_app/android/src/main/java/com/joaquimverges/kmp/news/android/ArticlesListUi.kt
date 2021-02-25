@@ -21,13 +21,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.AmbientContext
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.joaquimverges.helium.core.event.EventDispatcher
 import com.joaquimverges.helium.core.state.DataLoadState
 import com.joaquimverges.kmp.news.data.models.Article
@@ -136,7 +138,7 @@ fun List(
         initialFirstVisibleItemIndex = scrollPosition.scrollPosition,
         initialFirstVisibleItemScrollOffset = scrollPosition.scrollOffset
     )
-    val context = AmbientContext.current
+    val context = LocalContext.current
     LazyColumn(
         state = scrollState
     ) {

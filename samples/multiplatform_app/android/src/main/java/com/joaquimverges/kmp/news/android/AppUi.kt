@@ -1,10 +1,7 @@
 package com.joaquimverges.kmp.news.android
 
 import androidx.compose.material.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Providers
-import androidx.compose.runtime.ambientOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import com.joaquimverges.helium.compose.AppBlock
 import com.joaquimverges.helium.core.retained.getRetainedLogicBlock
@@ -15,14 +12,14 @@ import com.joaquimverges.kmp.news.logic.ArticleDetailLogic
 import com.joaquimverges.kmp.news.logic.ArticleListLogic
 import com.joaquimverges.kmp.news.logic.SourcesListLogic
 
-val AppRouterAmbient = ambientOf<AppRouter> { error("No AppRouter set!") }
+val LocalAppRouter = compositionLocalOf<AppRouter> { error("No AppRouter set!") }
 
 @Composable
 fun AppUi(appRouter: AppRouter) {
     MaterialTheme(
         colors = Themes.dark
     ) {
-        Providers(AppRouterAmbient provides appRouter) {
+        CompositionLocalProvider(LocalAppRouter provides appRouter) {
             AppBlock(appRouter) { state, _ ->
                 StackTransition(
                     state,
@@ -41,7 +38,7 @@ fun AppUi(appRouter: AppRouter) {
 
 @Composable
 fun ArticleList() {
-    val appRouter = AppRouterAmbient.current
+    val appRouter = LocalAppRouter.current
     val logic: ArticleListLogic = LocalContext.current.getRetainedLogicBlock {
         ArticleListLogic(appRouter)
     }
@@ -52,7 +49,7 @@ fun ArticleList() {
 
 @Composable
 fun ArticleDetail(article: Article) {
-    val appRouter = AppRouterAmbient.current
+    val appRouter = LocalAppRouter.current
     val logic = remember(article) { ArticleDetailLogic(article, appRouter) }
     AppBlock(logic) { state, dispatcher ->
         ArticleDetailUi(state, dispatcher)
@@ -61,7 +58,7 @@ fun ArticleDetail(article: Article) {
 
 @Composable
 fun SourcesList() {
-    val appRouter = AppRouterAmbient.current
+    val appRouter = LocalAppRouter.current
     val logic: SourcesListLogic = LocalContext.current.getRetainedLogicBlock {
         SourcesListLogic(appRouter)
     }

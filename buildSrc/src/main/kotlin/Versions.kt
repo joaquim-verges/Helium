@@ -27,8 +27,8 @@ object Versions {
     const val constraint_layout = "2.0.0"
     const val material_lib = "1.2.0-alpha05"
     const val navigation = "2.3.1"
-    const val compose = "1.0.0-alpha12"
-    const val accompanist = "0.5.1"
+    const val compose = "1.0.0-beta01"
+    const val accompanist = "0.6.0"
 
     // kotlin mpp
     const val ktor = "1.4.2"

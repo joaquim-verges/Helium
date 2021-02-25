@@ -1,8 +1,11 @@
 package com.joaquimverges.kmp.news.android.utils
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
@@ -13,7 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.gesture.scrollorientationlocking.Orientation
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntOffset
@@ -41,6 +44,7 @@ fun Draggable(
             Image(
                 imageVector = Icons.Filled.KeyboardArrowLeft,
                 contentDescription = null,
+                colorFilter = ColorFilter.tint(MaterialTheme.colors.onBackground),
                 modifier = Modifier.size(64.dp)
                     .scale(
                         offsetPosition.value / max,
@@ -52,15 +56,15 @@ fun Draggable(
 
         Surface(
             Modifier.draggable(
-                orientation = Orientation.Horizontal,
-                onDrag = { delta ->
+                rememberDraggableState(onDelta = { delta ->
                     val coeff = 1f - (offsetPosition.value / max)
                     val newValue = offsetPosition.value + (delta * coeff)
                     offsetPosition.value = newValue.coerceIn(
                         min,
                         max
                     )
-                },
+                }),
+                orientation = Orientation.Horizontal,
                 onDragStopped = { velocity ->
                     if (velocity > 0 || offsetPosition.value > max * .5f) {
                         onSwiped()
@@ -69,7 +73,12 @@ fun Draggable(
                     }
                 }
             )
-                .offset { IntOffset(offsetPosition.value.roundToInt(), 0) },
+                .offset {
+                    IntOffset(
+                        offsetPosition.value.roundToInt(),
+                        0
+                    )
+                },
             elevation = 8.dp
         ) {
             children()

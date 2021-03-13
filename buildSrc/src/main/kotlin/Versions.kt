@@ -7,7 +7,7 @@ object Versions {
     const val targetSdk = 30
 
     // kotlin std
-    const val kotlin = "1.4.30"
+    const val kotlin = "1.4.31"
     const val coroutines = "1.4.1"
 
     // test
@@ -27,8 +27,10 @@ object Versions {
     const val constraint_layout = "2.0.0"
     const val material_lib = "1.2.0-alpha05"
     const val navigation = "2.3.1"
-    const val compose = "1.0.0-beta01"
-    const val accompanist = "0.6.0"
+    const val compose = "1.0.0-beta02"
+    const val compose_activity = "1.3.0-alpha04"
+    const val compose_constraing_layout = "1.0.0-alpha04"
+    const val accompanist = "0.6.2"
 
     // kotlin mpp
     const val ktor = "1.4.2"

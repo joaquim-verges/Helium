@@ -36,7 +36,7 @@ import com.joaquimverges.kmp.news.data.models.Article
 import com.joaquimverges.kmp.news.data.models.ArticleResponse
 import com.joaquimverges.kmp.news.data.models.ArticleSource
 import com.joaquimverges.kmp.news.logic.ArticleListLogic
-import dev.chrisbanes.accompanist.coil.CoilImage
+import com.google.accompanist.coil.CoilImage
 
 @Composable
 fun ArticleListUI(

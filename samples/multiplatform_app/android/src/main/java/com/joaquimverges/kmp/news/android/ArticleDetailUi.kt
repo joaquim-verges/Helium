@@ -2,7 +2,6 @@ package com.joaquimverges.kmp.news.android
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -22,7 +21,7 @@ import com.joaquimverges.kmp.news.android.utils.Draggable
 import com.joaquimverges.kmp.news.data.models.Article
 import com.joaquimverges.kmp.news.data.models.ArticleSource
 import com.joaquimverges.kmp.news.logic.ArticleDetailLogic
-import dev.chrisbanes.accompanist.coil.CoilImage
+import com.google.accompanist.coil.CoilImage
 
 @Composable
 fun ArticleDetailUi(

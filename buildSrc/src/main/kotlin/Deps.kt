@@ -46,7 +46,7 @@ object Deps {
             "androidx.compose.foundation:foundation:${Versions.compose}",
             "androidx.compose.animation:animation:${Versions.compose}",
             "androidx.compose.ui:ui-tooling:${Versions.compose}",
-            "androidx.constraintlayout:constraintlayout-compose:${Versions.compose_constraing_layout}",
+            "androidx.constraintlayout:constraintlayout-compose:${Versions.compose_constraint_layout}",
             "androidx.activity:activity-compose:${Versions.compose_activity}"
     )
 

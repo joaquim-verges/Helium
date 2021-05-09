@@ -1,7 +1,7 @@
 object Versions {
 
     // android
-    const val agp = "7.0.0-alpha06"
+    const val agp = "7.0.0-alpha15"
     const val compileSdk = 30
     const val minSdk = 21
     const val targetSdk = 30

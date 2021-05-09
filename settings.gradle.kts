@@ -9,5 +9,3 @@ include(
     ":samples:multiplatform_app:common",
     ":samples:multiplatform_app:android"
 )
-
-enableFeaturePreview("GRADLE_METADATA")

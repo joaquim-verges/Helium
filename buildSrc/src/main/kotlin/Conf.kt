@@ -6,36 +6,31 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 // Android
 
 fun Project.androidLib(extraConf: (LibraryExtension.() -> Unit)? = null) {
-    extensions.getByType(LibraryExtension::class.java).apply {
-        configureAndroid(
-                libVersionCode = (project.properties["VERSION_CODE"] as String).toInt(),
-                libVersionName = project.properties["VERSION_NAME"] as String
-        )
-        extraConf?.invoke(this)
-    }
+    extensions.getByType(LibraryExtension::class.java)
+        .apply {
+            configureAndroid()
+            extraConf?.invoke(this)
+        }
     kotlinCompile()
 }
 
 fun Project.androidForMultiplatformLib() {
-    extensions.getByType(LibraryExtension::class.java).apply {
-        configureAndroid(
-                libVersionCode = (project.properties["VERSION_CODE"] as String).toInt(),
-                libVersionName = project.properties["VERSION_NAME"] as String,
-                customConf = {
-                    sourceSets {
-                        getByName("main") {
-                            manifest.srcFile("src/androidMain/AndroidManifest.xml")
-                            java.srcDirs("src/androidMain/kotlin")
-                            res.srcDirs("src/androidMain/res")
-                        }
-                        getByName("androidTest") {
-                            java.srcDirs("src/androidTest/kotlin")
-                            res.srcDirs("src/androidTest/res")
-                        }
+    extensions.getByType(LibraryExtension::class.java)
+        .apply {
+            configureAndroid() {
+                sourceSets {
+                    getByName("main") {
+                        manifest.srcFile("src/androidMain/AndroidManifest.xml")
+                        java.srcDirs("src/androidMain/kotlin")
+                        res.srcDirs("src/androidMain/res")
+                    }
+                    getByName("androidTest") {
+                        java.srcDirs("src/androidTest/kotlin")
+                        res.srcDirs("src/androidTest/res")
                     }
                 }
-        )
-    }
+            }
+        }
 }
 
 fun Project.kotlinCompile() {
@@ -47,11 +42,9 @@ fun Project.kotlinCompile() {
 }
 
 fun LibraryExtension.configureAndroid(
-        libVersionCode: Int,
-        libVersionName: String,
-        customConf: (LibraryExtension.() -> Unit)? = null
+    customConf: (LibraryExtension.() -> Unit)? = null
 ) {
-    compileSdkVersion(Versions.compileSdk)
+    compileSdk = Versions.compileSdk
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -59,10 +52,8 @@ fun LibraryExtension.configureAndroid(
     }
 
     defaultConfig {
-        minSdkVersion(Versions.minSdk)
-        targetSdkVersion(Versions.targetSdk)
-        versionCode = libVersionCode
-        versionName = libVersionName
+        minSdk = Versions.minSdk
+        targetSdk = Versions.targetSdk
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -70,7 +61,10 @@ fun LibraryExtension.configureAndroid(
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 

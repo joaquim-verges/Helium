@@ -1,10 +1,7 @@
 package com.joaquimverges.kmp.news.android
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -22,6 +19,8 @@ import com.joaquimverges.kmp.news.data.models.Article
 import com.joaquimverges.kmp.news.data.models.ArticleSource
 import com.joaquimverges.kmp.news.logic.ArticleDetailLogic
 import com.google.accompanist.coil.CoilImage
+import com.google.accompanist.coil.rememberCoilPainter
+import com.google.accompanist.imageloading.ImageLoadState
 
 @Composable
 fun ArticleDetailUi(
@@ -47,7 +46,8 @@ fun ArticleDetailContent(
 ) {
     state?.article?.let { article ->
         Column(
-            Modifier.fillMaxSize()
+            Modifier
+                .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .background(MaterialTheme.colors.background)
         ) {
@@ -56,7 +56,8 @@ fun ArticleDetailContent(
                 dispatcher
             )
             Column(
-                Modifier.fillMaxWidth()
+                Modifier
+                    .fillMaxWidth()
                     .padding(24.dp)
             ) {
                 Text(
@@ -109,32 +110,28 @@ fun HeroImage(
     imageUrl: String?,
     dispatcher: EventDispatcher<ArticleDetailLogic.DetailEvent>
 ) {
-    imageUrl?.let {
-        CoilImage(
-            data = it,
-            contentDescription = "Article Image",
-            modifier = Modifier.fillMaxWidth()
-                .aspectRatio(4 / 3f)
-                .clickable(
-                    onClick = {
-                        dispatcher.pushEvent(ArticleDetailLogic.DetailEvent.ArticleClosed)
-                    }
-                ),
-            loading = {
-                Box(
-                    modifier = Modifier.fillMaxWidth()
-                        .aspectRatio(4 / 3f)
-                        .background(MaterialTheme.colors.secondary)
-                )
-            },
-            contentScale = ContentScale.Crop
-        )
-    } ?: run {
-        Box(
-            modifier = Modifier.fillMaxWidth()
-                .aspectRatio(4 / 3f)
-                .background(MaterialTheme.colors.secondary)
-        )
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .aspectRatio(4 / 3f)
+            .background(MaterialTheme.colors.secondary)
+    ) {
+        imageUrl?.let {
+            val painter = rememberCoilPainter(request = it)
+            Image(
+                painter = painter,
+                contentDescription = "Article Image",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(4 / 3f)
+                    .clickable(
+                        onClick = {
+                            dispatcher.pushEvent(ArticleDetailLogic.DetailEvent.ArticleClosed)
+                        }
+                    ),
+                contentScale = ContentScale.Crop
+            )
+        }
     }
 }
 

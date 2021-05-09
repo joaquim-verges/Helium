@@ -37,6 +37,8 @@ import com.joaquimverges.kmp.news.data.models.ArticleResponse
 import com.joaquimverges.kmp.news.data.models.ArticleSource
 import com.joaquimverges.kmp.news.logic.ArticleListLogic
 import com.google.accompanist.coil.CoilImage
+import com.google.accompanist.coil.rememberCoilPainter
+import com.google.accompanist.imageloading.ImageLoadState
 
 @Composable
 fun ArticleListUI(
@@ -105,7 +107,8 @@ fun ArticleListUI(
 @Composable
 fun Centered(children: @Composable () -> Unit) {
     Column(
-        Modifier.fillMaxWidth()
+        Modifier
+            .fillMaxWidth()
             .fillMaxHeight(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -150,14 +153,16 @@ fun List(
                 }
             }
             Row(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .padding(horizontal = 6.dp)
             ) {
                 item.value.forEach {
                     Item(
                         article = it,
                         imgAspectRatio = if (item.value.size == 1) 16 / 9f else 4 / 3f,
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier
+                            .weight(1f)
                             .padding(6.dp)
                     ) {
                         scrollPosition.scrollPosition = scrollState.firstVisibleItemIndex
@@ -220,14 +225,15 @@ fun Item(
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Medium
             ),
-            modifier = Modifier.constrainAs(source) {
-                top.linkTo(image.bottom)
-                bottom.linkTo(image.bottom)
-                start.linkTo(
-                    image.start,
-                    margin = 8.dp
-                )
-            }
+            modifier = Modifier
+                .constrainAs(source) {
+                    top.linkTo(image.bottom)
+                    bottom.linkTo(image.bottom)
+                    start.linkTo(
+                        image.start,
+                        margin = 8.dp
+                    )
+                }
                 .background(
                     color = MaterialTheme.colors.surface,
                     shape = RoundedCornerShape(4.dp)
@@ -265,20 +271,24 @@ fun NetworkImage(
     urlToImage: String?,
     modifier: Modifier
 ) {
-    urlToImage?.takeIf { it.isNotBlank() }
+    urlToImage
+        ?.takeIf { it.isNotBlank() }
         ?.let {
-            CoilImage(
-                data = urlToImage,
+            val painter = rememberCoilPainter(request = it)
+            Image(
+                painter = painter,
                 contentDescription = "Article thumbnail",
                 modifier = modifier,
                 contentScale = ContentScale.Crop,
-                loading = {
-                    Box(modifier.background(MaterialTheme.colors.secondary))
-                }
             )
-        } ?: run {
-        Box(modifier.background(MaterialTheme.colors.secondary))
-    }
+            when (painter.loadState) {
+                is ImageLoadState.Loading -> Box(modifier.background(MaterialTheme.colors.secondary))
+                is ImageLoadState.Error -> Box(modifier.background(MaterialTheme.colors.error))
+            }
+        }
+        ?: run {
+            Box(modifier.background(MaterialTheme.colors.secondary))
+        }
 }
 
 @Preview

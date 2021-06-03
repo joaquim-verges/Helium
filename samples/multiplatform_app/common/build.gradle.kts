@@ -27,7 +27,7 @@ android {
 kotlin {
 
     android()
-    iosX64("ios")
+    ios("ios")
 
     sourceSets["commonMain"].apply {
         dependencies {
@@ -40,7 +40,6 @@ kotlin {
     sourceSets["androidMain"].dependencies {
         implementation(Deps.ktorAndroid)
         implementation(Deps.sqlDelightAndroid)
-        implementation(Deps.coroutinesAndroid)
     }
 
     sourceSets["iosMain"].dependencies {

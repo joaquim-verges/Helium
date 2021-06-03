@@ -24,7 +24,7 @@ android {
 
 kotlin {
 
-    iosX64("ios") {
+    ios("ios") {
         val target = this
         binaries {
             framework(ios_framework_name) {

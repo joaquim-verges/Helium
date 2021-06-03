@@ -7,7 +7,7 @@ PODS:
     - SDWebImage (~> 5.7)
 
 DEPENDENCIES:
-  - common (from `/Users/jverges/Perso/Helium/samples/multiplatform_app/common`)
+  - common (from `../common`)
   - SDWebImageSwiftUI
 
 SPEC REPOS:
@@ -17,13 +17,13 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   common:
-    :path: "/Users/jverges/Perso/Helium/samples/multiplatform_app/common"
+    :path: "../common"
 
 SPEC CHECKSUMS:
-  common: ede5f6e969c14bc3beaa0f113aef0b51f51e50f9
+  common: 45e28c3fa353303dceac99a136178bec1bea5dbf
   SDWebImage: cf6922231e95550934da2ada0f20f2becf2ceba9
   SDWebImageSwiftUI: 43687ffe232ddd33fe0659498b7ca9884fdd6b35
 
-PODFILE CHECKSUM: df7be16ead2cb78a9cf4489cb2fab0ae487fa7f8
+PODFILE CHECKSUM: 30083247b742b9394120d224815bf0bd0ea31503
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.10.1

@@ -17,7 +17,7 @@ Pod::Spec.new do |spec|
                 
 
     spec.pod_target_xcconfig = {
-        'KOTLIN_TARGET[sdk=iphonesimulator*]' => 'ios_x64',
+        'KOTLIN_TARGET[sdk=iphonesimulator*]' => 'ios_arm64',
         'KOTLIN_TARGET[sdk=iphoneos*]' => 'ios_arm',
         'KOTLIN_TARGET[sdk=watchsimulator*]' => 'watchos_x64',
         'KOTLIN_TARGET[sdk=watchos*]' => 'watchos_arm',

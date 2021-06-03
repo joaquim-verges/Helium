@@ -19,7 +19,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // create main logic + ui
         let appRouter = AppRouter(browserWrapper: BrowserWrapper())
-        let articleListLogic = ArticleListLogic(appRouter: appRouter, repo: NewsRepository(api: NewsApi()))
+        let api = NewsApi()
+        let db = Database()
+        let articleListLogic = ArticleListLogic(
+            appRouter: appRouter,
+            repo: NewsRepository(api: api, sourcesRepository: SourcesRepository(api: api, db: db))
+        )
         let ui = AppBlockSwiftUi(logic: appRouter) { state, dispatcher in
             AppUi(state: state, eventDispatcher: dispatcher)
         }.environmentObject(toEnvObject(value: appRouter))

@@ -1,14 +1,14 @@
 object Versions {
 
     // android
-    const val agp = "7.0.0-alpha15"
+    const val agp = "7.0.0-beta03"
     const val compileSdk = 30
     const val minSdk = 21
     const val targetSdk = 30
 
     // kotlin std
-    const val kotlin = "1.4.32"
-    const val coroutines = "1.4.1"
+    const val kotlin = "1.5.10"
+    const val coroutines = "1.5.0"
 
     // test
     const val robolectric = "4.3.1"
@@ -27,13 +27,13 @@ object Versions {
     const val constraint_layout = "2.0.0"
     const val material_lib = "1.2.0-alpha05"
     const val navigation = "2.3.1"
-    const val compose = "1.0.0-beta06"
-    const val compose_activity = "1.3.0-alpha06"
-    const val compose_constraint_layout = "1.0.0-alpha06"
-    const val accompanist = "0.9.1"
+    const val compose = "1.0.0-beta08"
+    const val compose_activity = "1.3.0-alpha07"
+    const val compose_constraint_layout = "1.0.0-alpha07"
+    const val accompanist = "0.11.1"
 
     // kotlin mpp
-    const val ktor = "1.4.2"
+    const val ktor = "1.5.0"
     const val sqlDelight = "1.4.3"
 
 }

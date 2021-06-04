@@ -11,7 +11,7 @@ buildscript {
         classpath("org.jlleitschuh.gradle:ktlint-gradle:9.3.0")
         classpath( "org.jetbrains.dokka:dokka-gradle-plugin:1.4.10.2")
         classpath("com.squareup.sqldelight:gradle-plugin:1.4.3")
-        classpath("com.vanniktech:gradle-maven-publish-plugin:0.13.0")
+        classpath("com.vanniktech:gradle-maven-publish-plugin:0.15.1")
     }
 }
 

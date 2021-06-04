@@ -58,6 +58,7 @@ dependencies {
     implementation project(':samples:multiplatform_app:common')
 
     Deps.androidXUiDeps.forEach { implementation(it) }
+    Deps.composeDeps.forEach { implementation(it) }
 
     implementation "com.google.accompanist:accompanist-coil:${Versions.accompanist}"
 }

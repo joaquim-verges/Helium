@@ -17,7 +17,7 @@ androidLib {
 
 dependencies {
     implementation(project(":helium-core"))
-    Deps.composeDeps.forEach { api(it) }
+    implementation("androidx.compose.runtime:runtime:${Versions.compose}")
 }
 
 tasks.withType<KotlinCompile>().configureEach {

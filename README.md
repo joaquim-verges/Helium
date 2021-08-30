@@ -64,6 +64,8 @@ Helium works great with declarative UI frameworks like Jetpack Compose and Swift
 
 For detailed information and examples, head over to the [helium-core](/helium-core) documentation.
 
+For usage with Jetpack Compose, check out the [helium-compose](/helium-compose) documentation.
+
 #### Ready to use App Blocks
 
 Helium provides the framework to build your own AppBlocks, but also provides a growing catalog of existing blocks ready to be used:
@@ -84,7 +86,7 @@ Follow the links above for documentation and examples on how to use those handy 
 
 #### Samples
 
-- [multiplaform_app](/samples/multiplaform_app) - Simple Multiplatform News App (Android & iOS), using Jetpack Compose and SwiftUI
+- [multiplaform_app](/samples/multiplatform_app) - Simple Multiplatform News App (Android & iOS), using Jetpack Compose and SwiftUI
 - [newsapp](/samples/newsapp) - Fully functional Android News app downloadable on [Google Play](https://play.google.com/store/apps/details?id=com.jv.news)
 - [demoapp](/samples/demoapp) - A catalog of different AppBlocks usages
 

@@ -6,10 +6,14 @@ Usage:
 
 ```kotlin
 @Composable
-fun ArticleList() {
-    val logic: MyLogic = viewModel()
+fun App() {
+    val logic: MyLogic = LocalContext.current.getRetainedLogicBlock()
     AppBlock(logic) { state, dispatcher ->
         MyUi(state, dispatcher)
     }
 }
 ```
+
+More detailed documentation coming soon!
+
+In the meantime check out some real world examples in the [sample news app UI](/samples/multiplatform_app/android/src/main/java/com/joaquimverges/kmp/news/android/AppUi.kt).

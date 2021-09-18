@@ -1,10 +1,12 @@
 package com.joaquimverges.kmp.news.android
 
 import androidx.compose.material.MaterialTheme
-import androidx.compose.runtime.*
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.remember
 import com.joaquimverges.helium.compose.AppBlock
-import com.joaquimverges.helium.core.retained.getRetainedLogicBlock
+import com.joaquimverges.helium.compose.logicBlock
 import com.joaquimverges.kmp.news.android.utils.StackTransition
 import com.joaquimverges.kmp.news.data.models.Article
 import com.joaquimverges.kmp.news.logic.AppRouter
@@ -39,7 +41,7 @@ fun AppUi(appRouter: AppRouter) {
 @Composable
 fun ArticleList() {
     val appRouter = LocalAppRouter.current
-    val logic: ArticleListLogic = LocalContext.current.getRetainedLogicBlock {
+    val logic: ArticleListLogic = logicBlock {
         ArticleListLogic(appRouter)
     }
     AppBlock(logic) { state, dispatcher ->
@@ -59,7 +61,7 @@ fun ArticleDetail(article: Article) {
 @Composable
 fun SourcesList() {
     val appRouter = LocalAppRouter.current
-    val logic: SourcesListLogic = LocalContext.current.getRetainedLogicBlock {
+    val logic: SourcesListLogic = logicBlock {
         SourcesListLogic(appRouter)
     }
     AppBlock(logic) { state, dispatcher ->

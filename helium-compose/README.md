@@ -5,12 +5,33 @@ Handy functions and extensions to integrate Helium Logic Blocks with your Jetpac
 Usage:
 
 ```kotlin
+// Simple logic, can be in Kotlin Multiplatform common code
+class MyLogic(): LogicBlock<State, Event>() {
+
+    init { pushState(State(count = 0)) }
+
+    override fun onViewEvent(event: Event) {
+        when (event) {
+            Tap -> pushState(currentState().copy(count = currentState().count + 1))
+        }
+    }
+}
+
+// Independent UI Block
+@Composable
+fun MyUi(state: State, dispatcher: EventDispatcher<Event>) {
+    Column {
+        Text(state.count.toString()).onClick {
+            dispatcher.send(Event.Tap)
+        }
+    }
+}
+
+// Assemble them with AppBlock
 @Composable
 fun App() {
-    val logic: MyLogic = LocalContext.current.getRetainedLogicBlock()
-    AppBlock(logic) { state, dispatcher ->
-        MyUi(state, dispatcher)
-    }
+    val logic: MyLogic = logicBlock()
+    AppBlock(logic) { state, dispatcher -> MyUi(state, dispatcher) }
 }
 ```
 

@@ -18,6 +18,7 @@ androidLib {
 dependencies {
     implementation(project(":helium-core"))
     implementation("androidx.compose.runtime:runtime:${Versions.compose}")
+    implementation("androidx.compose.ui:ui:${Versions.compose}")
 }
 
 tasks.withType<KotlinCompile>().configureEach {

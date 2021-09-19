@@ -6,13 +6,13 @@ Usage:
 
 ```kotlin
 // Simple logic, can be in Kotlin Multiplatform common code
-class MyLogic(): LogicBlock<State, Event>() {
+class MyLogic: LogicBlock<State, Event>() {
 
     init { pushState(State(count = 0)) }
 
-    override fun onViewEvent(event: Event) {
+    override fun onUiEvent(event: Event) {
         when (event) {
-            Tap -> pushState(currentState().copy(count = currentState().count + 1))
+            Tap -> incrementAndPushNewState()
         }
     }
 }

@@ -11,3 +11,7 @@ fun <S : BlockState, E : BlockEvent> LogicBlock<S, E>.stateMachine(initialState:
         .onEach { pushState(it) }
         .launchInBlock()
 }
+
+fun <S : BlockState, E : BlockEvent> LogicBlock<S, E>.onEvent(action: (E) -> Unit) {
+    observeEvents().onEach { action(it) }.launchInBlock()
+}

@@ -13,12 +13,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberImagePainter
 import com.joaquimverges.helium.core.event.EventDispatcher
 import com.joaquimverges.kmp.news.android.utils.Draggable
 import com.joaquimverges.kmp.news.data.models.Article
 import com.joaquimverges.kmp.news.data.models.ArticleSource
 import com.joaquimverges.kmp.news.logic.ArticleDetailLogic
-import com.google.accompanist.coil.rememberCoilPainter
 
 @Composable
 fun ArticleDetailUi(
@@ -115,7 +115,7 @@ fun HeroImage(
             .background(MaterialTheme.colors.secondary)
     ) {
         imageUrl?.let {
-            val painter = rememberCoilPainter(request = it)
+            val painter = rememberImagePainter(data = it)
             Image(
                 painter = painter,
                 contentDescription = "Article Image",

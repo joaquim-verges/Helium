@@ -60,5 +60,5 @@ dependencies {
     Deps.androidXUiDeps.forEach { implementation(it) }
     Deps.composeDeps.forEach { implementation(it) }
 
-    implementation "com.google.accompanist:accompanist-coil:${Versions.accompanist}"
+    implementation("io.coil-kt:coil-compose:${Versions.coil}")
 }

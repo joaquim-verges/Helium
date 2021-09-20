@@ -31,6 +31,7 @@ object Versions {
     const val compose_activity = "1.3.0"
     const val compose_constraint_layout = "1.0.0-beta02"
     const val accompanist = "0.15.0"
+    const val coil = "1.3.2"
 
     // kotlin mpp
     const val ktor = "1.5.4"

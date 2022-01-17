@@ -1,6 +1,8 @@
 package com.joaquimverges.helium.core.retained
 
+import android.app.Activity
 import android.content.Context
+import androidx.activity.ComponentActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
@@ -13,6 +15,10 @@ import java.lang.IllegalStateException
  * and only destroyed when the activity is really destroyed.
  */
 inline fun <reified P : ViewModel> FragmentActivity.getRetainedLogicBlock(): P {
+    return ViewModelProvider(this)[P::class.java]
+}
+
+inline fun <reified P : ViewModel> ComponentActivity.getRetainedLogicBlock(): P {
     return ViewModelProvider(this)[P::class.java]
 }
 
@@ -36,6 +42,10 @@ inline fun <reified P : ViewModel> Context.getRetainedLogicBlock(): P {
  * @param factory lambda to construct the LogicBlock yourself if it has non-empty constructors.
  */
 inline fun <reified P : ViewModel> FragmentActivity.getRetainedLogicBlock(noinline factory: (Class<P>) -> P): P {
+    return ViewModelProvider(this, LogicBlockFactory(P::class.java, factory)).get(P::class.java)
+}
+
+inline fun <reified P : ViewModel> ComponentActivity.getRetainedLogicBlock(noinline factory: (Class<P>) -> P): P {
     return ViewModelProvider(this, LogicBlockFactory(P::class.java, factory)).get(P::class.java)
 }
 

@@ -31,6 +31,9 @@ inline fun <reified P : ViewModel> Context.getRetainedLogicBlock(): P {
         is FragmentActivity -> {
             ViewModelProvider(this)[P::class.java]
         }
+        is ComponentActivity -> {
+            ViewModelProvider(this)[P::class.java]
+        }
         is Fragment -> {
             ViewModelProvider(this)[P::class.java]
         }

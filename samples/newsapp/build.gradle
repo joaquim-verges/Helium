@@ -41,8 +41,6 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:4.11.0"
     kapt "com.github.bumptech.glide:compiler:4.9.0"
     implementation "com.thoughtbot:expandablecheckrecyclerview:1.4"
-    debugImplementation "com.squareup.leakcanary:leakcanary-android:1.5.4"
-    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:1.5.4"
     implementation project(':helium-core')
     implementation project(':helium-ui')
     implementation project(':helium-navigation')

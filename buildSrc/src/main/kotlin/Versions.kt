@@ -2,9 +2,9 @@ object Versions {
 
     // android
     const val agp = "7.0.2"
-    const val compileSdk = 30
+    const val compileSdk = 31
     const val minSdk = 21
-    const val targetSdk = 30
+    const val targetSdk = 31
 
     // kotlin std
     const val kotlin = "1.5.31"
@@ -18,9 +18,10 @@ object Versions {
     const val test_espresso = "3.3.0"
 
     // androidX
-    const val arch_lifecycle = "2.2.0"
-    const val arch_lifecycle_runtime = "2.3.0-alpha05"
-    const val arch_lifecycle_viewmodel = "2.3.0-alpha05"
+    const val arch_lifecycle = "2.4.0"
+    const val fragment = "1.4.0"
+    const val arch_lifecycle_runtime = "2.4.0"
+    const val arch_lifecycle_viewmodel = "2.4.0"
     const val appcompat = "1.1.0"
     const val recyclerview = "1.1.0"
     const val swiperefresh = "1.1.0"

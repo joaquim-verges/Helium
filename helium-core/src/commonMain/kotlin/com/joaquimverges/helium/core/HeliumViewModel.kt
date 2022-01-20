@@ -7,4 +7,7 @@ import kotlinx.coroutines.CoroutineScope
  */
 expect abstract class HeliumViewModel() {
     val coroutineScope: CoroutineScope
+    open fun onResume()
+    open fun onPause()
+    open fun onClear()
 }

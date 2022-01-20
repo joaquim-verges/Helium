@@ -11,7 +11,7 @@ class LogicBlockFactory<T : ViewModel?>(
     private val factory: (Class<T>) -> T
 ) : ViewModelProvider.Factory {
 
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (clazz.isAssignableFrom(modelClass)) {
             @Suppress("UNCHECKED_CAST")
             return factory.invoke(clazz) as T

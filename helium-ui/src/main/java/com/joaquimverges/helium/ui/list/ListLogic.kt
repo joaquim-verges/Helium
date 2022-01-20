@@ -1,6 +1,7 @@
 package com.joaquimverges.helium.ui.list
 
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 import com.joaquimverges.helium.core.LogicBlock
 import com.joaquimverges.helium.core.event.BlockEvent
@@ -61,11 +62,14 @@ open class ListLogic<T, E : BlockEvent>(
             }.launchInBlock()
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     internal fun refreshIfNeeded() {
         if (refreshPolicy.shouldRefresh()) {
             loadFirstPage()
         }
+    }
+
+    override fun onResume() {
+        refreshIfNeeded()
     }
 
     fun loadFirstPage() {
